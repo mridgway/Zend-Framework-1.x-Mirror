@@ -17,7 +17,7 @@
  * @subpackage Renderer
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Html.php 21551 2010-03-18 17:19:11Z kokx $
+ * @version    $Id: Html.php 22281 2010-05-25 14:21:43Z matthew $
  */
 
 /**
@@ -101,7 +101,14 @@ class Zend_Markup_Renderer_Html extends Zend_Markup_Renderer_RendererAbstract
             'Zend_Markup_Renderer_Html' => 'Zend/Markup/Renderer/Html/'
         ));
 
-        $this->_defineDefaultMarkups();
+        if (!isset($options['useDefaultMarkups']) && isset($options['useDefaultTags'])) {
+            $options['useDefaultMarkups'] = $options['useDefaultTags'];
+        }
+        if (isset($options['useDefaultMarkups']) && ($options['useDefaultMarkups'] !== false)) {
+            $this->_defineDefaultMarkups();
+        } elseif (!isset($options['useDefaultMarkups'])) {
+            $this->_defineDefaultMarkups();
+        }
 
         parent::__construct($options);
     }

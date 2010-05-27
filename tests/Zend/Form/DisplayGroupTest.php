@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DisplayGroupTest.php 20266 2010-01-13 20:15:33Z matthew $
+ * @version    $Id: DisplayGroupTest.php 22129 2010-05-06 11:20:39Z alab $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -401,7 +401,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
         $this->group->addElements(array($foo, $bar));
         $html = $this->group->render($this->getView());
-        $this->assertRegexp('#^<dt[^>]*>&nbsp;</dt><dd[^>]*><fieldset.*?</fieldset></dd>$#s', $html, $html);
+        $this->assertRegexp('#^<dt[^>]*>&\#160;</dt><dd[^>]*><fieldset.*?</fieldset></dd>$#s', $html, $html);
         $this->assertContains('<input', $html, $html);
         $this->assertContains('"foo"', $html);
         $this->assertContains('"bar"', $html);
@@ -415,7 +415,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->group->addElements(array($foo, $bar))
                     ->setView($this->getView());
         $html = $this->group->__toString();
-        $this->assertRegexp('#^<dt[^>]*>&nbsp;</dt><dd[^>]*><fieldset.*?</fieldset></dd>$#s', $html, $html);
+        $this->assertRegexp('#^<dt[^>]*>&\#160;</dt><dd[^>]*><fieldset.*?</fieldset></dd>$#s', $html, $html);
         $this->assertContains('<input', $html);
         $this->assertContains('"foo"', $html);
         $this->assertContains('"bar"', $html);

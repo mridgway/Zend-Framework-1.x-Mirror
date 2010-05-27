@@ -17,7 +17,7 @@
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Captcha.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Captcha.php 22275 2010-05-24 18:17:35Z alab $
  */
 
 /** @see Zend_Form_Element_Xhtml */
@@ -154,7 +154,6 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
      */
     public function setOptions(array $options)
     {
-        parent::setOptions($options);
         if (array_key_exists('captcha', $options)) {
             if (array_key_exists('captchaOptions', $options)) {
                 $this->setCaptcha($options['captcha'], $options['captchaOptions']);
@@ -164,6 +163,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
             }
             unset($options['captcha']);
         }
+        parent::setOptions($options);
         return $this;
     }
 

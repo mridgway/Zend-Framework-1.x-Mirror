@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AutoCompleteTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AutoCompleteTest.php 22234 2010-05-21 22:18:53Z dragonbe $
  */
 
 // Call Zend_Controller_Action_Helper_AutoCompleteTest::main() if this source file is executed directly.
@@ -185,6 +185,24 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
         $encoded = $dojo->direct($data, false, true);
         $this->assertTrue($this->layout->isEnabled());
         $this->assertFalse($this->viewRenderer->getNoRender());
+    }
+    /**
+     * @group   ZF-9126
+     */
+    public function testDojoHelperEncodesUnicodeChars()
+    {
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $dojo->suppressExit = true;
+        $data = array ('garçon', 'schließen', 'Helgi Þormar Þorbjörnsson');
+        $encoded = $dojo->direct($data);
+        $body = $this->response->getBody();
+        $decoded = Zend_Json::decode($encoded);
+        $test = array ();
+        foreach ($decoded['items'] as $item) {
+            $test[] = $item['name'];
+        }
+        $this->assertSame($data, $test);
+        $this->assertSame($encoded, $body);
     }
 
     public function testScriptaculousHelperThrowsExceptionOnInvalidDataFormat()

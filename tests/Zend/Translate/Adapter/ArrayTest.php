@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ArrayTest.php 21662 2010-03-27 20:23:42Z thomas $
+ * @version    $Id: ArrayTest.php 22282 2010-05-25 14:21:53Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -152,20 +152,27 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/translation_en.php', 'en');
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals(
-            array(
-                'testoption'      => 'testkey',
-                'clear'           => false,
-                'content'         => dirname(__FILE__) . '/_files/translation_en.php',
-                'scan'            => null,
-                'locale'          => 'en',
-                'ignore'          => '.',
-                'disableNotices'  => false,
-                'log'             => false,
-                'logMessage'      => 'Untranslated message within \'%locale%\': %message%',
-                'logUntranslated' => false,
-                'reload'          => false),
-            $adapter->getOptions());
+        $expected = array(
+            'testoption'      => 'testkey',
+            'clear'           => false,
+            'content'         => dirname(__FILE__) . '/_files/translation_en.php',
+            'scan'            => null,
+            'locale'          => 'en',
+            'ignore'          => '.',
+            'disableNotices'  => false,
+            'log'             => false,
+            'logMessage'      => 'Untranslated message within \'%locale%\': %message%',
+            'logUntranslated' => false,
+            'reload'          => false,
+        );
+
+        $options = $adapter->getOptions();
+
+        foreach ($expected as $key => $value) {
+            $this->assertArrayHasKey($key, $options);
+            $this->assertEquals($value, $options[$key]);
+        }
+
         $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }

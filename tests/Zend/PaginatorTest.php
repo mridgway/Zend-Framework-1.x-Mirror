@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PaginatorTest.php 20444 2010-01-20 16:04:13Z ralph $
+ * @version    $Id: PaginatorTest.php 22262 2010-05-23 09:17:47Z wilmoore $
  */
 
 // Call Zend_PaginatorTest::main() if this source file is executed directly.
@@ -630,6 +630,34 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(9, $this->_paginator->normalizeItemNumber(9));
         $this->assertEquals(10, $this->_paginator->normalizeItemNumber(10));
         $this->assertEquals(10, $this->_paginator->normalizeItemNumber(11));
+    }
+
+    /**
+     * @group ZF-8656
+     */
+    public function testNormalizesPageNumberWhenGivenAFloat()
+    {
+        $this->assertEquals(1, $this->_paginator->normalizePageNumber(0.5));
+        $this->assertEquals(1, $this->_paginator->normalizePageNumber(1.99));
+        $this->assertEquals(2, $this->_paginator->normalizePageNumber(2.3));
+        $this->assertEquals(5, $this->_paginator->normalizePageNumber(5.1));
+        $this->assertEquals(10, $this->_paginator->normalizePageNumber(10.06));
+        $this->assertEquals(11, $this->_paginator->normalizePageNumber(11.5));
+        $this->assertEquals(11, $this->_paginator->normalizePageNumber(12.7889));
+    }
+
+    /**
+     * @group ZF-8656
+     */
+    public function testNormalizesItemNumberWhenGivenAFloat()
+    {
+        $this->assertEquals(1, $this->_paginator->normalizeItemNumber(0.5));
+        $this->assertEquals(1, $this->_paginator->normalizeItemNumber(1.99));
+        $this->assertEquals(2, $this->_paginator->normalizeItemNumber(2.3));
+        $this->assertEquals(5, $this->_paginator->normalizeItemNumber(5.1));
+        $this->assertEquals(9, $this->_paginator->normalizeItemNumber(9.06));
+        $this->assertEquals(10, $this->_paginator->normalizeItemNumber(10.5));
+        $this->assertEquals(10, $this->_paginator->normalizeItemNumber(11.7889));
     }
 
     public function testGetsPagesInSubsetRange()

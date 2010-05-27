@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RssTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: RssTest.php 22298 2010-05-25 21:41:56Z padraic $
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -1867,6 +1867,15 @@ class Zend_Feed_Reader_Feed_RssTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('http://www.example.com/feed/rss', $feed->getFeedLink());
     }
 
+    public function testGetsOriginalSourceUriIfFeedLinkNotAvailableFromFeed()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/feedlink/plain/rss20_NoFeedLink.xml')
+        );
+        $feed->setOriginalSourceUri('http://www.example.com/feed/rss');
+        $this->assertEquals('http://www.example.com/feed/rss', $feed->getFeedLink());
+    }
+
     public function testGetsFeedLinkFromRss094()
     {
         $feed = Zend_Feed_Reader::importString(
@@ -2091,6 +2100,27 @@ class Zend_Feed_Reader_Feed_RssTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Get Last Build Date (Unencoded Text)
+     */
+    public function testGetsLastBuildDateFromRss20()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/lastbuilddate/plain/rss20.xml')
+        );
+        $edate = new Zend_Date;
+        $edate->set('2009-03-07T08:03:50Z', Zend_Date::ISO_8601);
+        $this->assertTrue($edate->equals($feed->getLastBuildDate()));
+    }
+
+    public function testGetsLastBuildDateFromRss20_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/lastbuilddate/plain/none/rss20.xml')
+        );
+        $this->assertEquals(null, $feed->getLastBuildDate());
+    }
+
+    /**
      * Get Date Modified (Unencoded Text)
      */
     public function testGetsDateModifiedFromRss20()
@@ -2101,6 +2131,23 @@ class Zend_Feed_Reader_Feed_RssTest extends PHPUnit_Framework_TestCase
         $edate = new Zend_Date;
         $edate->set('2009-03-07T08:03:50Z', Zend_Date::ISO_8601);
         $this->assertTrue($edate->equals($feed->getDateModified()));
+    }
+
+    /**
+     * @group ZF-8702
+     */
+    public function testParsesCorrectDateIfMissingOffsetWhenSystemUsesUSLocale()
+    {
+        $locale = new Zend_Locale('en_US');
+        Zend_Registry::set('Zend_Locale', $locale);
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/datemodified/plain/rss20_en_US.xml')
+        );
+        $fdate = $feed->getDateModified();
+        $edate = new Zend_Date;
+        $edate->set('2010-01-04T08:14:00-0600', Zend_Date::ISO_8601);
+        Zend_Registry::getInstance()->offsetUnset('Zend_Locale');
+        $this->assertTrue($edate->equals($fdate));
     }
 
     // DC 1.0
@@ -2761,6 +2808,173 @@ class Zend_Feed_Reader_Feed_RssTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEquals(array(), (array) $feed->getCategories());
         $this->assertEquals(array(), array_values($feed->getCategories()->getValues()));
+    }
+
+    /**
+     * Get Image data (Unencoded Text)
+     */
+    public function testGetsImageFromRss20()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/rss20.xml')
+        );
+        $this->assertEquals(array(
+            'uri' => 'http://www.example.com/image.gif',
+            'link' => 'http://www.example.com',
+            'title' => 'Image title',
+            'height' => '55',
+            'width' => '50',
+            'description' => 'Image description'
+        ), $feed->getImage());
+    }
+
+    public function testGetsImageFromRss094()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/rss094.xml')
+        );
+        $this->assertEquals(array(
+            'uri' => 'http://www.example.com/image.gif',
+            'link' => 'http://www.example.com',
+            'title' => 'Image title',
+            'height' => '55',
+            'width' => '50',
+            'description' => 'Image description'
+        ), $feed->getImage());
+    }
+
+    public function testGetsImageFromRss093()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/rss093.xml')
+        );
+        $this->assertEquals(array(
+            'uri' => 'http://www.example.com/image.gif',
+            'link' => 'http://www.example.com',
+            'title' => 'Image title',
+            'height' => '55',
+            'width' => '50',
+            'description' => 'Image description'
+        ), $feed->getImage());
+    }
+
+    public function testGetsImageFromRss092()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/rss092.xml')
+        );
+        $this->assertEquals(array(
+            'uri' => 'http://www.example.com/image.gif',
+            'link' => 'http://www.example.com',
+            'title' => 'Image title',
+            'height' => '55',
+            'width' => '50',
+            'description' => 'Image description'
+        ), $feed->getImage());
+    }
+
+    public function testGetsImageFromRss091()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/rss091.xml')
+        );
+        $this->assertEquals(array(
+            'uri' => 'http://www.example.com/image.gif',
+            'link' => 'http://www.example.com',
+            'title' => 'Image title',
+            'height' => '55',
+            'width' => '50',
+            'description' => 'Image description'
+        ), $feed->getImage());
+    }
+
+    /*public function testGetsImageFromRss10()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/rss10.xml')
+        );
+        $this->assertEquals(array(
+            'uri' => 'http://www.example.com/image.gif',
+            'link' => 'http://www.example.com',
+            'title' => 'Image title',
+            'height' => '55',
+            'width' => '50',
+            'description' => 'Image description'
+        ), $feed->getImage());
+    }
+
+    public function testGetsImageFromRss090()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/rss090.xml')
+        );
+        $this->assertEquals(array(
+            'uri' => 'http://www.example.com/image.gif',
+            'link' => 'http://www.example.com',
+            'title' => 'Image title',
+            'height' => '55',
+            'width' => '50',
+            'description' => 'Image description'
+        ), $feed->getImage());
+    }*/
+
+    /**
+     * Get Image data (Unencoded Text) Missing
+     */
+    public function testGetsImageFromRss20_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/none/rss20.xml')
+        );
+        $this->assertEquals(null, $feed->getImage());
+    }
+
+    public function testGetsImageFromRss094_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/none/rss094.xml')
+        );
+        $this->assertEquals(null, $feed->getImage());
+    }
+
+    public function testGetsImageFromRss093_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/none/rss093.xml')
+        );
+        $this->assertEquals(null, $feed->getImage());
+    }
+
+    public function testGetsImageFromRss092_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/none/rss092.xml')
+        );
+        $this->assertEquals(null, $feed->getImage());
+    }
+
+    public function testGetsImageFromRss091_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/none/rss091.xml')
+        );
+        $this->assertEquals(null, $feed->getImage());
+    }
+
+    public function testGetsImageFromRss10_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/none/rss10.xml')
+        );
+        $this->assertEquals(null, $feed->getImage());
+    }
+
+    public function testGetsImageFromRss090_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/image/plain/none/rss090.xml')
+        );
+        $this->assertEquals(null, $feed->getImage());
     }
 
 }

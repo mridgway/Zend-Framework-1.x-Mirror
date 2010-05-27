@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AttributeTest.php 21941 2010-04-18 19:12:08Z sgehrig $
+ * @version    $Id: AttributeTest.php 22162 2010-05-14 10:15:55Z sgehrig $
  */
 
 /**
@@ -307,7 +307,7 @@ class Zend_Ldap_AttributeTest extends PHPUnit_Framework_TestCase
     {
         $data=array('ts' => array('dummy'));
         $retTs=Zend_Ldap_Attribute::getDateTimeAttribute($data, 'ts', 0);
-        $this->assertNull($retTs);
+        $this->assertEquals('dummy', $retTs);
     }
 
     public function testGetDateTimeValueNegativeOffet()

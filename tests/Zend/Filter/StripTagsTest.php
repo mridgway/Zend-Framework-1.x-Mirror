@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StripTagsTest.php 21553 2010-03-18 18:49:26Z thomas $
+ * @version    $Id: StripTagsTest.php 22174 2010-05-14 22:12:50Z thomas $
  */
 
 // Call Zend_Filter_StripTagsTest::main() if this source file is executed directly.
@@ -574,6 +574,34 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 
+    /**
+     * @group ZF-9833
+     */
+    public function testMultiParamArray()
+    {
+        $filter = new Zend_Filter_StripTags(array("a","b","hr"),array(),true);
+
+        $input    = 'test <a /> test <div>div-content</div>';
+        $expected = 'test <a /> test div-content';
+        $this->assertEquals($expected, $filter->filter($input));
+    }
+
+    /**
+     * @group ZF-9828
+     */
+    public function testMultiQuoteInput()
+    {
+        $filter = new Zend_Filter_StripTags(
+            array(
+                'allowTags' => 'img',
+                'allowAttribs' => array('width', 'height', 'src')
+            )
+        );
+
+        $input    = '<img width="10" height="10" src=\'wont_be_matched.jpg\'>';
+        $expected = '<img width="10" height="10" src=\'wont_be_matched.jpg\'>';
+        $this->assertEquals($expected, $filter->filter($input));
+    }
 }
 
 // Call Zend_Filter_StripTagsTest::main() if this source file is executed directly.

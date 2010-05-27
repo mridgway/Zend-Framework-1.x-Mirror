@@ -17,7 +17,7 @@
  * @subpackage Zend_Translate_Adapter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Adapter.php 21770 2010-04-05 20:16:08Z thomas $
+ * @version    $Id: Adapter.php 22294 2010-05-25 19:53:10Z thomas $
  */
 
 /**
@@ -45,6 +45,12 @@ abstract class Zend_Translate_Adapter {
      * @var boolean
      */
     private $_automatic = true;
+
+    /**
+     * Internal value to see already routed languages
+     * @var array()
+     */
+    private $_routed = array();
 
     /**
      * Internal cache for all adapters
@@ -89,6 +95,7 @@ abstract class Zend_Translate_Adapter {
         'logMessage'      => "Untranslated message within '%locale%': %message%",
         'logUntranslated' => false,
         'reload'          => false,
+        'route'           => null,
         'scan'            => null
     );
 
@@ -330,7 +337,7 @@ abstract class Zend_Translate_Adapter {
 
         if (isset(self::$_cache) and ($change == true)) {
             $id = 'Zend_Translate_' . $this->toString() . '_Options';
-            self::$_cache->save($this->_options, $id, array('Zend_Translate'));
+            self::$_cache->save($this->_options, $id);
         }
 
         return $this;
@@ -418,7 +425,7 @@ abstract class Zend_Translate_Adapter {
 
             if (isset(self::$_cache)) {
                 $id = 'Zend_Translate_' . $this->toString() . '_Options';
-                self::$_cache->save($this->_options, $id, array('Zend_Translate'));
+                self::$_cache->save($this->_options, $id);
             }
         }
 
@@ -440,6 +447,23 @@ abstract class Zend_Translate_Adapter {
             }
         }
         return $result;
+    }
+
+    /**
+     * Returns the message id for a given translation
+     * If no locale is given, the actual language will be used
+     *
+     * @param  string             $message Message to get the key for
+     * @param  string|Zend_Locale $locale (optional) Language to return the message ids from
+     * @return string|array|false
+     */
+    public function getMessageId($message, $locale = null)
+    {
+        if (empty($locale) or !$this->isAvailable($locale)) {
+            $locale = $this->_options['locale'];
+        }
+
+        return array_search($message, $this->_translate[(string) $locale]);
     }
 
     /**
@@ -534,13 +558,14 @@ abstract class Zend_Translate_Adapter {
 
         if (($options['content'] instanceof Zend_Translate) || ($options['content'] instanceof Zend_Translate_Adapter)) {
             $options['usetranslateadapter'] = true;
-            if (!empty($options['locale'])) {
+            if (!empty($options['locale']) && ($options['locale'] !== 'auto')) {
                 $options['content'] = $options['content']->getMessages($options['locale']);
             } else {
-                $locales = $options['content']->getList();
+                $content = $options['content'];
+                $locales = $content->getList();
                 foreach ($locales as $locale) {
                     $options['locale']  = $locale;
-                    $options['content'] = $options['content']->getMessages($locale);
+                    $options['content'] = $content->getMessages($locale);
                     $this->_addTranslationData($options);
                 }
 
@@ -609,7 +634,7 @@ abstract class Zend_Translate_Adapter {
 
         if (($read) and (isset(self::$_cache))) {
             $id = 'Zend_Translate_' . md5(serialize($options['content'])) . '_' . $this->toString();
-            self::$_cache->save($temp, $id, array('Zend_Translate'));
+            self::$_cache->save($temp, $id);
         }
 
         return $this;
@@ -653,6 +678,17 @@ abstract class Zend_Translate_Adapter {
             if (!Zend_Locale::isLocale($locale, false, false)) {
                 // language does not exist, return original string
                 $this->_log($messageId, $locale);
+                // use rerouting when enabled
+                if (!empty($this->_options['route'])) {
+                    if (array_key_exists($locale, $this->_options['route']) &&
+                        !array_key_exists($locale, $this->_routed)) {
+                        $this->_routed[$locale] = true;
+                        return $this->translate($messageId, $this->_options['route'][$locale]);
+                    }
+
+                    $this->_routed = array();
+                }
+
                 if ($plural === null) {
                     return $messageId;
                 }
@@ -697,6 +733,17 @@ abstract class Zend_Translate_Adapter {
         }
 
         $this->_log($messageId, $locale);
+        // use rerouting when enabled
+        if (!empty($this->_options['route'])) {
+            if (array_key_exists($locale, $this->_options['route']) &&
+                !array_key_exists($locale, $this->_routed)) {
+                $this->_routed[$locale] = true;
+                return $this->translate($messageId, $this->_options['route'][$locale]);
+            }
+
+            $this->_routed = array();
+        }
+
         if ($plural === null) {
             return $messageId;
         }
@@ -860,7 +907,7 @@ abstract class Zend_Translate_Adapter {
     public static function clearCache()
     {
         require_once 'Zend/Cache.php';
-        self::$_cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('Zend_Translate'));
+        self::$_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
     }
 
     /**

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IdenticalTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: IdenticalTest.php 22284 2010-05-25 14:22:05Z matthew $
  */
 
 // Call Zend_Validate_IdenticalTest::main() if this source file is executed directly.
@@ -105,18 +105,6 @@ class Zend_Validate_IdenticalTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-6511
-     */
-    public function testNotSameMessageContainsTokenAndValue()
-    {
-        $this->testValidatingAgainstTokenWithNonMatchingValueReturnsFalse();
-        $messages = $this->validator->getMessages();
-        $this->assertContains("The token 'foo'", $messages['notSame']);
-        $this->assertContains('bar', $messages['notSame']);
-        $this->assertContains('does not match', $messages['notSame']);
-    }
-
-    /**
      * @see ZF-6953
      */
     public function testValidatingAgainstEmptyToken()
@@ -144,6 +132,15 @@ class Zend_Validate_IdenticalTest extends PHPUnit_Framework_TestCase
         $validator = new Zend_Validate_Identical(array('token' => 123));
         $this->assertTrue($validator->isValid(123));
         $this->assertFalse($validator->isValid(array('token' => 123)));
+    }
+
+    public function testValidatingNonStrictToken()
+    {
+        $validator = new Zend_Validate_Identical(array('token' => 123, 'strict' => false));
+        $this->assertTrue($validator->isValid('123'));
+
+        $validator->setStrict(true);
+        $this->assertFalse($validator->isValid(array('token' => '123')));
     }
 }
 

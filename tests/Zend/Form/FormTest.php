@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormTest.php 21924 2010-04-17 11:55:50Z alab $
+ * @version    $Id: FormTest.php 22219 2010-05-20 22:29:40Z alab $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -1203,6 +1203,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('page1', $subForm->getName());
     }
 
+    public function testAddingSubFormResetsBelongsToWithDifferentSubFormName()
+    {
+        $subForm = new Zend_Form_SubForm;
+        $subForm->setName('quo')
+                ->addElement('text', 'foo');
+        $this->form->addSubForm($subForm, 'bar');
+        $this->assertEquals('bar', $subForm->foo->getBelongsTo());
+    }
+
+
     public function testGetSubFormReturnsNullForUnregisteredSubForm()
     {
         $this->assertNull($this->form->getSubForm('foo'));
@@ -1768,6 +1778,38 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     {
         $data = $this->_setup9607();
         $this->assertSame($data['partial'], $this->form->getValidValues($data['invalid']));
+    }
+
+    public function testZF9788_NumericArrayIndex()
+    {
+        $s = 2;
+        $e = 4;
+        $this->form->setName('f')
+                   ->setIsArray(true)
+                   ->addElement('text', (string)$e)
+                   ->$e->setRequired(true);
+        $this->form->addSubForm(new Zend_Form_SubForm(), $s)
+                   ->$s->addElement('text', (string)$e)
+                   ->$e->setRequired(true);
+
+        $valid = array('f' => array($e => 1,
+                                    $s => array($e => 1)));
+
+        $this->form->populate($valid);
+
+        $this->assertEquals($valid, $this->form->getValues());
+
+        $vv = $this->form->getValidValues(array('f' => array($e => 1,
+                                                             $s => array($e => 1))));
+        $this->assertEquals($valid, $vv);
+
+        $this->form->isValid(array());
+
+        $err = $this->form->getErrors();
+        $msg = $this->form->getMessages(); 
+        
+        $this->assertTrue(is_array($err['f'][$e]) && is_array($err['f'][$s][$e]));
+        $this->assertTrue(is_array($msg['f'][$e]) && is_array($msg['f'][$s][$e]));
     }
 
     // Display groups
@@ -3987,7 +4029,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         $html = $form->render();
 
-        $this->assertContains('<dt id="foo-label">&nbsp;</dt>', $html);
+        $this->assertContains('<dt id="foo-label">&#160;</dt>', $html);
         $this->assertContains('<dd id="foo-element">', $html);
     }
 
@@ -4003,7 +4045,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         $html = $form->render();
 
-        $this->assertContains('<dt id="testform-label">&nbsp;</dt>', $html);
+        $this->assertContains('<dt id="testform-label">&#160;</dt>', $html);
         $this->assertContains('<dd id="testform-element">', $html);
     }
 

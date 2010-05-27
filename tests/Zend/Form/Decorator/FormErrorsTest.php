@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormErrorsTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FormErrorsTest.php 22232 2010-05-21 22:04:05Z alab $
  */
 
 // Call Zend_Form_Decorator_FormErrorsTest::main() if this source file is executed directly.
@@ -250,6 +250,26 @@ class Zend_Form_Decorator_FormErrorsTest extends PHPUnit_Framework_TestCase
                 $this->assertNotContains('Sub ', $markup);
             } else {
                 $this->assertContains($value, $markup);
+            }
+        }
+    }
+
+    public function testRenderIsArrayForm()
+    {
+        $this->setupForm();
+        $this->form->setName('foo')
+                   ->setIsArray(true);
+        $content = 'test content';
+        $test = $this->decorator->render($content);
+        $this->assertContains($content, $test);
+        foreach ($this->form->getMessages() as $name => $messages) {
+            while (($message = current($messages))) {
+                if (is_string($message)) {
+                    $this->assertContains($message, $test, var_export($messages, 1));
+                }
+                if (false === next($messages) && is_array(prev($messages))) {
+                    $messages = current($messages);
+                }
             }
         }
     }

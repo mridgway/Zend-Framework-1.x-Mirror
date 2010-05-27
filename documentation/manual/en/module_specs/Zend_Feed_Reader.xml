@@ -655,6 +655,16 @@ $labels = $categories->getValues();
                     </row>
 
                     <row>
+                        <entry><methodname>getLastBuildDate()</methodname></entry>
+
+                        <entry>
+                            Returns the date on which this feed was last built. The returned date
+                            will be a <classname>Zend_Date</classname> object. This is only
+                            supported by RSS - Atom feeds will always return NULL.
+                        </entry>
+                    </row>
+
+                    <row>
                         <entry><methodname>getLanguage()</methodname></entry>
 
                         <entry>
@@ -700,6 +710,17 @@ $labels = $categories->getValues();
                             category name). Where any of the three fields are absent from the field,
                             they are either set to the closest available alternative or, in the case
                             of "scheme", set to <constant>NULL</constant>.
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry><methodname>getImage()</methodname></entry>
+
+                        <entry>
+                            Returns an array containing data relating to any feed image or logo,
+                            or NULL if no image found. The resulting array may contain the following
+                            keys: uri, link, title, description, height, and width. Atom logos only
+                            contain a URI so the remaining metadata is drawn from RSS feeds only.
                         </entry>
                     </row>
                 </tbody>

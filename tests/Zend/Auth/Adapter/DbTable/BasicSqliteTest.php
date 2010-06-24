@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BasicSqliteTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: BasicSqliteTest.php 22349 2010-06-02 04:48:44Z torio $
  */
 
 require_once dirname(__FILE__) . '/../../../../TestHelper.php';
@@ -341,6 +341,63 @@ class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCa
         $this->_db->foldCase(Zend_Db::CASE_UPPER);
         $this->_adapter->authenticate();
     }
+
+
+    /**
+     * Test fallback to default database adapter, when no such adapter set
+     *
+     * @expectedException Zend_Auth_Adapter_Exception
+     * @group ZF-7510
+     */
+    public function testAuthenticateWithDefaultDbAdapterNoAdapterException()
+    {
+        require_once('Zend/Db/Table/Abstract.php');
+        // preserve default db adapter between cases
+        $tmp = Zend_Db_Table_Abstract::getDefaultAdapter();
+
+        // make sure that no default adapter exists
+        Zend_Db_Table_Abstract::setDefaultAdapter(null);
+        try {
+            $this->_adapter = new Zend_Auth_Adapter_DbTable();
+        } catch (Exception $e) {
+            $this->assertContains('No database adapter present', $e->getMessage());
+            throw $e;
+        }
+
+        // restore adapter
+        Zend_Db_Table_Abstract::setDefaultAdapter($tmp);
+    }
+
+    /**
+     * Test fallback to default database adapter
+     *
+     * @group ZF-7510
+     */
+    public function testAuthenticateWithDefaultDbAdapter()
+    {
+        require_once('Zend/Db/Table/Abstract.php');
+        // preserve default adapter between cases
+        $tmp = Zend_Db_Table_Abstract::getDefaultAdapter();
+
+        // make sure that default db adapter exists
+        Zend_Db_Table_Abstract::setDefaultAdapter($this->_db);
+
+        // check w/o passing adapter
+        $this->_adapter = new Zend_Auth_Adapter_DbTable();
+        $this->_adapter
+            ->setTableName('users')
+            ->setIdentityColumn('username')
+            ->setCredentialColumn('password')
+            ->setTableName('users')
+            ->setIdentity('my_username')
+            ->setCredential('my_password');
+        $result = $this->_adapter->authenticate();
+        $this->assertTrue($result->isValid());
+
+        // restore adapter
+        Zend_Db_Table_Abstract::setDefaultAdapter($tmp);
+    }
+
 
     protected function _setupDbAdapter($optionalParams = array())
     {

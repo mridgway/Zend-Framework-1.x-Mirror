@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DisplayGroupTest.php 22129 2010-05-06 11:20:39Z alab $
+ * @version    $Id: DisplayGroupTest.php 22465 2010-06-19 17:41:03Z alab $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -777,6 +777,33 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         if (strtolower(substr(PHP_OS, 0, 3)) == 'win' && version_compare(PHP_VERSION, '5.1.4', '=')) {
             $this->markTestIncomplete('Error occurs for PHP 5.1.4 on Windows');
         }
+    }
+
+    /**
+     * Prove the fluent interface on Zend_Form::loadDefaultDecorators
+     *
+     * @link http://framework.zend.com/issues/browse/ZF-9913
+     * @return void
+     */
+    public function testFluentInterfaceOnLoadDefaultDecorators()
+    {
+        $this->assertSame($this->group, $this->group->loadDefaultDecorators());
+    }
+
+    /**
+     * @group ZF-7552
+     */
+    public function testAddDecoratorsKeepsNonNumericKeyNames()
+    {
+        $this->group->addDecorators(array(array(array('td'  => 'HtmlTag'),
+                                               array('tag' => 'td')),
+                                         array(array('tr'  => 'HtmlTag'),
+                                               array('tag' => 'tr')),
+                                         array('HtmlTag', array('tag' => 'baz'))));
+        $t1 = $this->group->getDecorators();
+        $this->group->setDecorators($t1);
+        $t2 = $this->group->getDecorators();
+        $this->assertEquals($t1, $t2);
     }
 }
 

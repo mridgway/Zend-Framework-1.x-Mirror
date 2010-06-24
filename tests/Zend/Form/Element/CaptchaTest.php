@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CaptchaTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: CaptchaTest.php 22329 2010-05-30 15:12:58Z bittarman $
  */
 
 // Call Zend_Form_Element_CaptchaTest::main() if this source file is executed directly.
@@ -162,6 +162,17 @@ class Zend_Form_Element_CaptchaTest extends PHPUnit_Framework_TestCase
     {
         require_once 'Zend/View.php';
         $this->assertFalse(array_key_exists('helper', $this->element->getAttribs()));
+    }
+
+    /**
+     * Prove the fluent interface on Zend_Form_Element_Captcha::loadDefaultDecorators
+     *
+     * @link http://framework.zend.com/issues/browse/ZF-9913
+     * @return void
+     */
+    public function testFluentInterfaceOnLoadDefaultDecorators()
+    {
+        $this->assertSame($this->element, $this->element->loadDefaultDecorators());
     }
 }
 

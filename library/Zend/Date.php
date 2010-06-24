@@ -16,7 +16,7 @@
  * @package   Zend_Date
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Date.php 22071 2010-05-01 17:25:23Z thomas $
+ * @version   $Id: Date.php 22321 2010-05-30 09:35:10Z thomas $
  */
 
 /**
@@ -1136,7 +1136,7 @@ class Zend_Date extends Zend_Date_DateObject
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compare($date, $part = null, $locale = null)
+    public function compare($date, $part = self::TIMESTAMP, $locale = null)
     {
         if (self::$_options['format_type'] == 'php') {
             $part = Zend_Locale_Format::convertPhpToIsoFormat($part);
@@ -2679,7 +2679,7 @@ class Zend_Date extends Zend_Date_DateObject
      * @return boolean
      * @throws Zend_Date_Exception
      */
-    public function equals($date, $part = null, $locale = null)
+    public function equals($date, $part = self::TIMESTAMP, $locale = null)
     {
         $result = $this->compare($date, $part, $locale);
 

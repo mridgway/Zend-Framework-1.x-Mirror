@@ -17,7 +17,7 @@
  * @subpackage Zend_Translate_Adapter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Adapter.php 22294 2010-05-25 19:53:10Z thomas $
+ * @version    $Id: Adapter.php 22425 2010-06-12 20:40:46Z thomas $
  */
 
 /**
@@ -131,6 +131,11 @@ abstract class Zend_Translate_Adapter {
             }
         } else if (!is_array($options)) {
             $options = array('content' => $options);
+        }
+
+        if (array_key_exists('cache', $options)) {
+            self::setCache($options['cache']);
+            unset($options['cache']);
         }
 
         if (isset(self::$_cache)) {
@@ -324,6 +329,11 @@ abstract class Zend_Translate_Adapter {
                 if (($key == 'log') && !($option instanceof Zend_Log)) {
                     require_once 'Zend/Translate/Exception.php';
                     throw new Zend_Translate_Exception('Instance of Zend_Log expected for option log');
+                }
+
+                if ($key == 'cache') {
+                    self::setCache($options);
+                    continue;
                 }
 
                 $this->_options[$key] = $option;
@@ -685,10 +695,9 @@ abstract class Zend_Translate_Adapter {
                         $this->_routed[$locale] = true;
                         return $this->translate($messageId, $this->_options['route'][$locale]);
                     }
-
-                    $this->_routed = array();
                 }
 
+                $this->_routed = array();
                 if ($plural === null) {
                     return $messageId;
                 }
@@ -708,11 +717,13 @@ abstract class Zend_Translate_Adapter {
         if ((is_string($messageId) || is_int($messageId)) && isset($this->_translate[$locale][$messageId])) {
             // return original translation
             if ($plural === null) {
+                $this->_routed = array();
                 return $this->_translate[$locale][$messageId];
             }
 
             $rule = Zend_Translate_Plural::getPlural($number, $locale);
             if (isset($this->_translate[$locale][$plural[0]][$rule])) {
+                $this->_routed = array();
                 return $this->_translate[$locale][$plural[0]][$rule];
             }
         } else if (strlen($locale) != 2) {
@@ -722,11 +733,13 @@ abstract class Zend_Translate_Adapter {
             if ((is_string($messageId) || is_int($messageId)) && isset($this->_translate[$locale][$messageId])) {
                 // return regionless translation (en_US -> en)
                 if ($plural === null) {
+                    $this->_routed = array();
                     return $this->_translate[$locale][$messageId];
                 }
 
                 $rule = Zend_Translate_Plural::getPlural($number, $locale);
                 if (isset($this->_translate[$locale][$plural[0]][$rule])) {
+                    $this->_routed = array();
                     return $this->_translate[$locale][$plural[0]][$rule];
                 }
             }
@@ -740,10 +753,9 @@ abstract class Zend_Translate_Adapter {
                 $this->_routed[$locale] = true;
                 return $this->translate($messageId, $this->_options['route'][$locale]);
             }
-
-            $this->_routed = array();
         }
 
+        $this->_routed = array();
         if ($plural === null) {
             return $messageId;
         }

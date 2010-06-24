@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BootstrapAbstractTest.php 22125 2010-05-05 22:23:05Z hobodave $
+ * @version    $Id: BootstrapAbstractTest.php 22479 2010-06-21 16:44:02Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -735,6 +735,7 @@ class Zend_Application_Bootstrap_BootstrapAbstractTest extends PHPUnit_Framework
      */
     public function testUsingFallbackAutoloaderWithModulesShouldNotResultInFrontcontrollerNotFoundWarning()
     {
+        require_once dirname(__FILE__) . '/../_files/Zf7696Bootstrap.php';
         $this->autoloader->setFallbackAutoloader(true);
         $options = array(
             'Resources' => array(

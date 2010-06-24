@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormErrorsTest.php 22232 2010-05-21 22:04:05Z alab $
+ * @version    $Id: FormErrorsTest.php 22317 2010-05-29 10:13:31Z alab $
  */
 
 // Call Zend_Form_Decorator_FormErrorsTest::main() if this source file is executed directly.
@@ -272,6 +272,23 @@ class Zend_Form_Decorator_FormErrorsTest extends PHPUnit_Framework_TestCase
                 }
             }
         }
+    }
+
+    public function testCustomFormErrors()
+    {
+        $this->setupForm();
+        $this->form->addDecorator($this->decorator)
+                   ->addError('form-badness');
+        $html = $this->form->render();
+        $this->assertContains('form-badness', $html);
+
+        $this->decorator->setOnlyCustomFormErrors(true);
+        $html = $this->form->render();
+        $this->assertNotRegexp('/form-errors.*?Master Foo/', $html);
+
+        $this->decorator->setShowCustomFormErrors(false);
+        $html = $this->form->render();
+        $this->assertNotContains('form-badness', $html);
     }
 
     /**

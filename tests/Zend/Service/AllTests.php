@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20221 2010-01-12 17:00:54Z matthew $
+ * @version    $Id: AllTests.php 22319 2010-05-29 18:26:18Z padraic $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -39,8 +39,7 @@ require_once 'Zend/Service/Simpy/AllTests.php';
 require_once 'Zend/Service/SlideShareTest.php';
 require_once 'Zend/Service/StrikeIron/AllTests.php';
 require_once 'Zend/Service/Technorati/AllTests.php';
-require_once 'Zend/Service/TwitterTest.php';
-require_once 'Zend/Service/TwitterSearchTest.php';
+require_once 'Zend/Service/Twitter/AllTests.php';
 require_once 'Zend/Service/WindowsAzure/AllTests.php';
 require_once 'Zend/Service/Yahoo/AllTests.php';
 
@@ -86,8 +85,7 @@ class Zend_Service_AllTests
         $suite->addTestSuite('Zend_Service_SlideShareTest');
         $suite->addTest(Zend_Service_StrikeIron_AllTests::suite());
         $suite->addTest(Zend_Service_Technorati_AllTests::suite());
-        $suite->addTestSuite('Zend_Service_TwitterTest');
-        $suite->addTestSuite('Zend_Service_TwitterSearchTest');
+        $suite->addTest(Zend_Service_Twitter_AllTests::suite());
         $suite->addTest(Zend_Service_WindowsAzure_AllTests::suite());
         $suite->addTest(Zend_Service_Yahoo_AllTests::suite());
 

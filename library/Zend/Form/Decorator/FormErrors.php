@@ -34,7 +34,7 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormErrors.php 22273 2010-05-24 15:55:55Z alab $
+ * @version    $Id: FormErrors.php 22317 2010-05-29 10:13:31Z alab $
  */
 class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
 {
@@ -122,6 +122,8 @@ class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
         $this->getPlacement();
         $this->getSeparator();
         $this->ignoreSubForms();
+        $this->getShowCustomFormErrors();
+        $this->getOnlyCustomFormErrors();
     }
 
     /**
@@ -356,6 +358,7 @@ class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
                 $this->removeOption('showCustomFormErrors');
             }
         }
+        return $this->_showCustomFormErrors;
     }
 
     /**
@@ -378,13 +381,14 @@ class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
     public function getOnlyCustomFormErrors()
     {
         if (null === $this->_onlyCustomFormErrors) {
-            if (null === ($how =  $this->getOption('onlyCustomFormErrors'))) {
+            if (null === ($show =  $this->getOption('onlyCustomFormErrors'))) {
                 $this->setOnlyCustomFormErrors($this->_defaults['onlyCustomFormErrors']);
             } else {
                 $this->setOnlyCustomFormErrors($show);
                 $this->removeOption('onlyCustomFormErrors');
             }
         }
+        return $this->_onlyCustomFormErrors;
     }
 
     /**
@@ -446,7 +450,7 @@ class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
                              .  $view->formErrors($messages, $this->getOptions())
                              .  $this->getMarkupListItemEnd();
                 }
-            } else if (!$this->ignoreSubForms()) {
+            } else if ($subitem instanceof Zend_Form && !$this->ignoreSubForms()) {
                 $content .= $this->getMarkupListStart()
                           . $this->_recurseForm($subitem, $view)
                           . $this->getMarkupListEnd();

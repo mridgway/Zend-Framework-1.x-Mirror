@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CurrencyTest.php 21647 2010-03-25 20:59:40Z thomas $
+ * @version    $Id: CurrencyTest.php 22369 2010-06-04 14:54:43Z thomas $
  */
 
 /**
@@ -815,5 +815,14 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $currency->setValue(100, 'USD');
         $this->assertEquals(50, $currency->getValue());
         $this->assertEquals('RUB', $currency->getShortName());
+    }
+
+    /**
+     * @ZF-9941
+     */
+    public function testSetValueByOutput()
+    {
+        $currency = new Zend_Currency(array('value' => 1000, 'locale' => 'de_AT'));
+        $this->assertEquals('€ 2.000,00', $currency->toCurrency(null, array('value' => 2000)));
     }
 }

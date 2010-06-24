@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ElementTest.php 21783 2010-04-06 19:04:30Z thomas $
+ * @version    $Id: ElementTest.php 22465 2010-06-19 17:41:03Z alab $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -2133,7 +2133,34 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->element->isValid(123));
         $messages = $this->element->getMessages();
         $this->assertEquals('Direct validator message', $messages['alphaInvalid']);
-    }    
+    }
+
+    /**
+     * Prove the fluent interface on Zend_Form::loadDefaultDecorators
+     *
+     * @link http://framework.zend.com/issues/browse/ZF-9913
+     * @return void
+     */
+    public function testFluentInterfaceOnLoadDefaultDecorators()
+    {
+        $this->assertSame($this->element, $this->element->loadDefaultDecorators());
+    }
+
+    /**
+     * @group ZF-7552
+     */
+    public function testAddDecoratorsKeepsNonNumericKeyNames()
+    {
+        $this->element->addDecorators(array(array(array('td'  => 'HtmlTag'),
+                                               array('tag' => 'td')),
+                                         array(array('tr'  => 'HtmlTag'),
+                                               array('tag' => 'tr')),
+                                         array('HtmlTag', array('tag' => 'baz'))));
+        $t1 = $this->element->getDecorators();
+        $this->element->setDecorators($t1);
+        $t2 = $this->element->getDecorators();
+        $this->assertEquals($t1, $t2);
+    }
 }
 
 class Zend_Form_ElementTest_Decorator extends Zend_Form_Decorator_Abstract
@@ -2195,6 +2222,7 @@ class Zend_Form_ElementTest_ArrayFilter implements Zend_Filter_Interface
         $validator = $username->getValidator('regex');
         $this->assertTrue($validator->zfBreakChainOnFailure);
     }
+    
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_ElementTest::main') {

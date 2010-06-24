@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SubFormTest.php 22129 2010-05-06 11:20:39Z alab $
+ * @version    $Id: SubFormTest.php 22367 2010-06-03 20:57:02Z alab $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -32,6 +32,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Form/SubForm.php';
 require_once 'Zend/View.php';
+require_once 'Zend/Version.php';
 
 /**
  * @category   Zend
@@ -130,7 +131,18 @@ class Zend_Form_SubFormTest extends PHPUnit_Framework_TestCase
         $form->addSubForm($subForm, 'foobar')
              ->setView(new Zend_View);
         $html = $form->render();
-        $this->assertContains('<dt>&#160;</dt>', $html);
+        $this->assertContains('>&#160;</dt>', $html  );
+    }
+
+    /**
+     * Prove the fluent interface on Zend_Form_Subform::loadDefaultDecorators
+     *
+     * @link http://framework.zend.com/issues/browse/ZF-9913
+     * @return void
+     */
+    public function testFluentInterfaceOnLoadDefaultDecorators()
+    {
+        $this->assertSame($this->form, $this->form->loadDefaultDecorators());
     }
 }
 

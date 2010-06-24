@@ -16,7 +16,7 @@
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Paginator.php 22303 2010-05-26 12:01:05Z bate $
+ * @version    $Id: Paginator.php 22355 2010-06-03 06:23:46Z bate $
  */
 
 /**
@@ -517,7 +517,6 @@ class Zend_Paginator implements Countable, IteratorAggregate
         }
 
         if (null === $pageNumber) {
-            $cleanTags = self::CACHE_TAG_PREFIX;
             foreach (self::$_cache->getIdsMatchingTags(array($this->_getCacheInternalId())) as $id) {
                 if (preg_match('|'.self::CACHE_TAG_PREFIX."(\d+)_.*|", $id, $page)) {
                     self::$_cache->remove($this->_getCacheId($page[1]));
@@ -1013,7 +1012,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     protected function _getCacheInternalId()
     {
         return md5(serialize(array(
-            get_class($this->getAdapter()),
+            spl_object_hash($this->getAdapter()),
             $this->getItemCountPerPage()
         )));
     }

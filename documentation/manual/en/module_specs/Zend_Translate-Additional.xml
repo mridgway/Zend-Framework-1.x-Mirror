@@ -100,6 +100,20 @@ $translate->addTranslation(
                     </row>
 
                     <row>
+                        <entry>cache</entry>
+                        <entry>all</entry>
+
+                        <entry>
+                            Sets a cache for the translation adapter. This must be a instance of
+                            <classname>Zend_Cache_Core</classname>
+                        </entry>
+
+                        <entry>
+                            <emphasis>Per default no cache is set</emphasis>
+                        </entry>
+                    </row>
+
+                    <row>
                         <entry>content</entry>
                         <entry>all</entry>
 
@@ -201,7 +215,7 @@ $translate->addTranslation(
                             This option allows to use reroute from non existing translations to
                             other languages. See the <link
                                 linkend="zend.translate.additional.rerouting">Rerouting
-                                Section</linkend> for details about this option.
+                                Section</link> for details about this option.
                         </entry>
 
                         <entry><emphasis><constant>NULL</constant></emphasis></entry>

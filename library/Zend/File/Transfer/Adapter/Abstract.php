@@ -16,7 +16,7 @@
  * @package   Zend_File_Transfer
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Abstract.php 21936 2010-04-18 16:23:34Z thomas $
+ * @version   $Id: Abstract.php 22372 2010-06-04 20:17:58Z thomas $
  */
 
 /**
@@ -355,7 +355,14 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $this->_break[$name]      = $breakChainOnFailure;
         $files                    = $this->_getFiles($files, true, true);
         foreach ($files as $file) {
-            $this->_files[$file]['validators'][] = $name;
+            if ($name == 'NotEmpty') {
+                $temp = $this->_files[$file]['validators'];
+                $this->_files[$file]['validators']  = array($name);
+                $this->_files[$file]['validators'] += $temp;
+            } else {
+                $this->_files[$file]['validators'][] = $name;
+            }
+
             $this->_files[$file]['validated']    = false;
         }
 

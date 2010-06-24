@@ -16,7 +16,7 @@
  * @package   Zend_Currency
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Currency.php 21647 2010-03-25 20:59:40Z thomas $
+ * @version   $Id: Currency.php 22369 2010-06-04 14:54:43Z thomas $
  */
 
 /**
@@ -137,7 +137,7 @@ class Zend_Currency
     public function toCurrency($value = null, array $options = array())
     {
         if ($value === null) {
-            if (is_array($value) && isset($options['value'])) {
+            if (is_array($options) && isset($options['value'])) {
                 $value = $options['value'];
             } else {
                 $value = $this->_options['value'];

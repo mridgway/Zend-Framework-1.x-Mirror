@@ -810,6 +810,62 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group ZF-2736
+     */
+    public function testDoubleReroutingForTranslations()
+    {
+        $translate = new Zend_Translate(
+            array(
+                'adapter' => Zend_Translate::AN_ARRAY,
+                'content' => dirname(__FILE__) . '/Translate/Adapter/_files/testarray/',
+                'locale'  => 'auto',
+                'scan'    => Zend_Translate::LOCALE_FILENAME,
+                'ignore'  => array('.', 'ignoreme', 'LC_TEST'),
+                'route'   => array('ja' => 'en_US', 'en_US' => 'ja'),
+            )
+        );
+
+        $translate2 = new Zend_Translate(
+            array(
+                'adapter' => Zend_Translate::AN_CSV,
+                'content' => dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.csv',
+                'locale'  => 'en_US',
+            )
+        );
+
+        $translate->addTranslation($translate2);
+
+        $langs = $translate->getList();
+        $this->assertFalse(array_key_exists('de_DE', $langs));
+        $this->assertTrue(array_key_exists('ja', $langs));
+        $this->assertTrue(array_key_exists('en_US', $langs));
+        $this->assertEquals('Message 5 (en)', $translate->translate('Message 5', 'ja'));
+        $this->assertEquals('Message 5 (en)', $translate->translate('Message 5', 'ja'));
+    }
+
+    /**
+     * ZF-9877
+     */
+    public function testSetCacheThroughOptions()
+    {
+        require_once 'Zend/Cache.php';
+        $cache = Zend_Cache::factory('Core', 'File',
+            array('lifetime' => 120, 'automatic_serialization' => true),
+            array('cache_dir' => dirname(__FILE__) . '/_files/'));
+
+        $translate = new Zend_Translate(array(
+            'adapter' => Zend_Translate::AN_ARRAY,
+            'content' => array('msg1' => 'Message 1 (en)'),
+            'locale'  => 'en',
+            'cache'   => $cache,
+        ));
+
+        $return = Zend_Translate::getCache();
+        $this->assertTrue($return instanceof Zend_Cache_Core);
+        $this->assertTrue(Zend_Translate::hasCache());
+    }
+
+    /**
      * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
      *
      * @param  integer $errno

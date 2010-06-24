@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: JsonTest.php 20616 2010-01-25 19:56:04Z matthew $
+ * @version    $Id: JsonTest.php 22453 2010-06-18 18:17:52Z ralph $
  */
 
 /**
@@ -754,6 +754,18 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     public function testDecodingInvalidJsonShouldRaiseAnException()
     {
         Zend_Json::decode(' some string ');
+    }
+
+    /**
+     * @group ZF-9416
+     * Encoding an iterator using the internal encoder should handle undefined keys
+     */
+    public function testIteratorWithoutDefinedKey()
+    {
+        $inputValue = new ArrayIterator(array('foo'));
+        $encoded = Zend_Json_Encoder::encode($inputValue);
+        $expectedDecoding = '{"__className":"ArrayIterator","0":"foo"}';
+        $this->assertEquals($encoded, $expectedDecoding);
     }
 }
 

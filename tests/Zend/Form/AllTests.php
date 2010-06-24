@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 22329 2010-05-30 15:12:58Z bittarman $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -31,6 +31,7 @@ require_once 'Zend/Form/DisplayGroupTest.php';
 require_once 'Zend/Form/ElementTest.php';
 require_once 'Zend/Form/Element/AllTests.php';
 require_once 'Zend/Form/FormTest.php';
+require_once 'Zend/Form/SubFormTest.php';
 
 /**
  * @category   Zend
@@ -56,6 +57,7 @@ class Zend_Form_AllTests
         $suite->addTestSuite('Zend_Form_ElementTest');
         $suite->addTest(Zend_Form_Element_AllTests::suite());
         $suite->addTestSuite('Zend_Form_FormTest');
+        $suite->addTestSuite('Zend_Form_SubFormTest');
 
         return $suite;
     }

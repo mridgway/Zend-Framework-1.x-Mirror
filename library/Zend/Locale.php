@@ -16,7 +16,7 @@
  * @package   Zend_Locale
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Locale.php 22278 2010-05-24 20:38:42Z matthew $
+ * @version   $Id: Locale.php 22314 2010-05-27 19:38:50Z thomas $
  */
 
 /**
@@ -807,8 +807,8 @@ class Zend_Locale
      */
     public static function isLocale($locale, $strict = false, $compatible = true)
     {
-        if (($locale instanceof Zend_Locale) 
-            || (is_array($locale) && array_key_exists($locale, self::$_localeData))
+        if (($locale instanceof Zend_Locale)
+            || (is_string($locale) && array_key_exists($locale, self::$_localeData))
         ) {
             return true;
         }

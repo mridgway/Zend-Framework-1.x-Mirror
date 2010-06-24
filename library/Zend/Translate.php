@@ -16,7 +16,7 @@
  * @package    Zend_Translate
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Translate.php 21662 2010-03-27 20:23:42Z thomas $
+ * @version    $Id: Translate.php 22391 2010-06-06 21:54:49Z thomas $
  */
 
 /**
@@ -127,8 +127,12 @@ class Zend_Translate {
             Zend_Loader::loadClass($options['adapter']);
         }
 
+        if (array_key_exists('cache', $options)) {
+            self::setCache($options['cache']);
+        }
+
         if (self::$_cache !== null) {
-            call_user_func(array($options['adapter'], 'setCache'), self::$_cache);
+            $options['cache'] = self::getCache();
         }
 
         $adapter = $options['adapter'];

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 22532 2010-07-07 02:32:08Z ramon $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -33,6 +33,7 @@ require_once 'Zend/Log/Filter/MessageTest.php';
 require_once 'Zend/Log/Filter/SuppressTest.php';
 require_once 'Zend/Log/Formatter/SimpleTest.php';
 require_once 'Zend/Log/Formatter/XmlTest.php';
+require_once 'Zend/Log/Writer/AbstractTest.php';
 require_once 'Zend/Log/Writer/DbTest.php';
 if (PHP_OS != 'AIX') {
     require_once 'Zend/Log/Writer/FirebugTest.php';
@@ -41,6 +42,8 @@ require_once 'Zend/Log/Writer/MailTest.php';
 require_once 'Zend/Log/Writer/MockTest.php';
 require_once 'Zend/Log/Writer/NullTest.php';
 require_once 'Zend/Log/Writer/StreamTest.php';
+require_once 'Zend/Log/Writer/SyslogTest.php';
+require_once 'Zend/Log/Writer/ZendMonitorTest.php';
 
 /**
  * @category   Zend
@@ -71,6 +74,7 @@ class Zend_Log_AllTests
         $suite->addTestSuite('Zend_Log_Filter_SuppressTest');
         $suite->addTestSuite('Zend_Log_Formatter_SimpleTest');
         $suite->addTestSuite('Zend_Log_Formatter_XmlTest');
+        $suite->addTestSuite('Zend_Log_Writer_AbstractTest');
         $suite->addTestSuite('Zend_Log_Writer_DbTest');
         if (PHP_OS != 'AIX') {
             $suite->addTestSuite('Zend_Log_Writer_FirebugTest');
@@ -79,6 +83,8 @@ class Zend_Log_AllTests
         $suite->addTestSuite('Zend_Log_Writer_MockTest');
         $suite->addTestSuite('Zend_Log_Writer_NullTest');
         $suite->addTestSuite('Zend_Log_Writer_StreamTest');
+        $suite->addTestSuite('Zend_Log_Writer_SyslogTest');
+        $suite->addTestSuite('Zend_Log_Writer_ZendMonitorTest');
 
         return $suite;
     }

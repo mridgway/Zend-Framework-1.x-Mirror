@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbTableTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: DbTableTest.php 22667 2010-07-25 05:24:33Z ramon $
  */
 
 /**
@@ -94,7 +94,9 @@ class Zend_Session_SaveHandler_DbTableTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $this->_dropTable();
+        if ($this->_db instanceof Zend_Db_Adapter_Abstract) {
+            $this->_dropTable();
+        }
     }
 
     public function testConfigPrimaryAssignmentFullConfig()

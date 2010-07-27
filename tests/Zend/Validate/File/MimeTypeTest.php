@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MimeTypeTest.php 21860 2010-04-15 21:08:49Z thomas $
+ * @version    $Id: MimeTypeTest.php 22679 2010-07-26 13:02:33Z alexander $
  */
 
 // Call Zend_Validate_File_MimeTypeTest::main() if this source file is executed directly.
@@ -184,6 +184,7 @@ class Zend_Validate_File_MimeTypeTest extends PHPUnit_Framework_TestCase
         require_once 'Zend/Validate/Exception.php';
         try {
             $validator = new Zend_Validate_File_MimeType(array('image/gif', 'magicfile' => __FILE__));
+            $this->fail('Zend_Validate_File_MimeType should not accept invalid magic file.');
         } catch (Zend_Validate_Exception $e) {
             // @ZF-9320: False Magic File is not allowed to be set
         }

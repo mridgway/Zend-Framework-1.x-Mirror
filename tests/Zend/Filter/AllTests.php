@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20223 2010-01-12 17:07:41Z matthew $
+ * @version    $Id: AllTests.php 22498 2010-06-28 03:45:19Z ramon $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -41,6 +41,8 @@ require_once 'Zend/Filter/HtmlEntitiesTest.php';
 require_once 'Zend/Filter/InflectorTest.php';
 require_once 'Zend/Filter/InputTest.php';
 require_once 'Zend/Filter/IntTest.php';
+require_once 'Zend/Filter/LocalizedToNormalizedTest.php';
+require_once 'Zend/Filter/NormalizedToLocalizedTest.php';
 require_once 'Zend/Filter/NullTest.php';
 require_once 'Zend/Filter/PregReplaceTest.php';
 require_once 'Zend/Filter/RealPathTest.php';
@@ -130,6 +132,9 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_InflectorTest');
         $suite->addTestSuite('Zend_Filter_InputTest');
         $suite->addTestSuite('Zend_Filter_IntTest');
+        $suite->addTestSuite('Zend_Filter_LocalizedToNormalizedTest');
+        $suite->addTestSuite('Zend_Filter_NormalizedToLocalizedTest');
+        $suite->addTestSuite('Zend_Filter_NullTest');
         $suite->addTestSuite('Zend_Filter_PregReplaceTest');
         $suite->addTestSuite('Zend_Filter_RealPathTest');
         $suite->addTestSuite('Zend_Filter_StringToLowerTest');

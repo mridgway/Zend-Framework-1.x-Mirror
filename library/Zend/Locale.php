@@ -16,7 +16,7 @@
  * @package   Zend_Locale
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Locale.php 22314 2010-05-27 19:38:50Z thomas $
+ * @version   $Id: Locale.php 22536 2010-07-07 21:41:48Z thomas $
  */
 
 /**
@@ -247,8 +247,7 @@ class Zend_Locale
      */
     public function __construct($locale = null)
     {
-        $locale = self::_prepareLocale($locale);
-        $this->setLocale((string) $locale);
+        $this->setLocale($locale);
     }
 
     /**
@@ -427,8 +426,12 @@ class Zend_Locale
         }
 
         $httplanguages = getenv('HTTP_ACCEPT_LANGUAGE');
+        if (empty($httplanguages) && array_key_exists('HTTP_ACCEPT_LANGUAGE', $_SERVER)) {
+            $httplanguages = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        }
+
         $languages     = array();
-        if (empty($httplanguages) === true) {
+        if (empty($httplanguages)) {
             return $languages;
         }
 

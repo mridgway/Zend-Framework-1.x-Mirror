@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FirebugTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FirebugTest.php 22570 2010-07-16 04:20:33Z ramon $
  */
 
 /**
@@ -106,7 +106,9 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        $this->_db->getConnection()->exec('DROP TABLE foo');
+        if (extension_loaded('pdo_sqlite')) {
+            $this->_db->getConnection()->exec('DROP TABLE foo');
+        }
 
         Zend_Wildfire_Channel_HttpHeaders::destroyInstance();
         Zend_Wildfire_Plugin_FirePhp::destroyInstance();

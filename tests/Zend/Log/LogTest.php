@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LogTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: LogTest.php 22632 2010-07-18 18:30:08Z ramon $
  */
 
 require_once dirname(__FILE__) . '/../../TestHelper.php';
@@ -30,6 +30,9 @@ require_once 'Zend/Log/Writer/Mock.php';
 
 /** Zend_Log_Writer_Stream */
 require_once 'Zend/Log/Writer/Stream.php';
+
+/** Zend_Log_FactoryInterface */
+require_once 'Zend/Log/FactoryInterface.php';
 
 /**
  * @category   Zend
@@ -241,50 +244,123 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
         $info = $event['info'];
         $this->assertContains('nonesuch', $info);
     }
-    
+
     // Factory
 
-    public function testLogConstructFromConfigStream() 
+    public function testLogConstructFromConfigStream()
     {
         $cfg = array('log' => array('memory' => array(
-            'writerName'      => "Stream", 
-            'writerNamespace' => "Zend_Log_Writer", 
+            'writerName'      => "Stream",
+            'writerNamespace' => "Zend_Log_Writer",
             'writerParams'    => array(
                 'stream'      => "php://memory"
-            )        
+            )
         )));
 
         $logger = Zend_Log::factory($cfg['log']);
         $this->assertTrue($logger instanceof Zend_Log);
     }
 
-    public function testLogConstructFromConfigStreamAndFilter() 
+    public function testLogConstructFromConfigStreamAndFilter()
     {
         $cfg = array('log' => array('memory' => array(
-            'writerName'      => "Stream", 
-            'writerNamespace' => "Zend_Log_Writer", 
+            'writerName'      => "Stream",
+            'writerNamespace' => "Zend_Log_Writer",
             'writerParams'    => array(
                 'stream'      => "php://memory"
-            ), 
-            'filterName'   => "Priority", 
+            ),
+            'filterName'   => "Priority",
             'filterParams' => array(
-                'priority' => "Zend_Log::CRIT", 
+                'priority' => "Zend_Log::CRIT",
                 'operator' => "<="
-             ),        
+             ),
         )));
 
         $logger = Zend_Log::factory($cfg['log']);
         $this->assertTrue($logger instanceof Zend_Log);
     }
 
-    public function testFactoryUsesNameAndNamespaceWithoutModifications() 
+    public function testFactoryUsesNameAndNamespaceWithoutModifications()
     {
         $cfg = array('log' => array('memory' => array(
-            'writerName'      => "ZendMonitor", 
-            'writerNamespace' => "Zend_Log_Writer", 
+            'writerName'      => "ZendMonitor",
+            'writerNamespace' => "Zend_Log_Writer",
         )));
 
         $logger = Zend_Log::factory($cfg['log']);
         $this->assertTrue($logger instanceof Zend_Log);
+    }
+
+	/**
+     * @group ZF-9955
+     */
+    public function testExceptionConstructWriterFromConfig()
+    {
+        try {
+            $logger = new Zend_Log();
+            $writer = array('writerName' => 'NotExtendedWriterAbstract');
+            $logger->addWriter($writer);
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('#^(Zend_Log_Writer_NotExtendedWriterAbstract|The\sspecified\swriter)#', $e->getMessage());
+        }
+    }
+
+    /**
+     * @group ZF-9956
+     */
+    public function testExceptionConstructFilterFromConfig()
+    {
+        try {
+            $logger = new Zend_Log();
+            $filter = array('filterName' => 'NotImplementsFilterInterface');
+            $logger->addFilter($filter);
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertRegExp('#^(Zend_Log_Filter_NotImplementsFilterInterface|The\sspecified\sfilter)#', $e->getMessage());
+        }
+    }
+
+    /**
+     * @group ZF-10170
+     */
+    public function testPriorityDuplicates()
+    {
+        $logger   = new Zend_Log();
+        $mock     = new Zend_Log_Writer_Mock();
+        $logger->addWriter($mock);
+        try {
+            $logger->addPriority('emerg', 8);
+            $this->fail();
+        } catch(Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertEquals('Existing priorities cannot be overwritten', $e->getMessage());
+        }
+
+        try {
+            $logger->log('zf10170', 0);
+            $logger->log('clone zf10170', 8);
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertType('Zend_Log_Exception', $e);
+            $this->assertEquals('Bad log priority', $e->getMessage());
+        }
+        $this->assertEquals(0, $mock->events[0]['priority']);
+        $this->assertEquals('EMERG', $mock->events[0]['priorityName']);
+        $this->assertFalse(array_key_exists(1, $mock->events));
+    }
+}
+
+class Zend_Log_Writer_NotExtendedWriterAbstract implements Zend_Log_FactoryInterface
+{
+    public static function factory($config)
+    {
+    }
+}
+
+class Zend_Log_Filter_NotImplementsFilterInterface implements Zend_Log_FactoryInterface
+{
+    public static function factory($config)
+    {
     }
 }

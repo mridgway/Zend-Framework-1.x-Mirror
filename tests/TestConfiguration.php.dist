@@ -17,7 +17,7 @@
  * @package    UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestConfiguration.php.dist 20569 2010-01-24 14:41:44Z mabe $
+ * @version    $Id: TestConfiguration.php.dist 22600 2010-07-16 21:40:19Z torio $
  */
 
 /**
@@ -563,6 +563,7 @@ define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED', false);
 define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID', 'Enter AWSAccessKeyId here');
 define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_SECRETKEY', 'Enter AWSSecretKey here');
 define('TESTS_ZEND_SERVICE_AMAZON_S3_BUCKET', 'zftestamazons3bucket');
+define('TESTS_ZEND_SERVICE_AMAZON_SQS_QUEUE', 'zftestamazonsqsqueuename');
 
 /**
  * Zend_Service_Delicious tests

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BootstrapAbstractTest.php 22479 2010-06-21 16:44:02Z matthew $
+ * @version    $Id: BootstrapAbstractTest.php 22665 2010-07-25 00:40:37Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -729,7 +729,7 @@ class Zend_Application_Bootstrap_BootstrapAbstractTest extends PHPUnit_Framework
         $bootstrap = new Zend_Application_Bootstrap_Bootstrap($this->application);
         $bootstrap->setApplication($bootstrap);
     }
-    
+
     /**
      * @group ZF-7696
      */
@@ -745,6 +745,30 @@ class Zend_Application_Bootstrap_BootstrapAbstractTest extends PHPUnit_Framework
         $this->application->setOptions($options);
         $bootstrap = new Zf7696Bootstrap($this->application);
         $bootstrap->bootstrap(array('modules'));
+    }
+
+    /**
+     * @group ZF-10199
+     */
+    public function testHasOptionShouldTreatOptionKeysAsCaseInsensitive()
+    {
+        $application = $this->application;
+        $application->setOptions(array(
+            'fooBar' => 'baz',
+        ));
+        $this->assertTrue($application->getBootstrap()->hasOption('FooBar'));
+    }
+
+    /**
+     * @group ZF-10199
+     */
+    public function testGetOptionShouldTreatOptionKeysAsCaseInsensitive()
+    {
+        $application = $this->application;
+        $application->setOptions(array(
+            'fooBar' => 'baz',
+        ));
+        $this->assertEquals('baz', $application->getBootstrap()->getOption('FooBar'));
     }
 }
 

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PaginatorTest.php 22262 2010-05-23 09:17:47Z wilmoore $
+ * @version    $Id: PaginatorTest.php 22636 2010-07-19 00:09:26Z ramon $
  */
 
 // Call Zend_PaginatorTest::main() if this source file is executed directly.
@@ -962,6 +962,27 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException("Zend_Paginator_Exception");
 
         $p = new Zend_Paginator(array());
+    }
+
+    /**
+     * @group ZF-9396
+     */
+    public function testArrayAccessInClassSerializableLimitIterator()
+    {
+        $iterator  = new ArrayIterator(array('zf9396', 'foo', null));
+        $paginator = Zend_Paginator::factory($iterator);
+
+        $this->assertEquals('zf9396', $paginator->getItem(1));
+
+        $items = $paginator->getAdapter()
+                           ->getItems(0, 10);
+
+        $this->assertEquals('foo', $items[1]);
+        $this->assertEquals(0, $items->key());
+        $this->assertFalse(isset($items[2]));
+        $this->assertTrue(isset($items[1]));
+        $this->assertFalse(isset($items[3]));
+        $this->assertEquals(0, $items->key());
     }
 }
 

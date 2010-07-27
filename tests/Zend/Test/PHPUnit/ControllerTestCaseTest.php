@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ControllerTestCaseTest.php 20256 2010-01-13 16:17:08Z matthew $
+ * @version    $Id: ControllerTestCaseTest.php 22562 2010-07-15 17:55:57Z dragonbe $
  */
 
 // Call Zend_Test_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.
@@ -305,6 +305,8 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
         $this->testCase->assertQuery('div#foo legend.bat', $body);
         $this->testCase->assertNotQuery('div#foo legend.bogus', $body);
         $this->testCase->assertQueryContentContains('legend.bat', 'La di da', $body);
+        $this->testCase->assertQueryContentContains('legend.numeric', 42, $body);
+        $this->testCase->assertNotQueryContentContains('legend.numeric', 31, $body);
         $this->testCase->assertNotQueryContentContains('legend.bat', 'La do da', $body);
         $this->testCase->assertQueryContentRegex('legend.bat', '/d[a|i]/i', $body);
         $this->testCase->assertNotQueryContentRegex('legend.bat', '/d[o|e]/i', $body);

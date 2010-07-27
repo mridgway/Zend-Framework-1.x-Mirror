@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BarcodeTest.php 20444 2010-01-20 16:04:13Z ralph $
+ * @version    $Id: BarcodeTest.php 22541 2010-07-08 21:04:57Z thomas $
  */
 
 /**
@@ -431,5 +431,17 @@ class Zend_Validate_BarcodeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($barcode->isValid('123'));
         $this->assertTrue($barcode->isValid('123456'));
         $this->assertTrue($barcode->isValid('0234567'));
+    }
+
+    /**
+     * @group ZF-10116
+     */
+    public function testArrayLengthMessage()
+    {
+        $barcode = new Zend_Validate_Barcode('ean8');
+        $this->assertFalse($barcode->isValid('123'));
+        $message = $barcode->getMessages();
+        $this->assertTrue(array_key_exists('barcodeInvalidLength', $message));
+        $this->assertContains("length of 7/8 characters", $message['barcodeInvalidLength']);
     }
 }

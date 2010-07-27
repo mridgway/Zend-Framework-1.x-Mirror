@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NormalizedToLocalizedTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: NormalizedToLocalizedTest.php 22552 2010-07-12 17:35:12Z thomas $
  */
 
 /**
@@ -228,8 +228,8 @@ class Zend_Filter_NormalizedToLocalizedTest extends PHPUnit_Framework_TestCase
         );
 
         $valuesReceived = array(
-            1 => '1.234,56',
-            2 => '1.234,56',
+            1 => '1.234,57',
+            2 => '1.234,57',
             3 => '1,23',
             4 => '1,23',
             5 => '1.234,00',

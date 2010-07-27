@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 22496 2010-06-28 01:30:13Z ramon $
  */
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -43,6 +43,7 @@ require_once 'Zend/Validate/File/NotExistsTest.php';
 require_once 'Zend/Validate/File/Sha1Test.php';
 require_once 'Zend/Validate/File/SizeTest.php';
 require_once 'Zend/Validate/File/UploadTest.php';
+require_once 'Zend/Validate/File/WordCountTest.php';
 
 /**
  * @category   Zend
@@ -80,6 +81,7 @@ class Zend_Validate_File_AllTests
         $suite->addTestSuite('Zend_Validate_File_Sha1Test');
         $suite->addTestSuite('Zend_Validate_File_SizeTest');
         $suite->addTestSuite('Zend_Validate_File_UploadTest');
+        $suite->addTestSuite('Zend_Validate_File_WordCountTest');
 
         return $suite;
     }

@@ -18,7 +18,7 @@
  * @subpackage Flickr
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Flickr.php 21948 2010-04-19 12:12:32Z alexander $
+ * @version    $Id: Flickr.php 22599 2010-07-16 21:25:22Z mikaelkael $
  */
 
 
@@ -62,10 +62,6 @@ class Zend_Service_Flickr
      */
     public function __construct($apiKey)
     {
-        iconv_set_encoding('output_encoding', 'UTF-8');
-        iconv_set_encoding('input_encoding', 'UTF-8');
-        iconv_set_encoding('internal_encoding', 'UTF-8');
-
         $this->apiKey = (string) $apiKey;
     }
 

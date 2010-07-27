@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DataTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: DataTest.php 22657 2010-07-23 16:41:36Z alexander $
  */
 
 /**
@@ -2450,7 +2450,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'postaltoterritory', 'AT');
-        $this->assertEquals("\d{4}", $value);
+        $this->assertEquals('\d{4}', $value);
     }
 
     /**

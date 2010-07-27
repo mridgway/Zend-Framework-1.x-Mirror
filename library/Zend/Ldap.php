@@ -17,7 +17,7 @@
  * @package    Zend_Ldap
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Ldap.php 22164 2010-05-14 10:56:25Z sgehrig $
+ * @version    $Id: Ldap.php 22502 2010-06-29 08:19:18Z sgehrig $
  */
 
 /**
@@ -995,6 +995,19 @@ class Zend_Ldap
          */
         require_once 'Zend/Ldap/Collection/Iterator/Default.php';
         $iterator = new Zend_Ldap_Collection_Iterator_Default($this, $search);
+        return $this->_createCollection($iterator, $collectionClass);
+    }
+
+    /**
+     * Extension point for collection creation
+     *
+     * @param  Zend_Ldap_Collection_Iterator_Default	$iterator
+     * @param  string|null								$collectionClass
+     * @return Zend_Ldap_Collection
+     * @throws Zend_Ldap_Exception
+     */
+    protected function _createCollection(Zend_Ldap_Collection_Iterator_Default $iterator, $collectionClass)
+    {
         if ($collectionClass === null) {
             /**
              * Zend_Ldap_Collection

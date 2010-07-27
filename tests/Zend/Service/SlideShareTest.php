@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SlideShareTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: SlideShareTest.php 22574 2010-07-16 14:12:02Z dragonbe $
  */
 
 
@@ -227,4 +227,18 @@ class Zend_Service_SlideShareTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($ss->getTranscript(), "none");
 
     }
+
+    /**
+     * @group   ZF-3247
+     */
+	public function testSlideShareObjectHandlesUnicodeCharactersWell()
+	{
+		$slideShow = new Zend_Service_SlideShare_SlideShow();
+		$slideShow->setTitle('Unicode test: ஸ்றீனிவாஸ ராமானுஜன் ஐயங்கார்');
+
+		if (!extension_loaded('mbstring')) {
+		    $this->markTestSkipped('Extension "mbstring" not loaded');
+		}
+        $this->assertEquals('UTF-8', mb_detect_encoding($slideShow->getTitle()));
+	}
 }

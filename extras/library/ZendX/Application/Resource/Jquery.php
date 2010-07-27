@@ -155,9 +155,9 @@ class ZendX_Application_Resource_Jquery
             }
         }
 
-        if ((isset($key['uienable']) && (bool) $key['uienable'])
-            || (isset($key['ui_enable']) && (bool) $key['ui_enable'])
-            || (!isset($key['ui_enable']) && !isset($key['uienable'])))
+        if ((isset($options['uienable']) && (bool) $options['uienable'])
+            || (isset($options['ui_enable']) && (bool) $options['ui_enable'])
+            || (!isset($options['ui_enable']) && !isset($options['uienable'])))
         {
             $this->_view->JQuery()->uiEnable();
         } else {

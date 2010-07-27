@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StripTagsTest.php 22174 2010-05-14 22:12:50Z thomas $
+ * @version    $Id: StripTagsTest.php 22550 2010-07-11 13:52:40Z thomas $
  */
 
 // Call Zend_Filter_StripTagsTest::main() if this source file is executed directly.

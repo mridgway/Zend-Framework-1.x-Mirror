@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OnlineTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: OnlineTest.php 22624 2010-07-18 00:46:43Z torio $
  */
 
 /**
@@ -225,7 +225,7 @@ class Zend_Service_Amazon_OnlineTest extends PHPUnit_Framework_TestCase
      */
     public function testItemLookup()
     {
-        $item = $this->_amazon->itemLookup('B0000A432X');
+        $item = $this->_amazon->itemLookup('B0015T963C');
         $this->assertTrue($item instanceof Zend_Service_Amazon_Item);
     }
 
@@ -328,7 +328,7 @@ class Zend_Service_Amazon_OnlineTest extends PHPUnit_Framework_TestCase
      */
     public function testQueryAsin()
     {
-        $item = $this->_query->asin('B0000A432X')->search();
+        $item = $this->_query->asin('B0015T963C')->search();
         $this->assertTrue($item instanceof Zend_Service_Amazon_Item);
     }
 }

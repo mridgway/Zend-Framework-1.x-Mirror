@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage UnitTests
- * @version    $Id: RetryPolicyTest.php 35709 2009-12-14 14:14:14Z unknown $
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -25,20 +25,14 @@
  */
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
-/**
- * @see Zend_Service_WindowsAzure_RetryPolicy_RetryPolicyAbstract
- */
+/** Zend_Service_WindowsAzure_RetryPolicy_RetryPolicyAbstract */
 require_once 'Zend/Service/WindowsAzure/RetryPolicy/RetryPolicyAbstract.php';
-
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Service_WindowsAzure_RetryPolicyTest::main');
-}
 
 /**
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage UnitTests
- * @version    $Id: RetryPolicyTest.php 35709 2009-12-14 14:14:14Z unknown $
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -57,12 +51,6 @@ class Zend_Service_WindowsAzure_RetryPolicyTest extends PHPUnit_Framework_TestCa
      * @var int
      */
     protected $_exceptionCount = 0;
-    
-    public static function main()
-    {
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_Service_WindowsAzure_RetryPolicyTest");
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
 
     /**
      * Test retry policy - noRetry
@@ -111,9 +99,4 @@ class Zend_Service_WindowsAzure_RetryPolicyTest extends PHPUnit_Framework_TestCa
         }
         return $this->_executedRetries;
     }
-}
-
-// Call Zend_Service_WindowsAzure_RetryPolicyTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Zend_Service_WindowsAzure_RetryPolicyTest::main") {
-    Zend_Service_WindowsAzure_RetryPolicyTest::main();
 }

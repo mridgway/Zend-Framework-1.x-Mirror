@@ -16,7 +16,7 @@
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Paginator.php 22355 2010-06-03 06:23:46Z bate $
+ * @version    $Id: Paginator.php 22829 2010-08-11 19:56:28Z bate $
  */
 
 /**
@@ -1012,7 +1012,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     protected function _getCacheInternalId()
     {
         return md5(serialize(array(
-            spl_object_hash($this->getAdapter()),
+            $this->getAdapter(),
             $this->getItemCountPerPage()
         )));
     }

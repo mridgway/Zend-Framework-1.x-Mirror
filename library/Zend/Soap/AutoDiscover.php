@@ -17,7 +17,7 @@
  * @subpackage AutoDiscover
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AutoDiscover.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AutoDiscover.php 22899 2010-08-24 21:46:26Z alexander $
  */
 
 /**
@@ -111,20 +111,20 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      * Set the location at which the WSDL file will be availabe.
      *
      * @see Zend_Soap_Exception
-     * @throws Zend_Soap_AutoDiscover_Exception
      * @param  Zend_Uri|string $uri
      * @return Zend_Soap_AutoDiscover
+     * @throws Zend_Soap_AutoDiscover_Exception
      */
     public function setUri($uri)
     {
-        if(!is_string($uri) && !($uri instanceof Zend_Uri)) {
+        if (!is_string($uri) && !($uri instanceof Zend_Uri)) {
             require_once "Zend/Soap/AutoDiscover/Exception.php";
             throw new Zend_Soap_AutoDiscover_Exception("No uri given to Zend_Soap_AutoDiscover::setUri as string or Zend_Uri instance.");
         }
         $this->_uri = $uri;
 
         // change uri in WSDL file also if existant
-        if($this->_wsdl instanceof Zend_Soap_Wsdl) {
+        if ($this->_wsdl instanceof Zend_Soap_Wsdl) {
             $this->_wsdl->setUri($uri);
         }
 
@@ -159,6 +159,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      * @see    Zend_Soap_AutoDiscover_Exception
      * @param  array $operationStyle
      * @return Zend_Soap_AutoDiscover
+     * @throws Zend_Soap_AutoDiscover_Exception
      */
     public function setOperationBodyStyle(array $operationStyle=array())
     {
@@ -263,6 +264,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      * @param string $class Class Name
      * @param string $namespace Class Namspace - Not Used
      * @param array $argv Arguments to instantiate the class - Not Used
+     * @return Zend_Soap_AutoDiscover
      */
     public function setClass($class, $namespace = '', $argv = null)
     {
@@ -282,6 +284,8 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
             $this->_addFunctionToWsdl($method, $wsdl, $port, $binding);
         }
         $this->_wsdl = $wsdl;
+
+        return $this;
     }
 
     /**
@@ -289,6 +293,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      *
      * @param string $function Function Name
      * @param string $namespace Function namespace - Not Used
+     * @return Zend_Soap_AutoDiscover
      */
     public function addFunction($function, $namespace = '')
     {
@@ -324,6 +329,8 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
             $this->_addFunctionToWsdl($method, $wsdl, $port, $binding);
         }
         $this->_wsdl = $wsdl;
+
+        return $this;
     }
 
     /**
@@ -442,6 +449,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      *
      * @param string $fault
      * @param string|int $code
+     * @throws Zend_Soap_AutoDiscover_Exception
      */
     public function fault($fault = null, $code = null)
     {
@@ -466,6 +474,8 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      * Proxy to WSDL dump function
      *
      * @param string $filename
+     * @return boolean
+     * @throws Zend_Soap_AutoDiscover_Exception
      */
     public function dump($filename)
     {
@@ -482,6 +492,9 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
 
     /**
      * Proxy to WSDL toXml() function
+     *
+     * @return string
+     * @throws Zend_Soap_AutoDiscover_Exception
      */
     public function toXml()
     {
@@ -510,6 +523,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      * Load Functions
      *
      * @param unknown_type $definition
+     * @throws Zend_Soap_AutoDiscover_Exception
      */
     public function loadFunctions($definition)
     {
@@ -521,6 +535,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface
      * Set Persistance
      *
      * @param int $mode
+     * @throws Zend_Soap_AutoDiscover_Exception
      */
     public function setPersistence($mode)
     {

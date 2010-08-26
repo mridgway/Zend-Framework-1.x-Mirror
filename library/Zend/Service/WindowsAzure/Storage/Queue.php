@@ -17,7 +17,7 @@
  * @subpackage Storage
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://todo     name_todo
- * @version    $Id: Queue.php 20833 2010-02-02 14:06:51Z matthew $
+ * @version    $Id$
  */
 
 /**
@@ -94,7 +94,7 @@ class Zend_Service_WindowsAzure_Storage_Queue extends Zend_Service_WindowsAzure_
 		parent::__construct($host, $accountName, $accountKey, $usePathStyleUri, $retryPolicy);
 		
 		// API version
-		$this->_apiVersion = '2009-04-14';
+		$this->_apiVersion = '2009-09-19';
 	}
 	
 	/**
@@ -145,7 +145,7 @@ class Zend_Service_WindowsAzure_Storage_Queue extends Zend_Service_WindowsAzure_
 		$headers = array_merge($headers, $this->_generateMetadataHeaders($metadata)); 
 		
 		// Perform request
-		$response = $this->_performRequest($queueName, '', Zend_Http_Client::PUT, $headers);			
+		$response = $this->_performRequest($queueName, '', Zend_Http_Client::PUT, $headers);	
 		if ($response->isSuccessful()) {
 		    return new Zend_Service_WindowsAzure_Storage_QueueInstance(
 		        $queueName,
@@ -270,23 +270,28 @@ class Zend_Service_WindowsAzure_Storage_Queue extends Zend_Service_WindowsAzure_
 	 * @param string $prefix     Optional. Filters the results to return only queues whose name begins with the specified prefix.
 	 * @param int    $maxResults Optional. Specifies the maximum number of queues to return per call to Azure storage. This does NOT affect list size returned by this function. (maximum: 5000)
 	 * @param string $marker     Optional string value that identifies the portion of the list to be returned with the next list operation.
+	 * @param string $include    Optional. Include this parameter to specify that the queue's metadata be returned as part of the response body. (allowed values: '', 'metadata')
 	 * @param int    $currentResultCount Current result count (internal use)
 	 * @return array
 	 * @throws Zend_Service_WindowsAzure_Exception
 	 */
-	public function listQueues($prefix = null, $maxResults = null, $marker = null, $currentResultCount = 0)
+	public function listQueues($prefix = null, $maxResults = null, $marker = null, $include = null, $currentResultCount = 0)
 	{
 	    // Build query string
-	    $queryString = '?comp=list';
-	    if (!is_null($prefix)) {
-	        $queryString .= '&prefix=' . $prefix;
-	    }
+		$queryString = array('comp=list');
+        if (!is_null($prefix)) {
+	        $queryString[] = 'prefix=' . $prefix;
+        }
 	    if (!is_null($maxResults)) {
-	        $queryString .= '&maxresults=' . $maxResults;
+	        $queryString[] = 'maxresults=' . $maxResults;
 	    }
 	    if (!is_null($marker)) {
-	        $queryString .= '&marker=' . $marker;
+	        $queryString[] = 'marker=' . $marker;
 	    }
+		if (!is_null($include)) {
+	        $queryString[] = 'include=' . $include;
+	    }
+	    $queryString = self::createQueryStringFromArray($queryString);
 	        
 		// Perform request
 		$response = $this->_performRequest('', $queryString, Zend_Http_Client::GET);	
@@ -298,14 +303,15 @@ class Zend_Service_WindowsAzure_Storage_Queue extends Zend_Service_WindowsAzure_
 			if (!is_null($xmlQueues)) {
 				for ($i = 0; $i < count($xmlQueues); $i++) {
 					$queues[] = new Zend_Service_WindowsAzure_Storage_QueueInstance(
-						(string)$xmlQueues[$i]->QueueName
+						(string)$xmlQueues[$i]->Name,
+						$this->_parseMetadataElement($xmlQueues[$i])
 					);
 				}
 			}
 			$currentResultCount = $currentResultCount + count($queues);
 			if (!is_null($maxResults) && $currentResultCount < $maxResults) {
     			if (!is_null($xmlMarker) && $xmlMarker != '') {
-    			    $queues = array_merge($queues, $this->listQueues($prefix, $maxResults, $xmlMarker, $currentResultCount));
+    			    $queues = array_merge($queues, $this->listQueues($prefix, $maxResults, $xmlMarker, $include, $currentResultCount));
     			}
 			}
 			if (!is_null($maxResults) && count($queues) > $maxResults) {
@@ -345,10 +351,11 @@ class Zend_Service_WindowsAzure_Storage_Queue extends Zend_Service_WindowsAzure_
 		}
 		    
 	    // Build query string
-	    $queryString = '';
-	    if (!is_null($ttl)) {
-	        $queryString .= '?messagettl=' . $ttl;
-	    }
+		$queryString = array();
+        if (!is_null($ttl)) {
+	        $queryString[] = 'messagettl=' . $ttl;
+        }
+	    $queryString = self::createQueryStringFromArray($queryString);
 	        
 	    // Build body
 	    $rawData = '';
@@ -390,17 +397,17 @@ class Zend_Service_WindowsAzure_Storage_Queue extends Zend_Service_WindowsAzure_
 		}
 		    
 	    // Build query string
-	    $query = array();
+		$queryString = array();
     	if ($peek) {
-    	    $query[] = 'peekonly=true';
+    	    $queryString[] = 'peekonly=true';
     	}
     	if ($numOfMessages > 1) {
-	        $query[] = 'numofmessages=' . $numOfMessages;
+	        $queryString[] = 'numofmessages=' . $numOfMessages;
     	}
     	if (!$peek && !is_null($visibilityTimeout)) {
-	        $query[] = 'visibilitytimeout=' . $visibilityTimeout;
+	        $queryString[] = 'visibilitytimeout=' . $visibilityTimeout;
     	}   
-    	$queryString = '?' . implode('&', $query);
+	    $queryString = self::createQueryStringFromArray($queryString);
 	        
 		// Perform request
 		$response = $this->_performRequest($queueName . '/messages', $queryString, Zend_Http_Client::GET);	
@@ -426,6 +433,7 @@ class Zend_Service_WindowsAzure_Storage_Queue extends Zend_Service_WindowsAzure_
 					(string)$xmlMessages[$i]->ExpirationTime,
 					($peek ? '' : (string)$xmlMessages[$i]->PopReceipt),
 					($peek ? '' : (string)$xmlMessages[$i]->TimeNextVisible),
+					(string)$xmlMessages[$i]->DequeueCount,
 					base64_decode((string)$xmlMessages[$i]->MessageText)
 			    );
 			}

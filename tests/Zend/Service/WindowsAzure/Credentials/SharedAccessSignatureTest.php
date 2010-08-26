@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage UnitTests
- * @version    $Id: SharedKeyCredentialsTest.php 22847 2009-06-24 06:51:14Z unknown $
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -25,31 +25,19 @@
  */
 require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
-/**
- * @see Zend_Service_WindowsAzure_Credentials_SharedAccessSignature 
- */
+/** Zend_Service_WindowsAzure_Credentials_SharedAccessSignature */
 require_once 'Zend/Service/WindowsAzure/Credentials/SharedAccessSignature.php';
-
-
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Service_WindowsAzure_SharedAccessSignatureCredentialsTest::main');
-}
 
 /**
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage UnitTests
- * @version    $Id: SharedKeyCredentialsTest.php 22847 2009-06-24 06:51:14Z unknown $
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_WindowsAzure_Credentials_SharedAccessSignatureTest extends PHPUnit_Framework_TestCase
 {
-    public static function main()
-    {
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_Service_WindowsAzure_Credentials_SharedAccessSignatureTest");
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
     
     /**
      * Test signing a container
@@ -136,9 +124,4 @@ class Zend_Service_WindowsAzure_Credentials_SharedAccessSignatureTest extends PH
         
         $this->assertEquals('http://blob.core.windows.net/myaccount/pictures/blob.txt?comp=metadata&' . $queryString, $result);
     }
-}
-
-// Call Zend_Service_WindowsAzure_Credentials_SharedAccessSignatureTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Zend_Service_WindowsAzure_Credentials_SharedAccessSignatureTest::main") {
-    Zend_Service_WindowsAzure_Credentials_SharedAccessSignatureTest::main();
 }

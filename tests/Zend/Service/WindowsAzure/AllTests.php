@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage UnitTests
- * @version    $Id: AllTests.php 35999 2009-12-21 07:56:42Z unknown $
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -25,11 +25,8 @@
  */
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Service_WindowsAzure_AllTests::main');
-}
-
 require_once 'Zend/Service/WindowsAzure/Credentials/AllTests.php';
+require_once 'Zend/Service/WindowsAzure/Diagnostics/AllTests.php';
 require_once 'Zend/Service/WindowsAzure/RetryPolicyTest.php';
 require_once 'Zend/Service/WindowsAzure/StorageTest.php';
 require_once 'Zend/Service/WindowsAzure/BlobStorageTest.php';
@@ -46,46 +43,32 @@ require_once 'Zend/Service/WindowsAzure/SessionHandlerTest.php';
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage UnitTests
- * @version    $Id: AllTests.php 35999 2009-12-21 07:56:42Z unknown $
+ * @version    $Id$
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_WindowsAzure_AllTests
 {
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend_Service_WindowsAzure test suite');
+        $suite = new PHPUnit_Framework_TestSuite();
 
-        $suite->addTestSuite(Zend_Service_WindowsAzure_Credentials_AllTests::suite());
+        $suite->addTest(Zend_Service_WindowsAzure_Credentials_AllTests::suite());
+        $suite->addTest(Zend_Service_WindowsAzure_Diagnostics_AllTests::suite());
         
         $suite->addTestSuite('Zend_Service_WindowsAzure_RetryPolicyTest');
         $suite->addTestSuite('Zend_Service_WindowsAzure_StorageTest');
-        if (TESTS_ZEND_SERVICE_WINDOWSAZURE_BLOB_RUNTESTS) {
-            $suite->addTestSuite('Zend_Service_WindowsAzure_BlobStorageTest');
-            $suite->addTestSuite('Zend_Service_WindowsAzure_BlobStorageSharedAccessTest');
-            $suite->addTestSuite('Zend_Service_WindowsAzure_BlobStreamTest');
-        }
-        if (TESTS_ZEND_SERVICE_WINDOWSAZURE_TABLE_RUNTESTS) {
-            $suite->addTestSuite('Zend_Service_WindowsAzure_TableEntityTest');
-            $suite->addTestSuite('Zend_Service_WindowsAzure_DynamicTableEntityTest');
-            $suite->addTestSuite('Zend_Service_WindowsAzure_TableEntityQueryTest');
-            $suite->addTestSuite('Zend_Service_WindowsAzure_TableStorageTest');
-        }
-        if (TESTS_ZEND_SERVICE_WINDOWSAZURE_QUEUE_RUNTESTS) {
-            $suite->addTestSuite('Zend_Service_WindowsAzure_QueueStorageTest');
-        }
-        if (TESTS_ZEND_SERVICE_WINDOWSAZURE_SESSIONHANDLER_RUNTESTS) {
-            $suite->addTestSuite('Zend_Service_WindowsAzure_SessionHandlerTest');
-        }
+        $suite->addTestSuite('Zend_Service_WindowsAzure_BlobStorageTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_BlobStorageSharedAccessTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_BlobStreamTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_TableEntityTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_DynamicTableEntityTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_TableEntityQueryTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_TableStorageTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_QueueStorageTest');
+        $suite->addTestSuite('Zend_Service_WindowsAzure_SessionHandlerTest');
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Service_WindowsAzure_AllTests::main') {
-    Zend_Service_WindowsAzure_AllTests::main();
-}

@@ -17,7 +17,7 @@
  * @package    UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestConfiguration.php.dist 22600 2010-07-16 21:40:19Z torio $
+ * @version    $Id: TestConfiguration.php.dist 22871 2010-08-21 15:12:31Z ralph $
  */
 
 /**
@@ -544,7 +544,7 @@ define('TESTS_ZEND_QUEUE_PLATFORMJQ_PASS', false);
 
 /**
  * Zend_Serializer adapter tests
- * 
+ *
  * TESTS_ZEND_SERIALIZER_ADAPTER_WDDX_ENABLED:
  *   - enable wddx adapter tests
  *   - needs wddx and SimpleXml php extension installed
@@ -569,6 +569,14 @@ define('TESTS_ZEND_SERVICE_AMAZON_SQS_QUEUE', 'zftestamazonsqsqueuename');
  * Zend_Service_Delicious tests
  */
 define('TESTS_ZEND_SERVICE_DELICIOUS_ENABLED', false);
+
+/**
+ * Zend_Service_DeveloperGarden tests
+ * Setup your Username and Password to test this Service
+ */
+define('TESTS_ZEND_SERVICE_DEVELOPERGARDEN_ONLINE_ENABLED', false);
+define('TESTS_ZEND_SERVICE_DEVELOPERGARDEN_ONLINE_LOGIN', 'ZF_Username');
+define('TESTS_ZEND_SERVICE_DEVELOPERGARDEN_ONLINE_PASSWORD', 'ZF_Password');
 
 /**
  * Zend_Service_Flickr online tests
@@ -667,7 +675,6 @@ define('TESTS_ZEND_SERVICE_WINDOWSAZURE_STORAGE_KEY_PROD',                'I+ebY
 /**
  * Blob storage tests
  */
-// Enable this tests only when you have a working account
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_BLOB_RUNTESTS',                   false);
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_BLOB_RUNONPROD',                  false);
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_BLOB_RUNLARGEBLOB',               true);
@@ -678,7 +685,6 @@ define('TESTS_ZEND_SERVICE_WINDOWSAZURE_BLOBSA_CONTAINER_PREFIX',         'phpaz
 /**
  * Table storage tests
  */
-// Enable this tests only when you have a working account
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_TABLE_RUNTESTS',                  false);
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_TABLE_RUNONPROD',                 false);
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_TABLE_TABLENAME_PREFIX',          'phpazuretesttable');
@@ -696,6 +702,13 @@ define('TESTS_ZEND_SERVICE_WINDOWSAZURE_QUEUE_PREFIX',                    'phpaz
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_SESSIONHANDLER_RUNTESTS',         false);
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_SESSIONHANDLER_RUNONPROD',        false);
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_SESSIONHANDLER_TABLENAME_PREFIX', 'phpazuretestsession');
+
+/**
+ * Diagnostics tests
+ */
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_DIAGNOSTICS_RUNTESTS',            false);
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_DIAGNOSTICS_RUNONPROD',           false);
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_DIAGNOSTICS_CONTAINER_PREFIX',    'phpazuretestdiag');
 
 /**
  * Zend_Service_Yahoo online tests

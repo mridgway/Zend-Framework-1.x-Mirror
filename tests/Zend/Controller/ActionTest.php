@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActionTest.php 21143 2010-02-23 07:17:41Z ralph $
+ * @version    $Id: ActionTest.php 22793 2010-08-05 18:32:52Z matthew $
  */
 
 // Call Zend_Controller_ActionTest::main() if this source file is executed directly.
@@ -245,6 +245,15 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $this->_controller->getParam('bar', -1));
         $this->assertEquals(-1, $this->_controller->getParam('baz', -1));
     }
+	
+	/**
+     * @group ZF-9179
+     */
+	public function testGetParamForEmptyString()
+	{
+		$this->_controller->setParam('lang', '');
+		$this->assertEquals('en', $this->_controller->getParam('lang', 'en'));
+	}
 
     public function testGetParams()
     {

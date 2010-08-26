@@ -17,7 +17,7 @@
  * @subpackage PHP
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Parameter.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Parameter.php 22765 2010-08-02 03:13:29Z ramon $
  */
 
 /**
@@ -237,7 +237,7 @@ class Zend_CodeGenerator_Php_Parameter extends Zend_CodeGenerator_Php_Abstract
             $output .= ' = ';
             if (is_string($this->_defaultValue)) {
                 $output .= '\'' . $this->_defaultValue . '\'';
-            } else if($this->_defaultValue instanceof Zend_CodeGenerator_Php_ParameterDefaultValue) {
+            } else if($this->_defaultValue instanceof Zend_CodeGenerator_Php_Parameter_DefaultValue) {
                 $output .= (string)$this->_defaultValue;
             } else {
                 $output .= $this->_defaultValue;

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: WordpressRss2DcAtomTest.php 22301 2010-05-26 10:15:13Z padraic $
+ * @version    $Id: WordpressRss2DcAtomTest.php 22300 2010-05-26 10:13:34Z padraic $
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';

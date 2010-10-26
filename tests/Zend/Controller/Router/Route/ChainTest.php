@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ChainTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ChainTest.php 23187 2010-10-20 18:42:37Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -31,6 +31,9 @@ require_once 'Zend/Config.php';
 
 /** Zend_Controller_Router_Rewrite */
 require_once 'Zend/Controller/Router/Rewrite.php';
+
+/** Zend_Controller_Dispatcher_Standard */
+require_once 'Zend/Controller/Dispatcher/Standard.php';
 
 /** Zend_Controller_Router_Route_Chain */
 require_once 'Zend/Controller/Router/Route/Chain.php';
@@ -114,6 +117,31 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $res['foo']);
         $this->assertEquals(2, $res['bar']);
+    }
+
+    /**
+     * @group ZF-8812
+     */
+    public function testChainingMatchToDefaultValues()
+    {
+        $foo = new Zend_Controller_Router_Route(
+            ':foo',
+            array('foo' => 'bar'),
+            array('foo' => '[a-z]{3}')
+        );
+        
+        $bar = new Zend_Controller_Router_Route_Module(array(
+            'module' => 0,
+            'controller' => 1,
+            'action' => 2
+        ));
+        
+        $chain = $foo->chain($bar);
+
+        $request = new Zend_Controller_Router_ChainTest_Request('http://www.zend.com/');
+        $res = $chain->match($request);
+
+        $this->assertTrue(is_array($res), 'Route did not match to default values.');
     }
 
     public function testChainingShortcutMatch()
@@ -426,8 +454,8 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $router = new Zend_Controller_Router_Rewrite();
         $front = Zend_Controller_Front::getInstance();
         $front->resetInstance();
-        $front->setDispatcher(new Zend_Controller_Router_RewriteTest_Dispatcher());
-        $front->setRequest(new Zend_Controller_Router_RewriteTest_Request());
+        $front->setDispatcher(new Zend_Controller_Router_ChainTest_Dispatcher());
+        $front->setRequest(new Zend_Controller_Router_ChainTest_Request());
         $router->setFrontController($front);
 
         $router->addConfig(new Zend_Config($routes));
@@ -640,6 +668,123 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $res['controller']);
         $this->assertEquals('bar', $res['action']);
     }
+
+    /**
+     * @group ZF-7848
+     */
+    public function testChainingWithEmptyStaticRoutesMatchesCorrectly()
+    {
+        $adminRoute = new Zend_Controller_Router_Route('admin', array(
+            'module'     => 'admin',
+            'controller' => 'index',
+            'action'     => 'index',
+        ));
+        $indexRoute = new Zend_Controller_Router_Route_Static('', array(
+            'module'     => 'admin',
+            'controller' => 'index',
+            'action'     => 'index',
+        ));
+        $loginRoute = new Zend_Controller_Router_Route('login', array(
+            'module'     => 'admin',
+            'controller' => 'login',
+            'action'     => 'index',
+        ));
+        $emptyRoute    = $adminRoute->chain($indexRoute);
+        $nonEmptyRoute = $adminRoute->chain($loginRoute);
+
+        $request = new Zend_Controller_Request_Http();
+        $request->setPathInfo('/admin');
+        $values = $emptyRoute->match($request);
+        $this->assertEquals(array(
+            'module'     => 'admin',
+            'controller' => 'index',
+            'action'     => 'index',
+        ), $values);
+
+        $request->setPathInfo('/admin/');
+        $values = $emptyRoute->match($request);
+        $this->assertEquals(array(
+            'module'     => 'admin',
+            'controller' => 'index',
+            'action'     => 'index',
+        ), $values);
+
+        $request->setPathInfo('/admin/login');
+        $values = $nonEmptyRoute->match($request);
+        $this->assertEquals(array(
+            'module'     => 'admin',
+            'controller' => 'login',
+            'action'     => 'index',
+        ), $values);
+    }
+
+    /**
+     * @group ZF-7848
+     */
+    public function testChainingWithConfiguredEmptyStaticRoutesMatchesCorrectly()
+    {
+        $routes = array(
+            'admin' => array(
+                'route' => 'admin',
+                'defaults' => array(
+                    'module'     => 'admin',
+                    'controller' => 'index',
+                    'action'     => 'index',
+                ),
+                'chains' => array(
+                    'index' => array(
+                        'type'  => 'Zend_Controller_Router_Route_Static',
+                        'route' => '',
+                        'defaults' => array(
+                            'module'     => 'admin',
+                            'controller' => 'index',
+                            'action'     => 'index',
+                        ),
+                    ),
+                    'login' => array(
+                        'route' => 'login',
+                        'defaults' => array(
+                            'module'     => 'admin',
+                            'controller' => 'login',
+                            'action'     => 'index',
+                        ),
+                    ),
+
+                ),
+            ),
+        );
+        $config = new Zend_Config($routes);
+        $rewrite = new Zend_Controller_Router_Rewrite();
+        $rewrite->addConfig($config);
+        $routes = $rewrite->getRoutes();
+        $indexRoute = $rewrite->getRoute('admin-index');
+        $loginRoute = $rewrite->getRoute('admin-login');
+
+        $request = new Zend_Controller_Request_Http();
+        $request->setPathInfo('/admin');
+        $values = $indexRoute->match($request);
+        $this->assertEquals(array(
+            'module'     => 'admin',
+            'controller' => 'index',
+            'action'     => 'index',
+        ), $values);
+
+        $request->setPathInfo('/admin/');
+        $values = $indexRoute->match($request);
+        $this->assertEquals(array(
+            'module'     => 'admin',
+            'controller' => 'index',
+            'action'     => 'index',
+        ), $values);
+
+        $request->setPathInfo('/admin/login');
+        $values = $loginRoute->match($request);
+        $this->assertEquals(array(
+            'module'     => 'admin',
+            'controller' => 'login',
+            'action'     => 'index',
+        ), $values);
+    }
     
     protected function _getRouter()
     {
@@ -680,6 +825,22 @@ class Zend_Controller_Router_ChainTest_Request extends Zend_Controller_Request_H
         $return = $this->_host;
         if ($this->_port)  $return .= ':' . $this->_port;
         return $return;
+    }
+}
+
+/**
+ * Zend_Controller_Router_ChainTest_Dispatcher - dispatcher object for router testing
+ */
+class Zend_Controller_Router_ChainTest_Dispatcher extends Zend_Controller_Dispatcher_Standard
+{
+    public function getDefaultControllerName()
+    {
+        return 'defctrl';
+    }
+
+    public function getDefaultAction()
+    {
+        return 'defact';
     }
 }
 

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ClassFrontendTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ClassFrontendTest.php 23051 2010-10-07 17:01:21Z mabe $
  */
 
 /**
@@ -46,15 +46,23 @@ class test {
 
     private $_string = 'hello !';
 
-    public static function foobar($param1, $param2) {
+    public static function foobar($param1, $param2)
+    {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";
     }
 
-    public function foobar2($param1, $param2) {
+    public function foobar2($param1, $param2)
+    {
         echo($this->_string);
         echo "foobar2_output($param1, $param2)";
         return "foobar2_return($param1, $param2)";
+    }
+
+    public function throwException()
+    {
+        echo 'throw exception';
+        throw new Exception('test exception');
     }
 
 }
@@ -248,5 +256,25 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         );
         $test = new Zend_Cache_Frontend_Class($options);
     }
+
+    /**
+     * @ZF-10521
+     */
+    public function testOutputBufferingOnException()
+    {
+        ob_start();
+        ob_implicit_flush(false);
+
+        echo 'start';
+        try {
+            $this->_instance2->throwException();
+            $this->fail("An exception should be thrown");
+        } catch (Exception $e) {}
+        echo 'end';
+
+        $output = ob_get_clean();
+        $this->assertEquals('startend', $output);
+    }
+
 }
 

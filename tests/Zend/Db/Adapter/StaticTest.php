@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: StaticTest.php 23193 2010-10-21 02:09:18Z ramon $
  */
 
 
@@ -378,6 +378,33 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Test_MyCompany1_Db_Adapter', get_class($adapter));
         set_include_path($oldIncludePath);
 
+    }
+
+    /**
+     * @group ZF-6620
+     */
+    public function testDbConstructorSetOptionFetchMode()
+    {
+        $db = new Zend_Db_Adapter_Static(array('dbname' => 'dummy'));
+        $this->assertEquals($db->getFetchMode(), Zend_Db::FETCH_ASSOC);
+
+        $params = array(
+            'dbname' => 'dummy',
+            'options' => array(
+                Zend_Db::FETCH_MODE => 'obj'
+             )
+        );
+        $db = new Zend_Db_Adapter_Static($params);
+        $this->assertEquals($db->getFetchMode(), Zend_Db::FETCH_OBJ);
+
+        $params = array(
+            'dbname' => 'dummy',
+            'options' => array(
+                Zend_Db::FETCH_MODE => Zend_Db::FETCH_OBJ
+             )
+        );
+        $db = new Zend_Db_Adapter_Static($params);
+        $this->assertEquals($db->getFetchMode(), Zend_Db::FETCH_OBJ);
     }
 
     protected function _isCaseSensitiveFileSystem()

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NavigationTest.php 20376 2010-01-18 12:31:52Z mabe $
+ * @version    $Id: NavigationTest.php 20375 2010-01-18 12:23:37Z mabe $
  */
 
 require_once dirname(__FILE__) . '/TestAbstract.php';

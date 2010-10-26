@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20267 2010-01-13 20:16:35Z matthew $
+ * @version    $Id: AllTests.php 23004 2010-09-24 15:14:34Z matthew $
  */
 
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -35,6 +35,7 @@ require_once 'Zend/Auth/AllTests.php';
 require_once 'Zend/Barcode/AllTests.php';
 require_once 'Zend/Cache/AllTests.php';
 require_once 'Zend/Captcha/AllTests.php';
+require_once 'Zend/Cloud/AllTests.php';
 require_once 'Zend/CodeGenerator/Php/AllTests.php';
 require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/Dom/AllTests.php';
@@ -171,6 +172,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Barcode_AllTests::suite());
         $suite->addTest(Zend_Cache_AllTests::suite());
         $suite->addTest(Zend_Captcha_AllTests::suite());
+        $suite->addTest(Zend_Cloud_AllTests::suite());
         $suite->addTest(Zend_CodeGenerator_Php_AllTests::suite());
         $suite->addTestSuite('Zend_ConfigTest');
         $suite->addTest(Zend_Config_AllTests::suite());

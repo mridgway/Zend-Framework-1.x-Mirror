@@ -17,7 +17,7 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: DialogContainer.php 20165 2010-01-09 18:57:56Z bkarwin $
+ * @version     $Id: DialogContainer.php 20744 2010-01-29 09:55:19Z beberlei $
  */
 
 /**
@@ -45,8 +45,8 @@ class ZendX_JQuery_View_Helper_DialogContainer extends ZendX_JQuery_View_Helper_
      * @param  array $attribs
      * @return string
      */
-	public function dialogContainer($id, $content, $params=array(), $attribs=array())
-	{
+    public function dialogContainer($id, $content, $params=array(), $attribs=array())
+    {
         if (!array_key_exists('id', $attribs)) {
             $attribs['id'] = $id;
         }
@@ -58,17 +58,17 @@ class ZendX_JQuery_View_Helper_DialogContainer extends ZendX_JQuery_View_Helper_
         }
 
         $js = sprintf('%s("#%s").dialog(%s);',
-            ZendX_JQuery_View_Helper_JQuery::getJQueryHandler(),
-            $attribs['id'],
-            $params
+                ZendX_JQuery_View_Helper_JQuery::getJQueryHandler(),
+                $attribs['id'],
+                $params
         );
         $this->jquery->addOnLoad($js);
 
         $html = '<div'
-              . $this->_htmlAttribs($attribs)
-              . '>'
-              . $content
-              . '</div>';
+                . $this->_htmlAttribs($attribs)
+                . '>'
+                . $content
+                . '</div>';
         return $html;
-	}
+    }
 }

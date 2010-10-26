@@ -1,10 +1,11 @@
 ({
 	"dateFormatItem-yM": "M/yyyy", 
 	"dateFormatItem-yQ": "Q yyyy", 
+	"dayPeriods-format-wide-pm": "หลังเที่ยง", 
 	"eraNames": [
 		"พุทธศักราช"
 	], 
-	"dateFormatItem-MMMEd": "Eท d MMM", 
+	"dateFormatItem-MMMEd": "E d MMM", 
 	"dateTimeFormat-full": "{1}, {0}", 
 	"dateFormatItem-yQQQ": "QQQ y", 
 	"months-standAlone-narrow": [
@@ -22,9 +23,10 @@
 		"ธ.ค."
 	], 
 	"dateTimeFormat-short": "{1}, {0}", 
+	"dayPeriods-format-wide-am": "ก่อนเที่ยง", 
 	"dateTimeFormat-medium": "{1}, {0}", 
 	"timeFormat-full": "H นาฬิกา m นาที ss วินาที zzzz", 
-	"dateFormatItem-yMMM": "MMM yyyy", 
+	"dateFormatItem-yMMM": "MMM y", 
 	"days-standAlone-narrow": [
 		"อ", 
 		"จ", 
@@ -38,14 +40,12 @@
 		"พ.ศ."
 	], 
 	"dateFormat-long": "d MMMM y", 
-	"dateFormatItem-EEEd": "EEEท d", 
 	"timeFormat-medium": "H:mm:ss", 
-	"dateFormatItem-yyMM": "M/yyyy", 
+	"dateFormatItem-EEEd": "EEE d", 
+	"dateFormatItem-Hm": "H:mm", 
 	"dateFormat-medium": "d MMM y", 
-	"dateFormatItem-yyMMM": "MMM y", 
-	"dateFormatItem-yMMMM": "MMMM y", 
+	"dateFormatItem-Hms": "H:mm:ss", 
 	"dateTimeFormat-long": "{1}, {0}", 
-	"dateFormatItem-MMMMEd": "E d MMMM", 
 	"dateFormatItem-MMMd": "d MMM", 
 	"timeFormat-long": "H นาฬิกา m นาที ss วินาที z", 
 	"months-format-abbr": [
@@ -63,7 +63,7 @@
 		"ธ.ค."
 	], 
 	"timeFormat-short": "H:mm", 
-	"dateFormatItem-MMMMd": "d MMMM", 
+	"dateFormatItem-H": "H", 
 	"days-format-abbr": [
 		"อา.", 
 		"จ.", 
@@ -73,15 +73,12 @@
 		"ศ.", 
 		"ส."
 	], 
-	"pm": "หลังเที่ยง", 
-	"dateFormatItem-MEd": "Eท d/M", 
-	"dateFormatItem-MMMEEEd": "EEEท d MMM", 
-	"am": "ก่อนเที่ยง", 
+	"dateFormatItem-MEd": "E, d/M", 
 	"dateFormat-short": "d/M/yyyy", 
 	"dateFormatItem-yMMMEd": "EEE d MMM y", 
 	"dateFormat-full": "EEEEที่ d MMMM G y", 
 	"dateFormatItem-Md": "d/M", 
-	"dateFormatItem-yMEd": "EEE d/M/y", 
+	"dateFormatItem-yMEd": "EEE d/M/yyyy", 
 	"months-format-wide": [
 		"มกราคม", 
 		"กุมภาพันธ์", 

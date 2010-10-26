@@ -60,7 +60,7 @@ dojo.declare(
 	//		when clicking the slider bar to make the handle move.
 	slideDuration: dijit.defaultDuration,
 
-	// Flag to _Templated
+	// Flag to _Templated  (TODO: why is this here?   I see no widgets in the template.)
 	widgetsInTemplate: true,
 
 	attributeMap: dojo.delegate(dijit.form._FormWidget.prototype.attributeMap, {
@@ -68,6 +68,13 @@ dojo.declare(
 	}),
 
 	baseClass: "dijitSlider",
+
+	// Apply CSS classes to up/down arrows and handle per mouse state
+	cssStateNodes: {
+		incrementButton: "dijitSliderIncrementButton",
+		decrementButton: "dijitSliderDecrementButton",
+		focusNode: "dijitSliderThumb"
+	},
 
 	_mousePixelCoord: "pageX",
 	_pixelCount: "w",
@@ -234,11 +241,15 @@ dojo.declare(
 	},
 
 	startup: function(){
+		if(this._started){ return; }
+
 		dojo.forEach(this.getChildren(), function(child){
 			if(this[child.container] != this.containerNode){
 				this[child.container].appendChild(child.domNode);
 			}
 		}, this);
+
+		this.inherited(arguments);
 	},
 
 	_typematicCallback: function(/*Number*/ count, /*Object*/ button, /*Event*/ e){

@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
+			dojo.require("dojo.window");
 			dojo.require("dijit.robotx");
 
 			dojo.addOnLoad(function(){
@@ -100,7 +100,7 @@
 
 								// make sure tooltip is on the screen (in LTR mode it needs to go to the
 								// left of the <select>, not to the right like it usually does)
-								var viewportCoords = dijit.getViewport(),
+								var viewportCoords = dojo.window.getBox(),
 									tooltipCoords = dojo.position(masterTT.domNode);
 								console.log("viewport coords: ", viewportCoords, "tooltip coords: ", tooltipCoords);
 								doh.t(tooltipCoords.x > 0, "x > 0");
@@ -172,10 +172,10 @@
 							var d = new doh.Deferred(),
 								tooltip = dijit.byId("t_tooltip");
 
-							// While we are at it, test attr('label', ...) too
-							tooltip.attr('label', 'bill was here');
+							// While we are at it, test set('label', ...) too
+							tooltip.set('label', 'bill was here');
 
-							var connectIds = tooltip.attr("connectId");
+							var connectIds = tooltip.get("connectId");
 							doh.is(2, connectIds.length, "2 connect ids initially");
 							doh.is("t1", connectIds[0]);
 							doh.is("t3", connectIds[1]);
@@ -190,7 +190,7 @@
 								around = dojo.byId("t1");
 
 							doh.robot.sequence(function(){
-								dijit.scrollIntoView(around);
+								dojo.window.scrollIntoView(around);
 								around.focus();
 							}, 500);
 
@@ -213,7 +213,7 @@
 								around = dojo.byId("t2");
 
 							doh.robot.sequence(function(){
-								dijit.scrollIntoView(around);
+								dojo.window.scrollIntoView(around);
 								around.focus();
 							}, 500);
 
@@ -233,7 +233,7 @@
 								around = dojo.byId("t3");
 
 							doh.robot.sequence(function(){
-								dijit.scrollIntoView(around);
+								dojo.window.scrollIntoView(around);
 								around.focus();
 							}, 500);
 
@@ -255,14 +255,14 @@
 
 							tooltip.addTarget("t2");
 
-							var connectIds = tooltip.attr("connectId");
+							var connectIds = tooltip.get("connectId");
 							doh.is(3, connectIds.length, "3 connect ids");
 							doh.is("t1", connectIds[0]);
 							doh.is("t3", connectIds[1]);
 							doh.is("t2", connectIds[2]);
 
 							// Focus "t2 text" and make sure tooltip shows
-							dijit.scrollIntoView(around);
+							dojo.window.scrollIntoView(around);
 							around.focus();
 
 							doh.robot.sequence(d.getTestCallback(function(){
@@ -282,13 +282,13 @@
 								around = dojo.byId("t3");
 
 							tooltip.removeTarget("t3");
-							var connectIds = tooltip.attr("connectId");
+							var connectIds = tooltip.get("connectId");
 							doh.is(2, connectIds.length, "2 connect ids");
 							doh.is("t1", connectIds[0]);
 							doh.is("t2", connectIds[1]);
 
 							// Focus "t3 text" and make sure tooltip doesn't show
-							dijit.scrollIntoView(around);
+							dojo.window.scrollIntoView(around);
 							around.focus();
 
 							doh.robot.sequence(d.getTestCallback(function(){
@@ -311,10 +311,10 @@
 							dojo.byId("t5").focus();
 
 							// Disconnecting from "t2 text", and adding "t4 text"
-							tooltip.attr("connectId", ["t3", "t4"]);
+							tooltip.set("connectId", ["t3", "t4"]);
 
 							// Focus "t2 text" and make sure tooltip doesn't show anymore
-							dijit.scrollIntoView(around);
+							dojo.window.scrollIntoView(around);
 							around.focus();
 
 							doh.robot.sequence(d.getTestCallback(function(){
@@ -333,7 +333,7 @@
 								around = dojo.byId("t4");
 
 							// Focus "t4 text" and make sure tooltip shows
-							dijit.scrollIntoView(around);
+							dojo.window.scrollIntoView(around);
 							around.focus();
 
 							doh.robot.sequence(d.getTestCallback(function(){

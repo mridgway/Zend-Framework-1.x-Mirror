@@ -110,10 +110,6 @@ dojo.require("dojo.parser");
 						idCounter++
 					].join("_");
 				}
-
-				if(! (this.node || node)){
-					new Error(this.declaredClass + ": no node provided to " + this.id);
-				}
 			},
 			set: function(/* String|DomNode|NodeList? */ cont, /* Object? */ params){
 				// summary:
@@ -141,7 +137,8 @@ dojo.require("dojo.parser");
 
 				var node = this.node; 
 				if(!node) {
-					console.error("setContent given no node");
+				    // can't proceed
+					throw new Error(this.declaredClass + ": setContent given no node");
 				}
 				try{
 					node = dojo.html._setNodeContent(node, this.content);
@@ -257,7 +254,11 @@ dojo.require("dojo.parser");
 				var rootNode = this.node;
 				try{
 					// store the results (widgets, whatever) for potential retrieval
-					this.parseResults = dojo.parser.parse(rootNode, true);
+					this.parseResults = dojo.parser.parse({
+						rootNode: rootNode,
+						dir: this.dir,
+						lang: this.lang
+					});
 				}catch(e){
 					this._onError('Content', e, "Error parsing in _ContentSetter#"+this.id);
 				}

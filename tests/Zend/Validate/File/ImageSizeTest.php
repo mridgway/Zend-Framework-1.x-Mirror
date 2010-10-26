@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ImageSizeTest.php 22697 2010-07-26 21:14:47Z alexander $
+ * @version    $Id: ImageSizeTest.php 22668 2010-07-25 14:50:46Z thomas $
  */
 
 // Call Zend_Validate_File_ImageSizeTest::main() if this source file is executed directly.
@@ -86,7 +86,7 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
         $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 0, 'minheight' => 10, 'maxwidth' => 1000, 'maxheight' => 2000));
         $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.jpg'));
         $failures = $validator->getMessages();
-        $this->assertContains('can not be read', $failures['fileImageSizeNotReadable']);
+        $this->assertContains('is not readable', $failures['fileImageSizeNotReadable']);
 
         $file['name'] = 'TestName';
         $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 0, 'minheight' => 10, 'maxwidth' => 1000, 'maxheight' => 2000));

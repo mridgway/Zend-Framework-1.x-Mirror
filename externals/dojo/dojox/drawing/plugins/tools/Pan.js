@@ -16,16 +16,15 @@ dojox.drawing.plugins.tools.Pan = dojox.drawing.util.oo.declare(
 	//
 	dojox.drawing.plugins._Plugin,
 	function(options){
-		
 		this.domNode = options.node;
 		var _scrollTimeout;
 		this.toolbar = options.scope;
 		this.connect(this.toolbar, "onToolClick", this, function(){
 			this.onSetPan(false)
 		});
-		this.connect(this.button, "onClick", this, "onSetPan");
 		this.connect(this.keys, "onKeyUp", this, "onKeyUp");
 		this.connect(this.keys, "onKeyDown", this, "onKeyDown");
+		this.connect(this.keys, "onArrow", this, "onArrow");
 		this.connect(this.anchors, "onAnchorUp", this, "checkBounds");
 		this.connect(this.stencils, "register", this, "checkBounds");
 		this.connect(this.canvas, "resize", this, "checkBounds");
@@ -44,6 +43,7 @@ dojox.drawing.plugins.tools.Pan = dojox.drawing.util.oo.declare(
 		
 	},{
 		selected:false,
+		keyScroll:false,
 		type:"dojox.drawing.plugins.tools.Pan",
 		
 		onPanUp: function(obj){
@@ -53,8 +53,13 @@ dojox.drawing.plugins.tools.Pan = dojox.drawing.util.oo.declare(
 		},
 		
 		onKeyUp: function(evt){
-			if(evt.keyCode == 32){
-				this.onSetPan(false);
+			switch(evt.keyCode){
+				case 32:
+					this.onSetPan(false);
+					break;
+				case 39: case 37: case 38: case 40:
+					clearInterval(this._timer);
+					break;
 			}
 		},
 		
@@ -62,6 +67,16 @@ dojox.drawing.plugins.tools.Pan = dojox.drawing.util.oo.declare(
 			if(evt.keyCode == 32){
 				this.onSetPan(true);
 			}
+		},
+		
+		interval: 20,
+		
+		onArrow: function(evt){
+			if(this._timer){ clearInterval(this._timer); }
+			this._timer = setInterval(dojo.hitch(this,function(evt){
+				this.canvas.domNode.parentNode.scrollLeft += evt.x*10;
+				this.canvas.domNode.parentNode.scrollTop += evt.y*10;
+			},evt), this.interval);
 		},
 		
 		onSetPan: function(/*Boolean | Event*/ bool){
@@ -85,6 +100,14 @@ dojox.drawing.plugins.tools.Pan = dojox.drawing.util.oo.declare(
 			this.canvas.domNode.parentNode.scrollTop -= obj.move.y;
 			this.canvas.domNode.parentNode.scrollLeft -= obj.move.x;
 			this.canvas.onScroll();
+		},
+		
+		onUp: function(obj){
+			if(obj.withinCanvas){
+				this.keyScroll = true;
+			}else{
+				this.keyScroll = false;
+			}
 		},
 		
 		onStencilUp: function(obj){
@@ -212,7 +235,8 @@ dojox.drawing.plugins.tools.Pan = dojox.drawing.util.oo.declare(
 dojox.drawing.plugins.tools.Pan.setup = {
 	name:"dojox.drawing.plugins.tools.Pan",
 	tooltip:"Pan Tool",
-	iconClass:"iconPan"
+	iconClass:"iconPan",
+	button:false
 };
 
 dojox.drawing.register(dojox.drawing.plugins.tools.Pan.setup, "plugin");

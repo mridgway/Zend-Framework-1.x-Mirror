@@ -3,9 +3,10 @@ dojo.provide("dijit.MenuItem");
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 dojo.require("dijit._Contained");
+dojo.require("dijit._CssStateMixin");
 
 dojo.declare("dijit.MenuItem",
-		[dijit._Widget, dijit._Templated, dijit._Contained],
+		[dijit._Widget, dijit._Templated, dijit._Contained, dijit._CssStateMixin],
 		{
 		// summary:
 		//		A line item in a Menu Widget
@@ -18,6 +19,8 @@ dojo.declare("dijit.MenuItem",
 			label: { node: "containerNode", type: "innerHTML" },
 			iconClass: { node: "iconNode", type: "class" }
 		}),
+
+		baseClass: "dijitMenuItem",
 
 		// label: String
 		//		Menu text
@@ -43,11 +46,12 @@ dojo.declare("dijit.MenuItem",
 			// If button label is specified as srcNodeRef.innerHTML rather than
 			// this.params.label, handle it here.
 			if(source && !("label" in this.params)){
-				this.attr('label', source.innerHTML);
+				this.set('label', source.innerHTML);
 			}
 		},
 
 		postCreate: function(){
+			this.inherited(arguments);
 			dojo.setSelectable(this.domNode, false);
 			var label = this.id+"_text";
 			dojo.attr(this.containerNode, "id", label);
@@ -63,7 +67,6 @@ dojo.declare("dijit.MenuItem",
 			//		Handler when mouse is moved onto menu item
 			// tags:
 			//		protected
-			dojo.addClass(this.domNode, 'dijitMenuItemHover');
 			this.getParent().onItemHover(this);
 		},
 
@@ -77,8 +80,13 @@ dojo.declare("dijit.MenuItem",
 
 			// if we are unhovering the currently selected item
 			// then unselect it
-			dojo.removeClass(this.domNode, 'dijitMenuItemHover');
 			this.getParent().onItemUnhover(this);
+
+			// _onUnhover() is called when the menu is hidden (collapsed), due to clicking
+			// a MenuItem and having it execut.  When that happens, FF and IE don't generate
+			// an onmouseout event for the MenuItem, so give _CssStateMixin some help
+			this._hovering = false;
+			this._setStateClass();
 		},
 
 		_onClick: function(evt){
@@ -144,27 +152,26 @@ dojo.declare("dijit.MenuItem",
 
 		setLabel: function(/*String*/ content){
 			// summary:
-			//		Deprecated.   Use attr('label', ...) instead.
+			//		Deprecated.   Use set('label', ...) instead.
 			// tags:
 			//		deprecated
-			dojo.deprecated("dijit.MenuItem.setLabel() is deprecated.  Use attr('label', ...) instead.", "", "2.0");
-			this.attr("label", content);
+			dojo.deprecated("dijit.MenuItem.setLabel() is deprecated.  Use set('label', ...) instead.", "", "2.0");
+			this.set("label", content);
 		},
 
 		setDisabled: function(/*Boolean*/ disabled){
 			// summary:
-			//		Deprecated.   Use attr('disabled', bool) instead.
+			//		Deprecated.   Use set('disabled', bool) instead.
 			// tags:
 			//		deprecated
-			dojo.deprecated("dijit.Menu.setDisabled() is deprecated.  Use attr('disabled', bool) instead.", "", "2.0");
-			this.attr('disabled', disabled);
+			dojo.deprecated("dijit.Menu.setDisabled() is deprecated.  Use set('disabled', bool) instead.", "", "2.0");
+			this.set('disabled', disabled);
 		},
 		_setDisabledAttr: function(/*Boolean*/ value){
 			// summary:
 			//		Hook for attr('disabled', ...) to work.
 			//		Enable or disable this menu item.
 			this.disabled = value;
-			dojo[value ? "addClass" : "removeClass"](this.domNode, 'dijitMenuItemDisabled');
 			dijit.setWaiState(this.focusNode, 'disabled', value ? 'true' : 'false');
 		},
 		_setAccelKeyAttr: function(/*String*/ value){

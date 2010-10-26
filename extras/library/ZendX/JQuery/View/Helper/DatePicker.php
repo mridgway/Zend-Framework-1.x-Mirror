@@ -17,7 +17,7 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: DatePicker.php 21869 2010-04-16 07:49:18Z beberlei $
+ * @version     $Id: DatePicker.php 21867 2010-04-16 07:45:34Z beberlei $
  */
 
 /**

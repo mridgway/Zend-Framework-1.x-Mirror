@@ -476,6 +476,25 @@
             </xi:include>
         </chapter>
 
+        <chapter id="zend.cloud">
+            <title>SimpleCloud API: Zend_Cloud</title>
+            <xi:include href="module_specs/Zend_Cloud_DocumentService.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Cloud_DocumentService.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Cloud_QueueService.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Cloud_QueueService.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Cloud_StorageService.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Cloud_StorageService.xml" />
+                </xi:fallback>
+            </xi:include>
+        </chapter>
+
         <chapter id="zend.codegenerator">
             <title>Zend_CodeGenerator</title>
             <xi:include href="module_specs/Zend_CodeGenerator-Introduction.xml">
@@ -512,9 +531,19 @@
                     <xi:include href="../en/module_specs/Zend_Config_Ini.xml" />
                 </xi:fallback>
             </xi:include>
+            <xi:include href="module_specs/Zend_Config_Json.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Config_Json.xml" />
+                </xi:fallback>
+            </xi:include>
             <xi:include href="module_specs/Zend_Config_Xml.xml">
                 <xi:fallback>
                     <xi:include href="../en/module_specs/Zend_Config_Xml.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Config_Yaml.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Config_Yaml.xml" />
                 </xi:fallback>
             </xi:include>
         </chapter>
@@ -1086,6 +1115,46 @@
                     <xi:include href="../en/module_specs/Zend_Http_Response.xml" />
                 </xi:fallback>
             </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent-Device.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent-Device.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent-Features.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent-Features.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent-Features_Wurfl.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent-Features_Wurfl.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent-Features_DeviceAtlas.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent-Features_DeviceAtlas.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent-Features_TeraWurfl.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent-Features_TeraWurfl.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent-Storage.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent-Storage.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Http_UserAgent-Storage_Session.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Http_UserAgent-Storage_Session.xml" />
+                </xi:fallback>
+            </xi:include>
         </chapter>
 
         <chapter id="zend.infocard">
@@ -1288,7 +1357,7 @@
                     <xi:include href="../en/module_specs/Zend_Mail-MultipleEmails.xml" />
                 </xi:fallback>
             </xi:include>
-            <xi:include href="module_specs/Zend_Mail-DifferentTransports.xml">
+            <xi:include href="module_specs/Zend_Mail-DifferentTransports.xml" parse="xml">
                 <xi:fallback>
                     <xi:include href="../en/module_specs/Zend_Mail-DifferentTransports.xml" />
                 </xi:fallback>
@@ -1823,6 +1892,16 @@
                     <xi:include href="../en/module_specs/Zend_Service_DeveloperGarden.xml" />
                 </xi:fallback>
             </xi:include>
+            <xi:include href="module_specs/Zend_Service_Ebay.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Service_Ebay.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Service_Ebay_Finding.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Service_Ebay_Finding.xml" />
+                </xi:fallback>
+            </xi:include>
             <xi:include href="module_specs/Zend_Service_Flickr.xml">
                 <xi:fallback>
                     <xi:include href="../en/module_specs/Zend_Service_Flickr.xml" />
@@ -1841,6 +1920,11 @@
             <xi:include href="module_specs/Zend_Service-ReCaptcha.xml">
                 <xi:fallback>
                     <xi:include href="../en/module_specs/Zend_Service-ReCaptcha.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Service_ShortUrl.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Service_ShortUrl.xml" />
                 </xi:fallback>
             </xi:include>
             <xi:include href="module_specs/Zend_Service_Simpy.xml">
@@ -1878,9 +1962,29 @@
                     <xi:include href="../en/module_specs/Zend_Service_Twitter.xml" parse="xml" />
                 </xi:fallback>
             </xi:include>
-            <xi:include href="module_specs/Zend_Service_WindowsAzure.xml" parse="xml">
+            <xi:include href="module_specs/Zend_Service_WindowsAzure.xml">
                 <xi:fallback>
-                    <xi:include href="../en/module_specs/Zend_Service_WindowsAzure.xml" parse="xml" />
+                    <xi:include href="../en/module_specs/Zend_Service_WindowsAzure.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Service_WindowsAzure_Blob.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Service_WindowsAzure_Blob.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Service_WindowsAzure_Manager.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Service_WindowsAzure_Manager.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Service_WindowsAzure_Queue.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Service_WindowsAzure_Queue.xml" />
+                </xi:fallback>
+            </xi:include>
+            <xi:include href="module_specs/Zend_Service_WindowsAzure_Table.xml">
+                <xi:fallback>
+                    <xi:include href="../en/module_specs/Zend_Service_WindowsAzure_Table.xml" />
                 </xi:fallback>
             </xi:include>
             <xi:include href="module_specs/Zend_Service_Yahoo.xml">

@@ -4,7 +4,7 @@ dojo.require("dojox.gfx");
 
 (function(){
 	var g = dojox.gfx;
-	
+
 	var clearNode = function(s){
 		s.marginLeft   = "0px";
 		s.marginTop    = "0px";
@@ -19,7 +19,7 @@ dojo.require("dojox.gfx");
 		s.borderRightWidth  = "0px";
 		s.borderBottomWidth = "0px";
 	};
-	
+
 	var getBoxWidth = function(n){
 		// marginBox is incredibly slow, so avoid it if we can
 		if(n["getBoundingClientRect"]){
@@ -29,15 +29,60 @@ dojo.require("dojox.gfx");
 			return dojo.marginBox(n).w;
 		}
 	};
-	
+
 	dojo.mixin(dojox.charting.axis2d.common, {
+		//	summary:
+		//		Common methods to be used by any axis.  This is considered "static".
 		createText: {
 			gfx: function(chart, creator, x, y, align, text, font, fontColor){
+				//	summary:
+				//		Use dojox.gfx to create any text.
+				//	chart: dojox.charting.Chart2D
+				//		The chart to create the text into.
+				//	creator: dojox.gfx.Surface
+				//		The graphics surface to use for creating the text.
+				//	x: Number
+				//		Where to create the text along the x axis (CSS left).
+				//	y: Number
+				//		Where to create the text along the y axis (CSS top).
+				//	align: String
+				//		How to align the text.  Can be "left", "right", "center".
+				//	text: String
+				//		The text to render.
+				//	font: String
+				//		The font definition, a la CSS "font".
+				//	fontColor: String|dojo.Color
+				//		The color of the resultant text.
+				//	returns: dojox.gfx.Text
+				//		The resultant GFX object.
 				return creator.createText({
 					x: x, y: y, text: text, align: align
-				}).setFont(font).setFill(fontColor);
+				}).setFont(font).setFill(fontColor);	//	dojox.gfx.Text
 			},
 			html: function(chart, creator, x, y, align, text, font, fontColor, labelWidth){
+				//	summary:
+				//		Use the HTML DOM to create any text.
+				//	chart: dojox.charting.Chart2D
+				//		The chart to create the text into.
+				//	creator: dojox.gfx.Surface
+				//		The graphics surface to use for creating the text.
+				//	x: Number
+				//		Where to create the text along the x axis (CSS left).
+				//	y: Number
+				//		Where to create the text along the y axis (CSS top).
+				//	align: String
+				//		How to align the text.  Can be "left", "right", "center".
+				//	text: String
+				//		The text to render.
+				//	font: String
+				//		The font definition, a la CSS "font".
+				//	fontColor: String|dojo.Color
+				//		The color of the resultant text.
+				//	labelWidth: Number?
+				//		The maximum width of the resultant DOM node.
+				//	returns: DOMNode
+				//		The resultant DOMNode (a "div" element).
+
 				// setup the text node
 				var p = dojo.doc.createElement("div"), s = p.style, boxWidth;
 				clearNode(s);
@@ -49,7 +94,7 @@ dojo.require("dojox.gfx");
 				s.left = "-10000px";
 				dojo.body().appendChild(p);
 				var size = g.normalizedLength(g.splitFontString(font).size);
-				
+
 				// do we need to calculate the label width?
 				if(!labelWidth){
 					boxWidth = getBoxWidth(p);
@@ -57,7 +102,7 @@ dojo.require("dojox.gfx");
 
 				// new settings for the text node
 				dojo.body().removeChild(p);
-				
+
 				s.position = "relative";
 				if(labelWidth){
 					s.width = labelWidth + "px";
@@ -93,6 +138,7 @@ dojo.require("dojox.gfx");
 					}
 				}
 				s.top = Math.floor(y - size) + "px";
+				s.whiteSpace = "nowrap";	// hack for WebKit
 				// setup the wrapper node
 				var wrap = dojo.doc.createElement("div"), w = wrap.style;
 				clearNode(w);
@@ -101,7 +147,7 @@ dojo.require("dojox.gfx");
 				// insert nodes
 				wrap.appendChild(p)
 				chart.node.insertBefore(wrap, chart.node.firstChild);
-				return wrap;
+				return wrap;	//	DOMNode
 			}
 		}
 	});

@@ -17,11 +17,17 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SyslogTest.php 22632 2010-07-18 18:30:08Z ramon $
+ * @version    $Id: SyslogTest.php 22977 2010-09-19 12:44:00Z intiilapa $
  */
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Log_Writer_SyslogTest::main');
+}
+
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Log_Writer_Syslog */
 require_once 'Zend/Log/Writer/Syslog.php';
@@ -36,6 +42,12 @@ require_once 'Zend/Log/Writer/Syslog.php';
  */
 class Zend_Log_Writer_SyslogTest extends PHPUnit_Framework_TestCase
 {
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function testWrite()
     {
         $fields = array('message' => 'foo', 'priority' => LOG_NOTICE);
@@ -84,4 +96,20 @@ class Zend_Log_Writer_SyslogTest extends PHPUnit_Framework_TestCase
             $this->assertContains('Only LOG_USER is a valid', $e->getMessage());
         }
     }
+
+    /**
+     * @group ZF-8953
+     */
+    public function testFluentInterface()
+    {
+        $writer   = new Zend_Log_Writer_Syslog();
+        $instance = $writer->setFacility(LOG_USER)
+                           ->setApplicationName('my_app');
+
+        $this->assertTrue($instance instanceof Zend_Log_Writer_Syslog);
+    }
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Log_Writer_SyslogTest::main') {
+    Zend_Log_Writer_SyslogTest::main();
 }

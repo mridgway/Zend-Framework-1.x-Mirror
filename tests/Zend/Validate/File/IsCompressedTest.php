@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IsCompressedTest.php 22686 2010-07-26 17:45:12Z ramon $
+ * @version    $Id: IsCompressedTest.php 22685 2010-07-26 17:31:23Z ramon $
  */
 
 // Call Zend_Validate_File_MimeTypeTest::main() if this source file is executed directly.

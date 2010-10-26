@@ -1,5 +1,6 @@
 ({
 	"field-dayperiod": "Časť dňa", 
+	"dayPeriods-format-wide-pm": "popoludní", 
 	"dateFormatItem-yQ": "Q yyyy", 
 	"field-minute": "Minúta", 
 	"dateFormatItem-MMMEd": "E, d. MMM", 
@@ -7,8 +8,11 @@
 		"pred n.l.", 
 		"n.l."
 	], 
+	"field-day-relative+-1": "Včera", 
 	"dateFormatItem-yQQQ": "QQQ y", 
+	"field-day-relative+-2": "Predvčerom", 
 	"field-weekday": "Deň v týždni", 
+	"field-day-relative+-3": "Pred tromi dňami", 
 	"days-standAlone-wide": [
 		"nedeľa", 
 		"pondelok", 
@@ -32,6 +36,7 @@
 		"n", 
 		"d"
 	], 
+	"dayPeriods-format-wide-am": "dopoludnia", 
 	"field-era": "Éra", 
 	"field-hour": "Hodina", 
 	"timeFormat-full": "H:mm:ss zzzz", 
@@ -49,7 +54,8 @@
 		"nov", 
 		"dec"
 	], 
-	"dateFormatItem-yMMM": "MMM y", 
+	"dateFormatItem-yMMM": "LLL y", 
+	"field-day-relative+0": "Dnes", 
 	"days-standAlone-narrow": [
 		"N", 
 		"P", 
@@ -59,17 +65,21 @@
 		"P", 
 		"S"
 	], 
+	"field-day-relative+1": "Zajtra", 
 	"eraAbbr": [
 		"pred n.l.", 
 		"n.l."
 	], 
-	"dateFormatItem-yyyyMMMM": "MMMM y", 
+	"field-day-relative+2": "Pozajtra", 
+	"field-day-relative+3": "O tri dni", 
+	"dateFormatItem-yyyyMMMM": "LLLL y", 
 	"dateFormat-long": "d. MMMM y", 
 	"timeFormat-medium": "H:mm:ss", 
 	"dateFormatItem-EEEd": "EEE, d.", 
 	"field-zone": "Pásmo", 
-	"dateFormatItem-Hm": "HH:mm", 
+	"dateFormatItem-Hm": "H:mm", 
 	"dateFormat-medium": "d.M.yyyy", 
+	"dateFormatItem-Hms": "H:mm:ss", 
 	"dateFormatItem-yyQQQQ": "QQQQ yy", 
 	"quarters-standAlone-wide": [
 		"1. štvrťrok", 
@@ -77,7 +87,7 @@
 		"3. štvrťrok", 
 		"4. štvrťrok"
 	], 
-	"dateFormatItem-yMMMM": "MMMM y", 
+	"dateFormatItem-yMMMM": "LLLL y", 
 	"dateFormatItem-ms": "mm:ss", 
 	"field-year": "Rok", 
 	"months-standAlone-wide": [
@@ -114,6 +124,7 @@
 		"dec"
 	], 
 	"timeFormat-short": "H:mm", 
+	"dateFormatItem-H": "H", 
 	"field-month": "Mesiac", 
 	"dateFormatItem-MMMMd": "d. MMMM", 
 	"quarters-format-abbr": [
@@ -131,7 +142,6 @@
 		"pi", 
 		"so"
 	], 
-	"pm": "popoludní", 
 	"dateFormatItem-mmss": "mm:ss", 
 	"days-format-narrow": [
 		"N", 
@@ -159,7 +169,6 @@
 		"n", 
 		"d"
 	], 
-	"am": "dopoludnia", 
 	"days-standAlone-abbr": [
 		"ne", 
 		"po", 

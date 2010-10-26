@@ -190,6 +190,12 @@ buildUtil.DojoBuildOptions = {
 		helpText: "Removes the default 'com', 'org' and 'net' namespaces that are present in Rhino. This is hazardous to use if "
 			+ "the build system is used as part of a Rhino-based server-side solution, so use with caution. Weird build errors "
 			+ "might occur. Only use if your own code includes things in a com, org or net namespace."
+	},
+	"addGuards": {
+		defaultValue: true,
+		helpText: "Set to false to remove the code guards that protect modules from re-definition. In general you SHOULD NOT "
+			+ "set this value to false. Only do it if you want an even smaller Dojo Base build and you know the implications "
+			+ "of re-defining modules. It is bad. Do not do it."
 	}
 };
 
@@ -1893,6 +1899,9 @@ buildUtil.generateSym = function(/*String*/name){
 	s = "$D" + s;
 	buildUtil.symctr++;
 	var ret;
+	
+	//Make sure name is valid JS
+	name = name.replace(/-/g, "__");
 	if(kwArgs.symbol == "long"){
 		ret = name; // + "_" + s;
 	}else if(kwArgs.symbol == "short"){

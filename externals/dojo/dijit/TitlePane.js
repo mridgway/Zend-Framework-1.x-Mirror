@@ -4,10 +4,11 @@ dojo.require("dojo.fx");
 
 dojo.require("dijit._Templated");
 dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit._CssStateMixin");
 
 dojo.declare(
 	"dijit.TitlePane",
-	[dijit.layout.ContentPane, dijit._Templated],
+	[dijit.layout.ContentPane, dijit._Templated, dijit._CssStateMixin],
 {
 	// summary:
 	//		A pane with a title on top, that can be expanded or collapsed.
@@ -69,10 +70,15 @@ dojo.declare(
 		if(!this.open){
 			this.hideNode.style.display = this.wipeNode.style.display = "none";
 		}
+		
+		// Hover and focus effect on title bar, except for non-toggleable TitlePanes
+		// This should really be controlled from _setToggleableAttr() but _CssStateMixin
+		// doesn't provide a way to disconnect a previous _trackMouseState() call
+		if(this.toggleable){
+			this._trackMouseState(this.titleBarNode, "dijitTitlePaneTitle");
+		}
 		this._setCss();
 		dojo.setSelectable(this.titleNode, false);
-		dijit.setWaiState(this.containerNode,"hidden", this.open ? "false" : "true");
-		dijit.setWaiState(this.focusNode, "pressed", this.open ? "true" : "false");
 
 		// setup open/close animations
 		var hideNode = this.hideNode, wipeNode = this.wipeNode;
@@ -99,6 +105,8 @@ dojo.declare(
 		// open: Boolean
 		//		True if you want to open the pane, false if you want to close it.
 		if(this.open !== open){ this.toggle(); }
+		dijit.setWaiState(this.containerNode,"hidden", this.open ? "false" : "true");
+		dijit.setWaiState(this.focusNode, "pressed", this.open ? "true" : "false");
 	},
 
 	_setToggleableAttr: function(/* Boolean */ canToggle){
@@ -108,10 +116,13 @@ dojo.declare(
 		//		True to allow user to open/close pane by clicking title bar.
 		this.toggleable = canToggle;
 		dijit.setWaiRole(this.focusNode, canToggle ? "button" : "heading");
-		dojo.attr(this.focusNode, "tabIndex", canToggle ? this.tabIndex : "-1");
 		if(canToggle){
 			// TODO: if canToggle is switched from true false shouldn't we remove this setting?
 			dijit.setWaiState(this.focusNode, "controls", this.id+"_pane");
+			dojo.attr(this.focusNode, "tabIndex", this.tabIndex);
+		}
+		else{
+			dojo.removeAttr(this.focusNode, "tabIndex");
 		}
 		this._setCss();
 	},
@@ -163,8 +174,6 @@ dojo.declare(
 			this.hideNode.style.display = this.open ? "" : "none";
 		}
 		this.open =! this.open;
-		dijit.setWaiState(this.containerNode, "hidden", this.open ? "false" : "true");
-		dijit.setWaiState(this.focusNode, "pressed", this.open ? "true" : "false");
 
 		// load content (if this is the first time we are opening the TitlePane
 		// and content is specified as an href, or href was set when hidden)
@@ -210,26 +219,6 @@ dojo.declare(
 	 	}
 	},
 
-	_onTitleEnter: function(){
-		// summary:
-		//		Handler for when someone hovers over my title
-		// tags:
-		//		private
-		if(this.toggleable){
-			dojo.addClass(this.focusNode, "dijitTitlePaneTitle-hover");
-		}
-	},
-
-	_onTitleLeave: function(){
-		// summary:
-		//		Handler when someone stops hovering over my title
-		// tags:
-		//		private
-		if(this.toggleable){
-			dojo.removeClass(this.focusNode, "dijitTitlePaneTitle-hover");
-		}
-	},
-
 	_onTitleClick: function(){
 		// summary:
 		//		Handler when user clicks the title bar
@@ -240,21 +229,12 @@ dojo.declare(
 		}
 	},
 
-	_handleFocus: function(/*Event*/ e){
-		// summary:
-		//		Handle blur and focus events on title bar
-		// tags:
-		//		private
-
-		dojo.toggleClass(this.focusNode, this.baseClass + "Focused", e.type == "focus");
-	},
-
 	setTitle: function(/*String*/ title){
 		// summary:
-		//		Deprecated.  Use attr('title', ...) instead.
+		//		Deprecated.  Use set('title', ...) instead.
 		// tags:
 		//		deprecated
-		dojo.deprecated("dijit.TitlePane.setTitle() is deprecated.  Use attr('title', ...) instead.", "", "2.0");
-		this.attr("title", title);
+		dojo.deprecated("dijit.TitlePane.setTitle() is deprecated.  Use set('title', ...) instead.", "", "2.0");
+		this.set("title", title);
 	}
 });

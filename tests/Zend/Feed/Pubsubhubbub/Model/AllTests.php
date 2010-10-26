@@ -16,7 +16,7 @@
  * @package    UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 22509 2010-06-30 20:54:39Z ramon $
+ * @version    $Id: AllTests.php 22508 2010-06-30 19:14:01Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {

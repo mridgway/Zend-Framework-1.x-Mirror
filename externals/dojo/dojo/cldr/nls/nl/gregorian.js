@@ -1,16 +1,20 @@
 ({
-	"dateFormatItem-yM": "M-yyyy", 
+	"dateFormatItem-yM": "M-y", 
 	"field-dayperiod": "AM/PM", 
+	"dayPeriods-format-wide-pm": "PM", 
 	"dateFormatItem-yQ": "Q yyyy", 
 	"field-minute": "Minuut", 
 	"eraNames": [
 		"Voor Christus", 
-		"Anno Domini"
+		"na Christus"
 	], 
 	"dateFormatItem-MMMEd": "E d MMM", 
+	"field-day-relative+-1": "gisteren", 
 	"dateFormatItem-MMdd": "dd-MM", 
 	"dateFormatItem-yQQQ": "QQQ y", 
+	"field-day-relative+-2": "eergisteren", 
 	"field-weekday": "Dag van de week", 
+	"field-day-relative+-3": "eereergisteren", 
 	"days-standAlone-wide": [
 		"zondag", 
 		"maandag", 
@@ -35,6 +39,7 @@
 		"N", 
 		"D"
 	], 
+	"dayPeriods-format-wide-am": "AM", 
 	"field-era": "Tijdperk", 
 	"field-hour": "Uur", 
 	"quarters-standAlone-abbr": [
@@ -60,6 +65,7 @@
 		"dec."
 	], 
 	"dateFormatItem-yMMM": "MMM y", 
+	"field-day-relative+0": "vandaag", 
 	"days-standAlone-narrow": [
 		"Z", 
 		"M", 
@@ -69,10 +75,13 @@
 		"V", 
 		"Z"
 	], 
+	"field-day-relative+1": "morgen", 
 	"eraAbbr": [
 		"v. Chr.", 
 		"n. Chr."
 	], 
+	"field-day-relative+2": "overmorgen", 
+	"field-day-relative+3": "overovermorgen", 
 	"dateFormatItem-yyyyMMMM": "MMMM y", 
 	"dateFormat-long": "d MMMM y", 
 	"timeFormat-medium": "HH:mm:ss", 
@@ -89,15 +98,8 @@
 		"3e kwartaal", 
 		"4e kwartaal"
 	], 
-	"dateFormatItem-yMMMM": "MMMM y", 
 	"dateFormatItem-ms": "mm:ss", 
 	"field-year": "Jaar", 
-	"quarters-standAlone-narrow": [
-		"1", 
-		"2", 
-		"3", 
-		"4"
-	], 
 	"field-week": "Week", 
 	"months-standAlone-wide": [
 		"januari", 
@@ -113,7 +115,6 @@
 		"november", 
 		"december"
 	], 
-	"dateFormatItem-MMMMEd": "E d MMMM", 
 	"dateFormatItem-MMMd": "d-MMM", 
 	"dateFormatItem-yyQ": "Q yy", 
 	"timeFormat-long": "HH:mm:ss z", 
@@ -149,8 +150,6 @@
 		"vr", 
 		"za"
 	], 
-	"pm": "PM", 
-	"dateFormatItem-mmss": "mm:ss", 
 	"dateFormatItem-M": "L", 
 	"days-format-narrow": [
 		"Z", 
@@ -178,7 +177,6 @@
 		"N", 
 		"D"
 	], 
-	"am": "AM", 
 	"days-standAlone-abbr": [
 		"zo", 
 		"ma", 
@@ -192,7 +190,7 @@
 	"dateFormatItem-yMMMEd": "EEE d MMM y", 
 	"dateFormat-full": "EEEE d MMMM y", 
 	"dateFormatItem-Md": "d-M", 
-	"dateFormatItem-yMEd": "EEE d-M-yyyy", 
+	"dateFormatItem-yMEd": "EEE d-M-y", 
 	"months-format-wide": [
 		"januari", 
 		"februari", 

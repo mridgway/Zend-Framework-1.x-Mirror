@@ -1,6 +1,7 @@
 ({
 	"dateFormatItem-yM": "M‏/yyyy", 
 	"field-dayperiod": "ص/م", 
+	"dayPeriods-format-wide-pm": "م", 
 	"dateFormatItem-yQ": "yyyy Q", 
 	"field-minute": "الدقائق", 
 	"eraNames": [
@@ -8,6 +9,7 @@
 		"ميلادي"
 	], 
 	"dateFormatItem-MMMEd": "E d MMM", 
+	"field-day-relative+-1": "أمس", 
 	"dateFormatItem-MMdd": "dd‏/MM", 
 	"dateFormatItem-yQQQ": "y QQQ", 
 	"field-weekday": "اليوم", 
@@ -35,6 +37,7 @@
 		"ب", 
 		"د"
 	], 
+	"dayPeriods-format-wide-am": "ص", 
 	"field-era": "العصر", 
 	"field-hour": "الساعات", 
 	"quarters-standAlone-abbr": [
@@ -60,6 +63,7 @@
 		"ديسمبر"
 	], 
 	"dateFormatItem-yMMM": "MMM y", 
+	"field-day-relative+0": "اليوم", 
 	"days-standAlone-narrow": [
 		"ح", 
 		"ن", 
@@ -69,16 +73,18 @@
 		"ج", 
 		"س"
 	], 
+	"field-day-relative+1": "غدًا", 
 	"eraAbbr": [
 		"ق.م", 
 		"م"
 	], 
+	"field-day-relative+2": "بعد الغد", 
 	"dateFormatItem-yyyyMM": "MM‏/yyyy", 
 	"dateFormatItem-yyyyMMMM": "MMMM، y", 
 	"dateFormat-long": "d MMMM، y", 
 	"timeFormat-medium": "h:mm:ss a", 
 	"field-zone": "التوقيت", 
-	"dateFormatItem-Hm": "H:mm", 
+	"dateFormatItem-Hm": "HH:mm", 
 	"dateFormat-medium": "dd‏/MM‏/yyyy", 
 	"quarters-standAlone-wide": [
 		"الربع الأول", 
@@ -152,7 +158,6 @@
 		"جمعة", 
 		"سبت"
 	], 
-	"pm": "م", 
 	"dateFormatItem-M": "L", 
 	"days-format-narrow": [
 		"ح", 
@@ -179,7 +184,6 @@
 		"ب", 
 		"د"
 	], 
-	"am": "ص", 
 	"days-standAlone-abbr": [
 		"أحد", 
 		"إثنين", 

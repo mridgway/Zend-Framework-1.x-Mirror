@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: InflectorTest.php 21372 2010-03-07 19:58:08Z thomas $
+ * @version    $Id: InflectorTest.php 21371 2010-03-07 19:56:01Z thomas $
  */
 
 

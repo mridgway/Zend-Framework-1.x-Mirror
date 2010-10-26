@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 17227 -->
+<!-- EN-Revision: 22747 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.json.advanced">
     <title>Uso Avançado do Zend_Json</title>
 
     <sect2 id="zend.json.advanced.objects1">
         <title>Objetos JSON</title>
+
         <para>
             Quando codificamos objetos <acronym>PHP</acronym> como <acronym>JSON</acronym>, todas
             as propriedades públicas desse objeto estarão codificadas em um objeto
             <acronym>JSON</acronym>.
         </para>
+
         <para>
             <acronym>JSON</acronym> não permite referências de objeto, por isso deve-se tomar
             cuidado para não codificar objetos com referências recursivas. Se você tiver problemas
@@ -19,28 +21,33 @@
             opcional para verificar a recursividade; se um objeto for serializado duplamente,
             uma exceção será lançada.
         </para>
+
         <para>
-            Descodificar objetos <acronym>JSON</acronym> traz uma ligeria dificuldade, entretanto,
+            Descodificar objetos <acronym>JSON</acronym> traz uma ligeira dificuldade, entretanto,
             desde que os objetos do JavaScript correspondam o mais próximo de uma matriz
             associativa do <acronym>PHP</acronym>. Alguns sugerem que um identificador da classe
             deve ser passado, e um exemplo do objeto dessa classe deve ser criado e populado com
             os pares chave/valor do objeto <acronym>JSON</acronym>; outros pensam que isto poderia
             gerar um risco substancial da segurança.
         </para>
+
         <para>
             Por padrão, <classname>Zend_Json</classname> irá descodificar objetos
             <acronym>JSON</acronym> como matriz associativas. Entretanto, se você deseja que o
             retorne um objeto, você pode especificar isto:
         </para>
+
         <programlisting language="php"><![CDATA[
 // Descodifique objetos JSON como objetos PHP
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 ]]></programlisting>
+
         <para>
             Todos os objetos descodificados assim são retornados como objetos de
-            <code>StdClass</code> com as propriedades que correspondem aos pares chave/valor na
-            notação de <acronym>JSON</acronym>.
+            <classname>StdClass</classname> com as propriedades que correspondem aos pares
+            chave/valor na notação de <acronym>JSON</acronym>.
         </para>
+
         <para>
             A recomendação do Zend Framework é que o desenvolvedor deve decidir-se como
             descodificar objetos <acronym>JSON</acronym>. Se um objeto de um tipo especificado for
@@ -72,7 +79,7 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
             descodificação <acronym>JSON</acronym>. Se não estiver instalado, uma implementação do
             Zend Framework no código <acronym>PHP</acronym> é usada para a codificação e
             descodificação. Este último é consideravelmente mais lento do que usando a extensão
-            do php, mas comporta-se exatamente da mesma forma.
+            do <acronym>PHP</acronym>, mas comporta-se exatamente da mesma forma.
         </para>
 
         <para>
@@ -103,10 +110,11 @@ Zend_Json::$useBuiltinEncoderDecoder = true:
             <classname>Zend_Json_Expr</classname>. Ela implementa o padrão value object e é
             imutável. Você pode definir a expressão javascript como o primeiro argumento do
             construtor. Por padrão <classname>Zend_Json::encode</classname> não codifica callbacks
-            de javascript, você deverá passar a opção <code>'enableJsonExprFinder' = true</code>
-            para a função <code>encode</code>. Se ativado, o suporte à expressão funcionará para
-            todas as expressões aninhadas em estruturas de grande porte.
-            Um exemplo de uso seria parecido com:
+            de javascript, você deverá passar a opção <property>enableJsonExprFinder</property> e
+            defini-la para <constant>TRUE</constant> para a função
+            <methodname>encode()</methodname>. Se ativado, o suporte à expressão funcionará para
+            todas as expressões aninhadas em estruturas de grande porte. Um exemplo de uso seria
+            parecido com:
         </para>
 
         <programlisting language="php"><![CDATA[

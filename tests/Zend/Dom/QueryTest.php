@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: QueryTest.php 22045 2010-04-28 19:59:49Z matthew $
+ * @version    $Id: QueryTest.php 23062 2010-10-08 14:05:45Z matthew $
  */
 
 // Call Zend_Dom_QueryTest::main() if this source file is executed directly.
@@ -270,6 +270,46 @@ EOF;
         $this->assertEquals(2, count($results), $results->getXpathQuery());
         $results = $this->query->query('input[type="hidden"][value="0"]');
         $this->assertEquals(1, count($results));
+    }
+
+    /**
+     * @group ZF-3938
+     */
+    public function testAllowsSpecifyingEncodingAtConstruction()
+    {
+        $doc = new Zend_Dom_Query($this->getHtml(), 'iso-8859-1');
+        $this->assertEquals('iso-8859-1', $doc->getEncoding());
+    }
+
+    /**
+     * @group ZF-3938
+     */
+    public function testAllowsSpecifyingEncodingWhenSettingDocument()
+    {
+        $this->query->setDocument($this->getHtml(), 'iso-8859-1');
+        $this->assertEquals('iso-8859-1', $this->query->getEncoding());
+    }
+
+    /**
+     * @group ZF-3938
+     */
+    public function testAllowsSpecifyingEncodingViaSetter()
+    {
+        $this->query->setEncoding('iso-8859-1');
+        $this->assertEquals('iso-8859-1', $this->query->getEncoding());
+    }
+
+    /**
+     * @group ZF-3938
+     */
+    public function testSpecifyingEncodingSetsEncodingOnDomDocument()
+    {
+        $this->query->setDocument($this->getHtml(), 'utf-8');
+        $test = $this->query->query('.foo');
+        $this->assertType('Zend_Dom_Query_Result', $test);
+        $doc  = $test->getDocument();
+        $this->assertType('DOMDocument', $doc);
+        $this->assertEquals('utf-8', $doc->encoding);
     }
 }
 

@@ -114,7 +114,9 @@ dojox.json.ref = {
 					if((typeof val =='object') && val && !(val instanceof Date) && i != '__parent'){
 						ref=val[refAttribute] || (idAsRef && val[idAttribute]);
 						if(!ref || !val.__parent){
-							val.__parent = it;
+							if(it != reWalk){
+								val.__parent = target;
+							}
 						}
 						if(ref){ // a reference was found
 							// make sure it is a safe reference
@@ -177,7 +179,7 @@ dojox.json.ref = {
 				}
 			}
 	
-			if(update && (idAttribute in it)){
+			if(update && (idAttribute in it || target instanceof Array)){
 				// this means we are updating with a full representation of the object, we need to remove deleted
 				for(i in target){
 					if(!target.__isDirty && target.hasOwnProperty(i) && !it.hasOwnProperty(i) && !(i.charAt(0) == '_' && i.charAt(1) == '_') && !(target instanceof Array && isNaN(i))){

@@ -57,6 +57,7 @@
 		
 		<script type="text/javascript" src="../../../dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
 		<script type="text/javascript" src="../../../dijit/tests/_testCommon.js"></script>
+		<script type="text/javascript" src="../GridContainerLite.js"></script>
 		<script type="text/javascript" src="../GridContainer.js"></script>
 		<script type="text/javascript">
 			dojo.require("dojo.parser");
@@ -78,6 +79,12 @@
 					GC1.setColumns(nb);
 				}
 			}
+			
+			function setColumnWidths(){
+				GC1 = dijit.byId("GC1");
+				var widths = dojo.byId("colWidth").value;
+				GC1.set("colWidths", widths);
+			}
 		</script>
 
 	</head>
@@ -92,34 +99,39 @@
 		
 		<h2>Grid Container (allowAutoScroll="true", hasResizableColumns="false")</h2>
 			
-			<h5>Add / remove dynamically columns :</h5>
-			<input value="5" name="col" id="nbCol"/>
-			<button id="bt2" dojoType="dijit.form.Button" onclick="setColumns();">set Number of Columns</button>
+		<h5>Add / remove dynamically columns :</h5>
+		<input value="5" name="col" id="nbCol"/>
+		<button id="bt2" dojoType="dijit.form.Button" onclick="setColumns();">set Number of Columns</button>
+
+		<h5>Set the width of columns :</h5>
+		<input value="25,30,40" name="col" id="colWidth"/>
+		<button id="bt3" dojoType="dijit.form.Button" onclick="setColumnWidths();">Set Column Widths</button>
 		
 		<div>
 			<h4>Testing column width where the first column has a width fixed to 40%.  All other columns take up the remiaining space</h4>
+			
 			<div id="GC1" dojoType="dojox.layout.GridContainer" 
 				nbZones="3"
 				opacity="0.7" 
 				allowAutoScroll="true" 
 				hasResizableColumns="false"
 				withHandles="true"
-				acceptTypes="dijit.layout.ContentPane, dijit.TitlePane, dijit.ColorPalette, dijit.Calendar"
+				acceptTypes="ContentPane, TitlePane, ColorPalette, Calendar"
 
 				colWidths="40"
 				>
-					<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°1 !</div>
-					<div dojoType="dijit.TitlePane" title="Ergo">
+					<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°1 !</div>
+					<div dojoType="dijit.TitlePane" dndType="TitlePane" title="Ergo">
 						Non ergo erunt homines deliciis diffluentes audiendi, si quando de amicitia, quam nec usu nec ratione habent cognitam, disputabunt. Nam quis est, pro deorum fidem atque hominum! qui velit, ut neque diligat quemquam nec ipse ab ullo diligatur, circumfluere omnibus copiis atque in omnium rerum abundantia vivere? Haec enim est tyrannorum vita nimirum, in qua nulla fides, nulla caritas, nulla stabilis benevolentiae potest esse fiducia, omnia semper suspecta atque sollicita, nullus locus amicitiae.
 					</div>
-					<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°2 !</div>
-			  		<div dojoType="dijit.layout.ContentPane" title="Intellectum">
+					<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°2 !</div>
+			  		<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" title="Intellectum">
 			  			Intellectum est enim mihi quidem in multis, et maxime in me ipso, sed paulo ante in omnibus, cum M. Marcellum senatui reique publicae concessisti, commemoratis praesertim offensionibus, te auctoritatem huius ordinis dignitatemque rei publicae tuis vel doloribus vel suspicionibus anteferre. Ille quidem fructum omnis ante actae vitae hodierno die maximum cepit, cum summo consensu senatus, tum iudicio tuo gravissimo et maximo. Ex quo profecto intellegis quanta in dato beneficio sit laus, cum in accepto sit tanta gloria.
 			  		</div>
 			  		
-					<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°3 !</div>
-					<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°4 !</div>
-					<div dojoType="dijit.Calendar"></div>
+					<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°3 !</div>
+					<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°4 !</div>
+					<div dojoType="dijit.Calendar" dndType="Calendar"></div>
 			</div>
 			
 			
@@ -130,21 +142,21 @@
 							allowAutoScroll="true" 
 							hasResizableColumns="false"
 							withHandles="true"
-							acceptTypes="dijit.layout.ContentPane, dijit.TitlePane, dijit.ColorPalette, dijit.Calendar"
+							acceptTypes="ContentPane,TitlePane,ColorPalette,Calendar"
 							colWidths="40,40,20"
 							>
-								<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°1 !</div>
-								<div dojoType="dijit.TitlePane" title="Ergo">
+								<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°1 !</div>
+								<div dojoType="dijit.TitlePane" dndType="TitlePane" title="Ergo">
 									Non ergo erunt homines deliciis diffluentes audiendi, si quando de amicitia, quam nec usu nec ratione habent cognitam, disputabunt. Nam quis est, pro deorum fidem atque hominum! qui velit, ut neque diligat quemquam nec ipse ab ullo diligatur, circumfluere omnibus copiis atque in omnium rerum abundantia vivere? Haec enim est tyrannorum vita nimirum, in qua nulla fides, nulla caritas, nulla stabilis benevolentiae potest esse fiducia, omnia semper suspecta atque sollicita, nullus locus amicitiae.
 								</div>
-								<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°2 !</div>
-						  		<div dojoType="dijit.layout.ContentPane" title="Intellectum">
+								<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°2 !</div>
+						  		<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" title="Intellectum">
 						  			Intellectum est enim mihi quidem in multis, et maxime in me ipso, sed paulo ante in omnibus, cum M. Marcellum senatui reique publicae concessisti, commemoratis praesertim offensionibus, te auctoritatem huius ordinis dignitatemque rei publicae tuis vel doloribus vel suspicionibus anteferre. Ille quidem fructum omnis ante actae vitae hodierno die maximum cepit, cum summo consensu senatus, tum iudicio tuo gravissimo et maximo. Ex quo profecto intellegis quanta in dato beneficio sit laus, cum in accepto sit tanta gloria.
 						  		</div>
 						  		
-								<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°3 !</div>
-								<div dojoType="dijit.layout.ContentPane" class="cpane" label="Content Pane">Content Pane n°4 !</div>
-								<div dojoType="dijit.Calendar"></div>
+								<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°3 !</div>
+								<div dojoType="dijit.layout.ContentPane" dndType="ContentPane" class="cpane" label="Content Pane">Content Pane n°4 !</div>
+								<div dojoType="dijit.Calendar" dndType="Calendar"></div>
 			</div>
 		</div>
 		

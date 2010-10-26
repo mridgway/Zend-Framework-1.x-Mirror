@@ -5,7 +5,7 @@
 	<title>Dijit Theme Tester</title>
 
 	<!-- required: a default theme -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
 
 	<style type="text/css">
 		@import "../../dojo/resources/dojo.css";
@@ -40,19 +40,13 @@
 
 		hr.spacer { border:0; background-color:#ededed; width:80%; height:1px; }
 
-		/* for custom menu buttons, do not appear to have any effect */
-		.myCustomTheme .dijitButtonNode {
-			border:1px solid #000;
-			vertical-align: middle;
-			padding: 0.2em 0.2em;
-			background: url("themeTesterImages/blackButtonEnabled.gif") repeat-x bottom left #474747;
-			color: blue;
-		}
-
-		.myCustomTheme .dijitButtonHover .dijitButtonNode,
-		.myCustomTheme .dijitToggleButtonHover .dijitButtonNode {
-			background: url("themeTesterImages/blackButtonHover.gif") repeat-x bottom left #3b3b3b !important;
-		}
+		/* rules used to test custom setting of TextBox padding */
+		.inputPadding0 .dijitInputField { padding: 0px !important; }
+		.inputPadding1 .dijitInputField { padding: 1px !important; }
+		.inputPadding2 .dijitInputField { padding: 2px !important; }
+		.inputPadding3 .dijitInputField { padding: 3px !important; }
+		.inputPadding4 .dijitInputField { padding: 4px !important; }
+		.inputPadding5 .dijitInputField { padding: 5px !important; }
 	</style>
 
 	<!-- a check for stray globals: not needed! -->
@@ -79,13 +73,19 @@
 	<script type="text/javascript"> // dojo.requires()
 
 		dojo.require("dijit.Menu");
+		dojo.require("dijit.MenuItem");
+		dojo.require("dijit.PopupMenuItem");
+
 		dojo.require("dijit.Calendar");
 		dojo.require("dijit.ColorPalette");
 		dojo.require("dijit.ProgressBar");
 		dojo.require("dijit.TitlePane");
 		dojo.require("dijit.Tooltip");
 		dojo.require("dijit.Tree");
+
 		dojo.require("dijit.MenuBar");
+		dojo.require("dijit.MenuBarItem");
+		dojo.require("dijit.PopupMenuBarItem");
 
 		// editor:
 		dojo.require("dijit.Editor");
@@ -95,7 +95,7 @@
 		// dnd:
 		dojo.require("dojo.dnd.Source");
 
-		// various Form elemetns
+		// various Form elements
 		dojo.require("dijit.form.CheckBox");
 		dojo.require("dijit.form.Textarea");
 		dojo.require("dijit.form.SimpleTextarea");
@@ -107,14 +107,20 @@
 		dojo.require("dijit.form.Button");
 		dojo.require("dijit.InlineEditBox");
 		dojo.require("dijit.form.NumberSpinner");
+
 		dojo.require("dijit.form.VerticalSlider");
+		dojo.require("dijit.form.VerticalRuleLabels");
+		dojo.require("dijit.form.VerticalRule");
 		dojo.require("dijit.form.HorizontalSlider");
+		dojo.require("dijit.form.HorizontalRuleLabels");
+		dojo.require("dijit.form.HorizontalRule");
 
 		// layouts used in page
 		dojo.require("dijit.layout.AccordionContainer");
 		dojo.require("dijit.layout.ContentPane");
 		dojo.require("dijit.layout.TabContainer");
 		dojo.require("dijit.layout.BorderContainer");
+		dojo.require("dijit.layout.LinkPane");
 		dojo.require("dijit.Dialog");
 
 		// scan page for widgets and instantiate them
@@ -136,6 +142,40 @@
 		// for the calendar
 		function myHandler(id,newValue){
 			console.debug("onChange for id = " + id + ", value: " + newValue);
+		}
+
+		// current setting (if there is one) to override theme default padding on TextBox based widgets
+		currentInputPadding = "";
+
+		function setTextBoxPadding(){
+			// summary:
+			//		Handler for when a MenuItem is clicked to set non-default padding for
+			//		TextBox widgets
+
+			// Effectively ignore clicks on the  currently checked MenuItem
+			if(!this.get("checked")){
+				this.set("checked", true);
+			}
+
+			// val will be "theme default", "0px", "1px", ..., "5px"
+			var val = this.get("label");
+			
+			// Set class on body to get requested padding, and remove any previously set class
+			if(currentInputPadding){
+				dojo.removeClass(dojo.body(), currentInputPadding);
+				currentInputPadding = "";
+			}
+			if(val != "theme default"){
+				currentInputPadding = "inputPadding" + val.replace("px", "");
+				dojo.addClass(dojo.body(), currentInputPadding);
+			}
+
+			// Clear previously checked MenuItem (radio-button effect).
+			dojo.forEach(this.getParent().getChildren(), function(mi){
+				if(mi != this){
+					mi.set("checked", false);
+				}
+			}, this);
 		}
 
 		dojo.addOnLoad(function() {
@@ -160,6 +200,7 @@
 			// availableThemes[] is just a list of 'official' dijit themes, you can use ?theme=String
 			// for 'un-supported' themes, too. (eg: yours)
 			var availableThemes = [
+				{ theme:"claro", author:"Dojo", baseUri:"../themes/" },
 				{ theme:"tundra", author:"Dojo", baseUri:"../themes/" },
 				{ theme:"soria", author:"nikolai", baseUri:"../themes/" },
 				{ theme:"nihilo", author:"nikolai", baseUri:"../themes/" }
@@ -167,7 +208,12 @@
 
 			var tmpString='';
 			dojo.forEach(availableThemes,function(theme){
-				tmpString += '<a href="?theme='+theme.theme+'">'+theme.theme+'</'+'a> - by: '+theme.author+' <br>';
+				tmpString += 
+					'<a href="?theme='+theme.theme+'">'+theme.theme+'</'+'a> (' +
+					'<a href="?theme='+theme.theme+'&dir=rtl">RTL</'+'a> ' +
+					'<a href="?theme='+theme.theme+'&a11y=true">high-contrast</'+'a> ' +
+					'<a href="?theme='+theme.theme+'&dir=rtl&a11y=true">RTL+high-contrast</'+'a> )' +
+					' - by: '+theme.author+' <br>';
 				dijit.byId('themeMenu').addChild(new dijit.MenuItem({
 					label: theme.theme,
 					onClick: function(){ location.search = "?theme=" + theme.theme; }
@@ -207,11 +253,11 @@
 		dojo.addOnLoad(function(){
 			// It's the server's responsibility to localize the date displayed in the (non-edit) version of an InlineEditBox,
 			// but since we don't have a server we'll hack it in the client
-			dijit.byId("backgroundArea").attr('value', dojo.date.locale.format(new Date(2005, 11, 30), { selector: 'date' }));
+			dijit.byId("backgroundArea").set('value', dojo.date.locale.format(new Date(2005, 11, 30), { selector: 'date' }));
 
 			var nineAm = new Date(0);
 			nineAm.setHours(9);
-			dijit.byId("timePicker").attr('value', dojo.date.locale.format(nineAm, { selector: 'time' }));
+			dijit.byId("timePicker").set('value', dojo.date.locale.format(nineAm, { selector: 'time' }));
 		});
 
 		/***
@@ -231,9 +277,9 @@
 		***/
 	</script>
 </head>
-<body class="tundra">
+<body class="claro">
 	<!-- basic preloader: -->
-	<div id="loader"><div id="loaderInner">Loading themeTester ... </div></div>
+	<div id="loader"><div id="loaderInner" style="direction:ltr;">Loading themeTester ... </div></div>
 
 	<!-- data for tree and combobox -->
 	<div dojoType="dojo.data.ItemFileReadStore" jsId="continentStore"
@@ -245,11 +291,11 @@
 		<div dojoType="dijit.MenuItem" onClick="alert('Hello world');">Enabled Item</div>
 		<div dojoType="dijit.MenuItem" disabled="true">Disabled Item</div>
 		<div dojoType="dijit.MenuSeparator"></div>
-		<div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconCut"
+		<div dojoType="dijit.MenuItem" iconClass="dijitIconCut"
 			onClick="alert('not actually cutting anything, just a test!')">Cut</div>
-		<div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconCopy"
+		<div dojoType="dijit.MenuItem" iconClass="dijitIconCopy"
 			onClick="alert('not actually copying anything, just a test!')">Copy</div>
-		<div dojoType="dijit.MenuItem" iconClass="dijitEditorIcon dijitEditorIconPaste"
+		<div dojoType="dijit.MenuItem" iconClass="dijitIconPaste"
 			onClick="alert('not actually pasting anything, just a test!')">Paste</div>
 		<div dojoType="dijit.MenuSeparator"></div>
 		<div dojoType="dijit.PopupMenuItem">
@@ -290,23 +336,22 @@
 			<div dojoType="dijit.PopupMenuBarItem" id="file">
 				<span>File</span>
 				<div dojoType="dijit.Menu" id="fileMenu">
-					<div dojoType="dijit.MenuItem" id="globals" iconClass="dijitEditorIcon dijitEditorIconNew" onClick="logStrayGlobals();">Log globals</div>
-					<div dojoType="dijit.MenuItem" id="widgets" iconClass="dijitEditorIcon dijitEditorIconNew" onClick="logWidgets();">Log widgets</div>
-					<div dojoType="dijit.MenuItem" id="destroy" iconClass="dijitEditorIcon dijitEditorIconDelete" onClick="tearDown();">Destroy All</div>
+					<div dojoType="dijit.MenuItem" id="globals" onClick="logStrayGlobals();">Log globals</div>
+					<div dojoType="dijit.MenuItem" id="widgets" onClick="logWidgets();">Log widgets</div>
+					<div dojoType="dijit.MenuItem" id="destroy" iconClass="dijitIconDelete" onClick="tearDown();">Destroy All</div>
 				</div>
 			</div>
 			<div dojoType="dijit.PopupMenuBarItem" id="edit">
 				<span>Edit</span>
 				<div dojoType="dijit.Menu" id="editMenu">
-					<div dojoType="dijit.MenuItem" id="cut" iconClass="dijitEditorIcon dijitEditorIconCut"
+					<div dojoType="dijit.MenuItem" id="cut" iconClass="dijitIconCut"
 						onClick="console.log('not actually cutting anything, just a test!')">Cut</div>
-					<div dojoType="dijit.MenuItem" id="copy" iconClass="dijitEditorIcon dijitEditorIconCopy"
+					<div dojoType="dijit.MenuItem" id="copy" iconClass="dijitIconCopy"
 						onClick="console.log('not actually copying anything, just a test!')">Copy</div>
-					<div dojoType="dijit.MenuItem" id="paste" iconClass="dijitEditorIcon dijitEditorIconPaste"
+					<div dojoType="dijit.MenuItem" id="paste" iconClass="dijitIconPaste"
 						onClick="console.log('not actually pasting anything, just a test!')">Paste</div>
 					<div dojoType="dijit.MenuSeparator" id="separator"></div>
-					<div dojoType="dijit.MenuItem" id="undo" iconClass="dijitEditorIcon dijitEditorIconUndo">Undo</div>
-					<div dojoType="dijit.MenuItem" id="redo" iconClass="dijitEditorIcon dijitEditorIconRedo">Redo</div>
+					<div dojoType="dijit.MenuItem" id="undo" iconClass="dijitIconUndo">Undo</div>
 				</div>
 			</div>
 			<div dojoType="dijit.PopupMenuBarItem" id="view">
@@ -329,6 +374,41 @@
 			<div dojoType="dijit.PopupMenuBarItem" id="themes">
 				<span>Themes</span>
 				<div dojoType="dijit.Menu" id="themeMenu">
+				</div>
+			</div>
+			<div dojoType="dijit.PopupMenuBarItem" id="dialogs">
+				<span>Dialogs</span>
+				<div dojoType="dijit.Menu" id="dialogMenu">
+					<div dojoType="dijit.MenuItem">
+						<script type="dojo/method" event="onClick">
+							var dlg = dijit.byId('dialog1');
+							dlg.show();
+							// avoid (trying to) restore focus to a closed menu, go to MenuBar instead
+							dlg._savedFocus = dojo.byId("header");
+						</script>
+						slow loading
+					</div>
+					<div dojoType="dijit.MenuItem">
+						<script type="dojo/method" event="onClick">
+							var dlg = dijit.byId('dialogAB');
+							dlg.show();
+							// avoid (trying to) restore focus to a closed menu, go to MenuBar instead
+							dlg._savedFocus = dojo.byId("header");
+						</script>
+						action bar
+					</div>
+				</div>
+			</div>
+			<div dojoType="dijit.PopupMenuBarItem" id="inputPadding">
+				<span>TextBox Padding</span>
+				<div dojoType="dijit.Menu" id="inputPaddingMenu">
+					<div dojoType="dijit.CheckedMenuItem" onClick="setTextBoxPadding" checked>theme default</div>
+					<div dojoType="dijit.CheckedMenuItem" onClick="setTextBoxPadding">0px</div>
+					<div dojoType="dijit.CheckedMenuItem" onClick="setTextBoxPadding">1px</div>
+					<div dojoType="dijit.CheckedMenuItem" onClick="setTextBoxPadding">2px</div>
+					<div dojoType="dijit.CheckedMenuItem" onClick="setTextBoxPadding">3px</div>
+					<div dojoType="dijit.CheckedMenuItem" onClick="setTextBoxPadding">4px</div>
+					<div dojoType="dijit.CheckedMenuItem" onClick="setTextBoxPadding">5px</div>
 				</div>
 			</div>
 			<div dojoType="dijit.PopupMenuBarItem" id="help">
@@ -401,7 +481,8 @@
 
 				<h2>Dialogs</h2>
 				<ul>
-					<li><a href="#" onclick="dijit.byId('dialog1').show()">show Modal Dialog</a></li>
+					<li><a href="#" onclick="dijit.byId('dialog1').show()">slow loading modal dialog</a></li>
+					<li><a href="#" onclick="dijit.byId('dialogAB').show()">modal dialog w/action bar</a></li>
 				</ul>
 
 				<div dojoType="dijit.form.DropDownButton">
@@ -430,7 +511,7 @@
 			<div dojoType="dijit.layout.ContentPane" title="Dojo Tree from Store">
 				<!-- tree widget -->
 				<div dojoType="dijit.Tree" store="continentStore" query="{type:'continent'}"
-					label="Continents">
+					label="Continents" openOnClick="true">
 				</div>
 			</div>
 
@@ -488,21 +569,21 @@
 					<div dojoType="dijit.PopupMenuBarItem" >
 						<span>File</span>
 						<div dojoType="dijit.Menu">
-							<div dojoType="dijit.MenuItem" >New</div>
-							<div dojoType="dijit.MenuItem" >Open</div>
-							<div dojoType="dijit.MenuSeparator" ></div>
-							<div dojoType="dijit.MenuItem"  iconClass="dijitEditorIconSave">Save</div>
-							<div dojoType="dijit.MenuItem" >Save As...</div>
+							<div dojoType="dijit.MenuItem" iconClass="dijitIconNewTask">New</div>
+							<div dojoType="dijit.MenuItem">Open</div>
+							<div dojoType="dijit.MenuSeparator"></div>
+							<div dojoType="dijit.MenuItem" iconClass="dijitIconSave">Save</div>
+							<div dojoType="dijit.MenuItem">Save As...</div>
 						</div>
 					</div>
 					<div dojoType="dijit.PopupMenuBarItem">
 						<span>Edit</span>
 						<div dojoType="dijit.Menu" >
-							<div dojoType="dijit.MenuItem"  iconClass="dijitEditorIcon dijitEditorIconCut"
+							<div dojoType="dijit.MenuItem"  iconClass="dijitIconCut"
 								onClick="console.log('not actually cutting anything, just a test!')">Cut</div>
-							<div dojoType="dijit.MenuItem"  iconClass="dijitEditorIcon dijitEditorIconCopy"
+							<div dojoType="dijit.MenuItem"  iconClass="dijitIconCopy"
 								onClick="console.log('not actually copying anything, just a test!')">Copy</div>
-							<div dojoType="dijit.MenuItem"  iconClass="dijitEditorIcon dijitEditorIconPaste"
+							<div dojoType="dijit.MenuItem"  iconClass="dijitIconPaste"
 								onClick="console.log('not actually pasting anything, just a test!')">Paste</div>
 						</div>
 					</div>
@@ -556,40 +637,40 @@
 
 				Enabled:
 
-				<button dojoType="dijit.form.Button" iconClass="plusIcon" onClick='console.debug("clicked simple")'>
+				<button dojoType="dijit.form.Button" iconClass="dijitIconTask" onClick='console.debug("clicked simple")'>
 					Simple
 				</button>
 
-				<button dojoType="dijit.form.DropDownButton" iconClass="noteIcon">
+				<button dojoType="dijit.form.DropDownButton" iconClass="dijitIconEdit">
 					<span>Drop Down</span>
 					<div dojoType="dijit.Menu" id="editMenu1" style="display: none;">
 						<div dojoType="dijit.MenuItem"
-							iconClass="dijitEditorIcon dijitEditorIconCut"
+							iconClass="dijitIconCut"
 							onClick="console.debug('not actually cutting anything, just a test!')">
 							Cut
 						</div>
 
 						<div dojoType="dijit.MenuItem"
-							 iconClass="dijitEditorIcon dijitEditorIconCopy"
+							 iconClass="dijitIconCopy"
 							onClick="console.debug('not actually copying anything, just a test!')">
 							Copy
 						</div>
 
 						<div dojoType="dijit.MenuItem"
-							 iconClass="dijitEditorIcon dijitEditorIconPaste"
+							 iconClass="dijitIconPaste"
 							onClick="console.debug('not actually pasting anything, just a test!')">
 							Paste
 						</div>
 					</div>
 				</button>
 
-				<button dojoType="dijit.form.ComboButton" iconClass="noteIcon"
+				<button dojoType="dijit.form.ComboButton" iconClass="dijitIconSave"
 					optionsTitle='save options'
 					onClick='console.debug("clicked combo save")'>
 					<span>Combo</span>
 					<div dojoType="dijit.Menu" id="saveMenu1" style="display: none;">
 						<div dojoType="dijit.MenuItem"
-							 iconClass="dijitEditorIcon dijitEditorIconSave"
+							 iconClass="dijitIconSave"
 							onClick="console.debug('not actually saving anything, just a test!')">
 							Save
 						</div>
@@ -608,40 +689,40 @@
 
 				Disabled:
 
-				<button dojoType="dijit.form.Button" iconClass="plusIcon" disabled>
+				<button dojoType="dijit.form.Button" iconClass="dijitIconTask" disabled>
 					Simple
 				</button>
 
-				<button dojoType="dijit.form.DropDownButton" iconClass="noteIcon" disabled>
+				<button dojoType="dijit.form.DropDownButton" iconClass="dijitIconEdit" disabled>
 					<span>Drop Down</span>
 					<div dojoType="dijit.Menu" id="editMenu2" style="display: none;">
 						<div dojoType="dijit.MenuItem"
-							iconClass="dijitEditorIcon dijitEditorIconCut"
+							iconClass="dijitIconCut"
 							onClick="console.debug('not actually cutting anything, just a test!')">
 							Cut
 						</div>
 
 						<div dojoType="dijit.MenuItem"
-							 iconClass="dijitEditorIcon dijitEditorIconCopy"
+							 iconClass="dijitIconCopy"
 							onClick="console.debug('not actually copying anything, just a test!')">
 							Copy
 						</div>
 
 						<div dojoType="dijit.MenuItem"
-							 iconClass="dijitEditorIcon dijitEditorIconPaste"
+							 iconClass="dijitIconPaste"
 							onClick="console.debug('not actually pasting anything, just a test!')">
 							Paste
 						</div>
 					</div>
 				</button>
 
-				<button dojoType="dijit.form.ComboButton" iconClass="noteIcon"
+				<button dojoType="dijit.form.ComboButton" iconClass="dijitIconSave"
 					optionsTitle='save options'
 					disabled>
 					<span>Combo</span>
 					<div dojoType="dijit.Menu" id="saveMenu2" style="display: none;">
 						<div dojoType="dijit.MenuItem"
-							 iconClass="dijitEditorIcon dijitEditorIconSave"
+							 iconClass="dijitIconSave"
 							onClick="console.debug('not actually saving anything, just a test!')">
 							Save
 						</div>
@@ -687,10 +768,12 @@
 			<div id="textboxTab" dojoType="dijit.layout.ContentPane" title="Text Input Widgets" style="padding:10px;display:none;">
 
 				<h2>dijit.form.DateTextBox</h2>
-				<label for="date1">Enabled:</label>
-				<input id="date1" name="date1" type="text" dojoType="dijit.form.DateTextBox" value="2008-12-25">
-				<label for="date2">Disabled:</label>
-				<input id="date2" name="date2" type="text" dojoType="dijit.form.DateTextBox" value="2008-12-25" disabled="disabled">
+				<label for="date1">Enabled w/placeHolder:</label>
+				<input id="date1" name="date1" type="text" dojoType="dijit.form.DateTextBox" placeHolder="Birthday">
+				<label for="date2">Disabled w/placeHolder:</label>
+				<input id="date2" name="date2" type="text" dojoType="dijit.form.DateTextBox" placeHolder="Birthday" disabled="disabled">
+				<label for="date2">Disabled w/value:</label>
+				<input id="date3" name="date3" type="text" dojoType="dijit.form.DateTextBox" value="2008-12-25" disabled="disabled">
 
 				<h2>dijit.form.TimeTextBox</h2>
 				<label for="time1">Enabled:</label>
@@ -749,22 +832,31 @@
 
 				<hr class="spacer">
 
-				<h2>dijit.form.ComboBox</h2>
-				<label for="datatestComboBox">Enabled: </label>
-				<input dojoType="dijit.form.ComboBox"
-					value="California"
+				<h2>dijit.form.FilteringSelect</h2>
+				<label for="filteringSelect">Enabled w/placeHolder: </label>
+				<input dojoType="dijit.form.FilteringSelect"
+					placeHolder="State"
 					store="stateStore"
 					searchAttr="name"
 					name="state2"
-					id="datatestComboBox"
+					id="filteringSelect"
 				>
-				<label for="datatestComboBox2">Disabled: </label>
-				<input dojoType="dijit.form.ComboBox"
-					value="California"
+				<label for="filteringSelect2">Disabled w/placeHolder: </label>
+				<input dojoType="dijit.form.FilteringSelect"
+					placeHolder="State"
 					store="stateStore"
 					searchAttr="name"
 					name="state2"
-					id="datatestComboBox2"
+					id="filteringSelect2"
+					disabled
+				>
+				<label for="filteringSelect3">Disabled w/value: </label>
+				<input dojoType="dijit.form.FilteringSelect"
+					value="California"
+					store="stateStore"
+					searchAttr="name"
+					name="state3"
+					id="filteringSelect3"
 					disabled
 				>
 
@@ -773,47 +865,49 @@
 
 			<div id="textareaTab" dojoType="dijit.layout.ContentPane" title="Textarea" style="padding:10px;">
 
+				<!--	&#8234; and &#8236; are inserted solely for testing purposes to mark the beginning and end of left-to-right text so that
+					cogniscent browsers don't render garbled punctuation nor exhibit strange home/end key behavior while in right-to-left mode -->
 				<h2>dijit.form.Textarea</h2>
 				<p>Enabled:</p>
-				<textarea dojoType="dijit.form.Textarea" name="areText">This text area will expand and contract as you type text.
+				<textarea dojoType="dijit.form.Textarea" name="areText">This text area will expand and contract as you type &#8234;text.&#8236;
 
-				Lorem ipsum dolor sit amet,
-				consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-				dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-				tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+Lorem ipsum dolor sit &#8234;amet,&#8236;
+consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
+tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo &#8234;consequat.&#8236;
 				</textarea>
 
 				<br>
 				<p>Disabled:</p>
 				<textarea dojoType="dijit.form.Textarea" name="areText2" disabled>This text
-				area is disabled and you shouldn't be able to type in it.
+				area is disabled and you shouldn't be able to type in &#8234;it.&#8236;
 				</textarea>
 
 
 				<h2>dijit.form.SimpleTextarea</h2>
 				<p></p>
 				<p>Enabled:</p>
-				<textarea dojoType="dijit.form.SimpleTextarea" name="areText">This text area has a constant height and displays a scrollbar when necessary.
+				<textarea dojoType="dijit.form.SimpleTextarea" name="areText">This text area has a constant height and displays a scrollbar when &#8234;necessary.&#8236;
 
-				Lorem ipsum dolor sit amet,
-				consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-				dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-				tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
-				autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,
-				vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
-				dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
-				nulla facilisi.
+Lorem ipsum dolor sit &#8234;amet,&#8236;
+consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
+tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
+autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie &#8234;consequat,&#8236;
+vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
+dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+nulla &#8234;facilisi.&#8236;
 				</textarea>
 
 				<p>Disabled:</p>
-				<textarea dojoType="dijit.form.SimpleTextarea" name="areText2" disabled>Lorem ipsum dolor sit amet,
+				<textarea dojoType="dijit.form.SimpleTextarea" name="areText2" disabled>Lorem ipsum dolor sit &#8234;amet,&#8236;
 				consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
 				dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
 				tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
-				autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,
+				autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie &#8234;consequat,&#8236;
 				vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
 				dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
-				nulla facilisi.
+				nulla &#8234;facilisi.&#8236;
 				</textarea>
 			</div><!-- end of Textarea tab -->
 
@@ -825,23 +919,18 @@
 					causes editor to become VERY tall, and size to a normal height when selected (like the
 					dijit.form.TextArea in "Form Feel" Tab), but in reverse. refs #3980 and is maybe new bug?
 				-->
-				<div style="border:1px solid #ededed;">
-				<textarea height="175" dojoType="dijit.Editor" extraPlugins="['|', 'createLink', 'fontName']" styleSheets="../../dojo/resources/dojo.css" style="width:400px; height:175px; overflow:auto; ">
+				<div height="175" dojoType="dijit.Editor" extraPlugins="['|', 'createLink', 'fontName']" styleSheets="../../dojo/resources/dojo.css">
 					<ul>
 						<li>Lorem <a href="http://dojotoolkit.org">and a link</a>, what do you think?</li>
 						<li>This is the Editor with a Toolbar attached.</li>
 					</ul>
-				</textarea>
 				</div>
 				<p>Disabled:</p>
-				<div style="border:1px solid #ededed;">
-				<textarea height="175" dojoType="dijit.Editor" extraPlugins="['|', 'createLink', 'fontName']" styleSheets="../../dojo/resources/dojo.css"
-					style="width:400px; height:175px; overflow:auto; " disabled="true">
+				<div height="175" dojoType="dijit.Editor" extraPlugins="['|', 'createLink', 'fontName']" styleSheets="../../dojo/resources/dojo.css" disabled="true">
 					<ul>
 						<li>Lorem <a href="http://dojotoolkit.org">and a link</a>, what do you think?</li>
 						<li>This is the Editor with a Toolbar attached.</li>
 					</ul>
-				</textarea>
 				</div>
 			</div><!-- end of Editor tab -->
 
@@ -1011,15 +1100,15 @@
 
 				(HTML before)
 				<p id="areaEditable" dojoType="dijit.InlineEditBox" editor="dijit.form.Textarea" autoSave="false">
-					I'm one big paragraph.  Go ahead and edit me.  I dare you.
-					The quick brown fox jumped over the lazy dog.  Blah blah blah blah blah blah blah ...
+					I'm one big &#8234;paragraph.&#8236;  Go ahead and edit &#8234;me.&#8236;  I dare &#8234;you.&#8236;
+					The quick brown fox jumped over the lazy &#8234;dog.&#8236;  Blah blah blah blah blah blah &#8234;blah ...&#8236;
 				</p>
 				(HTML after)
 
 				<p>
 					These links will
-					<a href="#" onClick="dijit.byId('areaEditable').attr('disabled', true)">disable</a> /
-					<a href="#" onClick="dijit.byId('areaEditable').attr('disabled', false)">enable</a>
+					<a href="#" onClick="dijit.byId('areaEditable').set('disabled', true)">disable</a> /
+					<a href="#" onClick="dijit.byId('areaEditable').set('disabled', false)">enable</a>
 					the text area above.
 				</p>
 
@@ -1113,8 +1202,34 @@
 
 	<!-- dialog in body -->
 	<div id="dialog1" dojoType="dijit.Dialog"
-		title="Floating Modal Dialog" style="display:none;"
-		href="../tests/layout/doc0.html"></div>
+		title="Floating Modal Dialog from href" style="display:none; width: 400px;"
+		href="../tests/layout/getResponse.php?delay=3000&messId=3" refreshOnShow="true"></div>
+	<div id="dialogAB" dojoType="dijit.Dialog"
+		title="Floating Modal Dialog" style="display:none;">
+		<div class="dijitDialogPaneContentArea">
+			<table>
+				<tr>
+					<td><label for="name">Name: </label></td>
+					<td><input dojoType=dijit.form.TextBox type="text" name="name" id="name"></td>
+				</tr>
+				<tr>
+					<td><label for="loc">Location: </label></td>
+					<td><input dojoType=dijit.form.TextBox type="text" name="loc" id="loc"></td>
+				</tr>
+				<tr>
+					<td><label for="date">Date: </label></td>
+					<td><input dojoType=dijit.form.DateTextBox type="text" name="date" id="date"></td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		<div class="dijitDialogPaneActionBar">
+			<button dojoType="dijit.form.Button" type="submit" id="ABdialog1button1">OK</button>
+			<button dojoType="dijit.form.Button" type="button" onClick="dijit.byId('dialogAB').onCancel();" 
+					id="ABdialog1button2">Cancel</button>
+		</div>
+	</div>
 
 </body>
 </html>

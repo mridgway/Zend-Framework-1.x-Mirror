@@ -44,9 +44,9 @@ dojo.declare("dojox.widget.DynamicTooltip", dijit.Tooltip,
 		// MOW: this is a new widget, do we really need a deprecated stub?
 		// setHref: function(/*String|Uri*/ href){
 		//	// summary:
-		//	//		Deprecated.   Use attr('href', ...) instead.
-		//	dojo.deprecated("dojox.widget.DynamicTooltip.setHref() is deprecated.	Use attr('href', ...) instead.", "", "2.0");
-		//	return this.attr("href", href);
+		//	//		Deprecated.   Use set('href', ...) instead.
+		//	dojo.deprecated("dojox.widget.DynamicTooltip.setHref() is deprecated.	Use set('href', ...) instead.", "", "2.0");
+		//	return this.set("href", href);
 		// },
 
 		_setHrefAttr: function(/*String|Uri*/ href){

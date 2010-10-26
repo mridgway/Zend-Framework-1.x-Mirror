@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 21920 2010-04-16 22:10:02Z dragonbe $
+ * @version    $Id: StaticTest.php 21919 2010-04-16 22:06:41Z dragonbe $
  */
 
 require_once realpath(dirname(__FILE__) . '/../../../') . '/TestHelper.php';

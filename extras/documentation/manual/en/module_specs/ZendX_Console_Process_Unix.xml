@@ -69,7 +69,7 @@ $process1->start();
 $process2 = new MyProcess();
 $process2->start();
 
-while ($process1->isRunning() && $process2->isRunning()) {
+while ($process1->isRunning() || $process2->isRunning()) {
     sleep(1);
 }
 

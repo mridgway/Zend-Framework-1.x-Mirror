@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 18786 -->
+<!-- EN-Revision: 20876 -->
 <!-- Reviewed: no -->
 <appendix id="requirements" xmlns:xi="http://www.w3.org/2001/XInclude">
-
     <title>Pré-requisitos do Zend Framework</title>
 
     <sect1 id="requirements.introduction">
-
         <title>Introdução</title>
 
         <para>
@@ -27,7 +25,6 @@
         </para>
 
         <sect2 id="requirements.version">
-
             <title>Versão do PHP</title>
 
             <para>
@@ -40,11 +37,9 @@
                 Zend Framework tem uma extensa coleção de testes unitários, que você pode
                 executar usando PHPUnit 3.3.0 ou posterior.
             </para>
-
         </sect2>
 
         <sect2 id="requirements.extensions">
-
             <title>Extensões do PHP</title>
 
             <para>
@@ -67,11 +62,10 @@
                 indisponíveis.
             </para>
 
-            <xi:include href="requirements-php-extensions-table.xml" />
+            <xi:include href="../../en/ref/requirements-php-extensions-table.xml" />
         </sect2>
 
         <sect2 id="requirements.zendcomponents">
-
             <title>Componentes do Zend Framework</title>
 
             <para>
@@ -92,11 +86,10 @@
                 indisponíveis.
             </para>
 
-            <xi:include href="requirements-zendcomponents-table.xml" />
+            <xi:include href="../../en/ref/requirements-zendcomponents-table.xml" />
         </sect2>
 
         <sect2 id="requirements.dependencies">
-
             <title>Dependências do Zend Framework</title>
 
             <para>
@@ -125,11 +118,9 @@
                 </para>
             </note>
 
-            <xi:include href="requirements-dependencies-table.xml" />
+            <xi:include href="../../en/ref/requirements-dependencies-table.xml" />
         </sect2>
-
     </sect1>
-
 </appendix>
 <!--
 vim:se ts=4 sw=4 et:

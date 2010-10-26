@@ -67,33 +67,30 @@ dojo.declare(
 				// tags:
 				//		private
 
-				// add a node that will be promoted to the button widget
-				var refNode = dojo.doc.createElement("span");
-				this.domNode.appendChild(refNode);
 				// create an instance of the button widget
 				var cls = dojo.getObject(this.buttonWidget);
 				var button = new cls({
 					id: this.id + "_" + page.id,
 					label: page.title,
+					dir: page.dir,
+					lang: page.lang,
 					showLabel: page.showTitle,
 					iconClass: page.iconClass,
 					closeButton: page.closable,
 					title: page.tooltip
-				}, refNode);
+				});
 				dijit.setWaiState(button.focusNode,"selected", "false");
 				this.pane2handles[page.id] = [
-					this.connect(page, 'attr', function(name, value){
-						if(arguments.length == 2){
-							var buttonAttr = {
-								title: 'label',
-								showTitle: 'showLabel',
-								iconClass: 'iconClass',
-								closable: 'closeButton',
-								tooltip: 'title'
-							}[name];
-							if(buttonAttr){
-								button.attr(buttonAttr, value);
-							}
+					this.connect(page, 'set', function(name, value){
+						var buttonAttr = {
+							title: 'label',
+							showTitle: 'showLabel',
+							iconClass: 'iconClass',
+							closable: 'closeButton',
+							tooltip: 'title'
+						}[name];
+						if(buttonAttr){
+							button.set(buttonAttr, value);
 						}
 					}),
 					this.connect(button, 'onClick', dojo.hitch(this,"onButtonClick", page)),
@@ -142,13 +139,13 @@ dojo.declare(
 
 				if(this._currentChild){
 					var oldButton=this.pane2button[this._currentChild.id];
-					oldButton.attr('checked', false);
+					oldButton.set('checked', false);
 					dijit.setWaiState(oldButton.focusNode, "selected", "false");
 					oldButton.focusNode.setAttribute("tabIndex", "-1");
 				}
 
 				var newButton=this.pane2button[page.id];
-				newButton.attr('checked', true);
+				newButton.set('checked', true);
 				dijit.setWaiState(newButton.focusNode, "selected", "true");
 				this._currentChild = page;
 				newButton.focusNode.setAttribute("tabIndex", "0");

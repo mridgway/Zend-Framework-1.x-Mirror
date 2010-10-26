@@ -12,7 +12,7 @@
 	</style>
 
 	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../dojo/dojo.js"
@@ -99,7 +99,7 @@
 							doh.t(myTree2.rootNode, "root node exists");
 							doh.t(myTree2.rootNode.isExpanded, "root node is expanded");
 							doh.t(myTree2.rootNode.getChildren()[3].isExpanded, "europe node is expanded");
-							doh.is(myTree2.rootNode.getChildren()[3].getChildren()[3], myTree2.lastFocused, "focused correct node");
+							doh.is(myTree2.rootNode.getChildren()[3].getChildren()[3], myTree2.selectedNode, "selected correct node");
 						}), 750);
 						return d;
 					},
@@ -107,13 +107,11 @@
 					function copyPath(){
 						var d = new doh.Deferred;
 
-						myTree.attr("path", myTree2.attr("path"));
-
-						setTimeout(d.getTestCallback(function(){
+						myTree.set("path", myTree2.get("path")).then(d.getTestCallback(function(){
 							doh.t(myTree.rootNode.isExpanded, "root node is expanded");
 							doh.t(myTree.rootNode.getChildren()[3].isExpanded, "europe node is expanded");
-							doh.is(myTree.rootNode.getChildren()[3].getChildren()[3], myTree.lastFocused, "focused correct node");
-						}), 500);
+							doh.is(myTree.rootNode.getChildren()[3].getChildren()[3], myTree.selectedNode, "selected correct node");
+						}));
 
 						return d;
 					},
@@ -124,20 +122,17 @@
 						runTest: function(){
 							var d = new doh.Deferred;
 
-							myTree.attr("path", ["earth", "NA", "CA", "Ottawa"]);
+							myTree.set("path", ["earth", "NA", "CA", "Ottawa"]).then(d.getTestErrback(function(){
+								var path = dojo.map(myTree.get("path"), function(item){ return myTree.model.getIdentity(item); });
+								doh.is(["earth", "NA", "CA", "Ottawa"], path, "path got set on myTree");
 
-							setTimeout(d.getTestErrback(function(){
-								var path = dojo.map(myTree.attr("path"), function(item){ return myTree.model.getIdentity(item); });
-								doh.is(["earth", "NA", "CA", "Ottawa"], path, "path got set on myTree")
-								myTree2.attr("path", path);
-
-								setTimeout(d.getTestCallback(function(){
+								myTree2.set("path", path).then(d.getTestCallback(function(){
 									doh.t(myTree2.rootNode.isExpanded, "root node is expanded");
 									doh.t(myTree2.rootNode.getChildren()[4].isExpanded, "north america node is expanded");
 									doh.t(myTree2.rootNode.getChildren()[4].getChildren()[1].isExpanded, "canada node is expanded");
-									doh.is(myTree2.rootNode.getChildren()[4].getChildren()[1].getChildren()[0], myTree2.lastFocused, "focused correct node");
-								}), 500);
-							}), 500);
+									doh.is(myTree2.rootNode.getChildren()[4].getChildren()[1].getChildren()[0], myTree2.selectedNode, "selected correct node");
+								}));
+							}));
 
 							return d;
 						}
@@ -188,18 +183,9 @@
 						return d;
 					},
 
-					function selectANode(){
-						var d = new doh.Deferred;
-
-						myTree.attr('selectedItem','CN');
-
-						// On IE it takes a little time for the attr('selectedItem', ...) to
-						// take effect because it calls node.focus() which takes time.
-						setTimeout(d.getTestCallback(function(){
-							doh.is('CN',myTree.model.getIdentity(myTree.attr('selectedItem')));
-						}), 250);
-
-						return d;
+					function selectAnItem(){
+						myTree.set('selectedItem','CN');
+						doh.is('CN',myTree.model.getIdentity(myTree.get('selectedItem')));
 					},
 
 					function nestedItemDelete(){
@@ -250,7 +236,7 @@
 	</script>
 
 </head>
-<body class="tundra">
+<body class="claro">
 
 	<h1 class="testTitle">Dijit.Tree automated tests</h1>
 	<div id="container"> <!--  tree will go here --></div>

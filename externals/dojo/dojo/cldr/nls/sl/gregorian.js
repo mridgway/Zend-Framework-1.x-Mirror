@@ -1,11 +1,15 @@
 ({
 	"field-dayperiod": "Čas dneva", 
+	"dayPeriods-format-wide-pm": "pop.", 
 	"field-minute": "Minuta", 
 	"eraNames": [
 		"pred našim štetjem", 
 		"naše štetje"
 	], 
+	"field-day-relative+-1": "Včeraj", 
+	"field-day-relative+-2": "Predvčerajšnjim", 
 	"field-weekday": "Dan v tednu", 
+	"field-day-relative+-3": "Pred tremi dnevi", 
 	"days-standAlone-wide": [
 		"nedelja", 
 		"ponedeljek", 
@@ -30,9 +34,10 @@
 		"d"
 	], 
 	"field-era": "Doba", 
+	"dayPeriods-format-wide-am": "dop.", 
 	"field-hour": "Ura", 
 	"dateFormatItem-y": "y", 
-	"timeFormat-full": "H:mm:ss zzzz", 
+	"timeFormat-full": "HH:mm:ss zzzz", 
 	"months-standAlone-abbr": [
 		"jan", 
 		"feb", 
@@ -47,6 +52,7 @@
 		"nov", 
 		"dec"
 	], 
+	"field-day-relative+0": "Danes", 
 	"days-standAlone-narrow": [
 		"n", 
 		"p", 
@@ -56,15 +62,20 @@
 		"p", 
 		"s"
 	], 
+	"field-day-relative+1": "Jutri", 
 	"eraAbbr": [
 		"pr. n. št.", 
 		"po Kr."
 	], 
+	"field-day-relative+2": "Pojutrišnjem", 
+	"field-day-relative+3": "Čez tri dni", 
 	"dateFormatItem-yyyyMMMM": "MMMM y", 
 	"dateFormat-long": "dd. MMMM y", 
 	"timeFormat-medium": "HH:mm:ss", 
 	"field-zone": "Območje", 
+	"dateFormatItem-Hm": "HH:mm", 
 	"dateFormat-medium": "d. MMM. yyyy", 
+	"dateFormatItem-Hms": "HH:mm:ss", 
 	"quarters-standAlone-wide": [
 		"1. četrtletje", 
 		"2. četrtletje", 
@@ -73,13 +84,6 @@
 	], 
 	"dateFormatItem-ms": "mm:ss", 
 	"field-year": "Leto", 
-	"quarters-standAlone-narrow": [
-		"1", 
-		"2", 
-		"3", 
-		"4"
-	], 
-	"dateFormatItem-HHmmss": "HH:mm:ss", 
 	"field-week": "Teden", 
 	"months-standAlone-wide": [
 		"januar", 
@@ -95,7 +99,6 @@
 		"november", 
 		"december"
 	], 
-	"dateFormatItem-HHmm": "HH:mm", 
 	"dateFormatItem-yyQ": "Q/yy", 
 	"timeFormat-long": "HH:mm:ss z", 
 	"months-format-abbr": [
@@ -131,7 +134,6 @@
 		"sob"
 	], 
 	"dateFormatItem-MMMMdd": "dd. MMMM", 
-	"pm": "pop.", 
 	"dateFormatItem-mmss": "mm:ss", 
 	"days-format-narrow": [
 		"n", 
@@ -158,7 +160,6 @@
 		"n", 
 		"d"
 	], 
-	"am": "dop.", 
 	"days-standAlone-abbr": [
 		"ned", 
 		"pon", 

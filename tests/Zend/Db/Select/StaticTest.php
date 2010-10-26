@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 22853 2010-08-19 19:01:09Z padraic $
+ * @version    $Id: StaticTest.php 23237 2010-10-25 20:15:07Z ralph $
  */
 
 
@@ -507,6 +507,112 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
         $select = $this->_selectHavingOrWithParameter();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
         $this->assertEquals('SELECT "zfbugs_products"."bug_id", COUNT(*) AS "thecount" FROM "zfbugs_products" GROUP BY "bug_id" HAVING (COUNT(*) > 1) OR (COUNT(*) = 1) ORDER BY "bug_id" ASC', $sql);
+    }
+
+	/**
+	 * Test if the quotation type could be passed
+	 * 
+	 * @group ZF-10000
+	 */
+	public function testSelectHavingQuoteBySpecificType()
+	{
+		$select = $this->_select()
+			->columns(array('count' => 'COUNT(*)'))
+			->group('bug_id');
+		
+		$select->having('COUNT(*) > ?', '1', Zend_Db::INT_TYPE);
+		$this->assertEquals('SELECT "zfproducts".*, COUNT(*) AS "count" FROM "zfproducts" GROUP BY "bug_id" HAVING (COUNT(*) > 1)', $select->__toString());
+	}
+	
+	/**
+	 * Test if the quotation is done for int
+	 * 
+	 * @group ZF-10000
+	 */
+	public function testSelectHavingQuoteAsIntAutomatically()
+	{
+		$select = $this->_select()
+			->columns(array('count' => 'COUNT(*)'))
+			->group('bug_id');
+		
+		$select->having('COUNT(*) > ?', 1);
+		$this->assertEquals('SELECT "zfproducts".*, COUNT(*) AS "count" FROM "zfproducts" GROUP BY "bug_id" HAVING (COUNT(*) > 1)', $select->__toString());
+	}
+	
+	/**
+	 * Test if the quotation is done for string
+	 * 
+	 * @group ZF-10000
+	 */
+	public function testSelectHavingQuoteAsStringAutomatically()
+	{
+		$select = $this->_select()
+			->columns(array('count' => 'COUNT(*)'))
+			->group('bug_id');
+		
+		$select->having('COUNT(*) > ?', '1');
+		$this->assertEquals('SELECT "zfproducts".*, COUNT(*) AS "count" FROM "zfproducts" GROUP BY "bug_id" HAVING (COUNT(*) > \'1\')', $select->__toString());
+	}
+	
+	/**
+	 * Test if the quotation type could be passed
+	 * 
+	 * @group ZF-10000
+	 */
+	public function testSelectOrHavingQuoteBySpecificType()
+	{
+		$select = $this->_select()
+			->columns(array('count' => 'COUNT(*)'))
+			->group('bug_id');
+		
+		$select->having('COUNT(*) > ?', '1', Zend_Db::INT_TYPE);
+		$select->orHaving('COUNT(*) = ?', '2', Zend_Db::INT_TYPE);
+		$this->assertEquals('SELECT "zfproducts".*, COUNT(*) AS "count" FROM "zfproducts" GROUP BY "bug_id" HAVING (COUNT(*) > 1) OR (COUNT(*) = 2)', $select->__toString());
+	}
+	
+	/**
+	 * Test if the quotation is done for int
+	 * 
+	 * @group ZF-10000
+	 */
+	public function testSelectOrHavingQuoteAsIntAutomatically()
+	{
+		$select = $this->_select()
+			->columns(array('count' => 'COUNT(*)'))
+			->group('bug_id');
+		
+		$select->having('COUNT(*) > ?', 1);
+		$select->orHaving('COUNT(*) = ?', 2);
+		$this->assertEquals('SELECT "zfproducts".*, COUNT(*) AS "count" FROM "zfproducts" GROUP BY "bug_id" HAVING (COUNT(*) > 1) OR (COUNT(*) = 2)', $select->__toString());
+	}
+	
+	/**
+	 * Test if the quotation is done for string
+	 * 
+	 * @group ZF-10000
+	 */
+	public function testSelectOrHavingQuoteAsStringAutomatically()
+	{
+		$select = $this->_select()
+			->columns(array('count' => 'COUNT(*)'))
+			->group('bug_id');
+		
+		$select->having('COUNT(*) > ?', '1');
+		$select->orHaving('COUNT(*) = ?', '2');
+		$this->assertEquals('SELECT "zfproducts".*, COUNT(*) AS "count" FROM "zfproducts" GROUP BY "bug_id" HAVING (COUNT(*) > \'1\') OR (COUNT(*) = \'2\')', $select->__toString());
+	}
+
+    /**
+     * @group ZF-10589
+     */
+    public function testHavingZero()
+    {
+        $select = $this->_select()
+                       ->columns(array('count' => 'COUNT(*)'))
+                       ->group('bug_id');
+
+        $select->having('COUNT(*) > ?', 0);
+        $this->assertEquals('SELECT "zfproducts".*, COUNT(*) AS "count" FROM "zfproducts" GROUP BY "bug_id" HAVING (COUNT(*) > 0)', $select->__toString());
     }
 
     /**

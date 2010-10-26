@@ -73,6 +73,25 @@
 				checked: false
 			});
 
+			// Test that dir attribute can be inherited from ancestor node
+			dojo.declare("tests.parser.DirClass", null, {
+				constructor: function(args, node){ dojo.mixin(this, args); },
+				dir: "",
+				name: ""
+			});
+
+			// For testing that parser recurses correctly, except when the prototype has a
+			// stopParser flag
+			dojo.declare("tests.parser.NormalContainer", null, {
+				constructor: function(args, node){ dojo.mixin(this, args); }
+			});
+			dojo.declare("tests.parser.ShieldedContainer", null, {
+				constructor: function(args, node){ dojo.mixin(this, args); },
+				
+				// flag to tell parser not to instantiate nodes inside of me
+				stopParser: true
+			});
+
 			deepTestProp = {
 				blah: {
 					thinger: 1
@@ -142,7 +161,8 @@
 						},
 						function testUnwantedParams(t){
 							// Make sure that parser doesn't pass any unwanted parameters to
-							// widget constructor, especially "toString" or "constructor"
+							// widget constructor, especially "toString" or "constructor".
+							// Make exception for dir/lang which parser gleans from document itself.
 							for(var param in obj.params){
 								doh.t(dojo.indexOf(
 									["strProp1", "strProp2",
@@ -152,7 +172,7 @@
 									"dateProp1", "dateProp2", "dateProp3",
 									"funcProp2", "funcProp3",
 									"preamble",
-									"callInc1", "callInc2"],
+									"callInc1", "callInc2", "dir", "lang"],
 									param) >= 0, param);
 							}
 						},
@@ -209,14 +229,6 @@
 							t.is(obj4.classCtor, tests.parser.Class3);
 							t.t(obj4 instanceof tests.parser.Class3);
 							t.t(obj4 instanceof tests.parser.Class2);
-						},
-						function testDisabledFlag(t){
-							t.t(disabledObj.disabled);
-							t.f(disabledObj.checked);
-						},
-						function testCheckedFlag(t){
-							t.f(checkedObj.disabled);
-							t.t(checkedObj.checked);
 						},
 						function testnostart(t){
 						  
@@ -275,6 +287,28 @@
 							var widgets = dojo.parser.parse({rootNode: wrapper});
 							doh.is(1, widgets.length, "parsed newly inserted parserTest widget");
 							doh.is(12345, widgets[0].params.newParam, "new parameter parsed");
+						},
+
+						// Test that dir=rtl or dir=ltr setting trickles down from root node
+						function dir(){				
+							doh.is("rtl", setRtl.dir, "direct setting of dir=rtl works");
+							doh.is("rtl", inheritRtl.dir, "inherited rtl works");
+							doh.is("ltr", inheritLtr.dir, "inherited ltr works (closest ancestor wins)");
+							doh.is("rtl", inheritRtl2.dir, "inherited rtl works, from grandparent");
+							doh.is("ltr", setLtr.dir, "direct setting of dir=ltr overrides inherited RTL");
+						},
+						
+						// Test that parser recurses correctly, except when there's a stopParser flag not to
+						function recurse(){
+							doh.t(container1, "normal container created");
+							doh.t(container1.incr, "script tag works too")
+							doh.t(window.contained1, "child widget also created");
+							doh.t(window.contained2, "child widget 2 also created");
+
+							doh.t(container2, "shielded container created");
+							doh.t(container2.incr, "script tag works too")
+							doh.f(window.contained3, "child widget not created");
+							doh.f(window.contained4, "child widget 2 not created");
 						}
 					]
 				);
@@ -323,6 +357,52 @@
 		
 		<div id="parsertest"></div>
 		<div id="parsertest2"></div>
+
+		<!-- section for testing that dir attribute trickles down from ancestor -->
+		<div dojoType="tests.parser.DirClass" jsId="setRtl" dir="rtl" name="RTL setting"></div>
+		<div dir="rtl">
+			<div dojoType="tests.parser.DirClass" jsId="inheritRtl" name="inherited RTL from parent"></div>
+			<div dir="ltr">
+				<div dojoType="tests.parser.DirClass" jsId="inheritLtr" name="inherited LTR from parent"></div>
+			</div>
+			<div>
+				<div dojoType="tests.parser.DirClass" jsId="inheritRtl2" name="inherited RTL from grandparent"></div>
+			</div>
+			<div dojoType="tests.parser.DirClass" jsId="setLtr" dir="ltr" name="LTR setting overrides inherited RTL"></div>
+		</div>
+		<div dojoType="tests.parser.DirClass" jsId="noDir" name="dir not inherited or set"></div>
 		
+		<!-- section for testing parser recursion -->
+
+		<div>
+			<div dojoType="tests.parser.NormalContainer" jsId="container1">
+				<!-- this script tag should get passed as param to NormalContainer constructor -->
+				<script type="dojo/method" event="incr" args="x">
+					return x+1;
+				</script>
+				
+				<!-- and these contained widgets should get instantiated -->
+				<div dojoType="tests.parser.Class1" jsId="contained1"></div>
+				<div>
+					<div dojoType="tests.parser.Class1" jsId="contained2"></div>			
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div dojoType="tests.parser.ShieldedContainer" jsId="container2">
+				<!-- this script tag should get passed as param to NormalContainer constructor -->
+				<script type="dojo/method" event="incr" args="x">
+					return x+1;
+				</script>
+				
+				<!-- but these contained widgets should *not* get instantiated -->
+				<div dojoType="tests.parser.Class1" jsId="contained3"></div>
+				<div>
+					<div dojoType="tests.parser.Class1" jsId="contained4"></div>			
+				</div>
+			</div>
+		</div>
+
 	</body>
 </html>

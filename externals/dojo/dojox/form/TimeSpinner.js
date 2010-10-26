@@ -1,7 +1,6 @@
 dojo.provide("dojox.form.TimeSpinner");
 
 dojo.require("dijit.form._Spinner");
-dojo.require("dijit.form.NumberTextBox");
 dojo.require("dojo.date");
 dojo.require("dojo.date.locale");
 dojo.require("dojo.date.stamp");
@@ -43,7 +42,7 @@ dojo.declare(
 
        _onKeyPress: function(e){
                 if((e.charOrCode == dojo.keys.HOME || e.charOrCode == dojo.keys.END) && !(e.ctrlKey || e.altKey || e.metaKey)
-                && typeof this.attr('value') != 'undefined' /* gibberish, so HOME and END are default editing keys*/){
+                && typeof this.get('value') != 'undefined' /* gibberish, so HOME and END are default editing keys*/){
                         var value = this.constraints[(e.charOrCode == dojo.keys.HOME ? "min" : "max")];
                         if(value){
                                 this._setValueAttr(value,true);

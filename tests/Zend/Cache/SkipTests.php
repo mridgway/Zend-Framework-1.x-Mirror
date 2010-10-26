@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SkipTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: SkipTests.php 23154 2010-10-18 17:41:06Z mabe $
  */
 
 /**
@@ -89,6 +89,19 @@ class Zend_Cache_XcacheBackendTest_SkipTests extends Zend_Cache_BackendTest_Skip
 class Zend_Cache_MemcachedBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
 {
 }
+
+/**
+ * @category   Zend
+ * @package    Zend_Cache
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @group      Zend_Cache
+ */
+class Zend_Cache_LibmemcachedBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
+{
+}
+
 
 /**
  * @category   Zend

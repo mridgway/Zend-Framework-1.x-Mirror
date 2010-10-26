@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Zend_ValidateTest.php 22360 2010-06-03 10:29:24Z thomas $
+ * @version    $Id: Zend_ValidateTest.php 23151 2010-10-17 16:20:14Z ramon $
  */
 
 require_once dirname(__FILE__) . '/../../TestHelper.php';
@@ -50,6 +50,15 @@ class resources_languages_Zend_ValidateTest extends PHPUnit_Framework_TestCase
             throw new Exception('Language resource directory "'.$this->_langDir.'" not readable.');
         }
 
+        // Show only a specific translation?
+        $langs = 'all';
+        if (defined('TESTS_ZEND_RESOURCES_TRANSLATIONS')) {
+            $langs = constant('TESTS_ZEND_RESOURCES_TRANSLATIONS');
+            if ($langs == 'en' || !Zend_Locale::isLocale($langs, true, false)) {
+                $langs = 'all';
+            }
+        }
+
         // detect languages
         foreach (new DirectoryIterator($this->_langDir) as $entry) {
             if (!$entry->isDir()) {
@@ -63,7 +72,9 @@ class resources_languages_Zend_ValidateTest extends PHPUnit_Framework_TestCase
             }
 
             // add all languages for testIsLocale
-            $this->_languages[] = $fname;
+            if ($langs == 'all' || $langs == $fname || $fname == 'en') {
+                $this->_languages[] = $fname;
+            }
 
             // include Zend_Validate translation tables
             $translationFile = $entry->getPathname() . DIRECTORY_SEPARATOR . 'Zend_Validate.php';
@@ -73,7 +84,9 @@ class resources_languages_Zend_ValidateTest extends PHPUnit_Framework_TestCase
                     $this->fail("Invalid or empty translation table found for language '{$fname}'");
                 }
 
-                $this->_translations[$fname] = $translation;
+                if ($langs == 'all' || $langs == $fname || $fname == 'en') {
+                    $this->_translations[$fname] = $translation;
+                }
             }
         }
     }

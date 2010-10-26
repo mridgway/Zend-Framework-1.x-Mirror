@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FunctionFrontendTest.php 22504 2010-06-30 17:05:07Z mabe $
+ * @version    $Id: FunctionFrontendTest.php 22503 2010-06-29 17:18:05Z mabe $
  */
 
 /**

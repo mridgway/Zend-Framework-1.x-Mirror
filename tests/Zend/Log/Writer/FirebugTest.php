@@ -17,11 +17,17 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FirebugTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FirebugTest.php 23066 2010-10-09 23:29:20Z cadorn $
  */
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Log_Writer_FirebugTest::main');
+}
+
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Log */
 require_once 'Zend/Log.php';
@@ -54,8 +60,6 @@ require_once 'Zend/Controller/Response/Http.php';
  */
 class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
 {
-
-
     protected $_controller = null;
     protected $_request = null;
     protected $_response = null;
@@ -70,9 +74,7 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_Log_Writer_FirebugTest");
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
@@ -285,7 +287,7 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(serialize($qued_messages),
                             serialize($messages));
     }
-    
+
     public function testFactory()
     {
         $cfg = array('log' => array('memory' => array(
@@ -295,6 +297,58 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         $logger = Zend_Log::factory($cfg['log']);
         $this->assertTrue($logger instanceof Zend_Log);
     }
+
+    /**
+     * @group ZF-10537
+     */
+    public function testFileLineOffsets()
+    {
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+        $firephp->setOption('includeLineNumbers', true);
+        $firephp->setOption('maxTraceDepth', 0);
+
+        $lines = array();
+        // NOTE: Do NOT separate the following pairs otherwise the line numbers will not match for the test
+
+        // Message number: 1
+        $lines[] = __LINE__+1;
+        $this->_logger->log('Hello World', Zend_Log::INFO);
+
+        // Message number: 2
+        $this->_logger->addPriority('TRACE', 8);
+        $this->_writer->setPriorityStyle(8, 'TRACE');
+        $lines[] = __LINE__+1;
+        $this->_logger->trace('Trace to here');
+
+        // Message number: 3
+        $this->_logger->addPriority('TABLE', 9);
+        $this->_writer->setPriorityStyle(9, 'TABLE');
+        $table = array('Summary line for the table',
+                       array(
+                           array('Column 1', 'Column 2'),
+                           array('Row 1 c 1',' Row 1 c 2'),
+                           array('Row 2 c 1',' Row 2 c 2')
+                       )
+                      );
+        $lines[] = __LINE__+1;
+        $this->_logger->table($table);
+
+        // Message number: 4
+        $lines[] = __LINE__+1;
+        $this->_logger->info('Hello World');
+
+        $messages = $protocol->getMessages();
+        $messages = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE][Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI];
+
+        for( $i=0 ; $i<sizeof($messages) ; $i++ ) {
+            if(!preg_match_all('/FirebugTest\.php","Line":' . $lines[$i] . '/', $messages[$i], $m)) {
+                $this->fail("File and line does not match for message number: " . ($i+1));
+            }
+
+        }
+    }    
 }
 
 class Zend_Log_Writer_FirebugTest_Formatter extends Zend_Log_Formatter_Firebug
@@ -365,5 +419,8 @@ class Zend_Log_Writer_FirebugTest_Response extends Zend_Controller_Response_Http
 
         return true;
     }
+}
 
+if (PHPUnit_MAIN_METHOD == 'Zend_Log_Writer_FirebugTest::main') {
+    Zend_Log_Writer_FirebugTest::main();
 }

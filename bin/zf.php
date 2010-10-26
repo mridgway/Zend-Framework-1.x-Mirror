@@ -148,9 +148,9 @@ class ZF
             $mode = 'runSetup';
         } elseif ($arguments[0] == '--info') {
             $mode = 'runInfo';
-    	}
-    	
-    	return $mode;
+        }
+        
+        return $mode;
     }
     
 
@@ -302,14 +302,14 @@ class ZF
      */
     protected function _setupPHPRuntime()
     {
-    	// set php runtime settings
-    	ini_set('display_errors', true);
-    	
+        // set php runtime settings
+        ini_set('display_errors', true);
+        
         // support the changing of the current working directory, necessary for some providers
         if (isset($_ENV['ZEND_TOOL_CURRENT_WORKING_DIRECTORY'])) {
             chdir($_ENV['ZEND_TOOL_CURRENT_WORKING_DIRECTORY']);
         }
-    	
+        
         if (!$this->_configFile) {
             return;
         }
@@ -323,8 +323,6 @@ class ZF
                 }
             }
         }
-
-        return null;
     }
     
     /**
@@ -368,8 +366,6 @@ class ZF
             $this->_mode = 'runError';
             return;
         }
-        
-        return null;
     }
     
     /**
@@ -413,8 +409,8 @@ is inside your include_path.  There are a variety of ways that you can
 ensure that this zf command line tool knows where the Zend Framework
 library is on your system, but not all of them can be described here.
 
-The easiest way to get the zf command running is to allow is to give it
-the include path via an environment variable ZEND_TOOL_INCLUDE_PATH or
+The easiest way to get the zf command running is to give it the include 
+path via an environment variable ZEND_TOOL_INCLUDE_PATH or 
 ZEND_TOOL_INCLUDE_PATH_PREPEND with the proper include path to use,
 then run the command "zf --setup".  This command is designed to create
 a storage location for your user, as well as create the zf.ini file
@@ -429,7 +425,6 @@ Your are encourged to read more in the link that follows.
 
 EOS;
 
-        return null;
     }
     
     /**
@@ -474,8 +469,6 @@ EOS;
                 $this->_runSetupMoreInfo();
                 break;
         }
-        
-        return null;
     }
 
     /**
@@ -527,8 +520,6 @@ EOS;
         }
         
         echo 'Config file written to ' . $configFile . PHP_EOL;
-        
-        return null;
     }
 
     /**
@@ -592,21 +583,20 @@ EOS;
      */
     protected function _runTool()
     {
-	    
-	    $configOptions = array();
-	    if (isset($this->_configFile) && $this->_configFile) {
-	        $configOptions['configOptions']['configFilepath'] = $this->_configFile;
-	    }
-	    if (isset($this->_storageDirectory) && $this->_storageDirectory) {
-	        $configOptions['storageOptions']['directory'] = $this->_storageDirectory;
-	    }
-	    
-	    // ensure that zf.php loads the Zend_Tool_Project features
-	    $configOptions['classesToLoad'] = 'Zend_Tool_Project_Provider_Manifest';
-	    
-	    $console = new Zend_Tool_Framework_Client_Console($configOptions);
-	    $console->dispatch();
-		return null;
+        
+        $configOptions = array();
+        if (isset($this->_configFile) && $this->_configFile) {
+            $configOptions['configOptions']['configFilepath'] = $this->_configFile;
+        }
+        if (isset($this->_storageDirectory) && $this->_storageDirectory) {
+            $configOptions['storageOptions']['directory'] = $this->_storageDirectory;
+        }
+        
+        // ensure that zf.php loads the Zend_Tool_Project features
+        $configOptions['classesToLoad'] = 'Zend_Tool_Project_Provider_Manifest';
+        
+        $console = new Zend_Tool_Framework_Client_Console($configOptions);
+        $console->dispatch();
     }
 
     /**
@@ -631,5 +621,3 @@ EOS;
 if (!getenv('ZF_NO_MAIN')) {
     ZF::main();
 }
-
-

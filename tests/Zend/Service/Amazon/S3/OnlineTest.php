@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OnlineTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: OnlineTest.php 23224 2010-10-22 13:45:57Z matthew $
  */
 
 /**
@@ -290,6 +290,46 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_amazon->isObjectAvailable($this->_bucket."/zftestfile"));
     }
 
+    /**
+     * @depends testCreateBucket
+     * @depends testCreateObject
+     */
+    public function testCopyObject()
+    {
+        $this->_amazon->createBucket($this->_bucket);
+        $data = "testdata";
+
+        $this->_amazon->putObject($this->_bucket."/zftest", $data);
+        $info1 = $this->_amazon->getInfo($this->_bucket."/zftest");
+
+        $this->_amazon->copyObject($this->_bucket."/zftest", $this->_bucket."/zftest2");
+        $this->assertTrue($this->_amazon->isObjectAvailable($this->_bucket."/zftest"));
+        $this->assertTrue($this->_amazon->isObjectAvailable($this->_bucket."/zftest2"));
+        $info2 = $this->_amazon->getInfo($this->_bucket."/zftest2");
+
+        $this->assertEquals($info1['etag'], $info2['etag']);
+    }
+
+    /**
+     * @depends testCopyObject
+     * @depends testRemoveObject
+     */
+    public function testMoveObject()
+    {
+        $this->_amazon->createBucket($this->_bucket);
+        $data = "testdata";
+
+        $this->_amazon->putObject($this->_bucket."/zftest", $data);
+        $info1 = $this->_amazon->getInfo($this->_bucket."/zftest");
+
+        $this->_amazon->moveObject($this->_bucket."/zftest", $this->_bucket."/zftest2");
+        $this->assertFalse($this->_amazon->isObjectAvailable($this->_bucket."/zftest"));
+        $this->assertTrue($this->_amazon->isObjectAvailable($this->_bucket."/zftest2"));
+        $info2 = $this->_amazon->getInfo($this->_bucket."/zftest2");
+
+        $this->assertEquals($info1['etag'], $info2['etag']);
+    }
+
     public function testObjectEncoding()
     {
         $this->_amazon->createBucket($this->_bucket);
@@ -380,6 +420,23 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
         $url = 'http://' . Zend_Service_Amazon_S3::S3_ENDPOINT."/".$this->_bucket."/subdir/dir%20with%20spaces/zftestfile.html";
         $data = @file_get_contents($url);
         $this->assertEquals(file_get_contents($filedir."testdata.html"), $data);
+    }
+
+    /**
+     * Test that isObjectAvailable() works if object name contains spaces
+     *
+     * @depends testCreateBucket
+     * @depends testObjectPath
+     *
+     * ZF-10017
+     */
+    public function testIsObjectAvailableWithSpacesInKey()
+    {
+        $this->_amazon->createBucket($this->_bucket);
+        $filedir = dirname(__FILE__)."/_files/";
+        $key = $this->_bucket.'/subdir/another dir with spaces/zftestfile.html';
+        $this->_amazon->putFile($filedir."testdata.html", $key);
+        $this->assertTrue($this->_amazon->isObjectAvailable($key));
     }
 
     /**

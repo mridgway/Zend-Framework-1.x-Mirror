@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RegexTest.php 21572 2010-03-19 19:45:26Z thomas $
+ * @version    $Id: RegexTest.php 21571 2010-03-19 19:43:01Z thomas $
  */
 
 

@@ -1,10 +1,4 @@
 ({
-	"quarters-format-abbr": [
-		"الربع الأول", 
-		"الربع الثاني", 
-		"الربع الثالث", 
-		"الربع الرابع"
-	], 
 	"dateFormat-medium": "dd‏/MM‏/yyyy", 
 	"dateFormatItem-MMMEd": "E d MMM", 
 	"dateFormatItem-yMEd": "EEE، d/‏M/‏yyyy", 
@@ -17,13 +11,15 @@
 		"طيفت", 
 		"شباط", 
 		"آذار الأول", 
-		"آذار الثاني", 
+		"آذار", 
 		"نيسان", 
 		"أيار", 
 		"سيفان", 
 		"تموز", 
-		"آب"
+		"آب", 
+		"أيلول"
 	], 
+	"months-format-wide-leap": "آذار الثاني", 
 	"days-standAlone-narrow": [
 		"ح", 
 		"ن", 
@@ -33,8 +29,7 @@
 		"ج", 
 		"س"
 	], 
-	"dateFormatItem-MMMMEd": "E d MMMM", 
-	"dateFormatItem-MMMMd": "d MMMM", 
+	"dayPeriods-format-wide-pm": "م", 
 	"months-standAlone-abbr": [
 		"تشري", 
 		"مرحشوان", 
@@ -42,7 +37,7 @@
 		"طيفت", 
 		"شباط", 
 		"آذار الأول", 
-		"آذار الثاني", 
+		"آذار", 
 		"نيسان", 
 		"أيار", 
 		"سيفان", 
@@ -50,6 +45,7 @@
 		"آب", 
 		"أيلول"
 	], 
+	"dayPeriods-format-wide-am": "ص", 
 	"quarters-standAlone-narrow": [
 		"١", 
 		"٢", 
@@ -67,14 +63,14 @@
 		"طيفت", 
 		"شباط", 
 		"آذار الأول", 
-		"آذار الثاني", 
+		"آذار", 
 		"نيسان", 
 		"أيار", 
 		"سيفان", 
 		"تموز", 
-		"آب"
+		"آب", 
+		"أيلول"
 	], 
-	"dateFormatItem-yMMMM": "MMMM y", 
 	"dateFormatItem-yM": "M‏/yyyy", 
 	"timeFormat-short": "h:mm a", 
 	"months-format-abbr": [
@@ -84,7 +80,7 @@
 		"طيفت", 
 		"شباط", 
 		"آذار الأول", 
-		"آذار الثاني", 
+		"آذار", 
 		"نيسان", 
 		"أيار", 
 		"سيفان", 
@@ -92,6 +88,7 @@
 		"آب", 
 		"أيلول"
 	], 
+	"timeFormat-long": "z h:mm:ss a", 
 	"days-format-wide": [
 		"الأحد", 
 		"الإثنين", 
@@ -101,7 +98,6 @@
 		"الجمعة", 
 		"السبت"
 	], 
-	"timeFormat-long": "z h:mm:ss a", 
 	"dateFormatItem-yQ": "yyyy Q", 
 	"dateFormatItem-yMMM": "MMM y", 
 	"quarters-format-wide": [

@@ -272,7 +272,7 @@ function _copyToRelease(/*String*/prefixName, /*String*/prefixPath, /*Object*/kw
 	}
 	
 	if(kwArgs.mini){
-		copyRegExps.exclude = /\/tests\/|\/demos\/|tests\.js|dijit\/bench|dijit\/themes\/noir|dijit\/themes\/themeTest|dijit\/themes\/templateThemeTest|(\.php$)/;
+		copyRegExps.exclude = /\/tests\/|\/demos\/|tests\.js|dijit\/bench|dijit\/themes\/themeTest|(\.php$)/;
 	}
 
 	logger.info("Copying: " + prefixPath + " to: " + releasePath);
@@ -329,7 +329,9 @@ function _copyToRelease(/*String*/prefixName, /*String*/prefixPath, /*Object*/kw
 			}
 		}
 
-		buildUtil.addGuardsAndBaseRequires(copiedFiles, needBaseRequires);
+		if(kwArgs.addGuards){
+			buildUtil.addGuardsAndBaseRequires(copiedFiles, needBaseRequires);
+		}
 	}
 }
 //********* End _copyToRelease *********

@@ -317,6 +317,9 @@ tests.register("tests.number",
 	t.is("-1.234,56", dojo.number.format(-1234.56, {places:2, locale: "de-de"}));
 	t.is("-1,000.10", dojo.number.format(-1000.1, {places:2, locale: "en-us"}));
 	t.is("123.46%", dojo.number.format(1.23456, {places:2, locale: "en-us", type: "percent"}));
+	t.is("123.4", dojo.number.format(123.4, {places:'1,3', locale: 'en-us'}));
+	t.is("123.45", dojo.number.format(123.45, {places:'1,3', locale: 'en-us'}));
+	t.is("123.456", dojo.number.format(123.456, {places:'1,3', locale: 'en-us'}));
 
 	//rounding
 	t.is("-1,234,568", dojo.number.format(-1234567.89, {places:0, locale: "en-us"}));
@@ -359,6 +362,10 @@ tests.register("tests.number",
 //	t.is(-1234567, dojo.number.parse("  -1,234,567  ", {locale: "en-us"}));
 
 //	t.t(dojo.number.parse("9.1093826E-31"));
+	t.is(1.23, dojo.number.parse("123%", {locale: "en-us", type: "percent"}));
+	t.is(1.23, dojo.number.parse("123%", {places:0, locale: "en-us", type: "percent"}));
+	t.t(isNaN(dojo.number.parse("123.46%", {places:0, locale: "en-us", type: "percent"})));
+	t.is(1.2346, dojo.number.parse("123.46%", {places:2, locale: "en-us", type: "percent"}));
 	t.is(0.501, dojo.number.parse("50.1%", {pattern: "#0.#%", locale: 'en-us'}));
 
 	t.is(123.4, dojo.number.parse("123.4", {pattern: "#0.#", locale: 'en-us'}));

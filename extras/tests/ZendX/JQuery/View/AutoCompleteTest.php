@@ -17,61 +17,15 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: AutoCompleteTest.php 20754 2010-01-29 11:42:43Z beberlei $
+ * @version     $Id: AutoCompleteTest.php 20755 2010-01-29 12:29:45Z beberlei $
  */
 
-require_once dirname(__FILE__)."/../../../TestHelper.php";
-
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'ZendX_JQuery_View_AutoCompleteTest::main');
-}
-
-require_once "Zend/Registry.php";
-require_once "Zend/View.php";
-require_once "ZendX/JQuery.php";
-require_once "ZendX/JQuery/View/Helper/JQuery.php";
+require_once "jQueryTestCase.php";
 
 require_once "ZendX/JQuery/View/Helper/AutoComplete.php";
 
-class ZendX_JQuery_View_AutoCompleteTest extends PHPUnit_Framework_TestCase
+class ZendX_JQuery_View_AutoCompleteTest extends ZendX_JQuery_View_jQueryTestCase
 {
-	private $view = null;
-	private $jquery = null;
-	private $helper = null;
-
-    /**
-     * Runs the test methods of this class.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        $suite  = new PHPUnit_Framework_TestSuite("ZendX_JQuery_View_AutoCompleteTest");
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
-
-	public function setUp()
-	{
-        Zend_Registry::_unsetInstance();
-        $this->view   = $this->getView();
-        $this->jquery = new ZendX_JQuery_View_Helper_JQuery_Container();
-        $this->jquery->setView($this->view);
-        Zend_Registry::set('ZendX_JQuery_View_Helper_JQuery', $this->jquery);
-	}
-
-	public function tearDown()
-	{
-		ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode();
-	}
-
-    public function getView()
-    {
-        require_once 'Zend/View.php';
-        $view = new Zend_View();
-        $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
-        return $view;
-    }
-
     public function testCallingInViewEnablesJQueryHelper()
     {
         $element = $this->view->autoComplete("element", "", array('data' => array('test')));
@@ -92,7 +46,7 @@ class ZendX_JQuery_View_AutoCompleteTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException ZendX_JQuery_Exception
      */
-    public function testShouldAllowAutoCompleteOnlyWithDataOrUrlOption()
+    public function testShouldAllowAutoCompleteOnlyWithSourceOption()
     {
         $element = $this->view->autoComplete("elem1");
     }
@@ -106,8 +60,4 @@ class ZendX_JQuery_View_AutoCompleteTest extends PHPUnit_Framework_TestCase
         $this->assertContains('id="elem1"', $element);
         $this->assertContains('value="Default"', $element);
     }
-}
-
-if (PHPUnit_MAIN_METHOD == 'ZendX_JQuery_View_AutoCompleteTest::main') {
-    ZendX_JQuery_View_AutoCompleteTest::main();
 }

@@ -124,14 +124,14 @@ dojo.declare("dijit._KeyNavContainer",
 			// tags:
 			//		private
 			
-			widget.attr("tabIndex", "-1");
+			widget.set("tabIndex", "-1");
 			
 			this.connect(widget, "_onFocus", function(){
 				// Set valid tabIndex so tabbing away from widget goes to right place, see #10272
-				widget.attr("tabIndex", this.tabIndex);
+				widget.set("tabIndex", this.tabIndex);
 			});
 			this.connect(widget, "_onBlur", function(){
-				widget.attr("tabIndex", "-1");
+				widget.set("tabIndex", "-1");
 			});
 		},
 
@@ -162,7 +162,7 @@ dojo.declare("dijit._KeyNavContainer",
 		},
 
 		_onBlur: function(evt){
-			// When focus is moved away the container, and it's descendant (popup) widgets,
+			// When focus is moved away the container, and its descendant (popup) widgets,
 			// then restore the container's tabIndex so that user can tab to it again.
 			// Note that using _onBlur() so that this doesn't happen when focus is shifted
 			// to one of my child widgets (typically a popup)

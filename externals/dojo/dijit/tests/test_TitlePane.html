@@ -10,7 +10,7 @@
 	</style>
 
 	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../dojo/dojo.js"
@@ -37,24 +37,24 @@
 		dojo.declare("dijit.TestTitlePane", dijit.TitlePane, {
 			templateString: '<div class="dijitTitlePane">' +
 							'    <div class="dijitTitlePaneTitle" dojoAttachPoint="titleBarNode" style="cursor: default;">' +
-							'        <span dojoAttachEvent="onclick:toggle,onkeypress: _onTitleKey,onfocus:_handleFocus,onblur:_handleFocus" tabindex="0"' +
-							'                waiRole="button" dojoAttachPoint="focusNode,arrowNode" style="cursor: pointer;">' +
-							'			<img src="${_blankGif}" alt="" class="dijitArrowNode" waiRole="presentation">' +
-							'			<span dojoAttachPoint="arrowNodeInner" class="dijitArrowNodeInner"></span>' +
-							'		 </span>' +
-							'        <span dojoAttachPoint="titleNode" class="dijitTitlePaneTextNode"></span>' +
-							'    </div>' +
-							'    <div class="dijitTitlePaneContentOuter" dojoAttachPoint="hideNode">' +
-							'        <div class="dijitReset" dojoAttachPoint="wipeNode">' +
-							'            <div class="dijitTitlePaneContentInner" dojoAttachPoint="containerNode" waiRole="region" tabindex="-1">' +
-							'            </div>' +
-							'        </div>' +
-							'    </div>' +
+							        '<span dojoAttachEvent="onclick:toggle,onkeypress: _onTitleKey" tabindex="0"' +
+							                'waiRole="button" dojoAttachPoint="focusNode,arrowNode" style="cursor: pointer;">' +
+										'<img src="${_blankGif}" alt="" class="dijitArrowNode" waiRole="presentation">' +
+										'<span dojoAttachPoint="arrowNodeInner" class="dijitArrowNodeInner"></span>' +
+									 '</span>' +
+							        '<span dojoAttachPoint="titleNode" class="dijitTitlePaneTextNode"></span>' +
+							    '</div>' +
+							    '<div class="dijitTitlePaneContentOuter" dojoAttachPoint="hideNode">' +
+							        '<div class="dijitReset" dojoAttachPoint="wipeNode">' +
+							            '<div class="dijitTitlePaneContentInner" dojoAttachPoint="containerNode" waiRole="region" tabindex="-1">' +
+							            '</div>' +
+							        '</div>' +
+							    '</div>' +
 							'</div>'
 		});
 	</script>
 </head>
-<body class="tundra">
+<body class="claro">
 	<h1 class="testTitle">Dijit TitlePane Test</h1>
 
 	<input id="input" value="for tab testing">
@@ -71,8 +71,8 @@
 		nec, malesuada eget, ornare a, libero. Lorem ipsum dolor sit amet,
 		consectetuer adipiscing elit.
 	</div>
-	<button id="titleButton" onclick="pane1.attr('title', 'New Title')">change title</button>
-	<button id="closeButton" onclick="pane1.attr('open', false)">close pane</button>
+	<button id="titleButton" onclick="pane1.set('title', 'New Title')">change title</button>
+	<button id="closeButton" onclick="pane1.set('open', false)">close pane</button>
 	<h1>Test #2: title pane with form, width=300px</h1>
 
 	<div dojoType="dijit.TitlePane" title="Title Pane #2" id="pane_2" style="width: 300px;">
@@ -98,7 +98,7 @@
 			<a dojoType="dijit.layout.LinkPane" href="layout/tab2.html"  onLoad="console.log('load of SubTab 2');" selected="true">SubTab 2</a>
 		</div>
 	</div>
-	<button onclick="dijit.byId('closed').attr('content', 'hello world! (' + new Date() + ')');">reset content</button>
+	<button onclick="dijit.byId('closed').set('content', 'hello world! (' + new Date() + ')');">reset content</button>
 
 	<h1>Test #4: title pane with href (initially closed)</h1>
 	<p>The pane should open to "Loading..." message and then 3 seconds later it should slide open more to show loaded data.</p>

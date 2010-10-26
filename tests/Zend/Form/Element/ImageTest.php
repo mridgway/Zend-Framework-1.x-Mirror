@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ImageTest.php 22329 2010-05-30 15:12:58Z bittarman $
+ * @version    $Id: ImageTest.php 22328 2010-05-30 15:09:06Z bittarman $
  */
 
 // Call Zend_Form_Element_ImageTest::main() if this source file is executed directly.

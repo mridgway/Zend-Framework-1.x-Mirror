@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: EmailAddressTest.php 21083 2010-02-18 19:29:20Z thomas $
+ * @version    $Id: EmailAddressTest.php 21082 2010-02-18 19:14:52Z thomas $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {

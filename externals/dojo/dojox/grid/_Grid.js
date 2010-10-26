@@ -187,17 +187,6 @@ dojo.requireLocalization("dijit", "loading");
 		// 		CSS class applied to the grid's domNode
 		classTag: 'dojoxGrid',
 
-		get: function(inRowIndex){
-			// summary: Default data getter.
-			// description:
-			//		Provides data to display in a grid cell. Called in grid cell context.
-			//		So this.cell.index is the column index.
-			// inRowIndex: Integer
-			//		Row for which to provide data
-			// returns:
-			//		Data to display for a given grid cell.
-		},
-
 		// settings
 		// rowCount: Integer
 		//		Number of rows to display.
@@ -340,10 +329,6 @@ dojo.requireLocalization("dijit", "loading");
 		// initialization
 		buildRendering: function(){
 			this.inherited(arguments);
-			// reset get from blank function (needed for markup parsing) to null, if not changed
-			if(this.get == dojox.grid._Grid.prototype.get){
-				this.get = null;
-			}
 			if(!this.domNode.getAttribute('tabIndex')){
 				this.domNode.tabIndex = "0";
 			}
@@ -363,6 +348,11 @@ dojo.requireLocalization("dijit", "loading");
 			dojox.grid.util.funnelEvents(this.domNode, this, 'doKeyEvent', dojox.grid.util.keyEvents);
 			if (this.selectionMode != "none") {
 				dojo.attr(this.domNode, "aria-multiselectable", this.selectionMode == "single" ? "false" : "true");
+			}
+
+			dojo.addClass(this.domNode, this.classTag);
+			if(!this.isLeftToRight()){
+				dojo.addClass(this.domNode, this.classTag+"Rtl");
 			}
 		},
 		
@@ -449,7 +439,7 @@ dojo.requireLocalization("dijit", "loading");
 			if(typeof ah == "boolean"){
 				this._autoHeight = ah;
 			}else if(typeof ah == "number"){
-				this._autoHeight = (ah >= this.attr('rowCount'));
+				this._autoHeight = (ah >= this.get('rowCount'));
 			}else{
 				this._autoHeight = false;
 			}
@@ -803,7 +793,7 @@ dojo.requireLocalization("dijit", "loading");
 					});
 				}
 			}
-			if(this.autoHeight === true || h != -1 || (typeof this.autoHeight == "number" && this.autoHeight >= this.attr('rowCount'))){
+			if(this.autoHeight === true || h != -1 || (typeof this.autoHeight == "number" && this.autoHeight >= this.get('rowCount'))){
 				this.scroller.windowHeight = h;
 			}else{
 				this.scroller.windowHeight = Math.max(this.domNode.clientHeight - t, 0);
@@ -838,7 +828,7 @@ dojo.requireLocalization("dijit", "loading");
 		},
 
 		_render: function(){
-			this.scroller.init(this.attr('rowCount'), this.keepRows, this.rowsPerPage);
+			this.scroller.init(this.get('rowCount'), this.keepRows, this.rowsPerPage);
 			this.prerender();
 			this.setScrollTop(0);
 			this.postrender();
@@ -1257,7 +1247,7 @@ dojo.requireLocalization("dijit", "loading");
 		addRow: function(){
 			// summary:
 			//		Add a row to the grid.
-			this.updateRowCount(this.attr('rowCount')+1);
+			this.updateRowCount(this.get('rowCount')+1);
 		},
 
 		removeSelectedRows: function(){
@@ -1266,7 +1256,7 @@ dojo.requireLocalization("dijit", "loading");
 			if(this.allItemsSelected){
 				this.updateRowCount(0);
 			}else{
-				this.updateRowCount(Math.max(0, this.attr('rowCount') - this.selection.getSelected().length));
+				this.updateRowCount(Math.max(0, this.get('rowCount') - this.selection.getSelected().length));
 			}
 			this.selection.clear();
 		}

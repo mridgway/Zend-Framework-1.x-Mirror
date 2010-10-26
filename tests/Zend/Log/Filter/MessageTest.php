@@ -17,9 +17,16 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MessageTest.php 20982 2010-02-08 15:51:36Z matthew $
+ * @version    $Id: MessageTest.php 22977 2010-09-19 12:44:00Z intiilapa $
  */
 
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Log_Filter_MessageTest::main');
+}
+
+/**
+ * Test helper
+ */
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Log */
@@ -38,6 +45,12 @@ require_once 'Zend/Log/Filter/Message.php';
  */
 class Zend_Log_Filter_MessageTest extends PHPUnit_Framework_TestCase
 {
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function testMessageFilterRecognizesInvalidRegularExpression()
     {
         try {
@@ -55,15 +68,15 @@ class Zend_Log_Filter_MessageTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($filter->accept(array('message' => 'foo accept bar')));
         $this->assertFalse($filter->accept(array('message' => 'foo reject bar')));
     }
-    
+
     public function testFactory()
     {
         $cfg = array('log' => array('memory' => array(
-            'writerName'   => "Mock", 
-            'filterName'   => "Message", 
+            'writerName'   => "Mock",
+            'filterName'   => "Message",
             'filterParams' => array(
-                'regexp'   => "/42/" 
-             ),        
+                'regexp'   => "/42/"
+             ),
         )));
 
         $logger = Zend_Log::factory($cfg['log']);
@@ -74,14 +87,18 @@ class Zend_Log_Filter_MessageTest extends PHPUnit_Framework_TestCase
     {
         require_once 'Zend/Config.php';
         $config = new Zend_Config(array('log' => array('memory' => array(
-            'writerName'   => "Mock", 
-            'filterName'   => "Message", 
+            'writerName'   => "Mock",
+            'filterName'   => "Message",
             'filterParams' => array(
-                'regexp'   => "/42/" 
-             ),        
+                'regexp'   => "/42/"
+             ),
         ))));
 
         $filter = Zend_Log_Filter_Message::factory($config->log->memory->filterParams);
         $this->assertTrue($filter instanceof Zend_Log_Filter_Message);
     }
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Log_Filter_MessageTest::main') {
+    Zend_Log_Filter_MessageTest::main();
 }

@@ -1,5 +1,7 @@
 dojo.provide("dijit._DialogMixin");
 
+dojo.require("dijit._Widget");
+
 dojo.declare("dijit._DialogMixin", null,
 	{
 		// summary:
@@ -49,7 +51,7 @@ dojo.declare("dijit._DialogMixin", null,
 			// type:
 			//		protected
 			this.onExecute();	// notify container that we are about to execute
-			this.execute(this.attr('value'));
+			this.execute(this.get('value'));
 		},
 
 		_getFocusItems: function(/*Node*/ dialogNode){

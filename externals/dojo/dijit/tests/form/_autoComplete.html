@@ -11,7 +11,7 @@
 	</style>
 
 	<!-- required: the default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../../dojo/dojo.js"
@@ -109,13 +109,13 @@
 		function toggleDisabled(button, widget){
 			widget = dijit.byId(widget);
 			button = dojo.byId(button);
-			widget.attr('disabled',!widget.disabled);
+			widget.set('disabled',!widget.disabled);
 			button.innerHTML= widget.disabled ? "Enable" : "Disable";
 		}
 	</script>
 </head>
 
-<body class="tundra">
+<body class="claro">
 
 	<h1 class="testTitle" id="title"></h1>
 	<script>dojo.byId('title').appendChild(document.createTextNode(testWidget+" Unit Test"))</script>
@@ -238,10 +238,10 @@
 		<br>value:<input id="v1" disabled value="not fired yet!" autocomplete="off">
 		<br>blur:<input id="b1" disabled value="not fired yet!" autocomplete="off">
 		<br>this.item:<input id="i1" disabled value="no onChange yet!" autocomplete="off">
-		<input type="button" id="sv1_1" value="Set displayed value to Kentucky" onClick="dijit.byId('setvaluetest').attr('displayedValue', 'Kentucky')" tabIndex="-1">
-	        <input type="button" id="sv1_2" value="Set displayed value to Canada" onClick="dijit.byId('setvaluetest').attr('displayedValue', 'Canada')" tabIndex="-1">
-	        <input type="button" id="sv1_3" value="Set value to null" onClick="dijit.byId('setvaluetest').attr('value', null)" tabIndex="-1">
-	        <input type="button" id="sv1_4" value="Get value" onClick="dojo.byId('v1').value=dijit.byId('setvaluetest').attr('value')" tabIndex="-1">
+		<input type="button" id="sv1_1" value="Set displayed value to Kentucky" onClick="dijit.byId('setvaluetest').set('displayedValue', 'Kentucky')">
+	        <input type="button" id="sv1_2" value="Set displayed value to Canada" onClick="dijit.byId('setvaluetest').set('displayedValue', 'Canada')">
+	        <input type="button" id="sv1_3" value="Set value to null" onClick="dijit.byId('setvaluetest').set('value', null)">
+	        <input type="button" id="sv1_4" value="Get value" onClick="dojo.byId('v1').value=dijit.byId('setvaluetest').get('value')">
 
 		<hr>
 
@@ -277,7 +277,7 @@
 				id="slow"
 		>
 		<br>onChange:<input id="ocSlow" disabled value="not fired yet!" autocomplete="off">
-		<button id="slowDestroy" tabIndex="-1" onclick="dijit.byId('slow').destroy();return false">Destroy widget to test in-flight query cancel</button>
+		<button id="slowDestroy" onclick="dijit.byId('slow').destroy();return false">Destroy widget to test in-flight query cancel</button>
 		<hr>
 
 		<label for="datatestDijit">Dijit List test #1</label> (150% font):
@@ -307,7 +307,7 @@
 		>
 		<br>onChange:<input id="value3" disabled value="not fired yet!" autocomplete="off">
 		<div>
-			<button id="combo3_disable" onclick='toggleDisabled("combo3_disable", "combo3"); return false;'>Enable</button>
+			<button id="combo3_disable" onclick='toggleDisabled("combo3_disable", "combo3"); return false;' tabIndex="-1">Enable</button>
 		</div>
 		<hr>
 		<p>Data store, autoComplete=false required=true and highlightMatch="none"</p>
@@ -333,6 +333,7 @@
 				style="width:50%;font-family:Courier;"
 				autoComplete="false"
 				selectOnClick="true"
+				pageSize="5"
 				title="New England States"
 		>
 			<option value="ct">Connecticut</option>
@@ -460,7 +461,7 @@
 		<p>Japanese</p>
 		<p>Try typing &#x6771;&#x533A; (East), &#x897F;&#x533A; (West), &#x5317;&#x533A; (North), &#x5357;&#x533A; (South) and a few choices will pop up.</p>
 		<label for="japanese">Japanese list:</label>
-		<select name="japanese" id="japanese" dojoType="$testWidget" style="width: 300px;" autoComplete="true">
+		<select name="japanese" id="japanese" dojoType="$testWidget" style="width: 300px;" autoComplete="true" required="true" value="">
 			<option value="nanboku">&#x5357;&#x5317; (Nanboku)</option>
 			<option value="touzai">&#x6771;&#x897F; (Touzai)</option>
 			<option value="toukyou">&#x6771;&#x4EAC; (Tokyo)</option>
@@ -485,10 +486,10 @@
 				promptMessage="Please enter a state"
 				invalidMessage="Invalid state name."
 		>
-		<input type="button" onclick="dijit.byId('labelFunc').attr('readOnly',false);" value="Remove readOnly">
-		<input type="button" onclick="dijit.byId('labelFunc').attr('readOnly',true);" value="Set readOnly">
-		<input type="button" onclick="dijit.byId('labelFunc').attr('disabled',false);" value="Remove disabled">
-		<input type="button" onclick="dijit.byId('labelFunc').attr('disabled',true);" value="Set disabled">
+		<input type="button" onclick="dijit.byId('labelFunc').set('readOnly',false);" value="Remove readOnly">
+		<input type="button" onclick="dijit.byId('labelFunc').set('readOnly',true);" value="Set readOnly">
+		<input type="button" onclick="dijit.byId('labelFunc').set('disabled',false);" value="Remove disabled">
+		<input type="button" onclick="dijit.byId('labelFunc').set('disabled',true);" value="Set disabled">
 		<hr>
 		<input type="button" value="Create one in a window" onclick="var win=window.open(window.location);">
 		<input type="submit">
@@ -508,12 +509,31 @@
 		<button name="button" onclick="alert(document.displayData()); return false;">view data</button>
 
 	</form>
+	
+	<hr>
+	<p>test placeholder</p>
+	<select id="placeholdertest"
+			name="placetest"
+			dojoType="$testWidget"
+			style="width:50%;font-family:Courier;"
+			autoComplete="false"
+			selectOnClick="true"
+			pageSize="5"
+			placeHolder="Select a New England State"
+			value=""
+	>
+		<option value="ct">Connecticut</option>
+		<option value="me">Maine</option>
+		<option value="ma">Massachusetts</option>
+		<option value="nh">New Hampshire</option>
+		<option value="vt">Vermont</option>
+	</select>
 	<p>
 	This is some text below the boxes. It shouldn't get pushed out of the way when search results get returned.
 	A native select tag to test IE bleed through problem:
 	</p>
 
-	<select>
+	<select id="native">
 	  <option>test for</option>
 	  <option>IE bleed through</option>
 	  <option>problem</option>

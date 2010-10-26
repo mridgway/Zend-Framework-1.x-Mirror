@@ -32,20 +32,21 @@ if (! $formats = $cache->load($cacheId)) {
     
     // Cache miss. Connect to backend service (expensive).
     
-    $phpLiveDocx = new Zend_Service_LiveDocx_MailMerge();
+    $mailMerge = new Zend_Service_LiveDocx_MailMerge();
     
-    $phpLiveDocx->setUsername(DEMOS_ZEND_SERVICE_LIVEDOCX_USERNAME)
-                ->setPassword(DEMOS_ZEND_SERVICE_LIVEDOCX_PASSWORD);
+    $mailMerge->setUsername(DEMOS_ZEND_SERVICE_LIVEDOCX_USERNAME)
+              ->setPassword(DEMOS_ZEND_SERVICE_LIVEDOCX_PASSWORD);
     
     $formats = new StdClass();
     
-    $formats->template = $phpLiveDocx->getTemplateFormats();
-    $formats->document = $phpLiveDocx->getDocumentFormats();
-    $formats->image    = $phpLiveDocx->getImageFormats();
+    $formats->template    = $mailMerge->getTemplateFormats();
+    $formats->document    = $mailMerge->getDocumentFormats();
+    $formats->imageImport = $mailMerge->getImageImportFormats();
+    $formats->imageExport = $mailMerge->getImageExportFormats();
     
     $cache->save($formats, $cacheId);
     
-    unset($phpLiveDocx);
+    unset($mailMerge);
     
 } else {
     
@@ -59,9 +60,12 @@ printf("Supported TEMPLATE file formats (input)  : %s%s",
     Demos_Zend_Service_LiveDocx_Helper::arrayDecorator($formats->template), PHP_EOL);
 
 printf("Supported DOCUMENT file formats (output) : %s%s",
-    Demos_Zend_Service_LiveDocx_Helper::arrayDecorator($formats->document), PHP_EOL);
+    Demos_Zend_Service_LiveDocx_Helper::arrayDecorator($formats->document), PHP_EOL . PHP_EOL);
 
-printf("Supported IMAGE file formats (output)    : %s%s",
-    Demos_Zend_Service_LiveDocx_Helper::arrayDecorator($formats->image), PHP_EOL);
+printf("Supported IMAGE file formats (import)    : %s%s",
+    Demos_Zend_Service_LiveDocx_Helper::arrayDecorator($formats->imageImport), PHP_EOL);
+
+printf("Supported IMAGE file formats (export)    : %s%s",
+    Demos_Zend_Service_LiveDocx_Helper::arrayDecorator($formats->imageExport), PHP_EOL);
 
 print(PHP_EOL);

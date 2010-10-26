@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 20819 -->
+<!-- EN-Revision: 21825 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.mail.encoding">
     <title>Encodage</title>
@@ -38,6 +38,6 @@ $mail->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
 
     <para>
         <classname>Zend_Mail_Transport_Smtp</classname> encode les lignes commençant par un ou
-        deux points, ainsi l'émail ne viole pas le protocole SMTP.
+        deux points, ainsi le courriel ne viole pas le protocole SMTP.
     </para>
 </sect1>

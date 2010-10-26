@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HeadLinkTest.php 20376 2010-01-18 12:31:52Z mabe $
+ * @version    $Id: HeadLinkTest.php 23249 2010-10-26 12:46:47Z matthew $
  */
 
 // Call Zend_View_Helper_HeadLinkTest::main() if this source file is executed directly.
@@ -462,6 +462,15 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
                   . '<link href="/test3.css" media="screen" rel="stylesheet" type="text/css" >';
 
         $this->assertEquals($expected, $test);
+    }
+
+    /**
+     * @issue ZF-10345
+     */
+    public function testIdAttributeIsSupported()
+    {
+        $this->helper->appendStylesheet(array('href' => '/bar/baz', 'id' => 'foo'));
+        $this->assertContains('id="foo"', $this->helper->toString());
     }
 }
 

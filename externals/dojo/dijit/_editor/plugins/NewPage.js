@@ -19,9 +19,12 @@ dojo.declare("dijit._editor.plugins.NewPage",dijit._editor._Plugin,{
 	_initButton: function(){
 		// summary:
 		//		Over-ride for creation of the Print button.
-		var strings = dojo.i18n.getLocalization("dijit._editor", "commands");
+		var strings = dojo.i18n.getLocalization("dijit._editor", "commands"),
+			editor = this.editor;
 		this.button = new dijit.form.Button({
 			label: strings["newPage"],
+			dir: editor.dir,
+			lang: editor.lang,
 			showLabel: false,
 			iconClass: this.iconClassPrefix + " " + this.iconClassPrefix + "NewPage",
 			tabIndex: "-1",
@@ -43,7 +46,9 @@ dojo.declare("dijit._editor.plugins.NewPage",dijit._editor._Plugin,{
 		//		Function to set the content to blank.
 		// tags:
 		//		private
-		this.editor.attr("value", this.content);
+		this.editor.beginEditing();
+		this.editor.set("value", this.content);
+		this.editor.endEditing();
 		this.editor.focus();
 	}
 });

@@ -17,42 +17,15 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: AjaxLinkTest.php 20165 2010-01-09 18:57:56Z bkarwin $
+ * @version     $Id: AjaxLinkTest.php 20755 2010-01-29 12:29:45Z beberlei $
  */
 
-require_once dirname(__FILE__)."/../../../TestHelper.php";
+require_once "jQueryTestCase.php";
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'ZendX_JQuery_View_AjaxLinkTest::main');
-}
+require_once "ZendX/JQuery/View/Helper/AjaxLink.php";
 
-require_once "Zend/Registry.php";
-require_once "Zend/View.php";
-require_once "ZendX/JQuery.php";
-require_once "ZendX/JQuery/View/Helper/JQuery.php";
-
-class ZendX_JQuery_View_AjaxLinkTest extends PHPUnit_Framework_TestCase {
-    private $view = null;
-    private $helper = null;
-
-    public function setUp() {
-        Zend_Registry::_unsetInstance();
-        $this->view   = $this->getView();
-        $this->helper = new ZendX_JQuery_View_Helper_JQuery_Container();
-        $this->helper->setView($this->view);
-        Zend_Registry::set('ZendX_JQuery_View_Helper_JQuery', $this->helper);
-    }
-
-    public function tearDown() {
-        ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode();
-    }
-
-    public function getView() {
-        require_once 'Zend/View.php';
-        $view = new Zend_View();
-        $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
-        return $view;
-    }
+class ZendX_JQuery_View_AjaxLinkTest extends ZendX_JQuery_View_jQueryTestCase
+{
 
     public function testShouldBeCallable() {
         $link = $this->view->ajaxLink("Link to Inject", "inject.html");
@@ -61,7 +34,7 @@ class ZendX_JQuery_View_AjaxLinkTest extends PHPUnit_Framework_TestCase {
         $this->assertNotContains('inject.html', $link);
         $this->assertNotContains('$.get', $link);
 
-        $render = $this->helper->__toString();
+        $render = $this->jquery->__toString();
         $this->assertContains('inject.html', $render);
         $this->assertContains('$.get', $render);
     }
@@ -73,7 +46,7 @@ class ZendX_JQuery_View_AjaxLinkTest extends PHPUnit_Framework_TestCase {
         $this->assertContains('inject.html', $link);
         $this->assertContains('$.get', $link);
 
-        $render = $this->helper->__toString();
+        $render = $this->jquery->__toString();
         $this->assertNotContains('inject.html', $render);
         $this->assertNotContains('$.get', $render);
     }
@@ -84,7 +57,7 @@ class ZendX_JQuery_View_AjaxLinkTest extends PHPUnit_Framework_TestCase {
         $this->assertContains('class="someClass ajaxLink', $link);
         $this->assertNotContains('inject.php', $link);
 
-        $render = $this->helper->__toString();
+        $render = $this->jquery->__toString();
         $this->assertContains('inject.php', $render);
         $this->assertContains('$.post', $render);
         $this->assertContains('#test', $render);
@@ -97,7 +70,7 @@ class ZendX_JQuery_View_AjaxLinkTest extends PHPUnit_Framework_TestCase {
         $this->assertContains('class="ajaxLink', $link);
         $this->assertNotContains('inject123.php', $link);
 
-        $render = $this->helper->__toString();
+        $render = $this->jquery->__toString();
         $this->assertContains('inject123.php', $render);
         $this->assertContains('$.get', $render);
         $this->assertContains('#test', $render);
@@ -111,7 +84,7 @@ class ZendX_JQuery_View_AjaxLinkTest extends PHPUnit_Framework_TestCase {
         $this->assertNotContains('inject.php', $link);
         $this->assertNotContains('{"name":"Ludwig von Mises","email":"mises@vienna.at"}', $link);
 
-        $render = $this->helper->__toString();
+        $render = $this->jquery->__toString();
         $this->assertContains('inject.php', $render);
         $this->assertContains('function(data, textStatus) { jsonCallback(data); }', $render);
         $this->assertContains("'json');", $render);
@@ -234,8 +207,4 @@ class ZendX_JQuery_View_AjaxLinkTest extends PHPUnit_Framework_TestCase {
         $this->assertNotContains("/>Label1</a>", $html);
         $this->assertContains(">Label1</a>", $html);
     }
-}
-
-if (PHPUnit_MAIN_METHOD == 'ZendX_JQuery_View_AjaxLinkTest::main') {
-    ZendX_JQuery_View_AjaxLinkTest::main();
 }

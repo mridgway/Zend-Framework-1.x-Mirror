@@ -4,7 +4,7 @@ dojo.require("dojox.math.round");
 (function(){
 	
 	var uidMap = {};
-
+	var start = 0;
 	dojox.drawing.util.common	= {
 		// summary:
 		//		A collection of common methods used for DojoX Drawing.
@@ -29,13 +29,13 @@ dojo.require("dojox.math.round");
 		//			}
 		//
 		//
-		radToDeg: function(/*Numer*/n) {
+		radToDeg: function(/*Numer*/n){
 			// summary:
 			//		Convert the passed number to degrees.
 			return (n*180)/Math.PI;	//	Number
 		},
 		
-		degToRad: function(/*Numer*/n) {
+		degToRad: function(/*Numer*/n){
 			// summary:
 			//		Convert the passed number to radians.
 			return (n*Math.PI)/180;	// Number
@@ -54,7 +54,6 @@ dojo.require("dojox.math.round");
 			if(snap){
 				snap = snap/180;
 				var radians = this.radians(obj),
-					radius = this.length(obj),
 					seg = Math.PI * snap,
 					rnd = dojox.math.round(radians/seg),
 					new_radian = rnd*seg;
@@ -65,13 +64,18 @@ dojo.require("dojox.math.round");
 			}
 		},
 		
+		oppAngle: function(/*Angle*/ang){
+			(ang+=180) > 360 ? ang = ang - 360 : ang;
+			return ang;
+		},
+		
 		radians: function(/*EventObject*/o){
 			// summary:
 			//		Return the radians derived from the coordinates
 			//		in the Mouse object.
 			//
 			//var o = this.argsToObj.apply(this, arguments);
-			return Math.atan2(o.start.y-o.y,o.start.x-o.x);
+			return Math.atan2(o.start.y-o.y,o.x-o.start.x);
 		},
 		
 		length: function(/*EventObject*/o){
@@ -86,7 +90,7 @@ dojo.require("dojox.math.round");
 			// summary:
 			//		Subtract an amount from a line
 			// description:
-			//		x1,y1,x2,y2 represents the Line. 'amt' represnets the amount
+			//		x1,y1,x2,y2 represents the Line. 'amt' represents the amount
 			//		to subtract from it.
 			//
 			var len = this.distance(this.argsToObj.apply(this, arguments));
@@ -139,12 +143,12 @@ dojo.require("dojox.math.round");
 			//		(or starting) point, length and angle, find the
 			//		x,y point at the end of that line.
 			//
-			radians =  angle * Math.PI / 180.0;
-			var x = radius * Math.cos(radians) * -1;
-			var y = radius * Math.sin(radians) * -1;
+			var radians =  angle * Math.PI / 180.0;
+			var x = radius * Math.cos(radians);
+			var y = radius * Math.sin(radians);
 			return {
 				x:cx+x,
-				y:cy+y
+				y:cy-y
 			}; // Object
 		},
 		
@@ -159,7 +163,6 @@ dojo.require("dojox.math.round");
 				return obj;	 // Object
 			}
 			var radius = this.length(obj);
-			var diff = min-((360-(max-min))/2);
 			var new_angle = angle > max ? max : min - angle < 100 ? min : max;
 			return this.pointOnCircle(obj.start.x,obj.start.y,radius, new_angle); // Object
 		},
@@ -175,7 +178,6 @@ dojo.require("dojox.math.round");
 			//				.125 would snap to 22.5 degrees, etc.
 			//
 			var radians = this.radians(obj),
-				angle = this.angle(obj),
 				radius = this.length(obj),
 				seg = Math.PI * ca,
 				rnd = Math.round(radians/seg),
@@ -186,6 +188,10 @@ dojo.require("dojox.math.round");
 		},
 		
 		// helpers
+		idSetStart: function(num){
+			start=num;
+		},
+		
 		uid: function(/* ? String */str){
 			// summary:
 			//		Creates a unique ID.
@@ -195,7 +201,7 @@ dojo.require("dojox.math.round");
 			//			and used in the id. Otherwise 'shape' is used.
 			//
 			str = str || "shape";
-			uidMap[str] = uidMap[str]===undefined ? 0 : uidMap[str] + 1;
+			uidMap[str] = uidMap[str]===undefined ? start : uidMap[str] + 1;
 			return str + uidMap[str]; // String
 		},
 		
@@ -232,7 +238,7 @@ dojo.require("dojox.math.round");
 			//		Helper function to attach attributes to SVG and VML raw nodes.
 			//
 			
-			if(!elem) { return false; }
+			if(!elem){ return false; }
 			try{
 				
 				// util is a crappy check, but we need to tell the diff

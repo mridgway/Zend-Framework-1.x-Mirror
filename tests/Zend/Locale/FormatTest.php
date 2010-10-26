@@ -17,8 +17,10 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormatTest.php 22675 2010-07-26 08:49:38Z alexander $
+ * @version    $Id: FormatTest.php 22551 2010-07-12 17:34:24Z thomas $
  */
+
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Locale_Format

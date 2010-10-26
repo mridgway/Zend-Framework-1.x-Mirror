@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Ean8Test.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Ean8Test.php 21667 2010-03-28 17:45:14Z mikaelkael $
  */
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
@@ -114,7 +114,9 @@ class Zend_Barcode_Object_Ean8Test extends Zend_Barcode_Object_TestCommon
     public function testGetKnownWidthWithoutOrientation()
     {
         $this->_object->setText('123456');
-        $this->assertEquals(82, $this->_object->getWidth());
+        $this->assertEquals(87, $this->_object->getWidth());
+        $this->_object->setWithQuietZones(false);
+        $this->assertEquals(67, $this->_object->getWidth(true));
     }
 
     public function testCompleteGeneration()

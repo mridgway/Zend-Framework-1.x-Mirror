@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AlnumTest.php 20358 2010-01-17 19:03:49Z thomas $
+ * @version    $Id: AlnumTest.php 20355 2010-01-17 18:09:57Z thomas $
  */
 
 

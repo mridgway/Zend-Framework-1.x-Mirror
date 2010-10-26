@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 21212 -->
+<!-- EN-Revision: 21994 -->
 <sect2 id="zend.filter.set.encrypt">
     <title>Encrypt</title>
 
     <para>
         このフィルタは、指定した設定で任意の文字列を暗号化します。
-        暗号化の際に、アダプタを使用します。実際には、PHP の
-        <code>Mcrypt</code> および <code>OpenSSL</code>
+        暗号化の際に、アダプタを使用します。実際には、<acronym>PHP</acronym> の
+        <classname>Mcrypt</classname> および <classname>OpenSSL</classname>
         拡張モジュール用のアダプタを使用します。
     </para>
 
@@ -39,9 +39,9 @@ $filter->setAdapter('openssl');
 
     <note>
         <para>
-            <code>adapter</code> オプションを指定しなかったり setAdapter
+            <property>adapter</property> オプションを指定しなかったり setAdapter
             を使用しなかったりした場合は、デフォルトで
-            <code>Mcrypt</code> アダプタを使用します。
+            <classname>Mcrypt</classname> アダプタを使用します。
         </para>
     </note>
 
@@ -49,8 +49,8 @@ $filter->setAdapter('openssl');
         <title>Mcrypt での暗号化</title>
 
         <para>
-            <code>Mcrypt</code> 拡張モジュールをインストールすると、
-            <code>Mcrypt</code> アダプタが使えるようになります。
+            <classname>Mcrypt</classname> 拡張モジュールをインストールすると、
+            <classname>Mcrypt</classname> アダプタが使えるようになります。
             このアダプタは、初期化時のオプションとして以下をサポートしています。
         </para>
 
@@ -68,7 +68,7 @@ $filter->setAdapter('openssl');
                     <emphasis>algorithm</emphasis>: 使用するアルゴリズム。
                     <ulink url="http://php.net/mcrypt">PHP マニュアルの mcrypt のページ</ulink>
                     であげられている暗号化アルゴリズムのいずれかでなければなりません。
-                    省略した場合のデフォルトは <code>blowfish</code> です。
+                    省略した場合のデフォルトは 'blowfish' です。
                 </para>
             </listitem>
 
@@ -86,7 +86,7 @@ $filter->setAdapter('openssl');
                     <emphasis>mode</emphasis>: 使用する暗号化モード。
                     <ulink url="http://php.net/mcrypt">PHP マニュアルの mcrypt のページ</ulink>
                     であげられているモードのいずれかでなければなりません。
-                    省略した場合のデフォルトは <code>cbc</code> です。
+                    省略した場合のデフォルトは 'cbc' です。
                 </para>
             </listitem>
 
@@ -94,7 +94,7 @@ $filter->setAdapter('openssl');
                 <para>
                     <emphasis>mode_directory</emphasis>:
                     モードが存在するディレクトリ。
-                    省略した場合のデフォルトは、<code>mcrypt</code>
+                    省略した場合のデフォルトは、<classname>Mcrypt</classname>
                     拡張モジュールで設定されているパスです。
                 </para>
             </listitem>
@@ -143,7 +143,7 @@ $filter->setAdapter('openssl');
 
         <note>
             <para>
-                また、インスタンス作成時あるいは setEncryption()
+                また、インスタンス作成時あるいは <methodname>setEncryption()</methodname>
                 をコールした際にすべての設定がチェックされることにも注意しましょう。
                 設定内容に問題があることを mcrypt が検知すると、例外がスローされます。
             </para>
@@ -183,8 +183,8 @@ print $encrypted;
         <title>OpenSSL での暗号化</title>
 
         <para>
-            <code>OpenSSL</code> 拡張モジュールをインストールすると、
-            <code>OpenSSL</code> アダプタが使えるようになります。
+            <classname>OpenSSL</classname> 拡張モジュールをインストールすると、
+            <classname>OpenSSL</classname> アダプタが使えるようになります。
             このアダプタは、初期化時のオプションとして以下をサポートしています。
         </para>
 
@@ -245,7 +245,7 @@ $filter->setPublicKey(array(
 
         <note>
             <para>
-                <code>OpenSSL</code> アダプタは、正しい鍵を渡さないと動作しないことに注意しましょう。
+                <classname>OpenSSL</classname> アダプタは、正しい鍵を渡さないと動作しないことに注意しましょう。
             </para>
         </note>
 
@@ -283,7 +283,7 @@ $filter->setPassphrase('mypassphrase');
         </para>
 
         <para>
-            <code>OpenSSL</code> でコンテンツの暗号化を行う完全な例は、このようになります。
+            <classname>OpenSSL</classname> でコンテンツの暗号化を行う完全な例は、このようになります。
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -307,7 +307,6 @@ print $encrypted;
 // 復号の方法は Decrypt フィルタを参照ください
 ]]></programlisting>
 
-        <!-- TODO : to be translated -->
         <sect4 id="zend.filter.set.encrypt.openssl.simplified">
             <title>Simplified usage with Openssl</title>
 

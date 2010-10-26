@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 23129 2010-10-15 19:32:47Z matthew $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -39,6 +39,7 @@ require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
 require_once 'Zend/Mail/MessageTest.php';
 require_once 'Zend/Mail/SmtpTest.php';
+require_once 'Zend/Mail/FileTransportTest.php';
 
 /**
  * @category   Zend
@@ -80,6 +81,7 @@ class Zend_Mail_AllTests
         if (defined('TESTS_ZEND_MAIL_SMTP_ENABLED') && constant('TESTS_ZEND_MAIL_SMTP_ENABLED') == true) {
             $suite->addTestSuite('Zend_Mail_SmtpTest');
         }
+        $suite->addTestSuite('Zend_Mail_FileTransportTest');
 
         return $suite;
     }

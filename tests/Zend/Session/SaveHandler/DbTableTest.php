@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbTableTest.php 22667 2010-07-25 05:24:33Z ramon $
+ * @version    $Id: DbTableTest.php 22666 2010-07-25 05:17:18Z ramon $
  */
 
 /**

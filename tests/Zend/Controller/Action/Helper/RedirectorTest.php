@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RedirectorTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: RedirectorTest.php 23248 2010-10-26 12:45:52Z matthew $
  */
 
 // Call Zend_Controller_Action_Helper_RedirectorTest::main() if this source file is executed directly.
@@ -417,17 +417,29 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $this->redirector->setUseAbsoluteUri(true);
         $this->redirector->gotoUrl('/bar/baz');
         $headers = $this->response->getHeaders();
-        $uri = false;
-        foreach ($headers as $header) {
-            if ('Location' == $header['name']) {
-                $uri = $header['value'];
-            }
-        }
-        if (!$uri) {
+
+        if (!($uri = $this->_parseLocationHeaderValue())) {
             $this->fail('No redirect header set in response');
         }
 
         $this->assertEquals('https://foobar.example.com:4443/bar/baz', $uri);
+    }
+
+    /**
+     * ZF-10163
+     */
+    public function testUseAbsoluteUriStripsPortFromServerHttpHost()
+    {
+        $_SERVER['HTTP_HOST']   = 'foobar.example.com:8080';
+        $_SERVER['SERVER_PORT'] = '8080';
+        $this->redirector->setUseAbsoluteUri(true);
+        $this->redirector->gotoUrl('/bar/baz');
+
+        if (!($uri = $this->_parseLocationHeaderValue())) {
+            $this->fail('No redirect header set in response');
+        }
+
+        $this->assertEquals('http://foobar.example.com:8080/bar/baz', $uri);
     }
 
     /**
@@ -492,8 +504,50 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $this->assertNotContains('https://', $test);
         $this->assertEquals('http://localhost/bar/baz', $test);
     }
+    
+    /**
+     * @group ZF-9859
+     */
+    public function testGotoUrlAndSetGotoUrlBehaveTheSame()
+    {
+        $url = 'http://www.example.com';
+        $gotoUrl = $this->redirector->gotoUrl($url);
+        $setGotoUrl = $this->redirector->setGotoUrl($url);
+        $this->assertSame($gotoUrl, $setGotoUrl);
+    }
+    
+    /**
+     * @group ZF-10364
+     */
+    public function testGotoSimpleDefaultModuleRedirectsToDefaultModule()
+    {
+        $this->controller->getFrontController()->setDefaultModule('test')
+                                               ->setDefaultControllerName('test')
+                                               ->setDefaultAction('test');
+
+        $this->redirector->gotoSimple('test', 'test', 'test');
+        $result = $this->redirector->getRedirectUrl();
+        $expected = '/';
+        $this->assertEquals($expected, $result);
+
+        $this->redirector->gotoSimple('index', 'index', 'default');
+        $result = $this->redirector->getRedirectUrl();
+        $expected = '/default/index/index';
+        $this->assertEquals($expected, $result);
+    }
 
     /**#@-*/
+
+    protected function _parseLocationHeaderValue()
+    {
+        $headers = $this->response->getHeaders();
+
+        foreach ($headers as $header) {
+            if ('Location' == $header['name']) {
+                return $header['value'];
+            }
+        }
+    }
 }
 
 /**

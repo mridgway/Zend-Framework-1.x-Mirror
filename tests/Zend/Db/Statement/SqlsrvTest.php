@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SqlsrvTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: SqlsrvTest.php 21900 2010-04-16 19:48:11Z juokaz $
  */
 
 require_once 'Zend/Db/Statement/TestCommon.php';
@@ -87,6 +87,77 @@ class Zend_Db_Statement_SqlsrvTest extends Zend_Db_Statement_TestCommon
 
         $this->assertEquals(count($result1), count($result2));
         $this->assertEquals($result1, $result2);
+
+        $stmt->closeCursor();
+    }
+    
+    /*
+     * @group ZF-8138
+     */
+    public function testStatementNextRowsetWithProcedure()
+    {
+        $products   = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+        
+        $products_procedure   = $this->_db->quoteIdentifier('#InsertIntoProducts');
+        
+        $prodecure = "CREATE PROCEDURE $products_procedure
+                                    @ProductName varchar(100)
+                   AS
+                       BEGIN
+                             -- insert row (result set 1)
+                             INSERT INTO $products 
+                                         ($product_name)
+                                    VALUES
+                                         (@ProductName);
+                            
+                             -- Get results (result set 2)
+                             SELECT * FROM $products;
+                       END";
+        
+        // create procedure
+        $this->_db->query($prodecure);
+
+        $stmt  = $this->_db->query('{call ' . $products_procedure .'(?)}', array('Product'));
+
+        $result1 = $stmt->rowCount();
+        
+        $this->assertEquals(1, $result1, 'Expected 1 row to be inserted');
+        
+        $stmt->nextRowset();
+
+        $result2 = $stmt->fetchAll();
+
+        $this->assertEquals(4, count($result2), 'Expected 3 results from original data and one 1 row');
+        $this->assertEquals('Product', $result2[3]['product_name']);
+
+        $stmt->closeCursor();
+    }
+	
+	/*
+     * @group ZF-7559
+     */
+    public function testStatementWithProcedure()
+    {
+        $products   = $this->_db->quoteIdentifier('zfproducts');
+        
+        $products_procedure   = $this->_db->quoteIdentifier('#GetProducts');
+        
+        $prodecure = "CREATE PROCEDURE $products_procedure
+                   AS
+                       BEGIN
+                             SELECT * FROM $products;
+                       END";
+        
+        // create procedure
+        $this->_db->query($prodecure);
+
+        $stmt  = $this->_db->query('EXECUTE ' . $products_procedure);
+
+        $result1 = $stmt->fetchAll();
+
+        $this->assertEquals(3, count($result1), 'Expected 3 results from original data');
 
         $stmt->closeCursor();
     }

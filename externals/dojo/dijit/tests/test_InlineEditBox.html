@@ -17,7 +17,7 @@
 		</style>
 
 		<!-- required: a default dijit theme: -->
-		<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/tundra/tundra.css">
+		<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
 
 		<!-- required: dojo.js -->
 		<script type="text/javascript" src="../../dojo/dojo.js"
@@ -60,7 +60,7 @@
 			*/
 		</script>
 	</head>
-	<body class="tundra">
+	<body class="claro">
 
 		<h1 class="testTitle">Dijit InlineEditBox Test</h1>
 
@@ -200,13 +200,13 @@ pulvinar in, consequat ut, leo. Nullam nec est. Aenean id risus blandit
 tortor pharetra congue. Suspendisse pulvinar.
 		</p>
 		These buttons will
-		<button onClick="dijit.byId('areaEditable').attr('disabled', true)">disable</button> /
-		<button onClick="dijit.byId('areaEditable').attr('disabled', false)">enable</button>
+		<button onClick="dijit.byId('areaEditable').set('disabled', true)">disable</button> /
+		<button onClick="dijit.byId('areaEditable').set('disabled', false)">enable</button>
 		the InlineEditBox above.
 		<hr style="width:100%;">
 
 		<h2>Editor</h2>
-		<div id="inlineRTE" dojoType="dijit.InlineEditBox" editor="dijit.Editor""
+		<div id="inlineRTE" dojoType="dijit.InlineEditBox" editor="dijit.Editor"
 			autoSave="false" renderAsHtml="true"
 			editorParams="{height: '', extraPlugins: ['dijit._editor.plugins.AlwaysShowToolbar']}">
 			<b>Aliquam</b> vitae enim. <i>Duis</i> scelerisque metus auctor est venenatis
@@ -248,5 +248,14 @@ tortor pharetra congue. Suspendisse pulvinar.
  			});
 		</script>
 		<hr style="width:100%;">
+		<h2>Complex renderAsHtml="false"</h2>
+		<div id="renderAsHtml_false" dojoType="dijit.InlineEditBox" renderAsHtml="false" width="400px" style="width:400px;">
+			&lt;B&gt;not bold&lt;/B&gt;&amp;lt;input&amp;gt;
+		</div>
+		<hr style="width:100%;">
+		<h2>Complex renderAsHtml="true"</h2>
+		<div id="renderAsHtml_true" dojoType="dijit.InlineEditBox" renderAsHtml="true" width="400px" style="width:400px;">
+			&lt;B&gt;not bold&lt;/B&gt;<B>bold</B>&amp;lt;input&amp;gt;
+		</div>
 	</body>
 </html>

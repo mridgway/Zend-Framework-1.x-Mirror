@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PlanetTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: PlanetTest.php 21667 2010-03-28 17:45:14Z mikaelkael $
  */
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
@@ -117,6 +117,8 @@ class Zend_Barcode_Object_PlanetTest extends Zend_Barcode_Object_TestCommon
     {
         $this->_object->setText('00000012345');
         $this->assertEquals(286, $this->_object->getWidth());
+        $this->_object->setWithQuietZones(false);
+        $this->assertEquals(246, $this->_object->getWidth(true));
     }
 
     public function testCompleteGeneration()

@@ -144,7 +144,9 @@ dojo.declare("dojox.data.AndOrReadStore", null,{
 
 		this._assertIsItem(item);
 		this._assertIsAttribute(attribute);
-		return item[attribute] || []; // Array
+		var arr = item[attribute] || [];
+		// Clone it before returning.  refs: #10474
+		return arr.slice(0, arr.length); // Array
 	},
 
 	getAttributes: function(/* item */ item){
@@ -795,7 +797,7 @@ dojo.declare("dojox.data.AndOrReadStore", null,{
 							if(!dojo.isObject(referenceDescription)){
 								// example: 'Miss Piggy'
 								// from an item like: { name:['Kermit'], friends:[{_reference:'Miss Piggy'}]}
-								arrayOfValues[j] = this._itemsByIdentity[referenceDescription];
+								arrayOfValues[j] = this._getItemByIdentity(referenceDescription);
 							}else{
 								// example: {name:'Miss Piggy'}
 								// from an item like: { name:['Kermit'], friends:[{_reference:{name:'Miss Piggy'}}] }

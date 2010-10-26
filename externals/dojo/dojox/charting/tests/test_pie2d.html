@@ -1,7 +1,9 @@
-﻿<html>
+﻿<!DOCTYPE HTML>
+<html>
 <head>
-<title>Pie 2D</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<title>Pie 2D</title>
 <style type="text/css">
 	@import "../../../dojo/resources/dojo.css";
 	@import "../../../dijit/tests/css/dijitTests.css";
@@ -93,7 +95,8 @@ makeObjects = function(){
 		type: "Pie",
 		font: "normal normal bold 14pt Tahoma",
 		fontColor: "white",
-		labelOffset: 40
+		labelOffset: 40,
+		startAngle: -45
 	});
 	chart6.addSeries("Series A", [
 		{y: 4, text: "Red", color: "red"},
@@ -147,7 +150,7 @@ dojo.addOnLoad(makeObjects);
 	<td><div id="test3" style="width: 300px; height: 300px;"></div></td>
 	<td><div id="test4" style="width: 300px; height: 300px;"></div></td>
 </tr></table>
-<p>5/6: Pie with internal custom labels and custom colors.</p>
+<p>5/6: Pie with internal custom labels and custom colors (#6 is rotated).</p>
 <table border="1"><tr>
 	<td><div id="test5" style="width: 300px; height: 300px;"></div></td>
 	<td><div id="test6" style="width: 300px; height: 300px;"></div></td>

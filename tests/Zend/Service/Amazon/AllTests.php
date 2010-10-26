@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 23138 2010-10-16 17:37:02Z ramon $
  */
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -30,7 +30,9 @@ require_once 'Zend/Service/Amazon/OfflineTest.php';
 require_once 'Zend/Service/Amazon/OnlineTest.php';
 require_once 'Zend/Service/Amazon/Ec2/AllTests.php';
 require_once 'Zend/Service/Amazon/S3/AllTests.php';
+require_once 'Zend/Service/Amazon/SimpleDb/AllTests.php';
 require_once 'Zend/Service/Amazon/Sqs/AllTests.php';
+require_once 'Zend/Service/Amazon/Authentication/AllTests.php';
 
 /**
  * @category   Zend
@@ -71,8 +73,10 @@ class Zend_Service_Amazon_AllTests
             $suite->addTestSuite('Zend_Service_Amazon_OnlineTest_Skip');
         }
 
+        $suite->addTest(Zend_Service_Amazon_Authentication_AllTests::suite());
         $suite->addTest(Zend_Service_Amazon_Ec2_AllTests::suite());
         $suite->addTest(Zend_Service_Amazon_S3_AllTests::suite());
+        $suite->addTest(Zend_Service_Amazon_SimpleDb_AllTests::suite());
         $suite->addTest(Zend_Service_Amazon_Sqs_AllTests::suite());
 
         return $suite;

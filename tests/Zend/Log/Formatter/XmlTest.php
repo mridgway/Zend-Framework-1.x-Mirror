@@ -17,13 +17,17 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: XmlTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: XmlTest.php 22977 2010-09-19 12:44:00Z intiilapa $
  */
 
-require_once dirname(__FILE__)."/../../../TestHelper.php";
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Log_Formatter_XmlTest::main');
+}
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Log_Formatter_Xml */
 require_once 'Zend/Log/Formatter/Xml.php';
@@ -38,6 +42,12 @@ require_once 'Zend/Log/Formatter/Xml.php';
  */
 class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
 {
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function testDefaultFormat()
     {
         $f = new Zend_Log_Formatter_Xml();
@@ -95,4 +105,8 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('&amp;amp', $line);
     }
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Log_Formatter_XmlTest::main') {
+    Zend_Log_Formatter_XmlTest::main();
 }

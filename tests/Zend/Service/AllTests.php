@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 22319 2010-05-29 18:26:18Z padraic $
+ * @version    $Id: AllTests.php 23140 2010-10-16 19:05:57Z ramon $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -31,10 +31,12 @@ require_once 'Zend/Service/Amazon/AllTests.php';
 require_once 'Zend/Service/Audioscrobbler/AllTests.php';
 require_once 'Zend/Service/Delicious/AllTests.php';
 require_once 'Zend/Service/DeveloperGarden/AllTests.php';
+require_once 'Zend/Service/Ebay/AllTests.php';
 require_once 'Zend/Service/Flickr/AllTests.php';
 require_once 'Zend/Service/LiveDocx/AllTests.php';
 require_once 'Zend/Service/Nirvanix/AllTests.php';
 require_once 'Zend/Service/ReCaptcha/AllTests.php';
+require_once 'Zend/Service/ShortUrl/AllTests.php';
 require_once 'Zend/Service/Simpy/AllTests.php';
 require_once 'Zend/Service/SlideShareTest.php';
 require_once 'Zend/Service/StrikeIron/AllTests.php';
@@ -77,10 +79,12 @@ class Zend_Service_AllTests
         $suite->addTest(Zend_Service_Audioscrobbler_AllTests::suite());
         $suite->addTest(Zend_Service_Delicious_AllTests::suite());
         $suite->addTest(Zend_Service_DeveloperGarden_AllTests::suite());
+        $suite->addTest(Zend_Service_Ebay_AllTests::suite());
         $suite->addTest(Zend_Service_Flickr_AllTests::suite());
         $suite->addTest(Zend_Service_LiveDocx_AllTests::suite());
         $suite->addTest(Zend_Service_Nirvanix_AllTests::suite());
         $suite->addTest(Zend_Service_ReCaptcha_AllTests::suite());
+        $suite->addTest(Zend_Service_ShortUrl_AllTests::suite());
         $suite->addTest(Zend_Service_Simpy_AllTests::suite());
         $suite->addTestSuite('Zend_Service_SlideShareTest');
         $suite->addTest(Zend_Service_StrikeIron_AllTests::suite());

@@ -1,4 +1,6 @@
-<input class="dijit dijitReset dijitLeft" dojoAttachPoint='textbox,focusNode'
-	dojoAttachEvent='onmouseenter:_onMouse,onmouseleave:_onMouse'
-	autocomplete="off" type="${type}" ${nameAttrSetting}
-	/>
+<div class="dijit dijitReset dijitInline dijitLeft" id="widget_${id}" waiRole="presentation"
+	><div class="dijitReset dijitInputField dijitInputContainer"
+		><input class="dijitReset dijitInputInner" dojoAttachPoint='textbox,focusNode' autocomplete="off"
+			${!nameAttrSetting} type='${type}'
+	/></div
+></div>

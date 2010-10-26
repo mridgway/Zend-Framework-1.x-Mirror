@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DiffieHellmanTest.php 22053 2010-04-29 14:29:52Z padraic $
+ * @version    $Id: DiffieHellmanTest.php 22052 2010-04-29 14:27:20Z padraic $
  */
 
 require_once 'Zend/Crypt/DiffieHellman.php';

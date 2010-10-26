@@ -18,18 +18,14 @@
 		}
 		#contentContainer { padding: 2em; }
 
-		#navMenuContainer, #navMenu, #navMenuSub1, #navMenuSub2, #navMenuSub3 {
-			background-color: #f7f7f7;
-			/* background-color: LightCoral */
-		}
 		#navMenu {
-			background: none;
+			/* make the sidebar menu blend in with the whole sidebar */
 			border: none;
 		}
 	</style>
 
 	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../dijit/themes/claro/claro.css">
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../dojo/dojo.js"
@@ -72,6 +68,12 @@
             var pSubMenu = new dijit.Menu({parentMenu:pMenu, id:"progSubMenu"});
             pSubMenu.addChild(new dijit.MenuItem({label:"Submenu item", onClick:fClick}));
             pSubMenu.addChild(new dijit.MenuItem({label:"Submenu item", onClick:fClick}));
+			
+            var pSubSubMenu = new dijit.Menu({parentMenu:pSubMenu, id:"progSubSubMenu"});
+            pSubSubMenu.addChild(new dijit.MenuItem({label:"SubSubmenu item", onClick:fClick}));
+            pSubSubMenu.addChild(new dijit.MenuItem({label:"SubSubmenu item", onClick:fClick}));
+            pSubMenu.addChild(new dijit.PopupMenuItem({label:"SubSubmenu", popup:pSubSubMenu, id:"progPopupMenuItem2"}));
+
             pMenu.addChild(new dijit.PopupMenuItem({label:"Submenu", popup:pSubMenu, id:"progPopupMenuItem"}));
 
             pMenu.startup();
@@ -102,7 +104,7 @@
 	});
     </script>
 </head>
-<body class="tundra">
+<body class="claro">
 
 	<div dojoType="dijit.Menu" id="windowContextMenu" contextMenuForWindow="true" style="display: none;">
 		<div dojoType="dijit.MenuItem" onClick="console.log('Hello world');">Context Menu</div>
@@ -275,7 +277,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td id="navMenuContainer" valign=top width="0%">
+			<td id="navMenuContainer" class="dijitMenu" valign=top width="0%">
 
 				<h3 style="margin-bottom: 2em;">Navigation menu:</h3>
 				<div dojoType="dijit.Menu" id="navMenu">

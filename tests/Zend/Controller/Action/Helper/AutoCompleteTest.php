@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AutoCompleteTest.php 22234 2010-05-21 22:18:53Z dragonbe $
+ * @version    $Id: AutoCompleteTest.php 22233 2010-05-21 22:16:08Z dragonbe $
  */
 
 // Call Zend_Controller_Action_Helper_AutoCompleteTest::main() if this source file is executed directly.

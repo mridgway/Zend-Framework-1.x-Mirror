@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StripTagsTest.php 22550 2010-07-11 13:52:40Z thomas $
+ * @version    $Id: StripTagsTest.php 22806 2010-08-08 08:31:28Z thomas $
  */
 
 // Call Zend_Filter_StripTagsTest::main() if this source file is executed directly.
@@ -601,6 +601,16 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
         $input    = '<img width="10" height="10" src=\'wont_be_matched.jpg\'>';
         $expected = '<img width="10" height="10" src=\'wont_be_matched.jpg\'>';
         $this->assertEquals($expected, $filter->filter($input));
+    }
+
+    /**
+     * @group ZF-10256
+     */
+    public function testNotClosedHtmlCommentAtEndOfString()
+    {
+        $input    = 'text<!-- not closed comment at the end';
+        $expected = 'text';
+        $this->assertEquals($expected, $this->_filter->filter($input));
     }
 }
 

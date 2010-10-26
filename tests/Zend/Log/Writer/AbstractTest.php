@@ -17,11 +17,17 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AbstractTest.php 22632 2010-07-18 18:30:08Z ramon $
+ * @version    $Id: AbstractTest.php 22977 2010-09-19 12:44:00Z intiilapa $
  */
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Log_Writer_AbstractTest::main');
+}
+
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Log_Writer_Abstract */
 require_once 'Zend/Log/Writer/Abstract.php';
@@ -37,6 +43,12 @@ require_once 'Zend/Log/Writer/Abstract.php';
 class Zend_Log_Writer_AbstractTest extends PHPUnit_Framework_TestCase
 {
     protected $_writer;
+
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
 
     protected function setUp()
     {
@@ -62,6 +74,18 @@ class Zend_Log_Writer_AbstractTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('Zend_Log_Exception');
         $this->_writer->addFilter(new StdClass());
     }
+
+    /**
+     * @group ZF-8953
+     */
+    public function testFluentInterface()
+    {
+        require_once 'Zend/Log/Formatter/Simple.php';
+        $instance = $this->_writer->addFilter(1)
+                                  ->setFormatter(new Zend_Log_Formatter_Simple());
+
+        $this->assertTrue($instance instanceof Zend_Log_Writer_AbstractTest_Concrete);
+    }
 }
 
 class Zend_Log_Writer_AbstractTest_Concrete extends Zend_Log_Writer_Abstract
@@ -73,4 +97,8 @@ class Zend_Log_Writer_AbstractTest_Concrete extends Zend_Log_Writer_Abstract
     static public function factory($config)
     {
     }
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Log_Writer_AbstractTest::main') {
+    Zend_Log_Writer_AbstractTest::main();
 }

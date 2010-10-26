@@ -13,12 +13,6 @@
 		"K", 
 		"A"
 	], 
-	"quarters-standAlone-narrow": [
-		"1", 
-		"2", 
-		"3", 
-		"4"
-	], 
 	"field-weekday": "Haftanın Günü", 
 	"dateFormatItem-yyQQQQ": "QQQQ yy", 
 	"dateFormatItem-yQQQ": "QQQ y", 
@@ -44,6 +38,7 @@
 		"Aralık"
 	], 
 	"dateFormatItem-EEEd": "d EEE", 
+	"dayPeriods-format-wide-pm": "PM", 
 	"dateFormat-full": "dd MMMM y EEEE", 
 	"dateFormatItem-Md": "dd/MM", 
 	"field-era": "Miladi Dönem", 
@@ -90,8 +85,11 @@
 	], 
 	"dateFormatItem-yyQ": "Q yy", 
 	"timeFormat-full": "HH:mm:ss zzzz", 
-	"am": "AM", 
-	"dateFormatItem-H": "H", 
+	"field-day-relative+0": "Bugün", 
+	"field-day-relative+1": "Yarın", 
+	"field-day-relative+2": "Yarından sonraki gün", 
+	"dateFormatItem-H": "HH", 
+	"field-day-relative+3": "Üç gün sonra", 
 	"months-standAlone-abbr": [
 		"Oca", 
 		"Şub", 
@@ -118,8 +116,6 @@
 		"3. çeyrek", 
 		"4. çeyrek"
 	], 
-	"dateFormatItem-HHmmss": "HH:mm:ss", 
-	"dateFormatItem-hhmmss": "hh:mm:ss a", 
 	"dateFormatItem-M": "L", 
 	"days-standAlone-wide": [
 		"Pazar", 
@@ -157,6 +153,9 @@
 	], 
 	"dateFormatItem-d": "d", 
 	"dateFormatItem-ms": "mm:ss", 
+	"field-day-relative+-1": "Dün", 
+	"field-day-relative+-2": "Evvelsi gün", 
+	"field-day-relative+-3": "Üç gün önce", 
 	"dateFormatItem-MMMd": "dd MMM", 
 	"dateFormatItem-MEd": "dd/MM E", 
 	"dateFormatItem-yMMMM": "MMMM y", 
@@ -187,6 +186,7 @@
 		"A"
 	], 
 	"dateFormatItem-yyMM": "MM/yy", 
+	"dateFormatItem-hm": "h:mm a", 
 	"days-format-abbr": [
 		"Paz", 
 		"Pzt", 
@@ -220,16 +220,16 @@
 		"C"
 	], 
 	"dateFormatItem-MMM": "LLL", 
-	"dateFormatItem-HHmm": "HH:mm", 
-	"pm": "PM", 
+	"dayPeriods-format-wide-am": "AM", 
 	"dateFormatItem-MMMMEd": "dd MMMM E", 
 	"dateFormat-short": "dd.MM.yyyy", 
 	"field-second": "Saniye", 
 	"dateFormatItem-yMMMEd": "dd MMM y EEE", 
-	"dateFormatItem-hhmm": "hh:mm a", 
 	"dateFormatItem-Ed": "d E", 
 	"field-week": "Hafta", 
 	"dateFormat-medium": "dd MMM y", 
 	"dateFormatItem-mmss": "mm:ss", 
+	"dateFormatItem-Hms": "HH:mm:ss", 
+	"dateFormatItem-hms": "h:mm:ss a", 
 	"dateFormatItem-yyyy": "y"
 })

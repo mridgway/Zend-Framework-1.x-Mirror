@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DijitElementTest.php 20622 2010-01-25 20:25:57Z matthew $
+ * @version    $Id: DijitElementTest.php 20621 2010-01-25 20:25:23Z matthew $
  */
 
 // Call Zend_Dojo_Form_Decorator_DijitElementTest::main() if this source file is executed directly.

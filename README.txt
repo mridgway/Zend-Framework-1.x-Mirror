@@ -1,40 +1,196 @@
-Welcome to the Zend Framework 1.10 Release! 
+Welcome to the Zend Framework 1.11 Release! 
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.10.8 Release ([INSERT REV NUM HERE]).
+Zend Framework 1.11rc1 Release ([INSERT REV NUM HERE]).
 Released on <Month> <Day>, <Year>.
 
 NEW FEATURES
 ------------
 
-* Zend_Barcode, contributed by Mikael Perraud and Thomas Weidner
-* Zend_Cache_Backend_Static, contributed by Pádraic Brady
-* Zend_Cache_Manager, contributed by Pádraic Brady
-* Zend_Exception - previous exception support, contributed by Marc Bennewitz
-* Zend_Feed_Pubsubhubbub, contributed by Pádraic Brady
-* Zend_Feed_Writer, contributed by Pádraic Brady
-* Zend_Filter_Boolean, contributed by Thomas Weidner
-* Zend_Filter_Compress/Decompress, contributed by Thomas Weidner
-* Zend_Filter_Null, contributed by Thomas Weidner
-* Zend_Log::factory(), contributed by Mark van der Velden and Martin Roest ibuildings
-* Zend_Log_Writer_ZendMonitor, contributed by Matthew Weier O'Phinney
-* Zend_Markup, contributed by Pieter Kokx
-* Zend_Oauth, contributed by Pádraic Brady
-* Zend_Serializer, contributed by Marc Bennewitz
-* Zend_Service_DeveloperGarden, contributed by Marco Kaiser
-* Zend_Service_LiveDocx, contributed by Jonathan Maron
-* Zend_Service_WindowsAzure, contributed by Maarten Balliauw
-* Zend_Validate_Barcode, contributed by Thomas Weidner
-* Zend_Validate_Callback, contributed by Thomas Weidner
-* Zend_Validate_CreditCard, contributed by Thomas Weidner
-* Zend_Validate_PostCode, contributed by Thomas Weidner
-* Additions to Zend_Application resources, including Cachemanager, Dojo, Jquery,
-  Layout, Log, Mail, and Multidb (contributed by Dolf Schimmel)
-* Refactoring of Zend_Loader::loadClass() to conform to PHP Framework Interop
-  Group reference implementation, which allows for autoloading PHP 5.3
-  namespaced code
-* Updated Dojo version to 1.4
+Mobile Support:
+
+    Zend Framework 1.11 marks the first release with explicit support
+    for mobile devices, via the new component Zend_Http_UserAgent. This
+    component was developed by Raphael Carles, CTO of Interakting.
+    
+    Zend_Http_UserAgent performs two responsibilities:
+    
+     * User-Agent detection
+     * Device capabilities detection, based on User-Agent
+    
+    The component includes a "features" adapter mechanism that allows
+    developers to tie into different backends for the purpose of
+    discovering device capabilities. Currently, the only shipped adapter
+    is for the WURFL (Wireless Universal Resource File) API.
+    
+     * Note: Luca Passani, author and lead of the WURFL project, has
+       provided an exemption to Zend Framework to provide a non-GPL
+       adapter accessing the WURFL PHP API.
+    
+    Additional hooks into the component are provided via a
+    Zend_Application resource plugin, and a Zend_View helper, allowing
+    developers the ability to return output customized for the detected
+    device (e.g., alternate layouts, alternate images, Flash versus
+    HTML5 support, etc.).
+
+Zend_Cloud: SimpleCloud API:
+
+    During ZendCon 2009, Zend announced a prototype of the SimpleCloud
+    API. This API was to provide hooks into cloud-based document
+    storage, queue services, and file storage.
+
+    Zend Framework 1.11.0 markes the first official, stable release of
+    Zend_Cloud, Zend Framework's PHP version of the SimpleCloud API.
+    Current support includes:
+
+    * Document Services:
+      - Amazon SimpleDB
+      - Windows Azure's Table Storage
+    * Queue Services:
+      - Amazon Simple Queue Service (SQS)
+      - Windows Azure's Queue Service
+      - All adapters supported by Zend_Queue:
+        * Zend Platform JobQueue
+        * Memcacheq
+        * Relational Database
+        * ActiveMQ
+    * Storage Services:
+      - Amazon Simple Storage Service (S3)
+      - Windows Azure's Blog Storage
+      - Nirvanix
+      - Local filesystem
+
+    When using any of the SimpleCloud APIs, your code will be portable
+    across the various adapters provided, allowing you to pick and
+    choose your services, as well as try different services until you
+    find one that suits your application or business needs.
+    Additionally, if you find you need to code adapter-specific
+    features, you can drop down to the specific adapter in order to do
+    so.
+
+    More adapters will be arriving in the coming months, giving you even
+    more options!
+
+    We thank Wil Sinclair and Stas Malyshev for their assistance in the
+    initial releases of Zend_Cloud.
+
+Security:
+
+    Several classes in Zend Framework were patched to eliminate the
+    potential for leaking timing information from the direct comparison
+    of sensitive data such as plaintext passwords or cryptographic
+    signatures to user input. These leaks arise from the normal process
+    of comparing any two strings in PHP. The nature of the leaks is that
+    strings are often compared byte by byte, with a negative result
+    being returned early as soon as any set of non-matching bytes is
+    detected. The more bytes that are equal (starting from the first
+    byte) between both sides of the comparison, the longer it takes for
+    a final result to be returned. Based on the time it takes to return
+    a negative or positive result, it is possible that an attacker
+    could, over many samples of requests, craft a string that compares
+    positively to another secret string value known only to a target
+    server simply by guessing the string one byte at a time and
+    measuring each guess' execution time. This server secret could be a
+    plaintext password or the correct cryptographic signature of a
+    request the attacker wants to execute, such as is used in several
+    open protocols including OpenID and OAuth. This could obviously
+    enable an attacker to gain sufficient information to perform a
+    secondary attack such as masquerading as an authenticated user.
+
+    This form of attack is known as a Remote Timing Attack. Timing
+    Attacks have been problematic in the past but to date have been very
+    difficult to perform remotely over the internet due to the
+    interference of network jitter which limits their effectiveness in
+    resolving very small timing differences. While the internet still
+    poses a challenge to performing successful Timing Attacks against a
+    remote server, the increasing use of frameworks on local networks
+    and in cloud computing, where network jitter may be significantly
+    reduced, raises the distinct possibility that remote Timing Attacks
+    will become feasible against ever smaller timing information leaks,
+    such as those leaked when comparing any two strings. As a
+    precaution, the applied changes implement a fixed time comparison
+    for several classes which would be attractive targets in any
+    potential remote Timing Attack. A fixed time comparison function
+    does not leak any timing information useful to an attacker thus
+    proactively preventing any future vulnerability to these forms of
+    attack.
+
+    We thank Padraic Brady for his efforts in identifying and patching
+    these vulnerabilities.
+
+SimpleDB Support:
+
+    Zend Framework has provided support for Amazon's Simple Storage
+    Service (S3), Simple Queue Service (SQS), and Elastic Cloud Compute
+    (EC2) platforms for several releases. Zend Framework 1.11.0 adds
+    support for SimpleDB, Amazon's non-relational document storage
+    database offering. Support is available for all SimpleDB operations
+    via Zend_Service_Amazon_SimpleDb.
+    
+    Zend Framework's SimpleDB adapter was originally written by Wil
+    Sinclair.
+
+eBay Findings API Support:
+
+    eBay has an extensive REST API, allowing developers to build
+    applications interacting with their extensive data. Zend Framework
+    1.11.0 includes Zend_Service_Ebay_Findings, which provides complete
+    support for the eBay Findings API. This API allows developers to
+    query eBay for details on active auctions, using categories or
+    keywords.
+
+    Zend_Service_Ebay was contributed by Renan de Lima and Ramon
+    Henrique Ornelas.
+
+New Configuration Formats:
+
+    Zend_Config has been a quite popular component in Zend Framework,
+    and has offerred adapters for PHP arrays, XML, and INI configuration
+    files. Zend Framework 1.11.0 now offers two additional configuration
+    formats: YAML and JSON.
+
+    Zend_Config_Yaml provides a very rudimentary YAML-parser that should
+    work with most configuration formats. However, it also allows you to
+    specify an alternate YAML parser if desired, allowing you to lever
+    tools such as PECL's ext/syck or Symfony's YAML component, sfYaml.
+
+    Zend_Config_Json leverages the Zend_Json component, and by extension
+    ext/json.
+
+    Both adapters have support for PHP constants, as well as provide the
+    ability to write configuration files based on configuration objects.
+
+    Stas Malyshev created both adapters for Zend Framework;
+    Zend_Config_Json also had assistance from Sudheer Satyanarayana.
+
+URL Shortening:
+
+    Zend_Service_ShortUrl was added for this release. The component
+    provides a simple interface for use with most URL shortening
+    services, defining simply the methods "shorten" and "unshorten".
+    Adapters for two services, http://jdem.cz and http://tinyurl.com,
+    are provided with this release. 
+
+    Zend_Service_ShortUrl was contributed by Martin Hujer.
+
+Additional View Helpers:
+
+    Several new view helpers are now exposed:
+
+    * Zend_View_Helper_UserAgent ties into the Zend_Http_UserAgent
+      component, detailed above. It gives you access to the UserAgent
+      instance, allowing you to query for the device and capabilities.
+    * Zend_View_Helper_TinySrc is an additional portion of Zend
+      Framework's mobile offering for version 1.11.0. The helper ties
+      into the TinySrc API, allowing you to a) provide device-specific
+      image sizes and formats for your site, and b) offload generation
+      of those images to this third-party service. The helper creates
+      img tags pointing to the service, and provides options for
+      specifying adaptive sizing and formats.
+    * Zend_View_Helper_Gravatar ties into the Gravatar API, allowing you
+      to provide avatar images for registered users that utilize the
+      Gravatar service. This helper was contributed by Marcin Morawski.
 
 A detailed list of all features and bug fixes in this release may be found at:
 

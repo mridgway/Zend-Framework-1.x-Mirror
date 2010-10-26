@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FactoryTest.php 20367 2010-01-18 04:51:23Z ralph $
+ * @version    $Id: FactoryTest.php 20366 2010-01-18 03:56:52Z ralph $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';

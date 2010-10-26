@@ -107,7 +107,7 @@ class ZendX_Application_Resource_Jquery
         $options = array_merge($options, array('cdn_ssl' => false));
 
         foreach ($options as $key => $value) {
-            switch($key) {
+            switch(strtolower($key)) {
                 case 'noconflictmode':
                     if (!(bool)$value) {
                         ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode();

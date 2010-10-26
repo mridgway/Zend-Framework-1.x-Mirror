@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AbstractTest.php 21258 2010-02-28 18:00:27Z thomas $
+ * @version    $Id: AbstractTest.php 21257 2010-02-28 17:58:31Z thomas $
  */
 
 // Call Zend_File_Transfer_Adapter_AbstractTest::main() if this source file is executed directly.

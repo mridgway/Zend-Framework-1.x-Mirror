@@ -1,6 +1,7 @@
 dojo.provide("dojox.grid.enhanced.plugins.Menu");
 
-dojo.declare("dojox.grid.enhanced.plugins.Menu", null, {
+dojo.require("dojox.grid.enhanced.plugins._Mixin");
+dojo.declare("dojox.grid.enhanced.plugins.Menu", dojox.grid.enhanced.plugins._Mixin, {
 	//	summary:
 	//		 Provides context menu support, including header menu, row menu, cell menu and selected region menu
 	// example:
@@ -21,10 +22,10 @@ dojo.declare("dojox.grid.enhanced.plugins.Menu", null, {
 		!this.rowMenu && (this.rowMenu = this._getMenuWidget(this.menus['rowMenu']));
 		!this.cellMenu && (this.cellMenu = this._getMenuWidget(this.menus['cellMenu']));
 		!this.selectedRegionMenu && (this.selectedRegionMenu = this._getMenuWidget(this.menus['selectedRegionMenu']));
-		this.headerMenu && this.attr('headerMenu', this.headerMenu) && this.setupHeaderMenu();
-		this.rowMenu && this.attr('rowMenu', this.rowMenu);
-		this.cellMenu && this.attr('cellMenu', this.cellMenu);
-		this.isDndSelectEnable && this.selectedRegionMenu && dojo.connect(this.select, 'setDrugCoverDivs', dojo.hitch(this, this._bindDnDSelectEvent));
+		this.headerMenu && this.set('headerMenu', this.headerMenu) && this.setupHeaderMenu();
+		this.rowMenu && this.set('rowMenu', this.rowMenu);
+		this.cellMenu && this.set('cellMenu', this.cellMenu);
+		this.isDndSelectEnable && this.selectedRegionMenu && this.connect(this.select, 'setDrugCoverDivs', this._bindDnDSelectEvent);
 	},
 	
 	_getMenuWidget: function(menuId){
@@ -39,7 +40,7 @@ dojo.declare("dojox.grid.enhanced.plugins.Menu", null, {
 		}
 		var menu = dijit.byId(menuId);
 		if(!menu){
-			throw new Error("Menu '" + menuId +"' not existed");	
+			console.warn("Menu '" + menuId +"' not existed");	
 		}
 		return menu;
 	},
@@ -50,10 +51,10 @@ dojo.declare("dojox.grid.enhanced.plugins.Menu", null, {
 		dojo.forEach(this.select.coverDIVs, dojo.hitch(this, function(cover){
 			//this.selectedRegionMenu.unBindDomNode(this.domNode);
 			this.selectedRegionMenu.bindDomNode(cover);
-			dojo.connect(cover, "contextmenu", dojo.hitch(this, function(e){
+			this.connect(cover, "contextmenu", function(e){
 				dojo.mixin(e, this.select.getSelectedRegionInfo());
 				this.onSelectedRegionContextMenu(e);
-			}));
+			});
 		}));
 	},
 	
@@ -87,7 +88,9 @@ dojo.declare("dojox.grid.enhanced.plugins.Menu", null, {
 		this[menuType] = menu;
 		this[menuType].bindDomNode(this.domNode);
 	},
-	
+
+	// TODO: this code is not accessible.  Shift-F10 won't open a menu.  (I think
+	// this function never even gets called.)
 	showRowCellMenu: function(e){
 		//summary:
 		//		Show row or cell menus
@@ -98,7 +101,13 @@ dojo.declare("dojox.grid.enhanced.plugins.Menu", null, {
 		// this.selection.isSelected(e.rowIndex) should remove?
 		//if(this.rowMenu && (!e.cell || this.selection.isSelected(e.rowIndex)) && (!this.focus.cell || this.focus.cell != e.cell)){
 		if(this.rowMenu && (!e.cell || this.selection.isSelected(e.rowIndex))){
-			this.rowMenu._openMyself(e);
+			this.rowMenu._openMyself({
+				target: e.target,
+				coords: "pageX" in e ? {
+					x: e.pageX,
+					y: e.pageY
+				} : null
+			});
 			dojo.stopEvent(e);
 			return;
 		}
@@ -110,6 +119,24 @@ dojo.declare("dojox.grid.enhanced.plugins.Menu", null, {
 			this.select.cellClick(e.cellIndex, e.rowIndex);
 			this.focus.setFocusCell(e.cell, e.rowIndex);
 		}
-		this.cellMenu && this.cellMenu._openMyself(e);
+		if(this.cellMenu){
+			this.cellMenu._openMyself({
+				target: e.target,
+				coords: "pageX" in e ? {
+					x: e.pageX,
+					y: e.pageY
+				} : null
+			});
+		}
+	},
+	
+	destroy: function(){
+		//summary:
+		//		Destroy all resources.
+		//_Grid.destroy will un-bind this.headerMenu		
+		this.rowMenu && this.rowMenu.unBindDomNode(this.domNode);
+		this.cellMenu && this.cellMenu.unBindDomNode(this.domNode);
+		this.selectedRegionMenu && this.selectedRegionMenu.destroy();
+		this.inherited(arguments);
 	}
 });

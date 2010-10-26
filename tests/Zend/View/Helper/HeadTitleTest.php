@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HeadTitleTest.php 22089 2010-05-04 11:49:03Z padraic $
+ * @version    $Id: HeadTitleTest.php 22879 2010-08-21 21:21:15Z ramon $
  */
 
 // Call Zend_View_Helper_HeadTitleTest::main() if this source file is executed directly.
@@ -237,6 +237,15 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         $placeholder = $this->helper->headTitle('Foo');
         $placeholder = $this->helper->headTitle('Bar');
         $this->assertContains('BarFoo', $placeholder->toString());
+    }
+
+    /**
+     * @group ZF-10284
+     */
+    public function testReturnTypeDefaultAttachOrder()
+    {
+        $this->assertTrue($this->helper->setDefaultAttachOrder('PREPEND') instanceof  Zend_View_Helper_HeadTitle);
+        $this->assertEquals('PREPEND', $this->helper->getDefaultAttachOrder());
     }
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 17175 -->
+<!-- EN-Revision: 22743 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.layout.quickstart">
     <title>Guia Rápido Zend_Layout</title>
@@ -13,7 +13,7 @@
         <title>Scripts de Layout</title>
 
         <para>
-            Em ambos os casos, entrentanto, você precisará criar um script de layout.
+            Em ambos os casos, entretanto, você precisará criar um script de layout.
             Scripts de layout simplesmente utilizam <classname>Zend_View</classname> (ou
             qualquer outra implementação de view que você esteja usando). Variáveis de layout são
             registradas com um <link linkend="zend.view.helpers.initial.placeholder">marcador</link>
@@ -105,7 +105,7 @@
             layout com qualquer conteúdo de aplicação uma vez que o laço de despacho foi feito,
             e registra um action helper para permitir o acesso ao objeto layout a partir de seus
             action controllers. Adicionalmente, você pode a qualquer tempo pegar a instância de
-            dentro de um view script usando o view helper <code>layout</code>.
+            dentro de um view script usando o view helper <classname>Layout</classname>.
         </para>
 
         <para>
@@ -121,12 +121,12 @@ Zend_Layout::startMvc();
         <para>
             <methodname>startMvc()</methodname> pode tomar uma matriz opcional de opções ou
             um objeto <classname>Zend_Config</classname> para customizar a instância; essas
-            opções são detalhadas na <xref linkend="zend.layout.options" />.
+            opções são detalhadas <link linkend="zend.layout.options">nesta seção</link>.
         </para>
 
         <para>
-            Em um action controller, você pode então acessar a instância de
-            layout como um action helper:
+            Em um action controller, você pode então acessar a instância de layout como um action
+            helper:
         </para>
 
         <programlisting language="php"><![CDATA[
@@ -147,8 +147,8 @@ class FooController extends Zend_Controller_Action
 ]]></programlisting>
 
         <para>
-            Em seus view scripts, você pode então acessar o objeto de <code>layout</code>
-            via view helper layout. Esse view helper é levemente diferente dos outros
+            Em seus view scripts, você pode então acessar o objeto de layout via view helper
+            <classname>Layout</classname>. Esse view helper é levemente diferente dos outros
             no que toca a não tomar argumentos, e retornar um objeto ao invés de um valor
             string. Isso permite que você imediatamente chame métodos no objeto de layout:
         </para>
@@ -216,13 +216,17 @@ $layout = Zend_Layout::getMvcInstance();
         </para>
 
         <itemizedlist>
-            <listitem><para>
+            <listitem>
+                <para>
                     Escopo de variáveis de layout.
-            </para></listitem>
+                </para>
+            </listitem>
 
-            <listitem><para>
+            <listitem>
+                <para>
                     Isolamento do view script de layout de outros scripts view.
-            </para></listitem>
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -257,7 +261,7 @@ echo $layout->render();
             um exemplo de um script de layout.
         </para>
 
-         <para>
+        <para>
             <inlinegraphic align="center" valign="middle"
                 fileref="figures/zend.layout.quickstart.example.png" format="PNG" />
         </para>
@@ -267,7 +271,7 @@ echo $layout->render();
             você tenha configurado; por exemplo, se você está usando posicionamento absoluto,
             você pode ser capaz de ter a navegação exibida mais tarde no documento, mas ainda
             mostrar-se no topo; o mesmo poderia ser dito para a barra lateral ou o cabeçalho.
-            A mecância real de puxar o conteúdo permanece a mesma, entretanto.
+            A mecânica real de puxar o conteúdo permanece a mesma, entretanto.
         </para>
     </sect2>
 </sect1>

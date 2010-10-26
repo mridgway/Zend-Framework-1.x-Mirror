@@ -7,11 +7,12 @@ dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
 dojo.require("dijit._Container");
 dojo.require("dijit._Contained");
+dojo.require("dijit._CssStateMixin");
 dojo.require("dojo.cookie");
 
 dojo.declare(
 	"dijit._TreeNode",
-	[dijit._Widget, dijit._Templated, dijit._Container, dijit._Contained],
+	[dijit._Widget, dijit._Templated, dijit._Container, dijit._Contained, dijit._CssStateMixin],
 {
 	// summary:
 	//		Single node within a tree.   This class is used internally
@@ -48,12 +49,22 @@ dojo.declare(
 
 	templateString: dojo.cache("dijit", "templates/TreeNode.html"),
 
+	baseClass: "dijitTreeNode",
+
+	// For hover effect for tree node, and focus effect for label
+	cssStateNodes: {
+		rowNode: "dijitTreeRow",
+		labelNode: "dijitTreeLabel"
+	},
+
 	attributeMap: dojo.delegate(dijit._Widget.prototype.attributeMap, {
 		label: {node: "labelNode", type: "innerText"},
 		tooltip: {node: "rowNode", type: "attribute", attribute: "title"}
 	}),
 
 	postCreate: function(){
+		this.inherited(arguments);
+
 		// set expand icon for leaf
 		this._setExpando();
 
@@ -77,10 +88,10 @@ dojo.declare(
 		var pixels = (Math.max(indent, 0) * this.tree._nodePixelIndent) + "px";
 
 		dojo.style(this.domNode, "backgroundPosition",	pixels + " 0px");
-		dojo.style(this.rowNode, dojo._isBodyLtr() ? "paddingLeft" : "paddingRight", pixels);
+		dojo.style(this.rowNode, this.isLeftToRight() ? "paddingLeft" : "paddingRight", pixels);
 
 		dojo.forEach(this.getChildren(), function(child){
-			child.attr("indent", indent+1);
+			child.set("indent", indent+1);
 		});
 	},
 
@@ -276,7 +287,7 @@ dojo.declare(
 		// Orphan all my existing children.
 		// If items contains some of the same items as before then we will reattach them.
 		// Don't call this.removeChild() because that will collapse the tree etc.
-		this.getChildren().forEach(function(child){
+		dojo.forEach(this.getChildren(), function(child){
 			dijit._Container.prototype.removeChild.call(this, child);
 		}, this);
 
@@ -296,7 +307,7 @@ dojo.declare(
 					for(var i=0;i<existingNodes.length;i++){
 						if(existingNodes[i] && !existingNodes[i].getParent()){
 							node = existingNodes[i];
-							node.attr('indent', this.indent+1);
+							node.set('indent', this.indent+1);
 							break;
 						}
 					}
@@ -308,6 +319,8 @@ dojo.declare(
 							isExpandable: model.mayHaveChildren(item),
 							label: tree.getLabel(item),
 							tooltip: tree.getTooltip(item),
+							dir: tree.dir,
+							lang: tree.lang,
 							indent: this.indent + 1
 						});
 					if(existingNodes){
@@ -339,12 +352,15 @@ dojo.declare(
 			this._setExpando(false);
 		}
 
+		// Set leaf icon or folder icon, as appropriate
+		this._updateItemClasses(this.item);
+
 		// On initial tree show, make the selected TreeNode as either the root node of the tree,
 		// or the first child, if the root node is hidden
 		if(this == tree.rootNode){
 			var fc = this.tree.showRoot ? this : this.getChildren()[0];
 			if(fc){
-				fc.setSelected(true);
+				fc.setFocusable(true);
 				tree.lastFocused = fc;
 			}else{
 				// fallback: no nodes in tree so focus on Tree <div> itself
@@ -382,22 +398,12 @@ dojo.declare(
 
 	_onLabelFocus: function(evt){
 		// summary:
-		//		Called when this node is focused (possibly programatically)
+		//		Called when this row is focused (possibly programatically)
+		//		Note that we aren't using _onFocus() builtin to dijit
+		//		because it's called when focus is moved to a descendant TreeNode.
 		// tags:
 		//		private
-		dojo.addClass(this.labelNode, "dijitTreeLabelFocused");
 		this.tree._onNodeFocus(this);
-	},
-
-	_onLabelBlur: function(evt){
-		// summary:
-		//		Called when focus was moved away from this node, either to
-		//		another TreeNode or away from the Tree entirely.
-		//		Note that we aren't using _onFocus/_onBlur builtin to dijit
-		//		because _onBlur() isn't called when focus is moved to my child TreeNode.
-		// tags:
-		//		private
-		dojo.removeClass(this.labelNode, "dijitTreeLabelFocused");
 	},
 
 	setSelected: function(/*Boolean*/ selected){
@@ -407,10 +413,19 @@ dojo.declare(
 		// description:
 		//		In particular, setting a node as selected involves setting tabIndex
 		//		so that when user tabs to the tree, focus will go to that node (only).
-		var labelNode = this.labelNode;
-		labelNode.setAttribute("tabIndex", selected ? "0" : "-1");
-		dijit.setWaiState(labelNode, "selected", selected);
-		dojo.toggleClass(this.rowNode, "dijitTreeNodeSelected", selected);
+		dijit.setWaiState(this.labelNode, "selected", selected);
+		dojo.toggleClass(this.rowNode, "dijitTreeRowSelected", selected);
+	},
+
+	setFocusable: function(/*Boolean*/ selected){
+		// summary:
+		//		A Tree has a (single) node that's focusable.
+		//		Mark that this node is/isn't that currently focsuable node.
+		// description:
+		//		In particular, setting a node as selected involves setting tabIndex
+		//		so that when user tabs to the tree, focus will go to that node (only).
+
+		this.labelNode.setAttribute("tabIndex", selected ? "0" : "-1");
 	},
 
 	_onClick: function(evt){
@@ -433,7 +448,6 @@ dojo.declare(
 		//		Handler for onmouseenter event on a node
 		// tags:
 		//		private
-		dojo.addClass(this.rowNode, "dijitTreeNodeHover");
 		this.tree._onNodeMouseEnter(this, evt);
 	},
 
@@ -442,7 +456,6 @@ dojo.declare(
 		//		Handler for onmouseenter event on a node
 		// tags:
 		//		private
-		dojo.removeClass(this.rowNode, "dijitTreeNodeHover");
 		this.tree._onNodeMouseLeave(this, evt);
 	}
 });
@@ -487,11 +500,13 @@ dojo.declare(
 
 	// path: String[] or Item[]
 	//		Full path from rootNode to selected node expressed as array of items or array of ids.
+	//		Since setting the path may be asynchronous (because ofwaiting on dojo.data), set("path", ...)
+	//		returns a Deferred to indicate when the set is complete.
 	path: [],
 
 	// selectedItem: [readonly] Item
 	//		The currently selected item in this tree.
-	//		This property can only be set (via attr('selectedItem', ...)) when that item is already
+	//		This property can only be set (via set('selectedItem', ...)) when that item is already
 	//		visible in the tree.   (I.e. the tree has already been expanded to show that node.)
 	//		Should generally use `path` attribute to set the selected item instead.
 	selectedItem: null,
@@ -632,6 +647,12 @@ dojo.declare(
 	postMixInProperties: function(){
 		this.tree = this;
 
+		if(this.autoExpand){
+			// There's little point in saving opened/closed state of nodes for a Tree
+			// that initially opens all it's nodes.
+			this.persist = false;
+		}
+
 		this._itemNodesMap={};
 
 		if(!this.cookieName){
@@ -768,25 +789,19 @@ dojo.declare(
 		// summary:
 		//		Select a tree node related to passed item.
 		//		WARNING: if model use multi-parented items or desired tree node isn't already loaded
-		//		behavior is not granted. Use 'path' attr instead for full support.
-		var oldValue = this.attr("selectedItem");
+		//		behavior is undefined. Use set('path', ...) instead.
+
+		var oldValue = this.get("selectedItem");
 		var identity = (!item || dojo.isString(item)) ? item : this.model.getIdentity(item);
 		if(identity == oldValue ? this.model.getIdentity(oldValue) : null){ return; }
 		var nodes = this._itemNodesMap[identity];
-		if(nodes && nodes.length){
-			//select the first item
-			this.focusNode(nodes[0]);
-		}else if(this.lastFocused){
-			// Select none so deselect current
-			this.lastFocused.setSelected(false);
-			this.lastFocused = null;
-		}
+		this._selectNode((nodes && nodes[0]) || null);	//select the first item
 	},
 
 	_getSelectedItemAttr: function(){
 		// summary:
 		//		Return item related to selected tree node.
-		return this.lastFocused && this.lastFocused.item;
+		return this.selectedNode && this.selectedNode.item;
 	},
 
 	_setPathAttr: function(/*Item[] || String[]*/ path){
@@ -794,17 +809,25 @@ dojo.declare(
 		//		Select the tree node identified by passed path.
 		// path:
 		//		Array of items or item id's
+		// returns:
+		//		Deferred to indicate when the set is complete
 
-		if(!path || !path.length){ return; }
+		var d = new dojo.Deferred();
+
+		this._selectNode(null);
+		if(!path || !path.length){
+			d.resolve(true);
+			return d;
+		}
 
 		// If this is called during initialization, defer running until Tree has finished loading
 		this._loadDeferred.addCallback(dojo.hitch(this, function(){
 			if(!this.rootNode){
-				console.debug("!this.rootNode");
+				d.reject(new Error("!this.rootNode"));
 				return;
 			}
 			if(path[0] !== this.rootNode.item && (dojo.isString(path[0]) && path[0] != this.model.getIdentity(this.rootNode.item))){
-				console.error(this, ":path[0] doesn't match this.rootNode.item.  Maybe you are using the wrong tree.");
+				d.reject(new Error(this.id + ":path[0] doesn't match this.rootNode.item.  Maybe you are using the wrong tree."));
 				return;
 			}
 			path.shift();
@@ -835,22 +858,25 @@ dojo.declare(
 					this._expandNode(node).addCallback(dojo.hitch(this, advance));
 				}else{
 					// Final destination node, select it
-					if(this.lastFocused != node){
-						this.focusNode(node);
-					}
+					this._selectNode(node);
+					
+					// signal that path setting is finished
+					d.resolve(true);
 				}
 			}
 
 			this._expandNode(node).addCallback(dojo.hitch(this, advance));
 		}));
+			
+		return d;
 	},
 
 	_getPathAttr: function(){
 		// summary:
 		//		Return an array of items that is the path to selected tree node.
-		if(!this.lastFocused){ return; }
+		if(!this.selectedNode){ return; }
 		var res = [];
-		var treeNode = this.lastFocused;
+		var treeNode = this.selectedNode;
 		while(treeNode && treeNode !== this.rootNode){
 			res.unshift(treeNode.item);
 			treeNode = treeNode.getParent();
@@ -998,6 +1024,7 @@ dojo.declare(
 
 	_onEnterKey: function(/*Object*/ message, /*Event*/ evt){
 		this._publish("execute", { item: message.item, node: message.node } );
+		this._selectNode(message.node);
 		this.onClick(message.item, message.node, evt);
 	},
 
@@ -1154,10 +1181,10 @@ dojo.declare(
 		// summary:
 		//		Translates click events into commands for the controller to process
 
-		var domElement = e.target;
+		var domElement = e.target,
+			isExpandoClick = (domElement == nodeWidget.expandoNode || domElement == nodeWidget.expandoNodeText);
 
-		if( (this.openOnClick && nodeWidget.isExpandable) ||
-			(domElement == nodeWidget.expandoNode || domElement == nodeWidget.expandoNodeText) ){
+		if( (this.openOnClick && nodeWidget.isExpandable) || isExpandoClick ){
 			// expando node was clicked, or label of a folder node was clicked; open it
 			if(nodeWidget.isExpandable){
 				this._onExpandoClick({node:nodeWidget});
@@ -1167,16 +1194,19 @@ dojo.declare(
 			this.onClick(nodeWidget.item, nodeWidget, e);
 			this.focusNode(nodeWidget);
 		}
+		if(!isExpandoClick){
+			this._selectNode(nodeWidget);
+		}
 		dojo.stopEvent(e);
 	},
 	_onDblClick: function(/*TreeNode*/ nodeWidget, /*Event*/ e){
 		// summary:
 		//		Translates double-click events into commands for the controller to process
 
-		var domElement = e.target;
+		var domElement = e.target,
+			isExpandoClick = (domElement == nodeWidget.expandoNode || domElement == nodeWidget.expandoNodeText);
 
-		if( (this.openOnDblClick && nodeWidget.isExpandable) ||
-			(domElement == nodeWidget.expandoNode || domElement == nodeWidget.expandoNodeText) ){
+		if( (this.openOnDblClick && nodeWidget.isExpandable) ||isExpandoClick ){
 			// expando node was clicked, or label of a folder node was clicked; open it
 			if(nodeWidget.isExpandable){
 				this._onExpandoClick({node:nodeWidget});
@@ -1185,6 +1215,9 @@ dojo.declare(
 			this._publish("execute", { item: nodeWidget.item, node: nodeWidget, evt: e } );
 			this.onDblClick(nodeWidget.item, nodeWidget, e);
 			this.focusNode(nodeWidget);
+		}
+		if(!isExpandoClick){
+			this._selectNode(nodeWidget);
 		}
 		dojo.stopEvent(e);
 	},
@@ -1364,6 +1397,21 @@ dojo.declare(
 		dijit.focus(node.labelNode);
 	},
 
+	_selectNode: function(/*_tree.Node*/ node){
+		// summary:
+		//		Mark specified node as select, and unmark currently selected node.
+		// tags:
+		//		protected
+
+		if(this.selectedNode && !this.selectedNode._destroyed){
+			this.selectedNode.setSelected(false);
+		}
+		if(node){
+			node.setSelected(true);
+		}
+		this.selectedNode = node;
+	},
+
 	_onNodeFocus: function(/*dijit._Widget*/ node){
 		// summary:
 		//		Called when a TreeNode gets focus, either by user clicking
@@ -1372,26 +1420,28 @@ dojo.declare(
 		//		It marks that the current node is the selected one, and the previously
 		//		selected node no longer is.
 
-		if(node){
-			if(node != this.lastFocused && this.lastFocused && !this.lastFocused._destroyed){
-				// mark that the previously selected node is no longer the selected one
-				this.lastFocused.setSelected(false);
+		if(node && node != this.lastFocused){
+			if(this.lastFocused && !this.lastFocused._destroyed){
+				// mark that the previously focsable node is no longer focusable
+				this.lastFocused.setFocusable(false);
 			}
 
 			// mark that the new node is the currently selected one
-			node.setSelected(true);
+			node.setFocusable(true);
 			this.lastFocused = node;
 		}
 	},
 
 	_onNodeMouseEnter: function(/*dijit._Widget*/ node){
 		// summary:
-		//		Called when mouse is over a node (onmouseenter event)
+		//		Called when mouse is over a node (onmouseenter event),
+		//		this is monitored by the DND code
 	},
 
 	_onNodeMouseLeave: function(/*dijit._Widget*/ node){
 		// summary:
-		//		Called when mouse is over a node (onmouseenter event)
+		//		Called when mouse leaves a node (onmouseleave event),
+		//		this is monitored by the DND code
 	},
 
 	//////////////// Events from the model //////////////////////////
@@ -1404,11 +1454,13 @@ dojo.declare(
 			nodes = this._itemNodesMap[identity];
 
 		if(nodes){
-			var self = this;
-			dojo.forEach(nodes,function(node){
-				node.attr({
-					label: self.getLabel(item),
-					tooltip: self.getTooltip(item)
+			var label = this.getLabel(item),
+				tooltip = this.getTooltip(item);
+			dojo.forEach(nodes, function(node){
+				node.set({
+					item: item,		// theoretically could be new JS Object representing same item
+					label: label,
+					tooltip: tooltip
 				});
 				node._updateItemClasses(item);
 			});
@@ -1527,7 +1579,7 @@ dojo.declare(
 
 		if(this.tree.rootNode){
 			// If tree has already loaded, then reset indent for all the nodes
-			this.tree.rootNode.attr('indent', this.showRoot ? 0 : -1);
+			this.tree.rootNode.set('indent', this.showRoot ? 0 : -1);
 		}
 	},
 

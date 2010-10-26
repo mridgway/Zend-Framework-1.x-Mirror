@@ -17,61 +17,15 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: ColorPickerTest.php 20165 2010-01-09 18:57:56Z bkarwin $
+ * @version     $Id: ColorPickerTest.php 20755 2010-01-29 12:29:45Z beberlei $
  */
 
-require_once dirname(__FILE__)."/../../../TestHelper.php";
-
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'ZendX_JQuery_View_ColorPickerTest::main');
-}
-
-require_once "Zend/Registry.php";
-require_once "Zend/View.php";
-require_once "ZendX/JQuery.php";
-require_once "ZendX/JQuery/View/Helper/JQuery.php";
+require_once "jQueryTestCase.php";
 
 require_once "ZendX/JQuery/View/Helper/ColorPicker.php";
 
-class ZendX_JQuery_View_ColorPickerTest extends PHPUnit_Framework_TestCase
+class ZendX_JQuery_View_ColorPickerTest extends ZendX_JQuery_View_jQueryTestCase
 {
-	private $view = null;
-	private $jquery = null;
-	private $helper = null;
-
-    /**
-     * Runs the test methods of this class.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        $suite  = new PHPUnit_Framework_TestSuite("ZendX_JQuery_View_ColorPickerTest");
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
-
-	public function setUp()
-	{
-        Zend_Registry::_unsetInstance();
-        $this->view   = $this->getView();
-        $this->jquery = new ZendX_JQuery_View_Helper_JQuery_Container();
-        $this->jquery->setView($this->view);
-        Zend_Registry::set('ZendX_JQuery_View_Helper_JQuery', $this->jquery);
-	}
-
-	public function tearDown()
-	{
-		ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode();
-	}
-
-    public function getView()
-    {
-        require_once 'Zend/View.php';
-        $view = new Zend_View();
-        $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
-        return $view;
-    }
-
     public function testCallingInViewEnablesJQueryHelper()
     {
         $element = $this->view->colorPicker("element", "");
@@ -106,8 +60,4 @@ class ZendX_JQuery_View_ColorPickerTest extends PHPUnit_Framework_TestCase
         $element = $this->view->colorPicker("elem1", "#FFFFFF");
         $this->assertEquals(array('$("#elem1").colorpicker({});', '$("#elem1").colorpicker({"color":"#FFFFFF"});'), $this->view->jQuery()->getOnLoadActions());
     }
-}
-
-if (PHPUnit_MAIN_METHOD == 'ZendX_JQuery_View_ColorPickerTest::main') {
-    ZendX_JQuery_View_ColorPickerTest::main();
 }

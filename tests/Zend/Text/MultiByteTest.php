@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MultiByteTest.php 21933 2010-04-18 15:37:03Z dasprid $
+ * @version    $Id: MultiByteTest.php 21931 2010-04-18 15:25:32Z dasprid $
  */
 
 // Call Zend_Text_MultiByteTest::main() if this source file is executed directly.

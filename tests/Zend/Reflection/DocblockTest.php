@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DocblockTest.php 20394 2010-01-18 18:39:03Z mabe $
+ * @version    $Id: DocblockTest.php 20393 2010-01-18 18:37:42Z mabe $
  */
 
 /**

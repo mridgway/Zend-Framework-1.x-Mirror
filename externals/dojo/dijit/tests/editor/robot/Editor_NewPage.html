@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="../../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
+			dojo.require("dojo.window");
 			dojo.require("dijit.robotx");
 
 			dojo.addOnLoad(function(){
@@ -40,25 +40,25 @@
 									break;
 								}
 							}
-							value = editor0.attr("value");
+							value = editor0.get("value");
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								editor0.focus();
 
 								//Find the fullscreen plugin, we'll need it.
 								doh.assertTrue(npPlugin != null);
-								var value = editor0.attr("value");
+								var value = editor0.get("value");
 								doh.robot.mouseMoveAt(npPlugin.button.domNode, 500);
 								doh.robot.mouseClick({left:true}, 500);
 
 								doh.robot.sequence(d.getTestCallback(function(){
 									//Now check the state!
-									var newVal = editor0.attr("value");
+									var newVal = editor0.get("value");
 									doh.assertTrue(newVal !== value, "Verify the contents have changed.");
 									newVal = dojo.trim(newVal);
 									newVal = newVal.replace("/>", ">");
@@ -72,7 +72,7 @@
 							return d;
 						},
 						tearDown: function(){
-							if(editor0){editor0.attr("value", value);}
+							if(editor0){editor0.set("value", value);}
 						}
 					},
 					{
@@ -88,25 +88,25 @@
 									break;
 								}
 							}
-							value = editor0.attr("value");
+							value = editor0.get("value");
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								editor0.focus();
 
 								//Find the fullscreen plugin, we'll need it.
 								doh.assertTrue(npPlugin != null);
-								var value = editor0.attr("value");
+								var value = editor0.get("value");
 								doh.robot.mouseMoveAt(npPlugin.button.domNode, 500);
 								doh.robot.mouseClick({left:true}, 500);
 
 								doh.robot.sequence(d.getTestCallback(function(){
 									//Now check the state!
-									var newVal = editor0.attr("value");
+									var newVal = editor0.get("value");
 									doh.assertTrue(newVal !== value, "Verify the contents have changed.");
 									newVal = dojo.trim(newVal);
 									doh.assertEqual("<p>This page intentionally left blank</p>", newVal, "Validate the contents are the defined default content");
@@ -117,7 +117,7 @@
 							return d;
 						},
 						tearDown: function(){
-							if(editor0){editor0.attr("value", value);}
+							if(editor0){editor0.set("value", value);}
 						}
 					}
 				]);

@@ -11,7 +11,7 @@
 	there are currently (3 themes * 4 tests) * (10 variations of supported browsers)
 	not including testing individual locale-strings
 
-	you should NOT be using this in a production enviroment. include
+	you should NOT be using this in a production environment. include
 	your css and set your classes manually. for test purposes only ...
 */
 
@@ -19,26 +19,26 @@
 	var d = dojo,
 		theme = false,
 		testMode = null,
-		defTheme = "tundra";
+		defTheme = "claro";
 
 	if(window.location.href.indexOf("?") > -1){
 		var str = window.location.href.substr(window.location.href.indexOf("?")+1).split(/#/);
 		var ary  = str[0].split(/&/);
 		for(var i=0; i<ary.length; i++){
-			var split = ary[i].split(/=/),
+			var split = ary[i].split("="),
 				key = split[0],
 				value = split[1].replace(/[^\w]/g, "");	// replace() to prevent XSS attack
 			switch(key){
 				case "locale":
 					// locale string | null
-					dojo.config.locale = locale = value;
+					dojo.locale = dojo.config.locale = locale = value;
 					break;
 				case "dir":
 					// rtl | null
 					document.getElementsByTagName("html")[0].dir = value;
 					break;
 				case "theme":
-					// tundra | soria | noir | squid | nihilo | null
+					// tundra | soria | nihilo | claro | null
 					theme = value;
 					break;
 				case "a11y":
@@ -47,7 +47,11 @@
 		}
 	}
 
-	// always include the default theme files:
+	// If URL specifies a non-claro theme then pull in those theme CSS files and modify
+	// <body> to point to that new theme instead of claro.
+	//
+	// Also defer parsing and any dojo.addOnLoad() calls that the test file makes
+	// until the CSS has finished loading.
 	if(theme || testMode){
 
 		if(theme){
@@ -60,11 +64,17 @@
 		if(dojo.config.parseOnLoad){
 			dojo.config.parseOnLoad = false;
 			dojo.config._deferParsing = true;
+			
+			// Capture any dojo.addOnLoad() calls the test makes and defer them until after
+			// the new CSS loads.   (TODO: would be more straightforward to just make a
+			// testAddOnLoad() function and call that from the test files)
+			var originalOnLoad = dojo.addOnLoad,
+				loadFuncs = [];
+			dojo.addOnLoad = function(f){ loadFuncs.push(f); };
 		}
 
-		d.addOnLoad(function(){
-
-			// set the classes
+		(originalOnLoad || dojo.addOnLoad)(function(){
+			// Reset <body> to point to the specified theme
 			var b = dojo.body();
 			if(theme){
 					dojo.removeClass(b, defTheme);
@@ -73,10 +83,16 @@
 					if(n){ d.destroy(n); }
 			}
 			if(testMode){ d.addClass(b, testMode); }
+
+			// Defer parsing and addOnLoad() execution until the specified CSS loads.
 			if(dojo.config._deferParsing){
-				// attempt to elimiate race condition introduced by this
-				// test helper file.  120ms to allow CSS to finish/process?
-				setTimeout(dojo.hitch(d.parser, "parse", b), 120);
+				setTimeout(function(){
+					dojo.addOnLoad = originalOnLoad;
+					dojo.parser.parse(b);
+					for(var i=0; i<loadFuncs.length; i++){
+						loadFuncs[i]();
+					}
+				}, 320);
 			}
 
 		});

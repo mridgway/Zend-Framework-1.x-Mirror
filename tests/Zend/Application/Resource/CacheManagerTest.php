@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CacheManagerTest.php 22618 2010-07-17 19:36:47Z ramon $
+ * @version    $Id: CacheManagerTest.php 22617 2010-07-17 19:29:55Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {

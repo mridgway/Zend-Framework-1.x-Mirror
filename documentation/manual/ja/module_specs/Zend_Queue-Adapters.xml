@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 20115 -->
+<!-- EN-Revision: 21819 -->
 <sect1 id="zend.queue.adapters">
     <title>アダプタ</title>
 
@@ -354,16 +354,19 @@ $queue = new Zend_Queue('Db', $options);
                         <filename>/queue/</filename>
                     </para>
                 </listitem>
+
                 <listitem>
                     <para>
                         <filename>/topic/</filename>
                     </para>
                 </listitem>
+
                 <listitem>
                     <para>
                         <filename>/temp-queue/</filename>
                     </para>
                 </listitem>
+
                 <listitem>
                     <para>
                         <filename>/temp-topic/</filename>
@@ -408,7 +411,7 @@ $queue = new Zend_Queue('Db', $options);
 
             <para>
                 データベース<emphasis>CREATE TABLE ( ... )</emphasis> <acronym>SQL</acronym>
-                文が<filename>Zend/Queue/Adapter/Db/queue.sql</filename>にあります。
+                文が<filename>Zend/Queue/Adapter/Db/mysql.sql</filename>にあります。
             </para>
         </sect3>
 
@@ -492,7 +495,7 @@ $queue = new Zend_Queue('Db', $options);
                 <listitem>
                     <para>
                         <methodname>getQueues()</methodname> - Zend Platformは、
-                        APIによってスクリプトを取り扱う、タスク生成されたジョブを参照できません。
+                        <acronym>API</acronym> によってスクリプトを取り扱う、タスク生成されたジョブを参照できません。
                         このメソッドは、例外を投げます。
                     </para>
                 </listitem>

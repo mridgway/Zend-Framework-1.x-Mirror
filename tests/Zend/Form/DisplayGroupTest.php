@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DisplayGroupTest.php 22465 2010-06-19 17:41:03Z alab $
+ * @version    $Id: DisplayGroupTest.php 22464 2010-06-19 17:31:21Z alab $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {

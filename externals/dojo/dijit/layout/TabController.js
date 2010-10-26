@@ -66,6 +66,11 @@ dojo.declare("dijit.layout._TabButton",
 	//		The CSS class applied to the domNode.
 	baseClass: "dijitTab",
 
+	// Apply dijitTabCloseButtonHover when close button is hovered
+	cssStateNodes: {
+		closeNode: "dijitTabCloseButton"
+	},
+
 	templateString: dojo.cache("dijit.layout","templates/_TabButton.html"),
 
 	// Override _FormWidget.scrollOnFocus.
@@ -113,21 +118,20 @@ dojo.declare("dijit.layout._TabButton",
 			var _nlsResources = dojo.i18n.getLocalization("dijit", "common");
 			if(this.closeNode){
 				dojo.attr(this.closeNode,"title", _nlsResources.itemClose);
-				if (dojo.isIE<8){
-					// IE<8 needs title set directly on image.  Only set for IE since alt=""
-					// for this node and WCAG 2.0 does not allow title when alt=""
-					dojo.attr(this.closeIcon, "title", _nlsResources.itemClose);
-				}
 			}
 			// add context menu onto title button
 			var _nlsResources = dojo.i18n.getLocalization("dijit", "common");
 			this._closeMenu = new dijit.Menu({
 				id: this.id+"_Menu",
+				dir: this.dir,
+				lang: this.lang,
 				targetNodeIds: [this.domNode]
 			});
 
 			this._closeMenu.addChild(new dijit.MenuItem({
 				label: _nlsResources.itemClose,
+				dir: this.dir,
+				lang: this.lang,
 				onClick: dojo.hitch(this, "onClickCloseButton")
 			}));
 		}else{
@@ -137,6 +141,18 @@ dojo.declare("dijit.layout._TabButton",
 			}
 		}
 	},
+	_setLabelAttr: function(/*String*/ content){
+		// summary:
+		//		Hook for attr('label', ...) to work.
+		// description:
+		//		takes an HTML string.
+		//		Inherited ToggleButton implementation will Set the label (text) of the button; 
+		//		Need to set the alt attribute of icon on tab buttons if no label displayed
+			this.inherited(arguments);
+			if(this.showLabel == false && !this.params.title){
+				this.iconNode.alt = dojo.trim(this.containerNode.innerText || this.containerNode.textContent || '');
+			}
+		},
 
 	destroy: function(){
 		if(this._closeMenu){
@@ -144,17 +160,5 @@ dojo.declare("dijit.layout._TabButton",
 			delete this._closeMenu;
 		}
 		this.inherited(arguments);
-	},
-
-	_onCloseButtonEnter: function(){
-		// summary:
-		//		Handler when mouse is moved over the close icon (the X)
-		dojo.addClass(this.closeNode, "closeButton-hover");
-	},
-
-	_onCloseButtonLeave: function(){
-		// summary:
-		//		Handler when mouse is moved off the close icon (the X)
-		dojo.removeClass(this.closeNode, "closeButton-hover");
 	}
 });

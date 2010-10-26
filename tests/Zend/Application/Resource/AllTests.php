@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20111 2010-01-07 00:15:30Z freak $
+ * @version    $Id: AllTests.php 23058 2010-10-07 20:25:17Z matthew $
  */
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -39,6 +39,7 @@ require_once 'Zend/Application/Resource/ModulesTest.php';
 require_once 'Zend/Application/Resource/MultidbTest.php';
 require_once 'Zend/Application/Resource/NavigationTest.php';
 require_once 'Zend/Application/Resource/SessionTest.php';
+require_once 'Zend/Application/Resource/UseragentTest.php';
 require_once 'Zend/Application/Resource/ViewTest.php';
 
 /**
@@ -74,6 +75,7 @@ class Zend_Application_Resource_AllTests
         $suite->addTestSuite('Zend_Application_Resource_MultidbTest');
         $suite->addTestSuite('Zend_Application_Resource_NavigationTest');
         $suite->addTestSuite('Zend_Application_Resource_SessionTest');
+        $suite->addTestSuite('Zend_Application_Resource_UseragentTest');
         $suite->addTestSuite('Zend_Application_Resource_ViewTest');
 
         return $suite;

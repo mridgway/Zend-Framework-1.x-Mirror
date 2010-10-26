@@ -1,10 +1,10 @@
 dojo.provide("dojox.date.islamic.locale");
-dojo.experimental("dojox.date.islamic.locale");
 
 dojo.require("dojox.date.islamic.Date");
 dojo.require("dojo.regexp");
 dojo.require("dojo.string");
 dojo.require("dojo.i18n");
+dojo.require("dojo.date");
 
 dojo.requireLocalization("dojo.cldr", "islamic");
 
@@ -48,7 +48,7 @@ dojo.requireLocalization("dojo.cldr", "islamic");
 					break;
 				case 'a':
 					var timePeriod = (dateObject.getHours() < 12) ? 'am' : 'pm';
-					s = bundle[timePeriod];
+					s = bundle['dayPeriods-format-wide-' + timePeriod];
 					break;
 				case 'h':
 				case 'H':
@@ -80,6 +80,25 @@ dojo.requireLocalization("dojo.cldr", "islamic");
 				case 'S':
 					s = Math.round(dateObject.getMilliseconds() * Math.pow(10, l-3)); pad = true;
 					break;
+				case 'z':
+					// We only have one timezone to offer; the one from the browser
+					s = dojo.date.getTimezoneName(dateObject.toGregorian());
+					if(s){ break; }
+					l = 4;
+					// fallthrough... use GMT if tz not available
+				case 'Z':
+					var offset = dateObject.toGregorian().getTimezoneOffset();
+					var tz = [
+						(offset <= 0 ? "+" : "-"),
+						dojo.string.pad(Math.floor(Math.abs(offset) / 60), 2),
+						dojo.string.pad(Math.abs(offset) % 60, 2)
+					];
+					if(l == 4){
+						tz.splice(0, 0, "GMT");
+						tz.splice(3, 0, ":");
+					}
+					s = tz.join("");
+					break;
 				default:
 					throw new Error("dojox.date.islamic.locale.formatPattern: invalid pattern char: "+pattern);
 			}
@@ -88,9 +107,9 @@ dojo.requireLocalization("dojo.cldr", "islamic");
 		});
 	}	
 	
-dojox.date.islamic.locale.format = function(/*islamic.Date*/dateObject, /*object?*/options){
-	// based on and similar to dojo.date.locale.format
-	//summary:
+// based on and similar to dojo.date.locale.format
+dojox.date.islamic.locale.format = function(/*islamic.Date*/dateObject, /*Object?*/options){
+	// summary:
 	//		Format a Date object as a String, using  settings.
 	options = options || {};
 
@@ -152,17 +171,19 @@ dojox.date.islamic.locale._parseInfo = function(/*oblect?*/options){
 
 
 
-dojox.date.islamic.locale.parse= function(/*String*/value, /*object?*/options){
+dojox.date.islamic.locale.parse= function(/*String*/value, /*Object?*/options){
 	// based on and similar to dojo.date.locale.parse
 	// summary: This function parse string date value according to options	
-	value =  value.replace(/[\u200E\u200F\u202A-\u202E]/g, ""); //remove special chars
 	
-	if(!options){options={};}
+	value =  value.replace(/[\u200E\u200F\u202A\u202E]/g, ""); //remove bidi non-printing chars
+
+	if(!options){ options={}; }
 	var info = dojox.date.islamic.locale._parseInfo(options);
-	
+
 	var tokens = info.tokens, bundle = info.bundle;
-	var re = new RegExp("^" + info.regexp + "$");
-	
+	var regexp = info.regexp.replace(/[\u200E\u200F\u202A\u202E]/g, ""); //remove bidi non-printing chars from the pattern
+	var re = new RegExp("^" + regexp + "$");
+
 	var match = re.exec(value);
 
 	var locale = dojo.i18n.normalizeLocale(options.locale); 
@@ -212,8 +233,8 @@ dojox.date.islamic.locale.parse= function(/*String*/value, /*object?*/options){
 					result[2] =  Number(v);
 				break;
 			case 'a': //am/pm
-				var am = options.am || bundle.am;
-				var pm = options.pm || bundle.pm;
+				var am = options.am || bundle['dayPeriods-format-wide-am'],
+					pm = options.pm || bundle['dayPeriods-format-wide-pm'];
 				if(!options.strict){
 					var period = /\./g;
 					v = v.replace(period,'').toLowerCase();
@@ -310,7 +331,7 @@ function _buildDateTimeRE  (tokens, bundle, options, pattern){
 					s = '\\d+';
 					break;
 				case 'M':
-					s = (l>2) ?  '\\S+' : p2+'[1-9]|1[0-2]';
+					s = (l>2) ?  '\\S+ ?\\S+' : p2+'[1-9]|1[0-2]';
 					break;
 				case 'd':
 					s = '[12]\\d|'+p2+'[1-9]|3[01]';
@@ -338,8 +359,8 @@ function _buildDateTimeRE  (tokens, bundle, options, pattern){
 					s = '\\d{'+l+'}';
 					break;
 				case 'a':
-					var am = options.am || bundle.am || 'AM';
-					var pm = options.pm || bundle.pm || 'PM';
+					var am = options.am || bundle['dayPeriods-format-wide-am'],
+						pm = options.pm || bundle['dayPeriods-format-wide-pm'];
 					if(options.strict){
 						s = am + '|' + pm;
 					}else{
@@ -384,18 +405,18 @@ dojox.date.islamic.locale.getNames = function(/*String*/item, /*String*/type, /*
 	// summary:
 	//		Used to get localized strings from dojo.cldr for day or month names.
 	var label;
-	var lookup = dojox.date.islamic.locale._getIslamicBundle;
+	var lookup = dojox.date.islamic.locale._getIslamicBundle(locale);
 	var props = [item, context, type];
 	if(context == 'standAlone'){
 		var key = props.join('-');
-		label = lookup(locale)[key];
+		label = lookup[key];
 		// Fall back to 'format' flavor of name
-		if(label === lookup("ROOT")[key]){ label = undefined; } // a bit of a kludge, in the absense of real aliasing support in dojo.cldr
+		if(label[0] == 1){ label = undefined; } // kludge, in the absence of real aliasing support in dojo.cldr
 	}
 	props[1] = 'format';
 	
 	// return by copy so changes won't be made accidentally to the in-memory model
-	return (label || lookup(locale)[props.join('-')]).concat(); /*Array*/
+	return (label || lookup[props.join('-')]).concat(); /*Array*/
 };
 
 

@@ -17,58 +17,13 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: jQueryTest.php 20751 2010-01-29 11:14:09Z beberlei $
+ * @version     $Id: jQueryTest.php 20755 2010-01-29 12:29:45Z beberlei $
  */
 
-require_once dirname(__FILE__)."/../../../TestHelper.php";
+require_once "jQueryTestCase.php";
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'ZendX_JQuery_View_jQueryTest::main');
-}
-
-require_once "Zend/Registry.php";
-require_once "Zend/View.php";
-require_once "ZendX/JQuery.php";
-require_once "ZendX/JQuery/View/Helper/JQuery.php";
-
-class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
+class ZendX_JQuery_View_jQueryTest extends ZendX_JQuery_View_jQueryTestCase
 {
-	private $view = null;
-	private $helper = null;
-
-    /**
-     * Runs the test methods of this class.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        $suite  = new PHPUnit_Framework_TestSuite("ZendX_JQuery_jQueryTest");
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
-
-	public function setUp()
-	{
-        Zend_Registry::_unsetInstance();
-        $this->view   = $this->getView();
-        $this->helper = new ZendX_JQuery_View_Helper_JQuery_Container();
-        $this->helper->setView($this->view);
-        Zend_Registry::set('ZendX_JQuery_View_Helper_JQuery', $this->helper);
-	}
-
-	public function tearDown()
-	{
-		ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode();
-	}
-
-    public function getView()
-    {
-        require_once 'Zend/View.php';
-        $view = new Zend_View();
-        $view->addHelperPath('ZendX/JQuery/View/Helper/', 'ZendX_JQuery_View_Helper');
-        return $view;
-    }
-
     public function testHelperSuccessfulCallForward()
     {
     	$jquery = new ZendX_JQuery_View_Helper_JQuery;
@@ -92,14 +47,14 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
 
     public function testShouldAllowSpecifyingJQueryVersion()
     {
-        $this->helper->setVersion('1.2.3');
-        $this->assertEquals('1.2.3', $this->helper->getVersion());
+        $this->jquery->setVersion('1.2.3');
+        $this->assertEquals('1.2.3', $this->jquery->getVersion());
     }
 
     public function testShouldUseDefaultSupportedVersionWhenNotSpecifiedOtherwise()
     {
-    	$this->assertEquals(ZendX_JQuery::DEFAULT_JQUERY_VERSION, $this->helper->getVersion());
-    	$this->assertEquals(ZendX_JQuery::DEFAULT_JQUERY_VERSION, $this->helper->getCdnVersion());
+    	$this->assertEquals(ZendX_JQuery::DEFAULT_JQUERY_VERSION, $this->jquery->getVersion());
+    	$this->assertEquals(ZendX_JQuery::DEFAULT_JQUERY_VERSION, $this->jquery->getCdnVersion());
     }
 
     /**
@@ -109,67 +64,67 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testUsingCdnShouldNotEnableHelperAnymore()
     {
-    	$this->helper->setCdnVersion();
-    	$this->assertFalse($this->helper->isEnabled());
+    	$this->jquery->setCdnVersion();
+    	$this->assertFalse($this->jquery->isEnabled());
     }
 
     public function testShouldBeNotEnabledByDefault()
     {
-    	$this->assertFalse($this->helper->isEnabled());
+    	$this->assertFalse($this->jquery->isEnabled());
     }
 
     public function testUsingLocalPath()
     {
-    	$this->helper->setLocalPath("/js/jquery.min.js");
-    	$this->assertFalse($this->helper->useCDN());
-    	$this->assertFalse($this->helper->isEnabled());
-    	$this->assertTrue($this->helper->useLocalPath());
-    	$this->assertContains("/js/jquery.min.js", $this->helper->getLocalPath());
+    	$this->jquery->setLocalPath("/js/jquery.min.js");
+    	$this->assertFalse($this->jquery->useCDN());
+    	$this->assertFalse($this->jquery->isEnabled());
+    	$this->assertTrue($this->jquery->useLocalPath());
+    	$this->assertContains("/js/jquery.min.js", $this->jquery->getLocalPath());
 
-    	$render = $this->helper->__toString();
+    	$render = $this->jquery->__toString();
     	$this->assertNotContains("/js/jquery.min.js", $render);
     }
 
     public function testUiDisabledDefault()
     {
-         $this->assertFalse($this->helper->uiIsEnabled());
+         $this->assertFalse($this->jquery->uiIsEnabled());
     }
 
     public function testUiUsingCdnByDefault()
     {
-         $this->assertFalse($this->helper->useUiLocal());
-         $this->assertTrue($this->helper->useUiCdn());
-         $this->assertNull($this->helper->getUiPath());
+         $this->assertFalse($this->jquery->useUiLocal());
+         $this->assertTrue($this->jquery->useUiCdn());
+         $this->assertNull($this->jquery->getUiPath());
     }
 
     public function testGetUiVersionReturnsDefaultSupportedVersionIfNotSpecifiedOtherwise()
     {
-        $this->assertEquals(ZendX_JQuery::DEFAULT_UI_VERSION, $this->helper->getUiVersion());
-        $this->assertEquals(ZendX_JQuery::DEFAULT_UI_VERSION, $this->helper->getUiCdnVersion());
+        $this->assertEquals(ZendX_JQuery::DEFAULT_UI_VERSION, $this->jquery->getUiVersion());
+        $this->assertEquals(ZendX_JQuery::DEFAULT_UI_VERSION, $this->jquery->getUiCdnVersion());
     }
 
     public function testShouldAllowEnableUi()
     {
-         $this->helper->uiEnable();
+         $this->jquery->uiEnable();
 
-         $render = $this->helper->__toString();
+         $render = $this->jquery->__toString();
          $this->assertContains("jquery-ui", $render);
-         $this->assertContains($this->helper->getUiCdnVersion(), $render);
+         $this->assertContains($this->jquery->getUiCdnVersion(), $render);
     }
 
     public function testShouldAllowSetUiVersion()
     {
-         $this->helper->setUiVersion("1.5.1");
-         $this->assertContains("1.5.1", $this->helper->getUiVersion());
+         $this->jquery->setUiVersion("1.5.1");
+         $this->assertContains("1.5.1", $this->jquery->getUiVersion());
     }
 
     public function testShouldAllowSetLocalUiPath()
     {
-         $this->helper->setUiLocalPath("/js/jquery-ui.min.js");
+         $this->jquery->setUiLocalPath("/js/jquery-ui.min.js");
 
-         $this->assertTrue($this->helper->useUiLocal());
-         $this->assertFalse($this->helper->useUiCdn());
-         $this->assertContains("/js/jquery-ui.min.js", $this->helper->getUiPath());
+         $this->assertTrue($this->jquery->useUiLocal());
+         $this->assertFalse($this->jquery->useUiCdn());
+         $this->assertContains("/js/jquery-ui.min.js", $this->jquery->getUiPath());
     }
 
     public function testNoConflictShouldBeDisabledDefault()
@@ -180,65 +135,65 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     public function testUsingNoConflictMode()
     {
     	ZendX_JQuery_View_Helper_JQuery::enableNoConflictMode();
-    	$this->helper->setCDNVersion("1.2.6");
-        $this->helper->enable();
-    	$render = $this->helper->__toString();
+    	$this->jquery->setCDNVersion("1.2.6");
+        $this->jquery->enable();
+    	$render = $this->jquery->__toString();
 
     	$this->assertContains('var $j = jQuery.noConflict();', $render);
     }
 
     public function testDefaultRenderModeShouldIncludeAllBlocks()
     {
-    	$this->assertEquals(ZendX_JQuery::RENDER_ALL, $this->helper->getRenderMode());
+    	$this->assertEquals(ZendX_JQuery::RENDER_ALL, $this->jquery->getRenderMode());
     }
 
     public function testShouldAllowSettingRenderMode()
     {
-    	$this->helper->setRenderMode(1);
-    	$this->assertEquals(1, $this->helper->getRenderMode());
-    	$this->helper->setRenderMode(2);
-    	$this->assertEquals(2, $this->helper->getRenderMode());
-    	$this->helper->setRenderMode(4);
-    	$this->assertEquals(4, $this->helper->getRenderMode());
+    	$this->jquery->setRenderMode(1);
+    	$this->assertEquals(1, $this->jquery->getRenderMode());
+    	$this->jquery->setRenderMode(2);
+    	$this->assertEquals(2, $this->jquery->getRenderMode());
+    	$this->jquery->setRenderMode(4);
+    	$this->assertEquals(4, $this->jquery->getRenderMode());
     }
 
     public function testShouldAllowUsingAddOnLoadStack()
     {
-    	$this->helper->addOnLoad('$(document).alert();');
-    	$this->assertEquals(array('$(document).alert();'), $this->helper->getOnLoadActions());
+    	$this->jquery->addOnLoad('$(document).alert();');
+    	$this->assertEquals(array('$(document).alert();'), $this->jquery->getOnLoadActions());
     }
 
     public function testShouldAllowStackingMultipleOnLoad()
     {
-    	$this->helper->addOnLoad("1");
-    	$this->helper->addOnLoad("2");
-    	$this->assertEquals(2, count($this->helper->getOnLoadActions()));
+    	$this->jquery->addOnLoad("1");
+    	$this->jquery->addOnLoad("2");
+    	$this->assertEquals(2, count($this->jquery->getOnLoadActions()));
     }
 
     public function testAddOnLoadEnablesJQuery()
     {
-        $this->assertFalse($this->helper->isEnabled());
-        $this->helper->addOnLoad("1");
-        $this->assertTrue($this->helper->isEnabled());
+        $this->assertFalse($this->jquery->isEnabled());
+        $this->jquery->addOnLoad("1");
+        $this->assertTrue($this->jquery->isEnabled());
     }
 
     public function testShouldAllowCaptureOnLoad()
     {
-    	$this->helper->onLoadCaptureStart();
+    	$this->jquery->onLoadCaptureStart();
     	echo '$(document).alert();';
-    	$this->helper->onLoadCaptureEnd();
-    	$this->assertEquals(array('$(document).alert();'), $this->helper->getOnLoadActions());
+    	$this->jquery->onLoadCaptureEnd();
+    	$this->assertEquals(array('$(document).alert();'), $this->jquery->getOnLoadActions());
     }
 
     public function testShouldAllowCaptureJavascript()
     {
-    	$this->helper->javascriptCaptureStart();
+    	$this->jquery->javascriptCaptureStart();
     	echo '$(document).alert();';
-    	$this->helper->javascriptCaptureEnd();
-    	$this->assertEquals(array('$(document).alert();'), $this->helper->getJavascript());
+    	$this->jquery->javascriptCaptureEnd();
+    	$this->assertEquals(array('$(document).alert();'), $this->jquery->getJavascript());
 
-    	$this->helper->clearJavascript();
-    	$this->assertEquals(array(), $this->helper->getJavascript());
+    	$this->jquery->clearJavascript();
+    	$this->assertEquals(array(), $this->jquery->getJavascript());
     }
 
     /**
@@ -246,8 +201,8 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testShouldDisallowNestingCapturesWithException()
     {
-    	$this->helper->javascriptCaptureStart();
-    	$this->helper->javascriptCaptureStart();
+    	$this->jquery->javascriptCaptureStart();
+    	$this->jquery->javascriptCaptureStart();
     }
 
     /**
@@ -255,40 +210,40 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testShouldDisallowNestingCapturesWithException2()
     {
-    	$this->helper->onLoadCaptureStart();
-    	$this->helper->onLoadCaptureStart();
+    	$this->jquery->onLoadCaptureStart();
+    	$this->jquery->onLoadCaptureStart();
 
     	$this->setExpectedException('Zend_Exception');
     }
 
     public function testAddJavascriptFiles()
     {
-    	$this->helper->addJavascriptFile('/js/test.js');
-    	$this->helper->addJavascriptFile('/js/test2.js');
-    	$this->helper->addJavascriptFile('http://example.com/test3.js');
+    	$this->jquery->addJavascriptFile('/js/test.js');
+    	$this->jquery->addJavascriptFile('/js/test2.js');
+    	$this->jquery->addJavascriptFile('http://example.com/test3.js');
 
-    	$this->assertEquals(array('/js/test.js', '/js/test2.js', 'http://example.com/test3.js'), $this->helper->getJavascriptFiles());
+    	$this->assertEquals(array('/js/test.js', '/js/test2.js', 'http://example.com/test3.js'), $this->jquery->getJavascriptFiles());
     }
 
     public function testAddedJavascriptFilesCanBeCleared()
     {
-    	$this->helper->addJavascriptFile('/js/test.js');
-    	$this->helper->addJavascriptFile('/js/test2.js');
-    	$this->helper->addJavascriptFile('http://example.com/test3.js');
+    	$this->jquery->addJavascriptFile('/js/test.js');
+    	$this->jquery->addJavascriptFile('/js/test2.js');
+    	$this->jquery->addJavascriptFile('http://example.com/test3.js');
 
-    	$this->helper->clearJavascriptFiles();
-    	$this->assertEquals(array(), $this->helper->getJavascriptFiles());
+    	$this->jquery->clearJavascriptFiles();
+    	$this->assertEquals(array(), $this->jquery->getJavascriptFiles());
     }
 
     public function testAddedJavascriptFilesRender()
     {
-    	$this->helper->addJavascriptFile('/js/test.js');
-    	$this->helper->addJavascriptFile('/js/test2.js');
-    	$this->helper->addJavascriptFile('http://example.com/test3.js');
+    	$this->jquery->addJavascriptFile('/js/test.js');
+    	$this->jquery->addJavascriptFile('/js/test2.js');
+    	$this->jquery->addJavascriptFile('http://example.com/test3.js');
 
-        $this->helper->enable();
+        $this->jquery->enable();
 
-    	$render = $this->helper->__toString();
+    	$render = $this->jquery->__toString();
     	$this->assertContains('src="/js/test.js"', $render);
     	$this->assertContains('src="/js/test2.js"', $render);
     	$this->assertContains('src="http://example.com/test3.js', $render);
@@ -296,29 +251,29 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
 
     public function testAddStylesheet()
     {
-    	$this->helper->addStylesheet('test.css');
-    	$this->helper->addStylesheet('test2.css');
+    	$this->jquery->addStylesheet('test.css');
+    	$this->jquery->addStylesheet('test2.css');
 
-    	$this->assertEquals(array('test.css', 'test2.css'), $this->helper->getStylesheets());
+    	$this->assertEquals(array('test.css', 'test2.css'), $this->jquery->getStylesheets());
     }
 
     public function testShouldRenderNothingOnDisable()
     {
-    	$this->helper->setCDNVersion("1.2.6");
-    	$this->helper->addJavascriptFile("test.js");
-    	$this->helper->disable();
-    	$this->assertEquals(strlen(''), strlen($this->helper->__toString()));
+    	$this->jquery->setCDNVersion("1.2.6");
+    	$this->jquery->addJavascriptFile("test.js");
+    	$this->jquery->disable();
+    	$this->assertEquals(strlen(''), strlen($this->jquery->__toString()));
     }
 
     public function testShouldAllowBasicSetupWithCDN()
     {
-        $this->helper->enable();
-    	$this->helper->setCDNVersion("1.2.3");
-    	$this->helper->addJavascriptFile("test.js");
+        $this->jquery->enable();
+    	$this->jquery->setCDNVersion("1.2.3");
+    	$this->jquery->addJavascriptFile("test.js");
 
-    	$render = $this->helper->__toString();
+    	$render = $this->jquery->__toString();
 
-    	$this->assertTrue($this->helper->useCDN());
+    	$this->assertTrue($this->jquery->useCDN());
     	$this->assertContains('jquery.min.js', $render);
     	$this->assertContains('1.2.3', $render);
     	$this->assertContains('test.js', $render);
@@ -327,23 +282,23 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
 
     public function testShouldAllowUseRenderMode()
     {
-        $this->helper->enable();
-    	$this->helper->setCDNVersion("1.2.3");
-    	$this->helper->addJavascriptFile("test.js");
-    	$this->helper->addJavascript("helloWorld();");
-    	$this->helper->addStylesheet("test.css");
-    	$this->helper->addOnLoad("alert();");
+        $this->jquery->enable();
+    	$this->jquery->setCDNVersion("1.2.3");
+    	$this->jquery->addJavascriptFile("test.js");
+    	$this->jquery->addJavascript("helloWorld();");
+    	$this->jquery->addStylesheet("test.css");
+    	$this->jquery->addOnLoad("alert();");
 
     	// CHeck CDN Usage
-    	$this->assertTrue($this->helper->useCDN());
+    	$this->assertTrue($this->jquery->useCDN());
 
     	// Test with Render No Parts
-    	$this->helper->setRenderMode(0);
-    	$this->assertEquals(strlen(''), strlen(trim($this->helper->__toString())));
+    	$this->jquery->setRenderMode(0);
+    	$this->assertEquals(strlen(''), strlen(trim($this->jquery->__toString())));
 
     	// Test Render Only Library
-    	$this->helper->setRenderMode(ZendX_JQuery::RENDER_LIBRARY);
-    	$render = $this->helper->__toString();
+    	$this->jquery->setRenderMode(ZendX_JQuery::RENDER_LIBRARY);
+    	$render = $this->jquery->__toString();
     	$this->assertContains("1.2.3/jquery.min.js", $render);
     	$this->assertNotContains("test.css", $render);
     	$this->assertNotContains("test.js", $render);
@@ -351,8 +306,8 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     	$this->assertNotContains("helloWorld();", $render);
 
     	// Test Render Only AddOnLoad
-    	$this->helper->setRenderMode(ZendX_JQuery::RENDER_JQUERY_ON_LOAD);
-    	$render = $this->helper->__toString();
+    	$this->jquery->setRenderMode(ZendX_JQuery::RENDER_JQUERY_ON_LOAD);
+    	$render = $this->jquery->__toString();
     	$this->assertNotContains("1.2.3/jquery.min.js", $render);
     	$this->assertNotContains("test.css", $render);
     	$this->assertNotContains("test.js", $render);
@@ -360,8 +315,8 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     	$this->assertNotContains("helloWorld();", $render);
 
     	// Test Render Only Javascript
-    	$this->helper->setRenderMode(ZendX_JQuery::RENDER_SOURCES);
-    	$render = $this->helper->__toString();
+    	$this->jquery->setRenderMode(ZendX_JQuery::RENDER_SOURCES);
+    	$render = $this->jquery->__toString();
     	$this->assertNotContains("1.2.3/jquery.min.js", $render);
     	$this->assertNotContains("test.css", $render);
     	$this->assertContains("test.js", $render);
@@ -369,8 +324,8 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     	$this->assertNotContains("helloWorld();", $render);
 
     	// Test Render Only Javascript
-    	$this->helper->setRenderMode(ZendX_JQuery::RENDER_STYLESHEETS);
-    	$render = $this->helper->__toString();
+    	$this->jquery->setRenderMode(ZendX_JQuery::RENDER_STYLESHEETS);
+    	$render = $this->jquery->__toString();
     	$this->assertNotContains("1.2.3/jquery.min.js", $render);
     	$this->assertContains("test.css", $render);
     	$this->assertNotContains("test.js", $render);
@@ -378,8 +333,8 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     	$this->assertNotContains("helloWorld();", $render);
 
 		// Test Render Library and AddOnLoad
-    	$this->helper->setRenderMode(ZendX_JQuery::RENDER_LIBRARY | ZendX_JQuery::RENDER_JQUERY_ON_LOAD);
-    	$render = $this->helper->__toString();
+    	$this->jquery->setRenderMode(ZendX_JQuery::RENDER_LIBRARY | ZendX_JQuery::RENDER_JQUERY_ON_LOAD);
+    	$render = $this->jquery->__toString();
     	$this->assertContains("1.2.3/jquery.min.js", $render);
     	$this->assertNotContains("test.css", $render);
     	$this->assertNotContains("test.js", $render);
@@ -387,8 +342,8 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     	$this->assertNotContains("helloWorld();", $render);
 
     	// Test Render All
-    	$this->helper->setRenderMode(ZendX_JQuery::RENDER_ALL);
-    	$render = $this->helper->__toString();
+    	$this->jquery->setRenderMode(ZendX_JQuery::RENDER_ALL);
+    	$render = $this->jquery->__toString();
     	$this->assertContains("1.2.3/jquery.min.js", $render);
     	$this->assertContains("test.css", $render);
     	$this->assertContains("test.js", $render);
@@ -401,14 +356,14 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testClearAddOnLoadStack()
     {
-        $this->helper->addOnLoad("foo");
-        $this->helper->addOnLoad("bar");
-        $this->helper->addOnLoad("baz");
+        $this->jquery->addOnLoad("foo");
+        $this->jquery->addOnLoad("bar");
+        $this->jquery->addOnLoad("baz");
 
-        $this->assertEquals(array("foo", "bar", "baz"), $this->helper->getOnLoadActions());
+        $this->assertEquals(array("foo", "bar", "baz"), $this->jquery->getOnLoadActions());
 
-        $this->helper->clearOnLoadActions();
-        $this->assertEquals(array(), $this->helper->getOnLoadActions());
+        $this->jquery->clearOnLoadActions();
+        $this->assertEquals(array(), $this->jquery->getOnLoadActions());
     }
 
     /**
@@ -417,16 +372,16 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     public function testNoConflictModeIsRecognizedInRenderingOnLoadStackEvent()
     {
         ZendX_JQuery_View_Helper_JQuery::enableNoConflictMode();
-        $this->helper->addOnLoad("foo");
-        $this->helper->addOnLoad("bar");
-        $this->helper->enable();
+        $this->jquery->addOnLoad("foo");
+        $this->jquery->addOnLoad("bar");
+        $this->jquery->enable();
 
-        $jQueryStack = $this->helper->__toString();
+        $jQueryStack = $this->jquery->__toString();
         $this->assertContains('$j(document).ready(function()', $jQueryStack);
 
         ZendX_JQuery_View_Helper_JQuery::disableNoConflictMode();
 
-        $jQueryStack =  $this->helper->__toString();
+        $jQueryStack =  $this->jquery->__toString();
         $this->assertNotContains('$j(document).ready(function()', $jQueryStack);
     }
 
@@ -435,12 +390,12 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testStylesheetShouldRenderCorrectClosingBracketBasedOnHtmlDoctypeDefinition()
     {
-        $this->helper->addStylesheet("test.css");
+        $this->jquery->addStylesheet("test.css");
         $this->view->doctype("HTML4_STRICT");
 
         $assert = '<link rel="stylesheet" href="test.css" type="text/css" media="screen">';
-        $this->helper->enable();
-        $this->assertContains($assert, $this->helper->__toString());
+        $this->jquery->enable();
+        $this->assertContains($assert, $this->jquery->__toString());
 
     }
 
@@ -449,12 +404,12 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testStylesheetShouldRenderCorrectClosingBracketBasedOnXHtmlDoctypeDefinition()
     {
-        $this->helper->addStylesheet("test.css");
+        $this->jquery->addStylesheet("test.css");
         $this->view->doctype("XHTML1_STRICT");
 
         $assert = '<link rel="stylesheet" href="test.css" type="text/css" media="screen" />';
-        $this->helper->enable();
-        $this->assertContains($assert, $this->helper->__toString());
+        $this->jquery->enable();
+        $this->assertContains($assert, $this->jquery->__toString());
     }
 
     /**
@@ -462,10 +417,10 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testIncludeJQueryLibraryFromSslPath()
     {
-        $this->helper->setCdnSsl(true);
-        $this->helper->enable();
+        $this->jquery->setCdnSsl(true);
+        $this->jquery->enable();
 
-        $this->assertContains(ZendX_JQuery::CDN_BASE_GOOGLE_SSL, $this->helper->__toString());
+        $this->assertContains(ZendX_JQuery::CDN_BASE_GOOGLE_SSL, $this->jquery->__toString());
     }
 
     /**
@@ -474,10 +429,10 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     public function testJQueryGoogleCdnPathIsBuiltCorrectly()
     {
         $jQueryCdnPath = "http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js";
-        $this->helper->setVersion("1.3.1");
-        $this->helper->enable();
+        $this->jquery->setVersion("1.3.1");
+        $this->jquery->enable();
 
-        $this->assertContains($jQueryCdnPath, $this->helper->__toString());
+        $this->assertContains($jQueryCdnPath, $this->jquery->__toString());
     }
 
     /**
@@ -486,12 +441,12 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     public function testJQueryUiGoogleCdnPathIsBuiltCorrectly()
     {
         $jQueryCdnPath = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js";
-        $this->helper->setVersion("1.3.1");
-        $this->helper->enable();
-        $this->helper->setUiVersion("1.7.1");
-        $this->helper->uiEnable();
+        $this->jquery->setVersion("1.3.1");
+        $this->jquery->enable();
+        $this->jquery->setUiVersion("1.7.1");
+        $this->jquery->uiEnable();
 
-        $this->assertContains($jQueryCdnPath, $this->helper->__toString());
+        $this->assertContains($jQueryCdnPath, $this->jquery->__toString());
     }
 
     /**
@@ -500,11 +455,11 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     public function testJQueryGoogleCdnSslPathIsBuiltCorrectly()
     {
         $jQueryCdnPath = "https://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js";
-        $this->helper->setCdnSsl(true);
-        $this->helper->setVersion("1.3.1");
-        $this->helper->enable();
+        $this->jquery->setCdnSsl(true);
+        $this->jquery->setVersion("1.3.1");
+        $this->jquery->enable();
 
-        $this->assertContains($jQueryCdnPath, $this->helper->__toString());
+        $this->assertContains($jQueryCdnPath, $this->jquery->__toString());
     }
 
     /**
@@ -513,12 +468,12 @@ class ZendX_JQuery_View_jQueryTest extends PHPUnit_Framework_TestCase
     public function testJQueryUiGoogleCdnSslPathIsBuiltCorrectly()
     {
         $jQueryCdnPath = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js";
-        $this->helper->setCdnSsl(true);
-        $this->helper->setVersion("1.3.1");
-        $this->helper->enable();
-        $this->helper->setUiVersion("1.7.1");
-        $this->helper->uiEnable();
+        $this->jquery->setCdnSsl(true);
+        $this->jquery->setVersion("1.3.1");
+        $this->jquery->enable();
+        $this->jquery->setUiVersion("1.7.1");
+        $this->jquery->uiEnable();
 
-        $this->assertContains($jQueryCdnPath, $this->helper->__toString());
+        $this->assertContains($jQueryCdnPath, $this->jquery->__toString());
     }
 }

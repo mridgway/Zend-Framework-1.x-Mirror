@@ -16,7 +16,6 @@
 		<script type="text/javascript" src="../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
 			dojo.require("dijit.robotx");
 
 			dojo.addOnLoad(function(){
@@ -239,13 +238,13 @@
 						runTest: function(){
 							var d = new doh.Deferred();
 
-							doh.f(dijit.byId("checked2").attr('checked'), "not initially checked");
+							doh.f(dijit.byId("checked2").get('checked'), "not initially checked");
 
 							doh.robot.mouseMoveAt("checked2", 500);
 							doh.robot.mouseClick({left: true}, 500);
 
 							doh.robot.sequence(d.getTestCallback(function(){
-								doh.t(dijit.byId("checked2").attr('checked'), "now it's checked");
+								doh.t(dijit.byId("checked2").get('checked'), "now it's checked");
 							}), 500);
 
 							return d;
@@ -445,28 +444,20 @@
 							doh.robot.mouseMoveAt("navMenuDisabledItem", 500);
 							doh.robot.sequence(d.getTestErrback(function(){
 								doh.t(isHidden("navMenuSub1"), "Enabled submenu should be hidden");
-								doh.t(dojo.hasClass("navMenuDisabledItem", "dijitMenuItemHover"),
-									"Disabled navigation MenuItem should have hover effect, actual class is: " + dojo.byId("navMenuDisabledItem").className);
 							}), 1000); // linger long enough for menu to close
 
 							doh.robot.mouseMoveAt("navMenuPopupItem1", 500, 500); // move back to Enabled submenu
 							doh.robot.sequence(d.getTestErrback(function(){
 								doh.t(isVisible("navMenuSub1"), "Enabled submenu should be visible");
-								doh.f(dojo.hasClass("navMenuDisabledItem", "dijitMenuItemHover"),
-									"Disabled navigation MenuItem shouldn't have hover effect anymore, actual class is: " + dojo.byId("navMenuDisabledItem").className);
 							}), 1000); // linger long enough for menu to open
 
 							doh.robot.mouseMoveAt("navMenuDisabledItem", 500, 50); // QUICKLY move to the next menu item
 							doh.robot.sequence(d.getTestErrback(function(){
-								doh.t(dojo.hasClass("navMenuDisabledItem", "dijitMenuItemHover"),
-									"Disabled navigation MenuItem should again have hover effect, actual class is: " + dojo.byId("navMenuDisabledItem").className);
 							}), 200, 50);
 
 							doh.robot.mouseMoveAt("navMenuSub1_item2", 0, 50); // QUICKLY move to the popup menu
 							doh.robot.sequence(d.getTestErrback(function(){
 								doh.t(isVisible("navMenuSub1"), "Enabled submenu 1 should be visible");
-								doh.f(dojo.hasClass("navMenuDisabledItem", "dijitMenuItemHover"),
-									"Disabled navigation MenuItem shouldn't have hover effect anymore, actual class is: " + dojo.byId("navMenuDisabledItem").className);
 								doh.t(dojo.hasClass("navMenuSub1_item2", "dijitMenuItemHover"),
 									"Submenu 1, item 2 navigation MenuItem should have hover effect, actual class is: " + dojo.byId("navMenuDisabledItem").className);
 								doh.t(dojo.hasClass("navMenuPopupItem1", "dijitMenuItemSelected"),

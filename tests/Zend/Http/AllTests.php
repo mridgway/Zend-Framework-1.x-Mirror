@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 23058 2010-10-07 20:25:17Z matthew $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -30,6 +30,7 @@ require_once 'Zend/Http/ResponseTest.php';
 require_once 'Zend/Http/CookieTest.php';
 require_once 'Zend/Http/CookieJarTest.php';
 require_once 'Zend/Http/Client/AllTests.php';
+require_once 'Zend/Http/UserAgent/AllTests.php';
 
 /**
  * @category   Zend
@@ -54,6 +55,7 @@ class Zend_Http_AllTests
         $suite->addTestSuite('Zend_Http_CookieTest');
         $suite->addTestSuite('Zend_Http_CookieJarTest');
         $suite->addTest(Zend_Http_Client_AllTests::suite());
+        $suite->addTest(Zend_Http_UserAgent_AllTests::suite());
 
         return $suite;
     }

@@ -22,10 +22,13 @@ try{
 	dojo.requireIf(dojo.isBrowser,"tests.cookie");
 	dojo.require("tests.fx");
 	dojo.require("tests.DeferredList");
+	dojo.require("tests.Stateful");
 	dojo.require("tests.html");
 	dojo.requireIf(dojo.isBrowser,"tests.NodeList-traverse");
 	dojo.requireIf(dojo.isBrowser,"tests.NodeList-manipulate");
 	dojo.require("tests.cache");
+	dojo.requireIf(dojo.isBrowser, "tests.uacss");
+	dojo.requireIf(dojo.isBrowser, "tests.window");
 }catch(e){
 	doh.debug(e);
 }

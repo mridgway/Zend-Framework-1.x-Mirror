@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 20161 -->
+<!-- EN-Revision: 21825 -->
 <sect1 id="migration.19">
     <title>Zend Framework 1.9</title>
 
@@ -163,7 +163,7 @@ $client->setFileUpload('file2.txt',
     <sect2 id="migration.19.zend.locale">
         <title>Zend_Locale</title>
 
-        <sect3 id="migration.19.zend.locale.depreciated">
+        <sect3 id="migration.19.zend.locale.deprecated">
             <title>非推奨となるメソッド</title>
 
             <para>
@@ -175,7 +175,7 @@ $client->setFileUpload('file2.txt',
                 次の一覧で、新旧のメソッドコールを参照ください。
             </para>
 
-            <table id="migration.19.zend.locale.depreciated.table-1">
+            <table id="migration.19.zend.locale.deprecated.table-1">
                 <title>新旧のメソッドコールの一覧</title>
 
                 <tgroup cols="2">
@@ -185,6 +185,7 @@ $client->setFileUpload('file2.txt',
                             <entry>新しい方法</entry>
                         </row>
                     </thead>
+
                     <tbody>
                         <row>
                             <entry>
@@ -194,6 +195,7 @@ $client->setFileUpload('file2.txt',
                                 <methodname>getTranslationList('language', $locale)</methodname>
                             </entry>
                         </row>
+
                         <row>
                             <entry>
                                 <methodname>getScriptTranslationList($locale)</methodname>
@@ -202,6 +204,7 @@ $client->setFileUpload('file2.txt',
                                 <methodname>getTranslationList('script', $locale)</methodname>
                             </entry>
                         </row>
+
                         <row>
                             <entry>
                                 <methodname>getCountryTranslationList($locale)</methodname>
@@ -210,6 +213,7 @@ $client->setFileUpload('file2.txt',
                                 <methodname>getTranslationList('territory', $locale, 2)</methodname>
                             </entry>
                         </row>
+
                         <row>
                             <entry>
                                 <methodname>getTerritoryTranslationList($locale)</methodname>
@@ -218,6 +222,7 @@ $client->setFileUpload('file2.txt',
                                 <methodname>getTranslationList('territory', $locale, 1)</methodname>
                             </entry>
                         </row>
+
                         <row>
                             <entry>
                                 <methodname>getLanguageTranslation($value, $locale)</methodname>
@@ -226,6 +231,7 @@ $client->setFileUpload('file2.txt',
                                 <methodname>getTranslation($value, 'language', $locale)</methodname>
                             </entry>
                         </row>
+
                         <row>
                             <entry>
                                 <methodname>getScriptTranslation($value, $locale)</methodname>
@@ -234,6 +240,7 @@ $client->setFileUpload('file2.txt',
                                 <methodname>getTranslation($value, 'script', $locale)</methodname>
                             </entry>
                         </row>
+
                         <row>
                             <entry>
                                 <methodname>getCountryTranslation($value, $locale)</methodname>
@@ -242,6 +249,7 @@ $client->setFileUpload('file2.txt',
                                 <methodname>getTranslation($value, 'country', $locale)</methodname>
                             </entry>
                         </row>
+
                         <row>
                             <entry>
                                 <methodname>getTerritoryTranslation($value, $locale)</methodname>
@@ -346,7 +354,6 @@ $container = new Zend_Navigation(array(
 ]]></programlisting>
     </sect2>
 
-    <!-- TODO : to be translated -->
     <sect2 id="migration.19.security">
         <title>Security fixes as with 1.9.7</title>
 
@@ -412,13 +419,15 @@ $container = new Zend_Navigation(array(
             <para>
                 <classname>Zend_Filter_StripTags</classname> contains a flag,
                 <varname>commentsAllowed</varname>, that, in previous versions, allowed you to
-                optionally whitelist HTML comments in HTML text filtered by the class. However, this
-                opens code enabling the flag to <acronym>XSS</acronym> attacks, particularly in
-                Internet Explorer (which allows specifying conditional functionality via HTML
-                comments). Starting in version 1.9.7 (and backported to versions 1.8.5 and 1.7.9),
-                the <varname>commentsAllowed</varname> flag no longer has any meaning, and all HTML
-                comments, including those containing other HTML tags or nested commments, will be
-                stripped from the final output of the filter.
+                optionally whitelist <acronym>HTML</acronym> comments in <acronym>HTML</acronym>
+                text filtered by the class. However, this opens code enabling the flag to
+                <acronym>XSS</acronym> attacks, particularly in Internet Explorer (which allows
+                specifying conditional functionality via <acronym>HTML</acronym> comments). Starting
+                in version 1.9.7 (and backported to versions 1.8.5 and 1.7.9), the
+                <varname>commentsAllowed</varname> flag no longer has any meaning, and all
+                <acronym>HTML</acronym> comments, including those containing other
+                <acronym>HTML</acronym> tags or nested commments, will be stripped from the final
+                output of the filter.
             </para>
         </sect3>
     </sect2>

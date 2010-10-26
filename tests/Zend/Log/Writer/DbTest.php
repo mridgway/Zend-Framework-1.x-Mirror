@@ -17,13 +17,19 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbTest.php 22514 2010-07-01 14:11:18Z ramon $
+ * @version    $Id: DbTest.php 22977 2010-09-19 12:44:00Z intiilapa $
  */
 
-/** PHPUnit_Framework_TestCase */
-require_once 'PHPUnit/Framework/TestCase.php';
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Log_Writer_DbTest::main');
+}
 
-/** Zend_Log_Writer_Mock */
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
+/** Zend_Log_Writer_Db */
 require_once 'Zend/Log/Writer/Db.php';
 
 /**
@@ -36,6 +42,12 @@ require_once 'Zend/Log/Writer/Db.php';
  */
 class Zend_Log_Writer_DbTest extends PHPUnit_Framework_TestCase
 {
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         $this->tableName = 'db-table-name';
@@ -121,6 +133,7 @@ class Zend_Log_Writer_DbTest extends PHPUnit_Framework_TestCase
             ),
         )));
 
+        require_once 'Zend/Log.php';
         $logger = Zend_Log::factory($cfg['log']);
         $this->assertTrue($logger instanceof Zend_Log);
     }
@@ -149,4 +162,8 @@ class Zend_Log_Writer_DbTest_MockDbAdapter
         $this->calls[$method][] = $params;
     }
 
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Log_Writer_DbTest::main') {
+    Zend_Log_Writer_DbTest::main();
 }

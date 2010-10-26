@@ -10,7 +10,7 @@
 	</style>
 
 	<!-- required: the default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../../dojo/dojo.js"
@@ -38,12 +38,12 @@
 	</script>
 
 </head>
-<body class="tundra">
+<body class="claro">
 
 	<h1 class="testTitle">Dijit layout.ContentPane programmatic tests</h1>
 
-	<button onclick="cp.attr('content', 'good night, sweet prince')">set content</button>
-	<button onclick="cp.attr('href', 'doc0.html')">set href</button>
+	<button onclick="cp.set('content', 'good night, sweet prince')">set content</button>
+	<button onclick="cp.set('href', 'doc0.html')">set href</button>
 
 </body>
 </html>

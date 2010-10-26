@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StreamTest.php 22623 2010-07-18 00:43:57Z torio $
+ * @version    $Id: StreamTest.php 22621 2010-07-18 00:35:48Z torio $
  */
 
 /**

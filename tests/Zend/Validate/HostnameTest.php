@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HostnameTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: HostnameTest.php 22830 2010-08-12 16:05:09Z thomas $
  */
 
 
@@ -388,5 +388,22 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     public function testInvalidDoubledIdn()
     {
         $this->assertFalse($this->_validator->isValid('test.com / http://www.test.com'));
+    }
+
+    /**
+     * @group ZF-10267
+     */
+    public function testURI()
+    {
+        $valuesExpected = array(
+            array(Zend_Validate_Hostname::ALLOW_URI, true, array('localhost', 'example.com', '~ex%20ample')),
+            array(Zend_Validate_Hostname::ALLOW_URI, false, array('§bad', 'don?t.know', 'thisisaverylonghostnamewhichextendstwohundredfiftysixcharactersandthereforshouldnotbeallowedbythisvalidatorbecauserfc3986limitstheallowedcharacterstoalimitoftwohunderedfiftysixcharactersinsumbutifthistestwouldfailthenitshouldreturntruewhichthrowsanexceptionbytheunittest')),
+        );
+        foreach ($valuesExpected as $element) {
+            $validator = new Zend_Validate_Hostname($element[0]);
+            foreach ($element[2] as $input) {
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+            }
+        }
     }
 }

@@ -1,55 +1,18 @@
 ({
-	"quarters-format-abbr": [
-		"רבעון 1", 
-		"רבעון 2", 
-		"רבעון 3", 
-		"רבעון 4"
-	], 
 	"dateFormat-medium": "dd/MM/yyyy", 
-	"dateFormatItem-MMMEd": "E d MMM", 
+	"dateFormatItem-MMMEd": "E, d בMMM", 
 	"dateFormatItem-yMEd": "EEE, d.M.yyyy", 
 	"eraNarrow": [
-		"לבה\"ע"
+		"לבה״ע"
 	], 
-	"months-format-narrow": [
-		"תשרי", 
-		"חשון", 
-		"כסלו", 
-		"טבת", 
-		"שבט", 
-		"אדר א'", 
-		"אדר", 
-		"ניסן", 
-		"אייר", 
-		"סיון", 
-		"תמוז", 
-		"אב", 
-		"אלול"
-	], 
-	"pm": "אחה\"צ", 
 	"dateFormatItem-Md": "d/M", 
-	"months-standAlone-narrow": [
-		"תשרי", 
-		"חשון", 
-		"כסלו", 
-		"טבת", 
-		"שבט", 
-		"אדר א'", 
-		"אדר", 
-		"ניסן", 
-		"אייר", 
-		"סיון", 
-		"תמוז", 
-		"אב", 
-		"אלול"
-	], 
 	"months-standAlone-wide": [
 		"תשרי", 
 		"חשון", 
 		"כסלו", 
 		"טבת", 
 		"שבט", 
-		"אדר א'", 
+		"אדר א׳", 
 		"אדר", 
 		"ניסן", 
 		"אייר", 
@@ -58,10 +21,11 @@
 		"אב", 
 		"אלול"
 	], 
+	"months-format-wide-leap": "אדר ב׳", 
+	"dateFormatItem-EEEd": "EEE ה-d", 
 	"eraNames": [
-		"לבה\"ע"
+		"לבה״ע"
 	], 
-	"am": "לפנה\"צ", 
 	"dateFormatItem-MMMMEd": "E, d בMMMM", 
 	"days-standAlone-narrow": [
 		"א", 
@@ -72,14 +36,14 @@
 		"ו", 
 		"ש"
 	], 
-	"dateFormatItem-MMMMd": "d בMMMM", 
+	"dayPeriods-format-wide-pm": "אחה״צ", 
 	"months-standAlone-abbr": [
 		"תשרי", 
 		"חשון", 
 		"כסלו", 
 		"טבת", 
 		"שבט", 
-		"אדר א'", 
+		"אדר א׳", 
 		"אדר", 
 		"ניסן", 
 		"אייר", 
@@ -88,15 +52,17 @@
 		"אב", 
 		"אלול"
 	], 
+	"dayPeriods-format-wide-am": "לפנה״צ", 
 	"dateFormat-long": "d בMMMM y", 
 	"dateFormat-short": "dd/MM/yy", 
+	"dateFormatItem-yMMMEd": "EEE, d בMMM y", 
 	"months-format-wide": [
 		"תשרי", 
 		"חשון", 
 		"כסלו", 
 		"טבת", 
 		"שבט", 
-		"אדר א'", 
+		"אדר א׳", 
 		"אדר", 
 		"ניסן", 
 		"אייר", 
@@ -105,7 +71,6 @@
 		"אב", 
 		"אלול"
 	], 
-	"dateFormatItem-yMMMM": "MMMM y", 
 	"dateFormatItem-yM": "M.yyyy", 
 	"months-format-abbr": [
 		"תשרי", 
@@ -113,7 +78,7 @@
 		"כסלו", 
 		"טבת", 
 		"שבט", 
-		"אדר א'", 
+		"אדר א׳", 
 		"אדר", 
 		"ניסן", 
 		"אייר", 
@@ -121,6 +86,9 @@
 		"תמוז", 
 		"אב", 
 		"אלול"
+	], 
+	"eraAbbr": [
+		"לבה״ע"
 	], 
 	"days-format-wide": [
 		"יום ראשון", 
@@ -131,10 +99,8 @@
 		"יום שישי", 
 		"יום שבת"
 	], 
-	"eraAbbr": [
-		"לבה\"ע"
-	], 
 	"dateFormatItem-yQ": "yyyy Q", 
+	"dateFormatItem-yMMM": "MMM y", 
 	"quarters-format-wide": [
 		"רבעון 1", 
 		"רבעון 2", 
@@ -142,13 +108,14 @@
 		"רבעון 4"
 	], 
 	"dateFormat-full": "EEEE, d בMMMM y", 
+	"dateFormatItem-MMMd": "d בMMM", 
 	"days-format-abbr": [
-		"יום א'", 
-		"יום ב'", 
-		"יום ג'", 
-		"יום ד'", 
-		"יום ה'", 
-		"יום ו'", 
+		"יום א׳", 
+		"יום ב׳", 
+		"יום ג׳", 
+		"יום ד׳", 
+		"יום ה׳", 
+		"יום ו׳", 
 		"שבת"
 	]
 })

@@ -185,11 +185,12 @@
 			name:"Karl Tiedt",
 			handle:"tk",
 			title:"Committer",
-			irc:"tk",
+			irc:"tekky",
 			twitter:"ktiedt",
-			location:"Colorado Springs, CO",
-			coords: { x:38.8381, y:-104.8214 },
-			employer: "Coyote Point Systems",
+			location:"College Station, TX",
+			coords: { x:30.5668, y:-96.2804 },
+			imgUrl:"images/users/tk.jpg",
+			employer: "Independent Contractor",
 			blameFor:[
 				"everything else."
 			]
@@ -460,6 +461,17 @@
 			website:"http://neonstalwart.blogspot.com/",
 			imgUrl:"images/users/neonstalwart.png",
 			blameFor:["dojox.data.ItemExplorer", "free help on irc"]
+		},
+		{
+			"name": "Mark Wubben",
+			"title": "Web Hacker",
+			"handle": "markwubben",
+			"irc": "markwubben",
+			"twitter": "novemberborn",
+			"location": "Copenhagen, Denmark",
+			"website": "http://novemberborn.net",
+			"imgUrl": "images/users/markwubben.png",
+			"coords": { "x": 55.6763, "y": 12.5681 }
 		}
 		
 		// from ohloh + not above:

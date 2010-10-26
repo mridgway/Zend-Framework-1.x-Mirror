@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OnlineTest.php 22624 2010-07-18 00:46:43Z torio $
+ * @version    $Id: OnlineTest.php 22622 2010-07-18 00:37:00Z torio $
  */
 
 /**

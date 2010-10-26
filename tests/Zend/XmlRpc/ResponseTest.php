@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: ResponseTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version $Id: ResponseTest.php 21360 2010-03-07 01:28:57Z lars $
  */
 
 require_once dirname(__FILE__)."/../../TestHelper.php";
@@ -42,6 +42,11 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
      * @var Zend_XmlRpc_Response
      */
     protected $_response;
+
+    /**
+     * @var bool
+     */
+    protected $_errorOccured = false;
 
     /**
      * Setup environment
@@ -134,6 +139,19 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_response->loadXml(new stdClass()));
         $this->assertTrue($this->_response->isFault());
         $this->assertSame(650, $this->_response->getFault()->getCode());
+    }
+
+    /**
+     * @group ZF-9039
+     */
+    public function testExceptionIsThrownWhenInvalidXmlIsReturnedByServer()
+    {
+        set_error_handler(array($this, 'trackError'));
+        $invalidResponse = 'foo';
+        $response = new Zend_XmlRpc_Response();
+        $this->assertFalse($this->_errorOccured);
+        $this->assertFalse($response->loadXml($invalidResponse));
+        $this->assertFalse($this->_errorOccured);
     }
 
     /**
@@ -231,5 +249,10 @@ EOD;
             $this->fail('Invalid XML-RPC response should raise an exception');
         } catch (Exception $e) {
         }
+    }
+
+    public function trackError($error)
+    {
+        $this->_errorOccured = true;
     }
 }

@@ -16,7 +16,6 @@
 		<script type="text/javascript" src="../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
 			dojo.require("dijit.robotx");
 
 			dojo.addOnLoad(function(){
@@ -321,7 +320,7 @@
 
 				// Run test about opening context menu via keyboard, except on safari/mac where that isn't
 				// possible (#9927)
-				if (!dojo.isMac || !dojo.isSafari) {
+				if (!dojo.isMac || !dojo.isWebKit) {
 					doh.register("Context menu keyboard tests", [{
 						name: "open global context menu (keyboard)",
 						timeout: 5000,
@@ -349,12 +348,13 @@
 								var menu = dijit.byId("windowContextMenu");
 								doh.t(isVisible(menu), "menu is now shown");
 
-								var menuCoords = dojo.position(menu.domNode);
+								var menuCoords = dojo.position(menu.domNode),
+									linkCoords = dojo.position("link");
 
-								doh.t(menuCoords.x < 50, "x < 50");
-								doh.t(menuCoords.y < 50, "y < 50");
-								doh.t(menuCoords.x >= 0, "x >= 0");
-								doh.t(menuCoords.y >= 0, "y >= 0");
+								doh.t(menuCoords.x < 100, "x < 100", "actual x: " + menuCoords.x);
+								doh.t(menuCoords.y < 50, "y < 50", "actual y: " + menuCoords.y);
+								doh.t(menuCoords.x >= 0, "x >= 0", "actual x: " + menuCoords.x);
+								doh.t(menuCoords.y >= 0, "y >= 0", "actual y: " + menuCoords.y);
 								doh.robot.keyPress(dojo.keys.ESCAPE, 0, {}, true); // close context menu
 							}), 1000);
 

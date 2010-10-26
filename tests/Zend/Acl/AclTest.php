@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AclTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AclTest.php 22580 2010-07-16 19:38:02Z ralph $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -1300,5 +1300,61 @@ class Zend_Acl_AclTest extends PHPUnit_Framework_TestCase
         $expected = array('someResource', 'someOtherResource');
         $this->assertEquals($expected, $this->_acl->getResources());
     }
+    
+    /**
+     * @group ZF-9643
+     */
+    public function testRemoveAllowWithNullResourceAppliesToAllResources()
+    {
+        $this->_acl->addRole('guest');
+        $this->_acl->addResource('blogpost');
+        $this->_acl->addResource('newsletter');
+        $this->_acl->allow('guest', 'blogpost', 'read');
+        $this->_acl->allow('guest', 'newsletter', 'read');
+        $this->assertTrue($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertTrue($this->_acl->isAllowed('guest', 'newsletter', 'read'));
 
+        $this->_acl->removeAllow('guest', 'newsletter', 'read');
+        $this->assertTrue($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertFalse($this->_acl->isAllowed('guest', 'newsletter', 'read'));
+        
+        $this->_acl->removeAllow('guest', null, 'read');
+        $this->assertFalse($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertFalse($this->_acl->isAllowed('guest', 'newsletter', 'read'));
+        
+        // ensure allow null/all resoures works
+        $this->_acl->allow('guest', null, 'read');
+        $this->assertTrue($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertTrue($this->_acl->isAllowed('guest', 'newsletter', 'read'));
+    }
+
+    /**
+     * @group ZF-9643
+     */
+    public function testRemoveDenyWithNullResourceAppliesToAllResources()
+    {
+        $this->_acl->addRole('guest');
+        $this->_acl->addResource('blogpost');
+        $this->_acl->addResource('newsletter');
+        
+        $this->_acl->allow();
+        $this->_acl->deny('guest', 'blogpost', 'read');
+        $this->_acl->deny('guest', 'newsletter', 'read');
+        $this->assertFalse($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertFalse($this->_acl->isAllowed('guest', 'newsletter', 'read'));
+
+        $this->_acl->removeDeny('guest', 'newsletter', 'read');
+        $this->assertFalse($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertTrue($this->_acl->isAllowed('guest', 'newsletter', 'read'));
+        
+        $this->_acl->removeDeny('guest', null, 'read');
+        $this->assertTrue($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertTrue($this->_acl->isAllowed('guest', 'newsletter', 'read'));
+        
+        // ensure deny null/all resources works
+        $this->_acl->deny('guest', null, 'read');
+        $this->assertFalse($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        $this->assertFalse($this->_acl->isAllowed('guest', 'newsletter', 'read'));
+    }
+    
 }

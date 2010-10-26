@@ -17,9 +17,16 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LogTest.php 22632 2010-07-18 18:30:08Z ramon $
+ * @version    $Id: LogTest.php 22977 2010-09-19 12:44:00Z intiilapa $
  */
 
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Log_LogTest::main');
+}
+
+/**
+ * Test helper
+ */
 require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /** Zend_Log */
@@ -44,6 +51,12 @@ require_once 'Zend/Log/FactoryInterface.php';
  */
 class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
 {
+    public static function main()
+    {
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         $this->log = fopen('php://memory', 'w+');
@@ -291,7 +304,87 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($logger instanceof Zend_Log);
     }
 
-	/**
+    /**
+     * @group ZF-9192
+     */
+    public function testUsingWithErrorHandler()
+    {
+        $writer = new Zend_Log_Writer_Mock();
+
+        $logger = new Zend_Log();
+        $logger->addWriter($writer);
+        $this->errWriter = $writer;
+
+
+        $oldErrorLevel = error_reporting();
+
+        $this->expectingLogging = true;
+        error_reporting(E_ALL | E_STRICT);
+
+        $oldHandler = set_error_handler(array($this, 'verifyHandlerData'));
+        $logger->registerErrorHandler();
+
+        trigger_error("Testing notice shows up in logs", E_USER_NOTICE);
+        trigger_error("Testing warning shows up in logs", E_USER_WARNING);
+        trigger_error("Testing error shows up in logs", E_USER_ERROR);
+
+        $this->expectingLogging = false;
+        error_reporting(0);
+
+        trigger_error("Testing notice misses logs", E_USER_NOTICE);
+        trigger_error("Testing warning misses logs", E_USER_WARNING);
+        trigger_error("Testing error misses logs", E_USER_ERROR);
+
+        restore_error_handler(); // Pop off the Logger
+        restore_error_handler(); // Pop off the verifyHandlerData
+        error_reporting($oldErrorLevel); // Restore original reporting level
+        unset($this->errWriter);
+    }
+
+    /**
+     * @group ZF-9192
+     * Used by testUsingWithErrorHandler -
+     * verifies that the data written to the original logger is the same as the data written in Zend_Log
+     */
+    public function verifyHandlerData($errno, $errstr, $errfile, $errline, $errcontext)
+    {
+        if ($this->expectingLogging) {
+            $this->assertFalse(empty($this->errWriter->events));
+            $event = array_shift($this->errWriter->events);
+            $this->assertEquals($errstr, $event['message']);
+            $this->assertEquals($errno, $event['errno']);
+            $this->assertEquals($errfile, $event['file']);
+            $this->assertEquals($errline, $event['line']);
+        } else {
+            $this->assertTrue(empty($this->errWriter->events));
+        }
+    }
+
+    /**
+     * @group ZF-9870
+     */
+    public function testSetAndGetTimestampFormat()
+    {
+        $logger = new Zend_Log($this->writer);
+        $this->assertEquals('c', $logger->getTimestampFormat());
+        $this->assertSame($logger, $logger->setTimestampFormat('Y-m-d H:i:s'));
+        $this->assertEquals('Y-m-d H:i:s', $logger->getTimestampFormat());
+    }
+
+    /**
+     * @group ZF-9870
+     */
+    public function testLogWritesWithModifiedTimestampFormat()
+    {
+        $logger = new Zend_Log($this->writer);
+        $logger->setTimestampFormat('Y-m-d');
+        $logger->debug('ZF-9870');
+        rewind($this->log);
+        $message = stream_get_contents($this->log);
+        $this->assertEquals(date('Y-m-d'), substr($message, 0, 10));
+    }
+
+    /**
      * @group ZF-9955
      */
     public function testExceptionConstructWriterFromConfig()
@@ -319,6 +412,20 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
             $this->assertType('Zend_Log_Exception', $e);
             $this->assertRegExp('#^(Zend_Log_Filter_NotImplementsFilterInterface|The\sspecified\sfilter)#', $e->getMessage());
         }
+    }
+
+    /**
+     * @group ZF-8953
+     */
+    public function testFluentInterface()
+    {
+        $logger   = new Zend_Log();
+        $instance = $logger->addPriority('all', 8)
+                           ->addFilter(1)
+                           ->addWriter(array('writerName' => 'Null'))
+                           ->setEventItem('os', PHP_OS);
+
+        $this->assertTrue($instance instanceof Zend_Log);
     }
 
     /**
@@ -363,4 +470,8 @@ class Zend_Log_Filter_NotImplementsFilterInterface implements Zend_Log_FactoryIn
     public static function factory($config)
     {
     }
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Log_LogTest::main') {
+    Zend_Log_LogTest::main();
 }

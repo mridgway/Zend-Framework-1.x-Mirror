@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -17,7 +16,7 @@
  * @package    UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestConfiguration.php.dist 22871 2010-08-21 15:12:31Z ralph $
+ * @version    $Id: TestConfiguration.php.dist 23154 2010-10-18 17:41:06Z mabe $
  */
 
 /**
@@ -57,15 +56,17 @@ define('TESTS_ZEND_AUTH_ADAPTER_LDAP_ONLINE_ENABLED', false);
 /**
  * Zend_Cache
  *
- * TESTS_ZEND_CACHE_SQLITE_ENABLED    => sqlite extension has to be enabled
- * TESTS_ZEND_CACHE_APC_ENABLED       => apc extension has to be enabled
- * TESTS_ZEND_CACHE_MEMCACHED_ENABLED => memcache extension has to be enabled and
- *                                       a memcached server has to be available
- * TESTS_ZEND_CACHE_XCACHE_ENABLED    => xcache extension has to be enabled
+ * TESTS_ZEND_CACHE_SQLITE_ENABLED     => sqlite extension has to be enabled
+ * TESTS_ZEND_CACHE_APC_ENABLED        => apc extension has to be enabled
+ * TESTS_ZEND_CACHE_MEMCACHED_ENABLED  => memcache extension has to be enabled and
+ *                                        a memcached server has to be available
+ * TESTS_ZEND_CACHE_LIBMEMCACHED_ENABLED => memcached extension has to be enabled and
+ *                                          a memcached server has to be available
+ * TESTS_ZEND_CACHE_XCACHE_ENABLED     => xcache extension has to be enabled
  */
 define('TESTS_ZEND_CACHE_SQLITE_ENABLED', false);
 define('TESTS_ZEND_CACHE_APC_ENABLED', false);
-define('TESTS_ZEND_CACHE_XCACHE_ENABLED', true);
+define('TESTS_ZEND_CACHE_XCACHE_ENABLED', false);
 define('TESTS_ZEND_CACHE_XCACHE_USER', null);
 define('TESTS_ZEND_CACHE_XCACHE_PASSWORD', null);
 define('TESTS_ZEND_CACHE_PLATFORM_ENABLED', false);
@@ -73,6 +74,20 @@ define('TESTS_ZEND_CACHE_MEMCACHED_ENABLED', false);
 define('TESTS_ZEND_CACHE_MEMCACHED_HOST', '127.0.0.1');
 define('TESTS_ZEND_CACHE_MEMCACHED_PORT', 11211);
 define('TESTS_ZEND_CACHE_MEMCACHED_PERSISTENT', true);
+define('TESTS_ZEND_CACHE_LIBMEMCACHED_ENABLED', false);
+define('TESTS_ZEND_CACHE_LIBMEMCACHED_HOST', '127.0.0.1');
+define('TESTS_ZEND_CACHE_LIBMEMCACHED_PORT', 11211);
+define('TESTS_ZEND_CACHE_LIBMEMCACHED_WEIGHT', 1);
+
+/**
+ * Zend_Cloud online tests
+ *
+ * You may need to provide connection details for specific adapters under their 
+ * specific configuration settings elsewhere in this file.
+ */
+define('TESTS_ZEND_CLOUD_STORAGE_NIRVANIX_DIRECTORY',     'simplecloud');
+define('TESTS_ZEND_CLOUD_STORAGE_WINDOWSAZURE_CONTAINER', 'simplecloudcontainer');
+
 
 /**
  * Zend_Controller
@@ -314,6 +329,28 @@ define('TESTS_ZEND_HTTP_CLIENT_BASEURI', false);
 define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY', false);
 define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_USER', '');
 define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_PASS', '');
+
+/**
+ * Zend_Http_UserAgent tests
+ *
+ * Location of WURFL library and config file, for testing mobile device 
+ * detection.
+ */
+define('TESTS_ZEND_HTTP_USERAGENT_WURFL_LIB_DIR', false);
+define('TESTS_ZEND_HTTP_USERAGENT_WURFL_CONFIG_FILE', false);
+
+/**
+ * Location of DeviceAtlas library and data file, for testing mobile device
+ * detection against DeviceAtlas
+ */
+define('TESTS_ZEND_HTTP_USERAGENT_DEVICEATLAS_LIB_DIR', false);
+define('TESTS_ZEND_HTTP_USERAGENT_DEVICEATLAS_DATA_FILE', false);
+
+/**
+ * Location of TeraWurfl library and data file, for testing mobile device
+ * detection against TeraWurfl
+ */
+define('TESTS_ZEND_HTTP_USERAGENT_TERAWURFL_LIB_DIR', false);
 
 /**
  * Zend_Loader_Autoloader multi-version support tests
@@ -579,6 +616,12 @@ define('TESTS_ZEND_SERVICE_DEVELOPERGARDEN_ONLINE_LOGIN', 'ZF_Username');
 define('TESTS_ZEND_SERVICE_DEVELOPERGARDEN_ONLINE_PASSWORD', 'ZF_Password');
 
 /**
+ * Zend_Service_Ebay online tests
+ */
+define('TESTS_ZEND_SERVICE_EBAY_ONLINE_ENABLED', false);
+define('TESTS_ZEND_SERVICE_EBAY_ONLINE_APPID', 'Enter APPID here');
+
+/**
  * Zend_Service_Flickr online tests
  */
 define('TESTS_ZEND_SERVICE_FLICKR_ONLINE_ENABLED', false);
@@ -594,6 +637,14 @@ define('TESTS_ZEND_SERVICE_FLICKR_ONLINE_APIKEY', 'Enter API key here');
  */
 define('TESTS_ZEND_SERVICE_LIVEDOCX_USERNAME', false);
 define('TESTS_ZEND_SERVICE_LIVEDOCX_PASSWORD', false);
+
+/**
+ * Zend_Service_Nirvanix online tests 
+ */
+define('TESTS_ZEND_SERVICE_NIRVANIX_ONLINE_ENABLED', false);
+define('TESTS_ZEND_SERVICE_NIRVANIX_ONLINE_ACCESSKEY', false);
+define('TESTS_ZEND_SERVICE_NIRVANIX_ONLINE_PASSWORD', false);
+define('TESTS_ZEND_SERVICE_NIRVANIX_ONLINE_USERNAME', false);
 
 /**
  * Zend_Service_ReCaptcha tests
@@ -711,6 +762,25 @@ define('TESTS_ZEND_SERVICE_WINDOWSAZURE_DIAGNOSTICS_RUNONPROD',           false)
 define('TESTS_ZEND_SERVICE_WINDOWSAZURE_DIAGNOSTICS_CONTAINER_PREFIX',    'phpazuretestdiag');
 
 /**
+ * Zend_Cloud related configuration
+ */
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_ENABLED',     false);
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_ACCOUNTNAME', 'provide account here');
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_ACCOUNTKEY',  'provide key here');
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_TABLE_HOST',  'table.core.windows.net');
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_QUEUE_HOST',  'queue.core.windows.net');
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_STORAGE_HOST','blob.core.windows.net');
+
+/**
+ * Proxy settings used by Zend_Cloud
+ */
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_STORAGE_USEPROXY',          false);
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_STORAGE_PROXY_HOST',        '');
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_STORAGE_PROXY_PORT',        '8080');
+define('TESTS_ZEND_SERVICE_WINDOWSAZURE_ONLINE_STORAGE_PROXY_CREDENTIALS', '');
+
+
+/**
  * Zend_Service_Yahoo online tests
  */
 define('TESTS_ZEND_SERVICE_YAHOO_ONLINE_ENABLED', false);
@@ -747,6 +817,11 @@ define('TESTS_ZEND_URI_CRASH_TEST_ENABLED', false);
  * connectivity.
  */
 define('TESTS_ZEND_VALIDATE_ONLINE_ENABLED', false);
+
+/**
+ * Resources translations ('all' for all translations or 'fr', 'de', ...)
+ */
+define('TESTS_ZEND_RESOURCES_TRANSLATIONS', 'all');
 
 /**
  * PHPUnit Code Coverage / Test Report

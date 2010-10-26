@@ -229,8 +229,7 @@ $elem = new ZendX_JQuery_Form_Element_Spinner("spinner1", array('label' => 'Spin
 $elem->setJQueryParams(array('min' => 0, 'max' => 1000, 'start' => 100));
 
 $form->addElement($elem);
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 </sect1>

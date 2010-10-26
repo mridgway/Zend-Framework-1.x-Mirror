@@ -36,10 +36,10 @@ dojox.xml.parser.parse = function(/*String?*/ str, /*String?*/ mimetype){
 		var errorNS = "http://www.mozilla.org/newlayout/xml/parsererror.xml";
 		if(de.nodeName == "parsererror" && de.namespaceURI == errorNS){
 			var sourceText = de.getElementsByTagNameNS(errorNS, 'sourcetext')[0];
-			if(!sourceText){
+			if(sourceText){
 				sourceText = sourceText.firstChild.data;
 			}
-        	throw new Error("Error parsing text " + nativeDoc.documentElement.firstChild.data + " \n" + sourceText);
+        	throw new Error("Error parsing text " + de.firstChild.data + " \n" + sourceText);
 		}
 		return doc;
 

@@ -187,7 +187,7 @@ if (false !== $geoData) {
 
 $microtime = microtime(true);
 
-if (false !== @file_get_contents(Zend_Service_LiveDocx_MailMerge::WSDL)) {
+if (false !== file_get_contents(Zend_Service_LiveDocx_MailMerge::WSDL)) {
     $duration = microtime(true) - $microtime;
     $result = TEST_PASS;
 } else {
@@ -220,13 +220,13 @@ $errorMessage = null;
 
 try {
     $microtime = microtime(true);
-    $phpLiveDocx = new Zend_Service_LiveDocx_MailMerge(
+    $mailMerge = new Zend_Service_LiveDocx_MailMerge(
         array (
             'username' => DEMOS_ZEND_SERVICE_LIVEDOCX_USERNAME,
             'password' => DEMOS_ZEND_SERVICE_LIVEDOCX_PASSWORD
         )
     );
-    $phpLiveDocx->logIn();
+    $mailMerge->logIn();
     $duration = microtime(true) - $microtime;
 } catch (Zend_Service_LiveDocx_Exception $e) {
     $duration = -1;

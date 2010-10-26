@@ -16,7 +16,6 @@
 		<script type="text/javascript" src="../../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
 			dojo.require("dijit.robotx");
 
 			function dom2string(root){
@@ -27,8 +26,8 @@
 				var out = [];
 
 				function recurse(children){
-					var i=0, node;
-					while(node = children[i++]){
+					var i=0, node = children[i++];
+					while(node){
 						switch(node.nodeType){
 						case 1:	// normal node
 							if(node.childNodes.length){
@@ -47,6 +46,7 @@
 							}
 							break;
 						}
+						node = children[i++];
 					}
 				}
 
@@ -74,8 +74,8 @@
 								// getValue() should call the post-filter which recombines the separate <p> nodes into bigger
 								// paragraphs.
 								doh.is('<p>para 1<br />line 2</p><p>para 2<br />line 2</p>',
-										dijit.byId("br").attr('value'),
-										"attr('value')");
+										dijit.byId("br").get('value'),
+										"get('value')");
 
 								// Make sure that the post-filter didn't corrupt the data inside the editor
 								doh.is('<p>para 1</p><p>line 2</p><p>&nbsp;</p><p>para 2</p><p>line 2</p>',
@@ -89,7 +89,6 @@
 								doh.is(0, dojo.style(sampleP, "margin-bottom"));
 							}
 						},
-
 						/*******
 						Not currently working, see #9462
 						{
@@ -99,23 +98,22 @@
 
 								var br = dijit.byId("br");
 
-								br.attr("value", "ab345<br>ab345<br>ab345<br>ab345<br>");
+								br.set("value", "<p>ab345<br>ab345<br>ab345<br>ab345<br></p>");
 
 								// Pre-filter should internally convert it to have a <p> for each line
 								// of text.
+								console.log(br.get("value"));
 								doh.is('<p>ab345</p><p>ab345</p><p>ab345</p><p>ab345</p>',
 										dom2string(dijit.byId("br").editNode),
 										"innerHTML of editor (should have converted each line of text to a separate <p>)");
 								// getValue() should call the post-filter which recombines the separate <p> nodes into bigger
 								// paragraphs.
 								doh.is('<p>ab345<br/>ab345<br/>ab345<br/>ab345</p>',
-										dijit.byId("br").attr('value'),
-										"attr('value')");
+										dijit.byId("br").get('value'),
+										"get('value')");
 							}
 						},
 						********/
-
-
 						{
 							name: "type in some text",
 							timeout: 10000,
@@ -123,7 +121,7 @@
 								var d = new doh.Deferred();
 
 								var br = dijit.byId("br");
-								br.attr("value", "");
+								br.set("value", "");
 								br.focus();
 
 								// tab to the MenuBar... then focus should automatically shift to "File" menu,
@@ -137,11 +135,11 @@
 											dom2string(br.editNode),
 											"innerHTML of editor (should have converted each line of text to a separate <p>)");
 
-									// attr('value') should call the post-filter which recombines the separate <p> nodes into bigger
+									// get('value') should call the post-filter which recombines the separate <p> nodes into bigger
 									// paragraphs.
 									doh.is('<p>ab345<br />ab345<br />ab345<br />ab345</p>',
-											br.attr('value'),
-											"attr('value')");
+											br.get('value'),
+											"get('value')");
 								}), 500);
 
 								return d;
@@ -149,6 +147,120 @@
 						}
 					]);
 				}
+
+				doh.register("Split tests", [
+					{
+						name: "Test div line split",
+						timeout: 10000,
+						runTest: function(){
+							var d = new doh.Deferred();
+							// The initial input was a div with a line of text with a bold tag in the middle.
+							// we want to focus on the bold and enter there, splitting it.
+							var editor = dijit.byId("div2");
+							dojo.window.scrollIntoView(editor.iframe);
+							var node = dojo.withGlobal(editor.window, function(){
+								return dojo.byId("boldLine0");
+							});
+							
+							doh.robot.mouseMoveAt(editor.iframe, 500);
+							doh.robot.mouseClick({left:true}, 500);
+
+							doh.robot.sequence(function(){
+                                editor._sCall("selectElementChildren", [node]);
+							}, 500);
+							
+							//Keyboard kill the selection and shift position between i and s.
+							if(!dojo.isMoz) {doh.robot.keyPress(dojo.keys.RIGHT_ARROW, 100, {}); }
+							doh.robot.keyPress(dojo.keys.LEFT_ARROW, 100, {});
+							doh.robot.keyPress(dojo.keys.ENTER, 500);
+
+							doh.robot.sequence(d.getTestCallback(function(){
+								// Do tests here.
+								var val = editor.get("value");
+								// Check that it split the is into two and that the bold and div were properly split.
+								doh.assertTrue(val.indexOf("It <b id=\"boldLine0\">i</b></div>") > 0);
+								doh.assertTrue(val.indexOf("<div><b>s</b>") > 0);
+							}), 500);
+
+							return d;
+						}
+
+					},
+					{
+						name: "Test div line split style clone",
+						timeout: 10000,
+						runTest: function(){
+							var d = new doh.Deferred();
+							// The initial input was a div with a line of text with a bold tag in the middle.
+							// we want to focus on the bold and enter there, splitting it.
+							var editor = dijit.byId("div3");
+							dojo.window.scrollIntoView(editor.iframe);
+							var node = dojo.withGlobal(editor.window, function(){
+								return dojo.byId("boldLine1");
+							});
+							
+							doh.robot.mouseMoveAt(editor.iframe, 500);
+							doh.robot.mouseClick({left:true}, 500);
+
+							doh.robot.sequence(function(){
+                                editor._sCall("selectElementChildren", [node]);
+							}, 500);
+							
+							//Keyboard kill the selection and shift position between i and s.
+							if(!dojo.isMoz) {doh.robot.keyPress(dojo.keys.RIGHT_ARROW, 100, {}); }
+							doh.robot.keyPress(dojo.keys.LEFT_ARROW, 100, {});
+							doh.robot.keyPress(dojo.keys.ENTER, 500);
+
+							doh.robot.sequence(d.getTestCallback(function(){
+								// Do tests here.
+								var val = editor.get("value");
+								// Check that it split the is into two and that the bold and div were properly split.
+								val = val.toLowerCase();
+								doh.assertTrue(/it <b\s+id="boldline1"\s+style\s*=\s*"\s*font-size:\s*4em;?\s*">i<\/b><\/div>/.test(val));
+								doh.assertTrue(/<div><b\s+style\s*=\s*"\s*font-size:\s*4em;?\s*">s<\/b>/.test(val));
+							}), 500);
+
+							return d;
+						}
+
+					},
+					{
+						name: "Test p line split",
+						timeout: 10000,
+						runTest: function(){
+							var d = new doh.Deferred();
+							// The initial input was a div with a line of text with a bold tag in the middle.
+							// we want to focus on the bold and enter there, splitting it.
+							var editor = dijit.byId("p2");
+							dojo.window.scrollIntoView(editor.iframe);
+							var node = dojo.withGlobal(editor.window, function(){
+								return dojo.byId("boldLine2");
+							});
+							
+							doh.robot.mouseMoveAt(editor.iframe, 500);
+							doh.robot.mouseClick({left:true}, 500);
+
+							doh.robot.sequence(function(){
+                                editor._sCall("selectElementChildren", [node]);
+							}, 500);
+							
+							//Keyboard kill the selection and shift position between i and s.
+							if(!dojo.isMoz) {doh.robot.keyPress(dojo.keys.RIGHT_ARROW, 100, {}); }
+							doh.robot.keyPress(dojo.keys.LEFT_ARROW, 100, {});
+							doh.robot.keyPress(dojo.keys.ENTER, 500);
+
+							doh.robot.sequence(d.getTestCallback(function(){
+								// Do tests here.
+								var val = editor.get("value");
+								// Check that it split the is into two and that the bold and div were properly split.
+								doh.assertTrue(val.indexOf("It <b id=\"boldLine2\">i</b></p>") > 0);
+								doh.assertTrue(val.indexOf("<p><b>s</b>") > 0);
+							}), 500);
+
+							return d;
+						}
+					}
+				]);
 
 				doh.run();
 			});

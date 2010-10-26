@@ -11,7 +11,7 @@
 		djConfig="parseOnLoad: true, isDebug: true"></script>
 
 	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
 
 	<script type="text/javascript" src="../_testCommon.js"></script>
 
@@ -23,7 +23,7 @@
 		dojo.require("dojo.parser");	// scan page for widgets and instantiate them
 	</script>
 </head>
-<body class="tundra">
+<body class="claro">
 	<br>
 	<br>
 	<div>Content before the editor.</div>
@@ -64,9 +64,9 @@
 		<h3 id="h30">
 			This is a sub-sub-heading.
 		</h3>
-		<br>
-		<p id="text">This is some text in a &lt;p&gt; for styling.</p>
-		<p id="text1">This is some more text in a &lt;p&gt; for styling.</p>
+        <br>
+		<p id="text">This is some text in a 'p' for styling.</p>
+		<p id="text1">This is some more text in a 'p' for styling.</p>
 		<br>
 		<font id="sizedText1" size="1">This is some small text.</font>
 		<br>
@@ -76,6 +76,20 @@
 		<br>
 		<font face="'Comic Sans MS'" id="comicText">This is some text in 'Comic Sans MS'</font>.
 		<br>
+		<br>
+		<br>
+		<h1 style="background-color: lightgray">Selection format removal test</h1>
+		<div id="selectionContainer">
+			<h3>
+				Some H3 formatted content.
+			</h3>
+			<pre>
+				Some PRE formatted content.
+			</pre>
+			<p>
+				Some P formatted content.
+			</p>
+		</div>
 
 	</div>
 	<br>

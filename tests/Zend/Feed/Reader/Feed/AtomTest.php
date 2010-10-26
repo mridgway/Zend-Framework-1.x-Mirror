@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AtomTest.php 22108 2010-05-05 13:44:11Z padraic $
+ * @version    $Id: AtomTest.php 23090 2010-10-12 17:28:16Z padraic $
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -548,5 +548,43 @@ class Zend_Feed_Reader_Feed_AtomTest extends PHPUnit_Framework_TestCase
             file_get_contents($this->_feedSamplePath.'/image/plain/none/atom10.xml')
         );
         $this->assertEquals(null, $feed->getImage());
+    }
+    
+    /**
+     * Get Icon (Unencoded Text)
+     */
+    public function testGetsIconFromAtom03()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/icon/plain/atom03.xml')
+        );
+        $this->assertEquals(array('uri'=>'http://www.example.com/logo.gif'), $feed->getIcon());
+    }
+
+    public function testGetsIconFromAtom10()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/icon/plain/atom10.xml')
+        );
+        $this->assertEquals(array('uri'=>'http://www.example.com/logo.gif'), $feed->getIcon());
+    }
+
+    /**
+     * Get Icon (Unencoded Text) When Missing
+     */
+    public function testGetsIconFromAtom03_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/icon/plain/none/atom03.xml')
+        );
+        $this->assertEquals(null, $feed->getIcon());
+    }
+
+    public function testGetsIconFromAtom10_None()
+    {
+        $feed = Zend_Feed_Reader::importString(
+            file_get_contents($this->_feedSamplePath.'/icon/plain/none/atom10.xml')
+        );
+        $this->assertEquals(null, $feed->getIcon());
     }
 }

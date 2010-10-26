@@ -13,12 +13,6 @@
 		"N", 
 		"D"
 	], 
-	"quarters-standAlone-narrow": [
-		"1", 
-		"2", 
-		"3", 
-		"4"
-	], 
 	"field-weekday": "Dia da semana", 
 	"dateFormatItem-yQQQ": "y QQQ", 
 	"dateFormatItem-yMEd": "EEE, dd/MM/yyyy", 
@@ -27,6 +21,7 @@
 		"a.C.", 
 		"d.C."
 	], 
+	"dayPeriods-format-wide-morning": "manhã", 
 	"dateFormat-long": "d 'de' MMMM 'de' y", 
 	"months-format-wide": [
 		"janeiro", 
@@ -42,10 +37,10 @@
 		"novembro", 
 		"dezembro"
 	], 
-	"dateTimeFormat-medium": "{1} {0}", 
 	"dateFormatItem-EEEd": "EEE, d", 
 	"dateFormat-full": "EEEE, d 'de' MMMM 'de' y", 
 	"dateFormatItem-Md": "d/M", 
+	"dayPeriods-format-wide-noon": "meio-dia", 
 	"field-era": "Era", 
 	"dateFormatItem-yM": "MM/yyyy", 
 	"months-standAlone-wide": [
@@ -91,7 +86,10 @@
 	], 
 	"dateFormatItem-yyQ": "Q yy", 
 	"timeFormat-full": "HH'h'mm'min'ss's' zzzz", 
-	"am": "AM", 
+	"field-day-relative+0": "Hoje", 
+	"field-day-relative+1": "Amanhã", 
+	"field-day-relative+2": "Depois de amanhã", 
+	"field-day-relative+3": "Daqui a três dias", 
 	"months-standAlone-abbr": [
 		"jan", 
 		"fev", 
@@ -118,7 +116,7 @@
 		"3º trimestre", 
 		"4º trimestre"
 	], 
-	"dateFormatItem-HHmmss": "H'h'mm'min'ss's'", 
+	"dateFormatItem-HHmmss": "HH'h'mm'min'ss's'", 
 	"dateFormatItem-M": "L", 
 	"days-standAlone-wide": [
 		"domingo", 
@@ -130,11 +128,10 @@
 		"sábado"
 	], 
 	"dateFormatItem-yyyyMMM": "MMM 'de' y", 
-	"dateFormatItem-MMMMd": "d 'de' MMMM", 
 	"dateFormatItem-yyMMMEEEd": "EEE, d 'de' MMM 'de' yy", 
 	"dateFormatItem-yyMMM": "MMM 'de' yy", 
 	"timeFormat-medium": "HH:mm:ss", 
-	"dateFormatItem-Hm": "H'h'mm", 
+	"dateFormatItem-Hm": "HH'h'mm", 
 	"quarters-standAlone-abbr": [
 		"T1", 
 		"T2", 
@@ -156,12 +153,15 @@
 		"sex", 
 		"sáb"
 	], 
+	"dayPeriods-format-wide-night": "noite", 
 	"dateFormatItem-yyMMMd": "d 'de' MMM 'de' yy", 
 	"dateFormatItem-d": "d", 
 	"dateFormatItem-ms": "mm'min'ss's'", 
+	"field-day-relative+-1": "Ontem", 
+	"field-day-relative+-2": "Anteontem", 
+	"field-day-relative+-3": "Há três dias", 
 	"dateFormatItem-MMMd": "d 'de' MMM", 
 	"dateFormatItem-MEd": "EEE, dd/MM", 
-	"dateFormatItem-yMMMM": "MMMM 'de' y", 
 	"field-day": "Dia", 
 	"days-format-wide": [
 		"domingo", 
@@ -224,12 +224,10 @@
 	], 
 	"dateFormatItem-MMM": "LLL", 
 	"dateFormatItem-HHmm": "HH'h'mm", 
-	"pm": "PM", 
-	"dateFormatItem-MMMMEd": "EEE, d 'de' MMMM", 
 	"dateFormat-short": "dd/MM/yy", 
+	"dayPeriods-format-wide-afternoon": "tarde", 
 	"field-second": "Segundo", 
 	"dateFormatItem-yMMMEd": "EEE, d 'de' MMM 'de' y", 
 	"field-week": "Semana", 
-	"dateFormat-medium": "dd/MM/yyyy", 
-	"dateFormatItem-mmss": "mm'min'ss's'"
+	"dateFormat-medium": "dd/MM/yyyy"
 })

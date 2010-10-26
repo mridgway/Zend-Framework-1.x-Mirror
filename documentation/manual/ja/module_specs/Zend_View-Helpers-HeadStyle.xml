@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 20143 -->
+<!-- EN-Revision: 21825 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle ヘルパー</title>
 
     <para>
-        HTML の <emphasis>&lt;style&gt;</emphasis> 要素を使用して、
-        <acronym>CSS</acronym> スタイルシートを HTML の <emphasis>&lt;head&gt;</emphasis>
+        <acronym>HTML</acronym> の <emphasis>&lt;style&gt;</emphasis> 要素を使用して、
+        <acronym>CSS</acronym> スタイルシートを <acronym>HTML</acronym> の <emphasis>&lt;head&gt;</emphasis>
         要素に埋め込みます。
     </para>
 
@@ -33,16 +33,19 @@
                 <command>appendStyle($content, $attributes = array())</command>
             </para>
         </listitem>
+
         <listitem>
             <para>
                 <command>offsetSetStyle($index, $content, $attributes = array())</command>
             </para>
         </listitem>
+
         <listitem>
             <para>
                 <command>prependStyle($content, $attributes = array())</command>
             </para>
         </listitem>
+
         <listitem>
             <para>
                 <command>setStyle($content, $attributes = array())</command>
@@ -68,6 +71,7 @@
 
         <example id="zend.view.helpers.initial.headstyle.conditional">
             <title>Headstyle で条件コメントを使う例</title>
+
             <programlisting language="php"><![CDATA[
 // スクリプトを追加します
 $this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7'));
@@ -105,7 +109,6 @@ $this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7'));
         ヘルパー</link> の具象実装です。
     </para>
 
-    <!-- TODO : to be translated -->
     <note>
         <title>UTF-8 encoding used by default</title>
 
@@ -193,17 +196,21 @@ body {
         </para>
 
         <itemizedlist>
-            <listitem><para>
+            <listitem>
+                <para>
                     スタイル宣言は、スタックの末尾に追加されていきます。
                     既存のスタックを上書きしたりスタックの先頭に追加したりしたい場合は、
                     それぞれ 'SET' あるいは 'PREPEND' を
                     <methodname>captureStart()</methodname> の最初の引数として渡します。
-            </para></listitem>
+                </para>
+            </listitem>
 
-            <listitem><para>
+            <listitem>
+                <para>
                     <emphasis>&lt;style&gt;</emphasis> タグに追加の属性を指定したい場合は、
                     <methodname>captureStart()</methodname> の 2 番目の引数に配列形式で渡します。
-            </para></listitem>
+                </para>
+            </listitem>
         </itemizedlist>
     </example>
 </sect3>

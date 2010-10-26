@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="../../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
+			dojo.require("dojo.window");
 			dojo.require("dijit.robotx");
 
 			dojo.addOnLoad(function(){
@@ -31,13 +31,13 @@
 						setUp: function(){
 							editor0 = dijit.byId("thud");
 							height = dojo.style(editor0.domNode, "height");
-							value = editor0.attr("value");
+							value = editor0.get("value");
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								doh.robot.mouseMoveAt(editor0.iframe, 500, null, 10, 10);
 								doh.robot.mouseClick({left:true}, 500);
 								doh.robot.keyPress(dojo.keys.ENTER, 500);
@@ -59,7 +59,63 @@
 							return d;
 						},
 						tearDown: function(){
-							if(editor0){editor0.attr("value", value);}
+							if(editor0){editor0.set("value", value);}
+						}
+					},
+					{
+						name: "Test font-size style migrated to editor body",
+						timeout: 20000,
+						setUp: function(){
+							editor0 = dijit.byId("fontSizedEditor");
+							value = editor0.get("value");
+						},
+						runTest: function(){
+							var d = new doh.Deferred();
+							try{
+								//Focus on the editor window
+								dojo.window.scrollIntoView(editor0.domNode);
+								doh.robot.mouseMoveAt(editor0.iframe, 500, null, 10, 10);
+								doh.robot.mouseClick({left:true}, 500);
+
+ 								doh.robot.sequence(d.getTestCallback(function(){
+									//Now check the state!
+									var bStyle = editor0.document.body.style["fontSize"];
+									doh.assertTrue(bStyle != null);
+									doh.assertTrue(bStyle.toLowerCase() === "30pt");
+								}), 500);
+							}catch(e){
+								d.errback(e);
+							}
+							return d;
+						},
+						tearDown: function(){
+							if(editor0){editor0.set("value", value);}
+						}
+					},
+					{
+						name: "Test prefilters do process initial content",
+						timeout: 20000,
+						setUp: function(){
+							editor0 = dijit.byId("filteredEditor");
+						},
+						runTest: function(){
+							var d = new doh.Deferred();
+							try{
+								//Focus on the editor window
+								dojo.window.scrollIntoView(editor0.domNode);
+								doh.robot.mouseMoveAt(editor0.iframe, 500, null, 10, 10);
+								doh.robot.mouseClick({left:true}, 500);
+
+ 								doh.robot.sequence(d.getTestCallback(function(){
+									//Now check the state!
+									var val = editor0.get("value");
+									doh.assertTrue(val.indexOf("DOJO") >= 0);
+									doh.assertTrue(val.indexOf("notdojo") < 0)
+								}), 500);
+							}catch(e){
+								d.errback(e);
+							}
+							return d;
 						}
 					},
 					{
@@ -67,13 +123,13 @@
 						timeout: 20000,
 						setUp: function(){
 							editor0 = dijit.byId("brEditor");
-							value = editor0.attr("value");
+							value = editor0.get("value");
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								doh.robot.mouseMoveAt(editor0.iframe, 500, null, 10, 10);
 								doh.robot.mouseClick({left:true}, 500);
  								doh.robot.sequence(function(){
@@ -82,7 +138,7 @@
 								doh.robot.typeKeys("abc", 500);
  								doh.robot.sequence(d.getTestCallback(function(){
 									//Now check the state!
-									var content = editor0.attr("value");
+									var content = editor0.get("value");
 									doh.assertTrue(content.indexOf("abc<br") >= 0);
 								}), 1000);
 							}catch(e){
@@ -91,7 +147,35 @@
 							return d;
 						},
 						tearDown: function(){
-							if(editor0){editor0.attr("value", value);}
+							if(editor0){editor0.set("value", value);}
+						}
+					},
+					{
+						name: "Test custom editor content (programmatic creation).",
+						timeout: 20000,
+						setUp: function(){
+							editor0 = dijit.byId("programmatic3");
+							value = editor0.get("value");
+						},
+						runTest: function(){
+							var d = new doh.Deferred();
+							try{
+								//Focus on the editor window
+								dojo.window.scrollIntoView(editor0.domNode);
+								doh.robot.mouseMoveAt(editor0.iframe, 500, null, 10, 10);
+								doh.robot.mouseClick({left:true}, 500);
+ 								doh.robot.sequence(d.getTestCallback(function(){
+									//Now check the state!
+									var content = editor0.get("value");
+									doh.assertTrue(content.indexOf("Custom Initial Content.") >= 0);
+								}), 1000);
+							}catch(e){
+								d.errback(e);
+							}
+							return d;
+						},
+						tearDown: function(){
+							if(editor0){editor0.set("value", value);}
 						}
 					}
 				]);

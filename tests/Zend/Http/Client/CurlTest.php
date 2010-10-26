@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CurlTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: CurlTest.php 22213 2010-05-20 20:13:16Z jan $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -300,6 +300,18 @@ class Zend_Http_Client_CurlTest extends Zend_Http_Client_CommonHttpTests
         $adapter->connect("http://framework.zend.com");
 
         $this->assertTrue(is_resource($adapter->getHandle()));
+    }
+    
+    /**
+     * @group ZF-9857
+     */
+    public function testHeadRequest()
+    {
+        $this->client->setUri($this->baseuri . 'testRawPostData.php');
+        $adapter = new Zend_Http_Client_Adapter_Curl;
+        $this->client->setAdapter($adapter);
+        $this->client->request('HEAD');
+        $this->assertEquals('', $this->client->getLastResponse()->getBody());
     }
 }
 

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FirebugTest.php 22570 2010-07-16 04:20:33Z ramon $
+ * @version    $Id: FirebugTest.php 22569 2010-07-16 04:17:54Z ramon $
  */
 
 /**

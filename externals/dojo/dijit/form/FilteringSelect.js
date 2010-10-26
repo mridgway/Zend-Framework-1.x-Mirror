@@ -42,7 +42,13 @@ dojo.declare(
 
 		isValid: function(){
 			// Overrides ValidationTextBox.isValid()
-			return this._isvalid || (!this.required && this.attr('displayedValue') == ""); // #5974
+			return this._isvalid || (!this.required && this.get('displayedValue') == ""); // #5974
+		},
+
+		_refreshState: function(){
+			if(!this.searchTimer){ // state will be refreshed after results are returned
+				this.inherited(arguments);
+			}
 		},
 
 		_callbackSetLabel: function(	/*Array*/ result,
@@ -68,7 +74,7 @@ dojo.declare(
 				this.validate(this._focused);
 				this.item = null;
 			}else{
-				this.attr('item', result[0], priorityChange);
+				this.set('item', result[0], priorityChange);
 			}
 		},
 
@@ -79,8 +85,10 @@ dojo.declare(
 			if(dataObject.query[this.searchAttr] != this._lastQuery){
 				return;
 			}
-			this._isvalid = results.length != 0; // FIXME: should this be greater-than?
-			this.validate(true);
+			if(this.item === undefined){ // item == undefined for keyboard search
+				this._isvalid = results.length != 0 || this._maxOptions != 0; // result.length==0 && maxOptions != 0 implies the nextChoices item selected but then the datastore returned 0 more entries
+				this.validate(true);
+			}
 			dijit.form.ComboBoxMixin.prototype._openResultList.apply(this, arguments);
 		},
 
@@ -117,7 +125,7 @@ dojo.declare(
 			this.store.fetchItemByIdentity({
 				identity: value,
 				onItem: function(item){
-					self._callbackSetLabel([item], undefined, priorityChange);
+					self._callbackSetLabel(item? [item] : [], undefined, priorityChange);
 				}
 			});
 		},
@@ -195,7 +203,7 @@ dojo.declare(
 		},
 
 		undo: function(){
-			this.attr('displayedValue', this._lastDisplayedValue);
+			this.set('displayedValue', this._lastDisplayedValue);
 		}
 	}
 );

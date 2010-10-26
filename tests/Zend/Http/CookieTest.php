@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CookieTest.php 21020 2010-02-11 17:27:23Z shahar $
+ * @version    $Id: CookieTest.php 23231 2010-10-25 14:19:59Z matthew $
  */
 
 require_once dirname(__FILE__) . '/../../TestHelper.php';
@@ -448,6 +448,14 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
         $expTime = "Sat, 29-Jan-2039 00:54:42 GMT";
         $cookie = Zend_Http_Cookie::fromString("foo=bar; domain=.example.com; expires=$expTime");
         $this->assertFalse($cookie->isExpired(), 'Expiry: ' . $cookie->getExpiryTime());
+    }
+
+    /**
+     * @group ZF-10506
+     */
+    public function testPregMatchIsQuoted()
+    {
+        $this->assertFalse(Zend_Http_Cookie::matchCookieDomain('foo.bar.com', 'www.foozbar.com'));
     }
 
     /**

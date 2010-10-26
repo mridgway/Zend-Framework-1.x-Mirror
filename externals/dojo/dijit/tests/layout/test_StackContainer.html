@@ -17,7 +17,7 @@
 	</style>
 
 	<!-- required: the default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../../dojo/dojo.js"
@@ -39,16 +39,16 @@
 		function selected(page){
 			console.debug("page selected " + page.id);
 			var widget=dijit.byId("myStackContainer");
-			dijit.byId("previous").attr("disabled", page.isFirstChild);
-			dijit.byId("next").attr("disabled", page.isLastChild);
-			dijit.byId("previous2").attr("disabled", page.isFirstChild);
-			dijit.byId("next2").attr("disabled", page.isLastChild);
+			dijit.byId("previous").set("disabled", page.isFirstChild);
+			dijit.byId("next").set("disabled", page.isLastChild);
+			dijit.byId("previous2").set("disabled", page.isFirstChild);
+			dijit.byId("next2").set("disabled", page.isLastChild);
 		}
 		dojo.subscribe("myStackContainer-selectChild", selected);
 	</script>
 </head>
 
-<body class="tundra">
+<body class="claro">
 	<h1 class="testTitle">A Tale Of Two Cities</h1>
 
 	<button dojoType="dijit.form.Button" id="previous"

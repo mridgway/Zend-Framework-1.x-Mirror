@@ -71,8 +71,10 @@ tests.register("tests.date.locale",
 
 	t.is("11082006", dojo.date.locale.format(date, {datePattern:"ddMMyyyy", selector:"date"}));
 
+	t.is("12 o'clock AM", dojo.date.locale.format(date, {datePattern:"hh 'o''clock' a", selector:"date", locale: 'en'}));
+
 	// compare without timezone
-	t.is("\u4e0a\u534812\u65f655\u520612\u79d2", dojo.date.locale.format(date, {formatLength:'full',selector:'time', locale:'zh-cn'}).split(' ')[0]);
+	t.is("\u4e0a\u534812\u65f655\u520612\u79d2", dojo.date.locale.format(date, {formatLength:'full',selector:'time', locale:'zh-cn'}).replace(/^.*(\u4e0a\u5348.*)/,"$1"));
 			}
 		},
 		{
@@ -233,6 +235,8 @@ tests.register("tests.date.locale",
 
 	t.is( new Date(2006, 7, 11), dojo.date.locale.parse("11082006", {datePattern:"ddMMyyyy", selector:"date"}));
 
+	t.is( new Date(2006, 7, 31), dojo.date.locale.parse("31Aug2006", {datePattern:"ddMMMyyyy", selector:"date"}));
+
 			}
 		},
 		{
@@ -250,7 +254,7 @@ tests.register("tests.date.locale",
 			runTest: function(t){
 				var time = new Date(2006, 7, 11, 12, 30);
 				var tformat = {selector:'time', strict:true, timePattern:"h 'o''clock'", locale:'en'};
-//BUG				t.is(time.getHours(), dojo.date.locale.parse("12 o'clock", tformat).getHours());
+				t.is(time.getHours(), dojo.date.locale.parse("12 o'clock", tformat).getHours());
 
 				tformat = {selector:'time', strict:true, timePattern:" 'Hour is' h", locale:'en'};
 				t.is(time.getHours(), dojo.date.locale.parse(" Hour is 12", tformat).getHours());
@@ -264,7 +268,7 @@ tests.register("tests.date.locale",
 			runTest: function(t){
 				var time = new Date(2006, 7, 11, 12, 30);
 				var tformat = {selector:'time', strict:true, timePattern:"h 'o''clock'", locale:'en'};
-//BUG				t.is(time.getHours(), dojo.date.locale.parse("12 o'clock", tformat).getHours());
+				t.is(time.getHours(), dojo.date.locale.parse("12 o'clock", tformat).getHours());
 
 				tformat = {selector:'time', strict:true, timePattern:" 'Hour is' h", locale:'en'};
 				t.is(time.getHours(), dojo.date.locale.parse(" Hour is 12", tformat).getHours());

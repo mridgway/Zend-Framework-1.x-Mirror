@@ -17,7 +17,7 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: AutoComplete.php 20754 2010-01-29 11:42:43Z beberlei $
+ * @version     $Id: AutoComplete.php 20752 2010-01-29 11:31:30Z beberlei $
  */
 
 /**

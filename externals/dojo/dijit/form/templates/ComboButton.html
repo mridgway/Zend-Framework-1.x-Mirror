@@ -1,20 +1,23 @@
-<table class='dijit dijitReset dijitInline dijitLeft'
+<table class="dijit dijitReset dijitInline dijitLeft"
 	cellspacing='0' cellpadding='0' waiRole="presentation"
 	><tbody waiRole="presentation"><tr waiRole="presentation"
-		><td class="dijitReset dijitStretch dijitButtonNode"><button id="${id}_button" class="dijitReset dijitButtonContents"
-			dojoAttachEvent="onclick:_onButtonClick,onmouseenter:_onMouse,onmouseleave:_onMouse,onmousedown:_onMouse,onkeypress:_onButtonKeyPress"  dojoAttachPoint="titleNode"
+		><td class="dijitReset dijitStretch dijitButtonNode" dojoAttachPoint="buttonNode" dojoAttachEvent="ondijitclick:_onButtonClick,onkeypress:_onButtonKeyPress"
+		><div id="${id}_button" class="dijitReset dijitButtonContents"
+			dojoAttachPoint="titleNode"
 			waiRole="button" waiState="labelledby-${id}_label"
-			><div class="dijitReset dijitInline" dojoAttachPoint="iconNode" waiRole="presentation"></div
+			><div class="dijitReset dijitInline dijitIcon" dojoAttachPoint="iconNode" waiRole="presentation"></div
 			><div class="dijitReset dijitInline dijitButtonText" id="${id}_label" dojoAttachPoint="containerNode" waiRole="presentation"></div
-		></button></td
+		></div
+		></td
 		><td id="${id}_arrow" class='dijitReset dijitRight dijitButtonNode dijitArrowButton'
 			dojoAttachPoint="_popupStateNode,focusNode,_buttonNode"
-			dojoAttachEvent="onmouseenter:_onMouse,onmouseleave:_onMouse,onkeypress:_onArrowKeyPress"
-			stateModifier="DownArrow"
-			title="${optionsTitle}" ${nameAttrSetting}
+			dojoAttachEvent="onkeypress:_onArrowKeyPress"
+			title="${optionsTitle}"
 			waiRole="button" waiState="haspopup-true"
-			><div class="dijitReset dijitArrowButtonInner" waiRole="presentation">&thinsp;</div
+			><div class="dijitReset dijitArrowButtonInner" waiRole="presentation"></div
 			><div class="dijitReset dijitArrowButtonChar" waiRole="presentation">&#9660;</div
 		></td
-	></tr></tbody
+		><td style="display:none !important;"
+			><input ${!nameAttrSetting} type="${type}" value="${value}" dojoAttachPoint="valueNode"
+		/></td></tr></tbody
 ></table>

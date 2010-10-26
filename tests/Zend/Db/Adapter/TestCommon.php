@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestCommon.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: TestCommon.php 23193 2010-10-21 02:09:18Z ramon $
  */
 
 /**
@@ -1781,6 +1781,46 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(array_fill(0, 4, 'EMPTY'), $value);
     }
 
+    /**
+     * @group ZF-8597
+     * Oracle is limited to 30 characters for an identifier
+     */
+    public function testAdapterUpdateWithLongColumnIdentifier()
+    {
+        // create test table using no identifier quoting
+        $this->_util->createTable('zf_longidentifier', array(
+            'id'    => 'INTEGER NOT NULL',
+            'veryveryveryverylongidentifier' => 'INTEGER NOT NULL'
+        ));
+        $tableName = $this->_util->getTableName('zf_longidentifier');
+
+        // insert into the table
+        $this->_db->insert($tableName, array(
+            'id' => 1,
+            'veryveryveryverylongidentifier' => 2
+        ));
+
+        //try to update
+        $this->_db->update($tableName,
+                           array('veryveryveryverylongidentifier' => 3),
+                           array($this->_db->quoteIdentifier('id') . ' = 1'));
+
+        // check if the row was inserted as expected
+        $select = $this->_db->select()->from($tableName, array('id', 'veryveryveryverylongidentifier'));
+
+        $stmt = $this->_db->query($select);
+        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+        $a = array(
+            0 => array(0 => 1, 1 => 3)
+        );
+        $this->assertEquals($a, $fetched,
+            'result of query not as expected');
+
+        // clean up
+        unset($stmt);
+        $this->_util->dropTable($tableName);
+    }
+
     protected function _testAdapterAlternateStatement($stmtClass)
     {
         $ip = get_include_path();
@@ -2053,5 +2093,21 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         // clean up
         unset($stmt);
         $this->_util->dropTable($tableName);
+    }
+
+    /**
+     * @group ZF-6620
+     */
+    public function testAdapterOptionFetchMode()
+    {
+        $params = $this->_util->getParams();
+
+        $params['options'] = array(
+            Zend_Db::FETCH_MODE => 'obj'
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $select = $db->select()->from('zfproducts');
+        $row = $db->fetchRow($select);
+        $this->assertType('stdClass', $row);
     }
 }

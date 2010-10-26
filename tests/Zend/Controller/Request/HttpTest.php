@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpTest.php 20984 2010-02-08 16:25:08Z matthew $
+ * @version    $Id: HttpTest.php 23229 2010-10-25 14:16:21Z matthew $
  */
 
 // Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.
@@ -838,6 +838,16 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $_SERVER['REQUEST_URI'] = '/index/index';
         $pathInfo = $request->getPathInfo();
         $this->assertEquals('/index/index', $pathInfo);
+    }
+
+    /**
+     * @group ZF-10577
+     */
+    public function testGetHeaderWithEmptyValueReturnsEmptyString()
+    {
+        $_SERVER['HTTP_X_FOO'] = '';
+        
+        $this->assertSame('', $this->_request->getHeader('X-Foo'));
     }
 }
 

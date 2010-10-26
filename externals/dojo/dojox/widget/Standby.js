@@ -1,7 +1,10 @@
 dojo.provide("dojox.widget.Standby");
+
+dojo.require("dojo.window");
+dojo.require("dojo.fx");
+
 dojo.require("dijit._Widget");
 dojo.require("dijit._Templated");
-dojo.require("dojo.fx");
 
 dojo.experimental("dojox.widget.Standby");
 
@@ -267,7 +270,7 @@ dojo.declare("dojox.widget.Standby",[dijit._Widget, dijit._Templated],{
 			var box = dojo.position(target, true);
 			if(target === dojo.body() || target === dojo.doc){
 				// Target is the whole doc, so scale to viewport.
-				box = dijit.getViewport();
+				box = dojo.window.getBox();
 				box.x = box.l;
 				box.y = box.t;
 			}
@@ -294,6 +297,26 @@ dojo.declare("dojox.widget.Standby",[dijit._Widget, dijit._Templated],{
 				if(zi != "auto"){
 					ziUl = parseInt(ziUl, 10) + 1;
 					ziIn = parseInt(ziIn, 10) + 2;
+				}else{
+					//We need to search up the chain to see if there
+					//are any parent zIndexs to overlay.
+					var cNode = target.parentNode;
+					var oldZi = -100000;
+					while(cNode && cNode !== dojo.body()){
+						zi = dojo.style(cNode, "zIndex");
+						if(!zi || zi === "auto"){
+							cNode = cNode.parentNode;
+						}else{
+							var newZi = parseInt(zi, 10);
+							if(oldZi < newZi){
+								oldZi = newZi;
+								ziUl = newZi + 1;
+								ziIn = newZi + 2;
+							}
+							// Keep looking until we run out, we want the highest zIndex.
+							cNode = cNode.parentNode;
+						}
+					}
 				}
 			}else{
 				ziUl = parseInt(this.zIndex, 10) + 1;
@@ -522,7 +545,7 @@ dojo.declare("dojox.widget.Standby",[dijit._Widget, dijit._Templated],{
 			node: self._underlayNode, 
 			properties: {opacity: {start: 0.75, end: 0}},
 			onEnd: function(){
-				dojo.style(self._underlayNode,{"display":"none", "zIndex": "-1000"});
+				dojo.style(this.node,{"display":"none", "zIndex": "-1000"});
 			}
 		});
 		var imageAnim = dojo.animateProperty({
@@ -530,7 +553,7 @@ dojo.declare("dojox.widget.Standby",[dijit._Widget, dijit._Templated],{
 			node: self._centerNode, 
 			properties: {opacity: {start: 1, end: 0}},
 			onEnd: function(){
-				dojo.style(self._centerNode,{"display":"none", "zIndex": "-1000"});
+				dojo.style(this.node,{"display":"none", "zIndex": "-1000"});
 				self.onHide();
 				self._enableOverflow();
 			}
@@ -671,7 +694,11 @@ dojo.declare("dojox.widget.Standby",[dijit._Widget, dijit._Templated],{
 					body.parentNode.style.overflow){
 					 this._oldBodyParentOverflow = body.parentNode.style.overflow;
 				 }else{
-					 this._oldBodyParentOverflow = "scroll";
+					 try{
+						this._oldBodyParentOverflow = dojo.style(body.parentNode, "overflow");
+					 }catch(e){
+						 this._oldBodyParentOverflow = "scroll";
+					 }
 				 }
 				 dojo.style(body.parentNode, "overflow", "hidden");
 			 }

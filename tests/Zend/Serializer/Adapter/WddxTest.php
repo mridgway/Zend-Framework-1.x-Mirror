@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: WddxTest.php 20587 2010-01-24 21:37:26Z mabe $
+ * @version    $Id: WddxTest.php 20586 2010-01-24 21:35:04Z mabe $
  */
 
 /**

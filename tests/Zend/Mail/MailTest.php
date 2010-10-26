@@ -950,7 +950,7 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($headers['From'][0], 'John Doe <john@example.com>');
         $this->assertEquals($headers['Reply-To'][0], 'Foo Bar <foo@example.com>');
     }
-    
+
     /**
      * @group ZF-9011
      */
@@ -963,14 +963,14 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
 
         $params = array('envelope'=> '-tjohn@example.com', 'foo' => '-fbar');
         $expected = '-tjohn@example.com -fbar';
-        
+
         $transportMock = new Zend_Mail_Transport_Sendmail_Mock($params);
         $this->assertEquals($expected, $transportMock->parameters);
 
         $transportMock = new Zend_Mail_Transport_Sendmail_Mock(new Zend_Config($params));
         $this->assertEquals($expected, $transportMock->parameters);
     }
-    
+
     /**
      * @group ZF-9011
      *
@@ -990,6 +990,22 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
         } catch(Zend_Mail_Transport_Exception $e) {
         	// do nothing
         }
+    }
+
+    /**
+     * @group ZF-10367
+     */
+    public function testClearHeader()
+    {
+        $mail = new Zend_Mail();
+
+        $mail->addHeader('foo', 'bar');
+        $headers = $mail->getHeaders();
+        $this->assertTrue(isset($headers['foo']));
+        
+        $mail->clearHeader('foo');
+        $headers = $mail->getHeaders();
+        $this->assertFalse(isset($headers['foo']));
     }
 
     public static function dataSubjects()

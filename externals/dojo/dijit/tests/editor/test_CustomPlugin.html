@@ -10,7 +10,7 @@
 	</style>
 
 	<!-- required: a default dijit theme: -->
-	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+	<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
 
 	<!-- required: dojo.js -->
 	<script type="text/javascript" src="../../../dojo/dojo.js"
@@ -74,8 +74,8 @@
 						this.sourceArea.style.top = "-999px";
 					}
 
-					this.editor.attr('disabled', this.source); // conditionally disable toolbar -- FIXME. Doesn't work.
-					this.button.attr('label', this.source ? "View WYSIWYG" : this.editor.commands[this.command]); // note: should be localized
+					this.editor.set('disabled', this.source); // conditionally disable toolbar -- FIXME. Doesn't work.
+					this.button.set('label', this.source ? "View WYSIWYG" : this.editor.commands[this.command]); // note: should be localized
 				}
 			}
 		);
@@ -89,7 +89,7 @@
 		});
 	</script>
 </head>
-<body class="tundra">
+<body class="claro">
 	<div dojoType="dijit.Editor" id="editor1" extraPlugins="['MyPlugin']"><p>
 	This editor should have my custom plugin
 	</p></div>

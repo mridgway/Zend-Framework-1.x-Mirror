@@ -13,16 +13,10 @@
 		"N", 
 		"D"
 	], 
-	"quarters-standAlone-narrow": [
-		"1", 
-		"2", 
-		"3", 
-		"4"
-	], 
 	"field-weekday": "día de la semana", 
 	"dateFormatItem-yyQQQQ": "QQQQ 'de' yy", 
-	"dateFormatItem-yQQQ": "QQQ yyyy", 
-	"dateFormatItem-yMEd": "EEE d/M/yyyy", 
+	"dateFormatItem-yQQQ": "QQQ y", 
+	"dateFormatItem-yMEd": "EEE d/M/y", 
 	"dateFormatItem-MMMEd": "E d MMM", 
 	"eraNarrow": [
 		"a.C.", 
@@ -45,10 +39,11 @@
 		"diciembre"
 	], 
 	"dateFormatItem-EEEd": "EEE d", 
+	"dayPeriods-format-wide-pm": "p.m.", 
 	"dateFormat-full": "EEEE d 'de' MMMM 'de' y", 
 	"dateFormatItem-Md": "d/M", 
 	"field-era": "era", 
-	"dateFormatItem-yM": "M/yyyy", 
+	"dateFormatItem-yM": "M/y", 
 	"months-standAlone-wide": [
 		"enero", 
 		"febrero", 
@@ -73,7 +68,7 @@
 	"timeFormat-long": "HH:mm:ss z", 
 	"field-year": "año", 
 	"dateFormatItem-yMMM": "MMM y", 
-	"dateFormatItem-yQ": "Q yyyy", 
+	"dateFormatItem-yQ": "Q y", 
 	"field-hour": "hora", 
 	"months-format-abbr": [
 		"ene", 
@@ -91,7 +86,10 @@
 	], 
 	"dateFormatItem-yyQ": "Q yy", 
 	"timeFormat-full": "HH:mm:ss zzzz", 
-	"am": "a.m.", 
+	"field-day-relative+0": "hoy", 
+	"field-day-relative+1": "mañana", 
+	"field-day-relative+2": "pasado mañana", 
+	"field-day-relative+3": "Dentro de tres días", 
 	"months-standAlone-abbr": [
 		"ene", 
 		"feb", 
@@ -118,8 +116,6 @@
 		"3er trimestre", 
 		"4º trimestre"
 	], 
-	"dateFormatItem-HHmmss": "HH:mm:ss", 
-	"dateFormatItem-hhmmss": "hh:mm:ss a", 
 	"dateFormatItem-M": "L", 
 	"days-standAlone-wide": [
 		"domingo", 
@@ -133,7 +129,7 @@
 	"dateFormatItem-MMMMd": "d 'de' MMMM", 
 	"dateFormatItem-yyMMM": "MMM-yy", 
 	"timeFormat-medium": "HH:mm:ss", 
-	"dateFormatItem-Hm": "H:mm", 
+	"dateFormatItem-Hm": "HH:mm", 
 	"quarters-standAlone-abbr": [
 		"T1", 
 		"T2", 
@@ -157,8 +153,12 @@
 	], 
 	"dateFormatItem-d": "d", 
 	"dateFormatItem-ms": "mm:ss", 
+	"field-day-relative+-1": "ayer", 
+	"dateFormatItem-h": "hh a", 
+	"field-day-relative+-2": "antes de ayer", 
+	"field-day-relative+-3": "Hace tres días", 
 	"dateFormatItem-MMMd": "d MMM", 
-	"dateFormatItem-MEd": "E, d-M", 
+	"dateFormatItem-MEd": "E, d/M", 
 	"dateFormatItem-yMMMM": "MMMM 'de' y", 
 	"field-day": "día", 
 	"days-format-wide": [
@@ -188,6 +188,7 @@
 		"D"
 	], 
 	"dateFormatItem-yyMM": "MM/yy", 
+	"dateFormatItem-hm": "hh:mm a", 
 	"days-format-abbr": [
 		"dom", 
 		"lun", 
@@ -221,15 +222,13 @@
 		"S"
 	], 
 	"dateFormatItem-MMM": "LLL", 
-	"dateFormatItem-HHmm": "HH:mm", 
-	"pm": "p.m.", 
-	"dateFormatItem-MMMMEd": "E d MMMM", 
+	"dayPeriods-format-wide-am": "a.m.", 
 	"dateFormat-short": "dd/MM/yy", 
 	"dateFormatItem-MMd": "d/MM", 
 	"field-second": "segundo", 
 	"dateFormatItem-yMMMEd": "EEE, d MMM y", 
-	"dateFormatItem-hhmm": "hh:mm a", 
 	"field-week": "semana", 
 	"dateFormat-medium": "dd/MM/yyyy", 
-	"dateFormatItem-mmss": "mm:ss"
+	"dateFormatItem-Hms": "HH:mm:ss", 
+	"dateFormatItem-hms": "hh:mm:ss a"
 })

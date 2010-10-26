@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 19074 -->
+<!-- EN-Revision: 22757 -->
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer の基本</title>
     <para>
@@ -107,7 +107,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
         <para>
             成功した場合は <methodname>Zend_OpenId_Consumer::login()</methodname>
             は何も返さずに <acronym>HTTP</acronym> リダイレクトを行います。
-            エラーが発生した場合は false を返します。
+            エラーが発生した場合は <constant>FALSE</constant> を返します。
             エラーが発生するのは、たとえば識別子が無効だったり
             プロバイダが死んでいたり、通信障害が発生したりした場合などです。
         </para>
@@ -294,7 +294,7 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
             しかし、このストレージがあらゆる場合にうまく使えるというわけではありません。
             たとえばその手の情報はデータベースに保存したいという人もいるでしょうし、
             大規模なウェブファームで共通のストレージを使用したいこともあるでしょう。
-            幸いなことに、このデフォルトのストレージは簡単に変更することができます。
+            幸いなことに、このデフォルトのストレージは簡単に変更できます。
             そのために必要なのは、<classname>Zend_OpenId_Consumer_Storage</classname>
             クラスを継承した独自のストレージクラスを実装して
             それを <classname>Zend_OpenId_Consumer</classname>
@@ -601,7 +601,7 @@ $consumer = new Zend_OpenId_Consumer($storage);
 
         <para>
             OpenID 対応のウェブサイトからは、
-            これらのフィールドの任意の組み合わせについての問い合わせをすることができます。
+            これらのフィールドの任意の組み合わせについて問い合わせられます。
             また、いくつかの情報についてのみ厳密に問い合わせを行い、
             それ以外の情報については開示するかしないかをユーザに決めさせることもできます。
             次の例は、<emphasis>nickname</emphasis> およびオプションで
@@ -631,10 +631,10 @@ if (!$consumer->login($_POST['openid_identifier'],
             見てのとおり、<classname>Zend_OpenId_Extension_Sreg</classname>
             のコンストラクタに渡すのは問い合わせたいフィールドの配列です。
             この配列のインデックスはフィールド名、値はフラグとなります。
-            <emphasis>true</emphasis> はそのフィールドが必須であること、そして
-            <emphasis>false</emphasis> はそのフィールドがオプションであることを表します。
+            <constant>TRUE</constant> はそのフィールドが必須であること、そして
+            <constant>FALSE</constant> はそのフィールドがオプションであることを表します。
             <classname>Zend_OpenId_Consumer::login</classname> の 4 番目の引数には、
-            extension あるいは extension のリストを指定することができます。
+            extension あるいは extension のリストを指定できます。
         </para>
 
         <para>
@@ -679,7 +679,7 @@ if ($consumer->verify($_GET, $id, $sreg)) {
             必要なデータの存在は自動的にチェックされます。
             この場合、必須フィールドのいずれかが存在しなければ
             <classname>Zend_OpenId_Consumer::verify</classname> は
-            <emphasis>false</emphasis> を返します。
+            <constant>FALSE</constant> を返します。
         </para>
 
         <para>
@@ -705,9 +705,9 @@ if ($consumer->verify($_GET, $id, $sreg)) {
             そう、<classname>Zend_Auth</classname> のことです。
             このクラスを <classname>Zend_OpenId_Consumer</classname>
             と組み合わせて使うこともできます。次の例は、
-            <code>OpenIdAdapter</code> が
+            <classname>OpenIdAdapter</classname> が
             <classname>Zend_Auth_Adapter_Interface</classname> の
-            <code>authenticate</code> メソッドを実装する方法を示すものです。
+            <methodname>authenticate</methodname> メソッドを実装する方法を示すものです。
             これは、認証問い合わせと検証を行います。
         </para>
 

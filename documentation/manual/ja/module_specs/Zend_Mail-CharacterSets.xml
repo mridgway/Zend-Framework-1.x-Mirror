@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 19422 -->
+<!-- EN-Revision: 21992 -->
 <sect1 id="zend.mail.character-sets">
     <title>文字セット</title>
+
     <para>
         <classname>Zend_Mail</classname> はメールの現在の文字セットをチェックしません。
         <classname>Zend_Mail</classname> のインスタンスを作成する際に、メールの文字セットを指定します。
         デフォルトは <code>iso-8859-1</code> です。
         メールに追加する内容は、すべて正しい文字セットでエンコードされている必要があります。
         新しいメールパートを作成する際には、
-        個々のパートについて異なる文字セットを指定することができます。
+        個々のパートについて異なる文字セットを指定できます。
     </para>
+
     <note>
         <title>テキスト形式限定</title>
+
         <para>
             文字セットが適用されるのは、プレーンテキストのメッセージについてのみです。
         </para>
@@ -35,8 +38,13 @@ function myConvert($string) {
 }
 
 $mail = new Zend_Mail('ISO-2022-JP');
-//この場合、 ISO-2022-JP は MSB を使わないので、 ENCODING_7BIT を使えます。
-$mail->setBodyText(myConvert('This is the text of the mail.'), null, Zend_Mime::ENCODING_7BIT);
+//この場合、 ISO-2022-JP は MSB を使わないので、
+// ENCODING_7BIT を使えます。
+$mail->setBodyText(
+    myConvert('This is the text of the mail.'),
+    null,
+    Zend_Mime::ENCODING_7BIT
+);
 $mail->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
 $mail->setFrom('somebody@example.com', myConvert('Some Sender'));
 $mail->addTo('somebody_else@example.com', myConvert('Some Recipient'));

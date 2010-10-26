@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Static.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Static.php 23193 2010-10-21 02:09:18Z ramon $
  */
 
 
@@ -288,7 +288,8 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
      */
     public function setFetchMode($mode)
     {
-        return;
+        $this->_fetchMode = $mode;
+        return $this;
     }
 
     /**

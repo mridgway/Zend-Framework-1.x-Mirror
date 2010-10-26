@@ -19,7 +19,7 @@
 		</style>
 
 		<!-- required: the default dijit theme: -->
-		<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/tundra/tundra.css">
+		<link id="themeStyles" rel="stylesheet" href="../../../dijit/themes/claro/claro.css">
 
 		<!-- required: dojo.js -->
 		<script type="text/javascript" src="../../../dojo/dojo.js"
@@ -39,7 +39,7 @@
 			dojo.require("dojo.parser");
 		</script>
 	</head>
-<body class="tundra">
+<body class="claro">
 	<h1 class="testTitle">Dijit Button Test</h1>
 	<h2>Simple, drop down &amp; combo buttons</h2>
 	<p>
@@ -202,7 +202,7 @@
 	<h2>Toggle buttons</h2>
 	<p>The button CSS as well as the icon CSS can change on toggle </p>
 	<div class="box">
-		<button dojoType="dijit.form.ToggleButton" id="toggle1" checked onChange="console.log('toggled button checked='+arguments[0]);this.attr('label',arguments[0] ==
+		<button dojoType="dijit.form.ToggleButton" id="toggle1" checked onChange="console.log('toggled button checked='+arguments[0]);this.set('label',arguments[0] ==
 		true ? 'toggle me off' : 'toggle me on');" iconClass="dijitCheckBoxIcon">
 			Toggle me off
 		</button>
@@ -298,27 +298,27 @@
 		var disabled = false;
 		function toggleDisabled(){
 			disabled =! disabled;
-			forEachButton(function(widget){ widget.attr('disabled',disabled); });
+			forEachButton(function(widget){ widget.set('disabled',disabled); });
 			dojo.byId("toggle").innerHTML= disabled ? "Enable all" : "Disable all";
 		}
-		var labels=["<img src='../images/note.gif' width='20' height='20'>All", "<i>work</i>", "and no", "<h1>play</h1>",
-					 "<span style='color: red'>makes</span>", "Jack", "<h3>a</h3>", "dull",
+		var labels=["<img src='../images/note.gif' width='20' height='20'>All", "<i>work</i>", "and no", "<span style='font-size: 40pt;'>play</span>",
+					 "<span style='color: red'>makes</span>", "Jack", "<span style='font-size: 20pt;'>a</a>", "dull",
 					 "<img src='../images/plus.gif' width='16' height='16'>boy"];
 		var idx = 0;
 		function changeLabels(){
 			forEachButton(function(widget){
-				widget.attr('label', labels[idx++ % labels.length]);
+				widget.set('label', labels[idx++ % labels.length]);
 			});
 		}
 		function getLabels(){
 			forEachButton(function(widget){
-				console.log(widget.attr('label'));
+				console.log(widget.get('label'));
 			});
 		}
 	</script>
 	<div>
 		<button id="toggle" onclick='toggleDisabled()'>Disable all</button>
-		<button onclick='changeLabels()'>Change labels</button>
+		<button id="changeLabels" onclick='changeLabels()'>Change labels</button>
 		<button onclick='getLabels()'>Get labels</button>
 		<button onclick='location.reload()'>Revert</button>
 	</div>
@@ -337,7 +337,7 @@
 				label: "hello!",
 				name: "programmatic"
 			});
-			widget2.attr("label", "i'm programmatic too");	// change label (for testing)
+			widget2.set("label", "i'm programmatic too");	// change label (for testing)
 			widget2.placeAt("buttonContainer");	// place in page
 		});
 	</script>
@@ -400,6 +400,52 @@
 		<button dojoType="dijit.form.Button" type="submit" id="bSubmit">Submit</button>&nbsp;&nbsp;
 		<button dojoType="dijit.form.Button" type="reset" id="bReset">Reset</button>
 	</form>
+
+	<h3>onClick Tests</h3>
+	<div>Testing that onClick works properly
+	</div>
+	<form>
+		<label for="onClickName">Value: </label><input id="onClickName" name="onClickName" value="RESET"><br>
+		<button dojoType="dijit.form.Button" type="reset" id="reset1">Reset with no onClick handler should reset</button>
+		<button type="reset" id="reset1N">Native Reset with no onClick handler should reset</button><br>
+		<button dojoType="dijit.form.Button" type="reset" id="reset2" onClick="return false">Reset with "return false" onClick handler should not reset</button>
+		<button type="reset" id="reset2N" onClick="return false">Native Reset with "return false" onClick handler should not reset</button><br>
+		<button dojoType="dijit.form.Button" type="reset" id="reset3" onClick="return true">Reset with "return true" onClick handler should reset</button>
+		<button type="reset" id="reset3N" onClick="return true">Native Reset with "return true" onClick handler should reset</button><br>
+		<button dojoType="dijit.form.Button" type="reset" id="reset4" onClick="return">Reset with "return" onClick handler should reset</button>
+		<button type="reset" id="reset4N" onClick="return">Native Reset with "return" onClick handler should reset</button><br>
+		<button dojoType="dijit.form.Button" type="reset" id="reset5" onClick="">Reset with "" onClick handler should reset</button>
+		<button type="reset" id="reset5N" onClick="">Native Reset with "" onClick handler should reset</button><br>
+	</form>
+
+	<h3>Submit/value test</h3>
+	<script>
+		submittedValues = function(values){
+			for(var i in values){
+				document.getElementById('buttonName').value = i;
+				document.getElementById('buttonValue').value = values[i];
+			}
+		};
+	</script>
+	<form dojoType="dijit.form.Form" id="myForm"
+		encType="multipart/form-data" action="../formAction.html" method="" target="_formSubmitIframe">
+		<button id="Plain" name="Plain" type="submit" dojoType="dijit.form.Button" value="Plain Submit" label="Plain Submit"></button>
+		<button id="Combo" name="Combo" type="submit" dojoType="dijit.form.ComboButton" value="Combo Submit" label="Combo Submit">
+			<div dojoType="dijit.Menu" style="display:none;">
+				<div id="ComboMenuItem" dojoType="dijit.MenuItem" onclick="dijit.byId('myForm').submit()">Combo MenuItem Submit</div>
+			</div>
+		</button>
+		<button id="DropDown" name="DropDown" type="submit" dojoType="dijit.form.DropDownButton" value="DropDown Submit" label="DropDown Submit">
+			<div dojoType="dijit.Menu" style="display:none;">
+				<div id="DropDownMenuItem" dojoType="dijit.MenuItem" onclick="dijit.byId('myForm').submit()">DropDown MenuItem Submit</div>
+			</div>
+		</button>
+		<button id="Disabled" name="Disabled" type="submit" dojoType="dijit.form.Button" disabled value="Disabled Submit" label="Disabled Submit"></button>
+	</form>
+	<br>
+	<label for="buttonName">Submitted name:</label><input id="buttonName"><br>
+	<nobr style="width:100%;"><label for="buttonValue">Submitted value:</label><input id="buttonValue" style="width:100%;overflow:hidden;"></nobr>
+<iframe name="_formSubmitIframe" src="about:blank" onload="if(this.values)submittedValues(this.values)" style="display:none;"></iframe>
 
 </body>
 </html>

@@ -1,17 +1,11 @@
 ({
-	"quarters-standAlone-narrow": [
-		"1", 
-		"2", 
-		"3", 
-		"4"
-	], 
 	"field-weekday": "曜日", 
 	"dateFormatItem-yQQQ": "yQQQ", 
 	"dateFormatItem-yMEd": "y/M/d(EEE)", 
 	"dateFormatItem-MMMEd": "M月d日(E)", 
 	"eraNarrow": [
-		"紀元前", 
-		"西暦"
+		"BC", 
+		"AD"
 	], 
 	"dateFormat-long": "y年M月d日", 
 	"months-format-wide": [
@@ -29,6 +23,7 @@
 		"12月"
 	], 
 	"dateTimeFormat-medium": "{1} {0}", 
+	"dayPeriods-format-wide-pm": "午後", 
 	"dateFormat-full": "y年M月d日EEEE", 
 	"dateFormatItem-Md": "M/d", 
 	"dateFormatItem-yMd": "y/M/d", 
@@ -55,12 +50,13 @@
 		"第3四半期", 
 		"第4四半期"
 	], 
-	"timeFormat-long": "HH:mm:ss z", 
+	"timeFormat-long": "H:mm:ss z", 
 	"field-year": "年", 
 	"dateFormatItem-yMMM": "y年M月", 
 	"dateFormatItem-yQ": "y/Q", 
 	"field-hour": "時", 
 	"dateFormatItem-MMdd": "MM/dd", 
+	"dateFormatItem-yyQ": "yy/Q", 
 	"months-format-abbr": [
 		"1月", 
 		"2月", 
@@ -75,10 +71,12 @@
 		"11月", 
 		"12月"
 	], 
-	"dateFormatItem-yyQ": "yy/Q", 
 	"timeFormat-full": "H時mm分ss秒 zzzz", 
-	"am": "午前", 
+	"field-day-relative+0": "今日", 
+	"field-day-relative+1": "明日", 
+	"field-day-relative+2": "明後日", 
 	"dateFormatItem-H": "H時", 
+	"field-day-relative+3": "3日後", 
 	"months-standAlone-abbr": [
 		"1月", 
 		"2月", 
@@ -115,13 +113,12 @@
 		"金曜日", 
 		"土曜日"
 	], 
-	"dateFormatItem-MMMMd": "M月d日", 
 	"dateFormatItem-yyMMM": "y年M月", 
 	"timeFormat-medium": "H:mm:ss", 
 	"dateFormatItem-Hm": "H:mm", 
 	"eraAbbr": [
-		"紀元前", 
-		"西暦"
+		"BC", 
+		"AD"
 	], 
 	"field-minute": "分", 
 	"field-dayperiod": "午前/午後", 
@@ -136,11 +133,14 @@
 	], 
 	"dateFormatItem-d": "d日", 
 	"dateFormatItem-ms": "mm:ss", 
+	"field-day-relative+-1": "昨日", 
+	"dateFormatItem-h": "ah", 
 	"dateTimeFormat-long": "{1}{0}", 
+	"field-day-relative+-2": "一昨日", 
+	"field-day-relative+-3": "3日前", 
 	"dateFormatItem-MMMd": "M月d日", 
 	"dateFormatItem-MEd": "M/d(E)", 
 	"dateTimeFormat-full": "{1}{0}", 
-	"dateFormatItem-yMMMM": "y年M月", 
 	"field-day": "日", 
 	"days-format-wide": [
 		"日曜日", 
@@ -204,8 +204,7 @@
 		"土"
 	], 
 	"dateFormatItem-MMM": "LLL", 
-	"pm": "午後", 
-	"dateFormatItem-MMMMEd": "M月d日(E)", 
+	"dayPeriods-format-wide-am": "午前", 
 	"dateFormat-short": "yy/MM/dd", 
 	"field-second": "秒", 
 	"dateFormatItem-yMMMEd": "y年M月d日(EEE)", 
@@ -213,6 +212,7 @@
 	"field-week": "週", 
 	"dateFormat-medium": "yyyy/MM/dd", 
 	"dateTimeFormat-short": "{1} {0}", 
+	"dateFormatItem-Hms": "H:mm:ss", 
 	"dateFormatItem-hms": "ah:mm:ss", 
 	"dateFormatItem-yyyy": "y年"
 })

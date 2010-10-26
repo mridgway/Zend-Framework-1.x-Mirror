@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IsImageTest.php 22693 2010-07-26 19:31:40Z alexander $
+ * @version    $Id: IsImageTest.php 22690 2010-07-26 19:28:49Z alexander $
  */
 
 // Call Zend_Validate_File_IsImageTest::main() if this source file is executed directly.

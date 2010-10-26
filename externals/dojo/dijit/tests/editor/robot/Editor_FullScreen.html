@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="../../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
+			dojo.require("dojo.window");
 			dojo.require("dijit.robotx");
 
 			dojo.addOnLoad(function(){
@@ -39,14 +39,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								editor0.focus();
 
 								//Find the fullscreen plugin, we'll need it.
@@ -56,7 +56,7 @@
 								doh.robot.sequence(d.getTestCallback(function(){
 									//Now check the state!
 									doh.assertTrue(fsPlugin.isFullscreen);
-									var vp = dijit.getViewport();
+									var vp = dojo.window.getBox();
 									var edPos = dojo.position(editor0.domNode);
 									doh.assertEqual("absolute", dojo.style(editor0.domNode, "position"));
 									doh.assertEqual("0", dojo.style(editor0.domNode, "top"), "Top position check");
@@ -75,7 +75,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						}
 					},
 					{
@@ -91,14 +91,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								editor0.focus();
 
 								//Find the fullscreen plugin, we'll need it.
@@ -125,7 +125,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						}
 					},
 					{
@@ -141,14 +141,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								editor0.focus();
 
 								//Find the fullscreen plugin, we'll need it.
@@ -159,7 +159,7 @@
 								doh.robot.sequence(d.getTestCallback(function(){
 									//Now check the state!
 									doh.assertTrue(fsPlugin.isFullscreen);
-									var vp = dijit.getViewport();
+									var vp = dojo.window.getBox();
 									var edPos = dojo.position(editor0.domNode);
 									doh.assertEqual("absolute", dojo.style(editor0.domNode, "position"));
 									doh.assertEqual("0", dojo.style(editor0.domNode, "top"), "Top position check");
@@ -178,7 +178,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						}
 					},
 					{
@@ -194,14 +194,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor0.domNode);
+								dojo.window.scrollIntoView(editor0.domNode);
 								editor0.focus();
 								doh.assertTrue(fsPlugin != null);
 								//Click it, then click it again!
@@ -229,7 +229,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						}
 					},
 					{
@@ -246,14 +246,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -265,7 +265,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -273,7 +273,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -298,7 +298,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					},
@@ -316,14 +316,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -335,7 +335,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -343,7 +343,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -368,7 +368,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					},
@@ -386,14 +386,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -405,7 +405,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -413,7 +413,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -438,7 +438,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					},
@@ -456,14 +456,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -475,7 +475,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -483,7 +483,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -508,7 +508,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					},
@@ -526,14 +526,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -545,7 +545,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -553,7 +553,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -578,7 +578,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					},
@@ -596,14 +596,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -615,7 +615,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -623,7 +623,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -648,7 +648,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					},
@@ -666,14 +666,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -685,7 +685,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -693,7 +693,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -718,7 +718,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					},
@@ -736,14 +736,14 @@
 									break;
 								}
 							}
-							if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							if(fsPlugin) {fsPlugin.button.set("checked", false);}
 						},
 						runTest: function(){
 							var d = new doh.Deferred();
 
 							try{
 								//Focus on the editor window
-								dijit.scrollIntoView(editor.domNode);
+								dojo.window.scrollIntoView(editor.domNode);
 								editor.focus();
 
 								var origEditorSize = dojo.marginBox(editor.domNode);
@@ -755,7 +755,7 @@
 
 								doh.robot.sequence(function(){
 									// Engage FullScreen Mode
-									fsPlugin.button.attr("checked", true);
+									fsPlugin.button.set("checked", true);
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Resize the container
@@ -763,7 +763,7 @@
 								}, 1000);
 								doh.robot.sequence(function(){
 									// Disengage FullScreen Mode
-									fsPlugin.button.attr("checked", false);
+									fsPlugin.button.set("checked", false);
 								}, 1000);
 								doh.robot.sequence(d.getTestCallback(function(){
 									// Now validate the editor resized when it returned since
@@ -788,7 +788,7 @@
 							return d;
 						},
 						tearDown: function(){
-							 if(fsPlugin) {fsPlugin.button.attr("checked", false);}
+							 if(fsPlugin) {fsPlugin.button.set("checked", false);}
 							 if(container && os){container.resize(os);}
 						}
 					}

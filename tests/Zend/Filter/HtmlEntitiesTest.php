@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HtmlEntitiesTest.php 21061 2010-02-15 21:56:54Z thomas $
+ * @version    $Id: HtmlEntitiesTest.php 22244 2010-05-22 08:40:03Z wilmoore $
  */
 
 /**
@@ -167,5 +167,50 @@ class Zend_Filter_HtmlEntitiesTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('ISO-8859-1', $filter->getEncoding());
         $this->assertEquals(5, $filter->getQuoteStyle());
+    }
+
+    /**
+     * Ensures that when ENT_QUOTES is set, the filtered value has both 'single' and "double" quotes encoded
+     *
+     * @group  ZF-8962
+     * @return void
+     */
+    public function testQuoteStyleQuotesEncodeBoth()
+    {
+        $input  = "A 'single' and " . '"double"';
+        $result = 'A &#039;single&#039; and &quot;double&quot;';
+
+        $this->_filter->setQuoteStyle(ENT_QUOTES);
+        $this->assertEquals($result, $this->_filter->filter($input));
+    }
+
+    /**
+     * Ensures that when ENT_COMPAT is set, the filtered value has only "double" quotes encoded
+     *
+     * @group  ZF-8962
+     * @return void
+     */
+    public function testQuoteStyleQuotesEncodeDouble()
+    {
+        $input  = "A 'single' and " . '"double"';
+        $result = "A 'single' and &quot;double&quot;";
+        
+        $this->_filter->setQuoteStyle(ENT_COMPAT);
+        $this->assertEquals($result, $this->_filter->filter($input));
+    }
+
+    /**
+     * Ensures that when ENT_NOQUOTES is set, the filtered value leaves both "double" and 'single' quotes un-altered
+     *
+     * @group  ZF-8962
+     * @return void
+     */
+    public function testQuoteStyleQuotesEncodeNone()
+    {
+        $input  = "A 'single' and " . '"double"';
+        $result = "A 'single' and " . '"double"';
+
+        $this->_filter->setQuoteStyle(ENT_NOQUOTES);
+        $this->assertEquals($result, $this->_filter->filter($input));
     }
 }

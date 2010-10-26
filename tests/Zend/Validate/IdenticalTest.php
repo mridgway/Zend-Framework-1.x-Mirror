@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IdenticalTest.php 22284 2010-05-25 14:22:05Z matthew $
+ * @version    $Id: IdenticalTest.php 22289 2010-05-25 14:27:05Z matthew $
  */
 
 // Call Zend_Validate_IdenticalTest::main() if this source file is executed directly.

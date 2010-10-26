@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormTest.php 22465 2010-06-19 17:41:03Z alab $
+ * @version    $Id: FormTest.php 22930 2010-09-09 18:45:18Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -1110,6 +1110,27 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     {
         $this->testSettingArrayToWhichElementsBelongEmptyClearsIt();
         $this->assertFalse($this->form->isArray());
+    }
+
+    /** 
+     * @group ZF-6741
+     */
+    public function testUseIdForDdTagByDefault()
+    {
+        $this->form->addSubForm(new Zend_Form_SubForm(), 'bar')
+                   ->bar->addElement('text', 'foo');
+
+        $html = $this->form->setView($this->getView())->render();
+        $this->assertRegexp('/<dd.*?bar-foo.*?>/', $html);
+    }
+
+    public function testUseIdForDtTagByDefault()
+    {
+        $this->form->addSubForm(new Zend_Form_SubForm(), 'bar')
+                   ->bar->addElement('text', 'foo');
+
+        $html = $this->form->setView($this->getView())->render();
+        $this->assertRegexp('/<dt.*?bar-foo.*?>/', $html);
     }
 
     /**
@@ -2901,8 +2922,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function getView()
     {
         $view = new Zend_View();
-        $libPath = dirname(__FILE__) . '/../../../library';
-        $view->addHelperPath($libPath . '/Zend/View/Helper');
         return $view;
     }
 
@@ -4175,7 +4194,39 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array('sub' => array('valid' => 1234)), $this->form->getValidValues($data));
     }
-        
+
+     /**
+     * @group ZF-9275
+     */
+    public function testElementTranslatorNotOverriddenbyGlobalTranslatorDuringValidation()
+    {
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
+        Zend_Registry::set('Zend_Translate', $translator);
+
+        $this->form->addElement('text', 'foo');
+        $this->form->isValid(array());
+
+        $received = $this->form->foo->hasTranslator();
+        $this->assertSame(false, $received);
+    }
+
+     /**
+     * @group ZF-9275
+     */
+    public function testZendValidateDefaultTranslatorOverridesZendTranslateDefaultTranslator()
+    {
+        $translate = new Zend_Translate('array', array('isEmpty' => 'translate'));
+        Zend_Registry::set('Zend_Translate', $translate);
+
+        $translateValidate = new Zend_Translate('array', array('isEmpty' => 'validate'));
+        Zend_Validate_Abstract::setDefaultTranslator($translateValidate);
+
+        $this->form->addElement('text', 'foo', array('required'=>1));
+        $this->form->isValid(array());
+
+        $this->assertSame(array('isEmpty' => 'validate'), $this->form->foo->getMessages());
+    }
+
     /**
      * @group ZF-9494
      */
@@ -4327,6 +4378,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $t2 = $this->form->getDecorators();
         $this->assertEquals($t1, $t2);
     }
+
+    /**
+     * @group ZF-10411
+     */
+    public function testAddingElementToDisplayGroupManuallyShouldPreventRenderingByForm()
+    {
+        $form = new Zend_Form_FormTest_AddToDisplayGroup();
+        $html = $form->render($this->getView());
+        $this->assertEquals(1, substr_count($html, 'Customer Type'), $html);
+    }
 }
 
 class Zend_Form_FormTest_DisplayGroup extends Zend_Form_DisplayGroup
@@ -4338,6 +4399,34 @@ class Zend_Form_FormTest_FormExtension extends Zend_Form
     public function init()
     {
         $this->setDisableLoadDefaultDecorators(true);
+    }
+}
+
+class Zend_Form_FormTest_WithDisplayGroup extends Zend_Form
+{
+    public function init()
+    {
+        $this->addElement('text', 'el1', array(
+            'label'    => 'Title',
+            'required' => true,
+        ));
+        $this->addDisplayGroup(array('el1'), 'group1', array(
+            'legend' => 'legend 1',
+        ));
+    }
+}
+
+class Zend_Form_FormTest_AddToDisplayGroup extends Zend_Form_FormTest_WithDisplayGroup
+{
+    public function init()
+    {
+        parent::init();
+        $element = new Zend_Form_Element_Text('el2', array(
+            'label' => 'Customer Type',
+        ));
+
+        $this->addElement($element);
+        $this->group1->addElement($element);
     }
 }
 

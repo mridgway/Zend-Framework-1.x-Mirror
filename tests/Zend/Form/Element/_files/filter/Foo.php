@@ -17,10 +17,10 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Foo.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Foo.php 22911 2010-08-27 22:01:03Z ramon $
  */
 
-require_once 'Zend/Filter/File/LowerCase.php'
+require_once 'Zend/Filter/File/LowerCase.php';
 
 /**
  * custom filter for use with file element tests

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SlideShareTest.php 22574 2010-07-16 14:12:02Z dragonbe $
+ * @version    $Id: SlideShareTest.php 22573 2010-07-16 14:09:17Z dragonbe $
  */
 
 

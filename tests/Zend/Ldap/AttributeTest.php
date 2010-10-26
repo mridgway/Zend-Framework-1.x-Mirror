@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AttributeTest.php 22162 2010-05-14 10:15:55Z sgehrig $
+ * @version    $Id: AttributeTest.php 22161 2010-05-14 10:11:10Z sgehrig $
  */
 
 /**

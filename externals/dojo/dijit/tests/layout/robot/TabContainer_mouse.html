@@ -16,7 +16,6 @@
 		<script type="text/javascript" src="../../helpers.js"></script>
 
 		<script type="text/javascript">
-			dojo.require("dijit.dijit"); // optimize: load dijit layer
 			dojo.require("dijit.robotx");
 
 			dojo.addOnLoad(function(){
@@ -73,11 +72,11 @@
 						runTest: function(t){
 							var d = new doh.Deferred();
 							doh.robot.mouseClick({left: true}, 500);
-							doh.robot.mouseMoveAt(dojo.query('#mainTabContainer_tablist_tab3 span.closeButton')[0], 500);
+							doh.robot.mouseMoveAt(dojo.query('#mainTabContainer_tablist_tab3 span.dijitTabCloseButton')[0], 500);
 							
 							// verify the close button is in its hover state
 							doh.robot.sequence(d.getTestCallback(function(){
-								var closeHover = dojo.query("#mainTabContainer_tablist_tab3 span.closeButton-hover");
+								var closeHover = dojo.query("#mainTabContainer_tablist_tab3 .dijitTabCloseButtonHover");
 								doh.is(1, closeHover.length);
 							}), 500);
 							
@@ -90,7 +89,7 @@
 						runTest: function(t){
 							var d = new doh.Deferred();
 							
-							doh.robot.mouseMoveAt(dojo.query('#mainTabContainer_tablist_tab3 span.closeButton')[0], 500);
+							doh.robot.mouseMoveAt(dojo.query('#mainTabContainer_tablist_tab3 span.dijitTabCloseButton')[0], 500);
 							doh.robot.mouseClick({left: true}, 500);
 							
 							var tc = dijit.byId("mainTabContainer");
@@ -107,9 +106,9 @@
 						runTest: function(t){
 							var d = new doh.Deferred();
 							
-							doh.robot.mouseMoveAt("dijit_layout__ScrollingTabControllerButton_0-menuBtn", 500);
+							doh.robot.mouseMoveAt("mainTabContainer_tablist_menuBtn", 500);
 							doh.robot.mouseClick({left: true}, 500);
-							doh.robot.mouseMoveAt("dijit_MenuItem_8", 500);
+							doh.robot.mouseMoveAt("tab4href_stcMi", 500);
 							doh.robot.mouseClick({left: true}, 1000);
 							
 							// verify SplitContainer tab is displayed (but it doesn't get focus, see #10727)
@@ -118,10 +117,10 @@
 								// TODO: this check won't work in RTL mode
 								var tc = dijit.byId("mainTabContainer");
 
-								var leftButton = dojo.byId("dijit_layout__ScrollingTabControllerButton_1");
+								var leftButton = dojo.byId("mainTabContainer_tablist_leftBtn");
 								var tablistLeft = dojo.position(leftButton).x + dojo.position(leftButton).w;
 	
-								var rightButton = dojo.byId("dijit_layout__ScrollingTabControllerButton_2");
+								var rightButton = dojo.byId("mainTabContainer_tablist_rightBtn");
 								var tablistRight = dojo.position(rightButton).x;
 	
 								var tab = dijit.byId("mainTabContainer_tablist_tab4href");

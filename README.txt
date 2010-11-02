@@ -2,7 +2,7 @@ Welcome to the Zend Framework 1.11 Release!
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.11rc1 Release ([INSERT REV NUM HERE]).
+Zend Framework 1.11.0 Release ([INSERT REV NUM HERE]).
 Released on <Month> <Day>, <Year>.
 
 NEW FEATURES
@@ -21,8 +21,9 @@ Mobile Support:
     
     The component includes a "features" adapter mechanism that allows
     developers to tie into different backends for the purpose of
-    discovering device capabilities. Currently, the only shipped adapter
-    is for the WURFL (Wireless Universal Resource File) API.
+    discovering device capabilities. Currently, ships with adapters for
+    the WURFL (Wireless Universal Resource File) API, TeraWURFL, and
+    DeviceAtlas.
     
      * Note: Luca Passani, author and lead of the WURFL project, has
        provided an exemption to Zend Framework to provide a non-GPL
@@ -169,8 +170,9 @@ URL Shortening:
     Zend_Service_ShortUrl was added for this release. The component
     provides a simple interface for use with most URL shortening
     services, defining simply the methods "shorten" and "unshorten".
-    Adapters for two services, http://jdem.cz and http://tinyurl.com,
-    are provided with this release. 
+    Adapters for the services http://is.gd, http://jdem.cz,
+    http://metamark.net, and http://tinyurl.com, are provided with this
+    release. 
 
     Zend_Service_ShortUrl was contributed by Martin Hujer.
 

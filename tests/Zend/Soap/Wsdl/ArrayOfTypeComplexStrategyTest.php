@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ArrayOfTypeComplexStrategyTest.php 21858 2010-04-15 19:58:12Z beberlei $
+ * @version    $Id: ArrayOfTypeComplexStrategyTest.php 23334 2010-11-14 22:17:19Z alexander $
  */
 require_once dirname(__FILE__)."/../../../TestHelper.php";
 require_once dirname(__FILE__)."/../_files/commontypes.php";
@@ -131,7 +131,7 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
         );
 
         $this->assertContains(
-            '<xsd:complexType name="Zend_Soap_Wsdl_ComplexObjectWithObjectStructure"><xsd:all><xsd:element name="object" type="tns:Zend_Soap_Wsdl_ComplexTest"/></xsd:all></xsd:complexType>',
+            '<xsd:complexType name="Zend_Soap_Wsdl_ComplexObjectWithObjectStructure"><xsd:all><xsd:element name="object" type="tns:Zend_Soap_Wsdl_ComplexTest" nillable="true"/></xsd:all></xsd:complexType>',
             $wsdl
         );
 

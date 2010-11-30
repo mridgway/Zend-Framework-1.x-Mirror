@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: StaticTest.php 23382 2010-11-18 22:50:50Z bittarman $
  */
 
 
@@ -496,6 +496,8 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
         $this->assertEquals(count($queries), count($queryProfiles));
 
         foreach ($queryProfiles as $queryId => $queryProfile) {
+            $this->assertNotNull($queryProfile->getStartedMicrotime());
+
             $this->assertTrue(isset($queries[$queryId]));
             $this->assertEquals($queries[$queryId]['sql'], $queryProfile->getQuery());
             $this->assertEquals($queries[$queryId]['typeExpected'], $queryProfile->getQueryType());

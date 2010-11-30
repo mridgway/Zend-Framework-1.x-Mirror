@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DojoTest.php 23060 2010-10-08 13:42:26Z matthew $
+ * @version    $Id: DojoTest.php 23368 2010-11-18 19:56:30Z bittarman $
  */
 
 // Call Zend_Dojo_View_Helper_DojoTest::main() if this source file is executed directly.
@@ -900,6 +900,16 @@ function() {
         $this->assertEquals($stylesheetMods, $helper->getStyleSheetModules());
         $this->assertEquals($stylesheets, $helper->getStylesheets());
         $this->assertFalse($helper->registerDojoStylesheet());
+    }
+
+    public function testJsonExpressionRenders()
+    {
+        $this->helper->addDijit('foo',
+                array('dojoType' => 'dijit.form.TextBox',
+                      'onChange' => new Zend_Json_Expr('function(){alert(\'foo\');}'),
+                      ));
+        $output = $this->helper->dijitsToJson();
+        $this->assertRegexp('#(function\\(\\){alert\\(\'foo\'\\);})#', $output);
     }
 
     public function setupDojo()

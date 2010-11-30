@@ -17,9 +17,10 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerUrlTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ServerUrlTest.php 23374 2010-11-18 21:04:24Z bittarman $
  */
 
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/View/Helper/ServerUrl.php';
@@ -152,5 +153,27 @@ class Zend_View_Helper_ServerUrlTest extends PHPUnit_Framework_TestCase
 
         $url = new Zend_View_Helper_ServerUrl();
         $this->assertEquals('http://example.com', $url->serverUrl(new stdClass()));
+    }
+
+    /**
+     * @group ZF-9919
+     */
+    public function testServerUrlWithScheme()
+    {
+        $_SERVER['HTTP_SCHEME'] = 'https';
+        $_SERVER['HTTP_HOST'] = 'example.com';
+        $url = new Zend_View_Helper_ServerUrl();
+        $this->assertEquals('https://example.com', $url->serverUrl());
+    }
+
+    /**
+     * @group ZF-9919
+     */
+    public function testServerUrlWithPort()
+    {
+        $_SERVER['SERVER_PORT'] = 443;
+        $_SERVER['HTTP_HOST'] = 'example.com';
+        $url = new Zend_View_Helper_ServerUrl();
+        $this->assertEquals('https://example.com', $url->serverUrl());
     }
 }

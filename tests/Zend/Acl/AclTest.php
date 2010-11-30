@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AclTest.php 22580 2010-07-16 19:38:02Z ralph $
+ * @version    $Id: AclTest.php 23358 2010-11-18 16:19:31Z ralph $
  */
 
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
@@ -1304,7 +1304,7 @@ class Zend_Acl_AclTest extends PHPUnit_Framework_TestCase
     /**
      * @group ZF-9643
      */
-    public function testRemoveAllowWithNullResourceAppliesToAllResources()
+    public function testRemoveAllowWithNullResourceAfterResourceSpecificRulesAppliesToAllResources()
     {
         $this->_acl->addRole('guest');
         $this->_acl->addResource('blogpost');
@@ -1331,7 +1331,7 @@ class Zend_Acl_AclTest extends PHPUnit_Framework_TestCase
     /**
      * @group ZF-9643
      */
-    public function testRemoveDenyWithNullResourceAppliesToAllResources()
+    public function testRemoveDenyWithNullResourceAfterResourceSpecificRulesAppliesToAllResources()
     {
         $this->_acl->addRole('guest');
         $this->_acl->addResource('blogpost');
@@ -1357,4 +1357,22 @@ class Zend_Acl_AclTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->_acl->isAllowed('guest', 'newsletter', 'read'));
     }
     
+    /**
+     * @group ZF-10649
+     */
+    public function testAllowAndDenyWithNullForResourcesWillApplyToAllResources()
+    {
+        $this->_acl->addRole('guest');
+        $this->_acl->addResource('blogpost');
+        
+        $this->_acl->allow('guest');
+        $this->assertTrue($this->_acl->isAllowed('guest'));
+        $this->assertTrue($this->_acl->isAllowed('guest', 'blogpost'));
+        $this->assertTrue($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+        
+        $this->_acl->deny('guest');
+        $this->assertFalse($this->_acl->isAllowed('guest'));
+        $this->assertFalse($this->_acl->isAllowed('guest', 'blogpost'));
+        $this->assertFalse($this->_acl->isAllowed('guest', 'blogpost', 'read'));
+    }
 }

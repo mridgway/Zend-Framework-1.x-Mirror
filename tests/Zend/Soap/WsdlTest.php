@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: WsdlTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: WsdlTest.php 23342 2010-11-15 15:29:20Z alexander $
  */
 
 require_once dirname(__FILE__)."/../../TestHelper.php";
@@ -204,7 +204,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                    'operation3',
                                    array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"),
                                    array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"),
-                                   array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/")
+                                   array('name' => 'MyFault', 'use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/")
                                    );
 
         $this->assertEquals($this->sanitizeWsdlXmlOutputForOsCompability($wsdl->toXml()),
@@ -234,8 +234,8 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                .     '<output>'
                                .       '<soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>'
                                .     '</output>'
-                               .     '<fault>'
-                               .       '<soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>'
+                               .     '<fault name="MyFault">'
+                               .       '<soap:fault name="MyFault" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>'
                                .     '</fault>'
                                .   '</operation>'
                                . '</binding>'
@@ -617,8 +617,8 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                .   '<xsd:schema targetNamespace="http://localhost/MyService.php">'
                                .     '<xsd:complexType name="Zend_Soap_Wsdl_Test">'
                                .       '<xsd:all>'
-                               .         '<xsd:element name="var1" type="xsd:int"/>'
-                               .         '<xsd:element name="var2" type="xsd:string"/>'
+                               .         '<xsd:element name="var1" type="xsd:int" nillable="true"/>'
+                               .         '<xsd:element name="var2" type="xsd:string" nillable="true"/>'
                                .       '</xsd:all>'
                                .     '</xsd:complexType>'
                                .   '</xsd:schema>'

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CommonHttpTests.php 22214 2010-05-20 20:38:40Z jan $
+ * @version    $Id: CommonHttpTests.php 23310 2010-11-08 18:23:29Z matthew $
  */
 
 // Read local configuration
@@ -979,6 +979,23 @@ abstract class Zend_Http_Client_CommonHttpTests extends PHPUnit_Framework_TestCa
         }
         
         $this->assertEquals($expect, strlen($response->getBody()));
+    }
+
+    /**
+     * @group ZF-10645
+     */
+    public function testPutRequestsHonorSpecifiedContentType()
+    {
+        $this->client->setUri($this->baseuri . 'ZF10645-PutContentType.php');
+        $this->client->setMethod(Zend_Http_Client::PUT);
+        $data = array('foo' => 'bar');
+        $this->client->setRawData(http_build_query($data), 'text/html; charset=ISO-8859-1');
+
+        $response = $this->client->request();
+        $request  = $this->client->getLastRequest();
+
+        $this->assertContains('text/html; charset=ISO-8859-1', $request, $request);
+        $this->assertContains('REQUEST_METHOD: PUT', $response->getBody(), $response->getBody());
     }
     
     /**

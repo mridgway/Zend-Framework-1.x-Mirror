@@ -50,8 +50,8 @@ class ZendX_Application_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - ZendX_Application');
 
-        $suite->addTest(ZendX_Application_Process_AllTests::suite());
-        
+        $suite->addTest(ZendX_Application_Resource_AllTests::suite());
+
         return $suite;
     }
 }

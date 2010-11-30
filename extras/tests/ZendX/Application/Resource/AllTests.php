@@ -29,7 +29,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'ZendX_Application_Resource_AllTests::main');
 }
 
-require_once 'ZendX/Application/Resource/JQueryTest.php';
+require_once 'ZendX/Application/Resource/JqueryTest.php';
 
 /**
  * @category   Zend
@@ -49,7 +49,7 @@ class ZendX_Application_Resource_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - ZendX_Application_Resource');
         $suite->addTestSuite('ZendX_Application_Resource_JQueryTest');
-        
+
         return $suite;
     }
 }

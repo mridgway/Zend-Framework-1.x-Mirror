@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: JsonTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: JsonTest.php 23451 2010-11-28 13:10:03Z ramon $
  */
 
 // Call Zend_View_Helper_JsonTest::main() if this source file is executed directly.
@@ -98,9 +98,12 @@ class Zend_View_Helper_JsonTest extends PHPUnit_Framework_TestCase
         $found = false;
         foreach ($headers as $header) {
             if ('Content-Type' == $header['name']) {
+                if ($found) {
+                    $this->fail('Content-Type header has been set twice.');
+                    return null;
+                }
                 $found = true;
                 $value = $header['value'];
-                break;
             }
         }
         $this->assertTrue($found);
@@ -109,6 +112,16 @@ class Zend_View_Helper_JsonTest extends PHPUnit_Framework_TestCase
 
     public function testJsonHelperSetsResponseHeader()
     {
+        $this->helper->json('foobar');
+        $this->verifyJsonHeader();
+    }
+
+    /**
+     * @group ZF-10675
+     */
+    public function testJsonHelperReplacesContentTypeReponseHeaderIfAlreadySet()
+    {
+        $this->response->setHeader('Content-Type', 'text/html');
         $this->helper->json('foobar');
         $this->verifyJsonHeader();
     }

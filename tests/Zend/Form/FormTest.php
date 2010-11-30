@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormTest.php 22930 2010-09-09 18:45:18Z matthew $
+ * @version    $Id: FormTest.php 23429 2010-11-22 23:06:46Z bittarman $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -4388,6 +4388,35 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $html = $form->render($this->getView());
         $this->assertEquals(1, substr_count($html, 'Customer Type'), $html);
     }
+
+    public function testAddElementToDisplayGroupByElementInstance()
+    {
+        $element = new Zend_Form_Element_Text('foo');
+
+        $this->form->addElement($element);
+        $this->form->addDisplayGroup(array($element), 'bar');
+        $this->assertNotNull($this->form->getDisplayGroup('bar')->getElement('foo'));
+    }
+
+    /**
+     * @group ZF-10149
+     */
+    public function testIfViewIsSetInTime()
+    {
+        try {
+            $form = new Zend_Form(array('view' => new MyTestView()));
+            $this->assertTrue($form->getView() instanceof MyTestView);
+
+            $form = new Zend_Form(array('view' => new StdClass()));
+            $this->assertNull($form->getView());
+
+            $result = $form->render();
+        }
+        catch (Zend_Form_Exception $e) {
+            $this->fail('Setting a view object using the options array should not throw an exception');
+        }
+        $this->assertNotEquals($result,'');
+    }
 }
 
 class Zend_Form_FormTest_DisplayGroup extends Zend_Form_DisplayGroup
@@ -4428,6 +4457,11 @@ class Zend_Form_FormTest_AddToDisplayGroup extends Zend_Form_FormTest_WithDispla
         $this->addElement($element);
         $this->group1->addElement($element);
     }
+}
+
+class MyTestView extends Zend_View
+{
+
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_FormTest::main') {

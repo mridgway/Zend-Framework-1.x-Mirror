@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MathTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: MathTest.php 23450 2010-11-27 01:58:52Z ramon $
  */
 
 require_once 'Zend/Crypt/Math.php';
@@ -37,7 +37,17 @@ class Zend_Crypt_MathTest extends PHPUnit_Framework_TestCase
 
     public function testRand()
     {
-        $math = new Zend_Crypt_Math;
+        try {
+            $math = new Zend_Crypt_Math_BigInteger();
+        } catch (Zend_Crypt_Math_BigInteger_Exception $e) {
+            if (strpos($e->getMessage(), 'big integer precision math support not detected') !== false) {
+                $this->markTestSkipped($e->getMessage());
+            } else {
+                throw $e;
+            }
+        }
+
+        $math   = new Zend_Crypt_Math();
         $higher = '155172898181473697471232257763715539915724801966915404479707795314057629378541917580651227423698188993727816152646631438561595825688188889951272158842675419950341258706556549803580104870537681476726513255747040765857479291291572334510643245094715007229621094194349783925984760375594985848253359305585439638443';
         $lower  = '155172898181473697471232257763715539915724801966915404479707795314057629378541917580651227423698188993727816152646631438561595825688188889951272158842675419950341258706556549803580104870537681476726513255747040765857479291291572334510643245094715007229621094194349783925984760375594985848253359305585439638442';
         $result = $math->rand($lower, $higher);

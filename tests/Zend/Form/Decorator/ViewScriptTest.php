@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewScriptTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ViewScriptTest.php 23299 2010-11-05 04:38:14Z matthew $
  */
 
 // Call Zend_Form_Decorator_ViewScriptTest::main() if this source file is executed directly.
@@ -129,9 +129,45 @@ class Zend_Form_Decorator_ViewScriptTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('decorator.phtml', $this->decorator->getViewScript());
     }
 
+    public function testCanSetViewModule()
+    {
+        $this->testViewScriptNullByDefault();
+        $this->decorator->setViewModule('fooModule');
+        $this->assertEquals('fooModule', $this->decorator->getViewModule());
+    }
+
+    public function testCanSetViewModuleViaOption()
+    {
+        $this->testViewScriptNullByDefault();
+        $this->decorator->setOption('viewModule', 'fooModule');
+        $this->assertEquals('fooModule', $this->decorator->getViewModule());
+    }
+
+    public function testCanSetViewModuleViaElementAttribute()
+    {
+        $this->testViewScriptNullByDefault();
+        $this->getElement()->setAttrib('viewModule', 'fooModule');
+        $this->assertEquals('fooModule', $this->decorator->getViewModule());
+    }
+
     public function testRenderingRendersViewScript()
     {
         $this->testCanSetViewScriptViaElementAttribute();
+        $test = $this->decorator->render('');
+        $this->assertContains('This is content from the view script', $test);
+    }
+
+    public function testRenderingRendersViewScriptWithModule()
+    {
+        $this->testCanSetViewScriptViaElementAttribute();
+
+        $module = 'fooModule';
+
+        // add module to front controller so partial view helper can verify it exists
+        require_once 'Zend/Controller/Front.php';
+        Zend_Controller_Front::getInstance()->addControllerDirectory('', $module);
+
+        $this->getElement()->setAttrib('viewModule', $module);
         $test = $this->decorator->render('');
         $this->assertContains('This is content from the view script', $test);
     }

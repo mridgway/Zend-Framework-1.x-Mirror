@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: VersionTest.php 22963 2010-09-18 17:17:06Z intiilapa $
+ * @version    $Id: VersionTest.php 23340 2010-11-15 15:24:18Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -96,7 +96,7 @@ class Zend_VersionTest extends PHPUnit_Framework_TestCase
     {
         $actual = Zend_Version::getLatest();
         if ('not available' === $actual) {
-            $this->markIncomplete('http://framework.zend.com/ may be down');
+            $this->markTestIncomplete('http://framework.zend.com/ may be down');
         }
 
         $this->assertRegExp('/^[1-2](\.[0-9]+){2}/', $actual);

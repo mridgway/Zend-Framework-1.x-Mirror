@@ -81,7 +81,7 @@ class Zend_Service_Amazon_SimpleDb_OnlineTest extends PHPUnit_Framework_TestCase
 
     // Because Amazon uses an eventual consistency model, this test period may
     // help avoid *but not guarantee* false negatives
-    protected $_testWaitPeriod = 5;
+    protected $_testWaitPeriod = 2;
 
     /**
      * Sets up this test case
@@ -105,6 +105,8 @@ class Zend_Service_Amazon_SimpleDb_OnlineTest extends PHPUnit_Framework_TestCase
         $this->_testItemNamePrefix = 'TestsZendServiceAmazonSimpleDbItem';
 
         $this->_testAttributeNamePrefix = 'TestsZendServiceAmazonSimpleDbAttribute';
+
+        $this->_wait();
     }
 
     public function testGetAttributes() {
@@ -124,6 +126,7 @@ class Zend_Service_Amazon_SimpleDb_OnlineTest extends PHPUnit_Framework_TestCase
 
             // Now that everything's set up, test it
             $this->_amazon->putAttributes($domainName, $itemName, $attributes);
+            $this->_wait();
 
             // One attribute
             $results = $this->_amazon->getAttributes($domainName, $itemName, $attributeName1);
@@ -164,6 +167,7 @@ class Zend_Service_Amazon_SimpleDb_OnlineTest extends PHPUnit_Framework_TestCase
 
             // Now that everything's set up, test it
             $this->_amazon->putAttributes($domainName, $itemName, $attributes);
+            $this->_wait();
 
             // Multiple attributes
             $results = $this->_amazon->getAttributes($domainName, $itemName);
@@ -218,6 +222,8 @@ class Zend_Service_Amazon_SimpleDb_OnlineTest extends PHPUnit_Framework_TestCase
 
             $this->assertEquals(array(), $this->_amazon->getAttributes($domainName, $itemName1));
             $this->_amazon->batchPutAttributes($items, $domainName, $replace);
+            $this->_wait();
+
             $result = $this->_amazon->getAttributes($domainName, $itemName1, $attributeName1);
 
             $this->assertTrue(array_key_exists($attributeName1, $result));
@@ -234,28 +240,35 @@ class Zend_Service_Amazon_SimpleDb_OnlineTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($attributeValue3, current($result[$attributeName3]->getValues()));
             $this->assertTrue(array_key_exists($attributeName4, $result));
             $this->assertEquals($attributeName4, $result[$attributeName4]->getName());
-            $this->assertEquals(2, $result[$attributeName4]->getValues());
+            $this->assertEquals(2, count($result[$attributeName4]->getValues()));
             $this->assertEquals(array($attributeValue4, $attributeValue5), $result[$attributeName4]->getValues());
 
             // Test replace
-            $oldItems = $items;
             $newAttributeValue1 = 'newValue1';
             $newAttributeValue4 = 'newValue4';
-            $items[$itemName1][$attributeName1] = array($newAttributeValue1);
-            $items[$itemName2][$attributeName4] = array($newAttributeValue4);
+            $items[$itemName1][$attributeName1]->setValues(array($newAttributeValue1));
+            $items[$itemName2][$attributeName4]->setValues(array($newAttributeValue4));
 
             $this->_amazon->batchPutAttributes($items, $domainName, $replace);
+            $this->_wait();
+
             $result = $this->_amazon->getAttributes($domainName, $itemName1, $attributeName1);
-            $this->assertEquals($oldItems[$itemName1][$attributeName1], $this->_amazon->getAttributes($domainName, $itemName1, $attributeName1));
-            $this->assertEquals($oldItems[$itemName2][$attributeName4], $this->_amazon->getAttributes($domainName, $itemName2, $attributeName4));
-            $this->assertEquals($oldItems[$itemName1], $this->_amazon->getAttributes($domainName, $itemName1));
+            $this->assertEquals(array($newAttributeValue1, $attributeValue1), $result[$attributeName1]->getValues());
+
+            $result = $this->_amazon->getAttributes($domainName, $itemName2, $attributeName4);
+            $this->assertEquals(array($newAttributeValue4, $attributeValue4, $attributeValue5), $result[$attributeName4]->getValues());
 
             $replace[$itemName1][$attributeName1] = true;
             $replace[$itemName2][$attributeName4] = true;
 
             $this->_amazon->batchPutAttributes($items, $domainName, $replace);
-            $this->assertEquals($items[$itemName1][$attributeName1], $this->_amazon->getAttributes($domainName, $itemName1, $attributeName1));
-            $this->assertEquals($items[$itemName2][$attributeName4], $this->_amazon->getAttributes($domainName, $itemName2, $attributeName4));
+            $this->_wait();
+
+            $result = $this->_amazon->getAttributes($domainName, $itemName1, $attributeName1);
+            $this->assertEquals($items[$itemName1][$attributeName1], $result[$attributeName1]);
+
+            $result = $this->_amazon->getAttributes($domainName, $itemName2, $attributeName4);
+            $this->assertEquals($items[$itemName2][$attributeName4], $result[$attributeName4]);
             $this->assertEquals($items[$itemName1], $this->_amazon->getAttributes($domainName, $itemName1));
 
             $this->_amazon->deleteDomain($domainName);

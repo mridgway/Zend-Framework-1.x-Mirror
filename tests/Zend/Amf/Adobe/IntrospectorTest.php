@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IntrospectorTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: IntrospectorTest.php 23316 2010-11-10 16:37:40Z matthew $
  */
 
 // Call Zend_Controller_Action_Helper_MultiPageFormTest::main() if this source file is executed directly.
@@ -130,6 +130,17 @@ class Zend_Amf_Adobe_IntrospectorTest extends PHPUnit_Framework_TestCase
     {
         $xml = $this->introspector->introspect('com.zend.framework.IntrospectorTest');
         $this->assertRegexp('/<type[^>]*(name="explicit")/', $xml, $xml);
+    }
+
+    /**
+     * @group ZF-10365
+     */
+    public function testArgumentsWithArrayTypeHintsReflectedInReturnedXml()
+    {
+        require_once dirname(__FILE__) . '/TestAsset/ParameterHints.php';
+        $xml = $this->introspector->introspect('Zend.Amf.Adobe.TestAsset.ParameterHints');
+        $this->assertRegexp('/<argument[^>]*(name="arg1")[^>]*(type="Unknown\[\]")/', $xml, $xml);
+        $this->assertRegexp('/<argument[^>]*(name="arg2")[^>]*(type="Unknown\[\]")/', $xml, $xml);
     }
 }
 

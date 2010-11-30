@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NoRecordExistsTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: NoRecordExistsTest.php 23356 2010-11-18 15:59:10Z ralph $
  */
 
 
@@ -243,5 +243,23 @@ class Zend_Validate_Db_NoRecordExistsTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->markTestSkipped('No database available');
         }
+    }
+    
+    /**
+     * 
+     * @group ZF-10705
+     */
+    public function testCreatesQueryBasedOnNamedOrPositionalAvailablity()
+    {
+        Zend_Db_Table_Abstract::setDefaultAdapter(null);
+        $this->_adapterHasResult->setSupportsParametersValues(array('named' => false, 'positional' => true));
+        $validator = new Zend_Validate_Db_RecordExists('users', 'field1', null, $this->_adapterHasResult);
+        $wherePart = $validator->getSelect()->getPart('where');
+        $this->assertEquals($wherePart[0], '("field1" = ?)');
+        
+        $this->_adapterHasResult->setSupportsParametersValues(array('named' => true, 'positional' => true));
+        $validator = new Zend_Validate_Db_RecordExists('users', 'field1', null, $this->_adapterHasResult);
+        $wherePart = $validator->getSelect()->getPart('where');
+        $this->assertEquals($wherePart[0], '("field1" = :value)');
     }
 }

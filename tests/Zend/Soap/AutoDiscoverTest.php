@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AutoDiscoverTest.php 21858 2010-04-15 19:58:12Z beberlei $
+ * @version    $Id: AutoDiscoverTest.php 23338 2010-11-15 14:59:33Z alexander $
  */
 
 require_once dirname(__FILE__)."/../../TestHelper.php";
@@ -504,7 +504,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
                 '<operation name="Zend_Soap_AutoDiscover_TestFunc2">'.
                 '<soap:operation soapAction="' . $scriptUri . '#Zend_Soap_AutoDiscover_TestFunc2"/>'.
                 '<input><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="' . $scriptUri . '"/></input>'.
-                '<output><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="' . $scriptUri . '"/></output>'.
                 '</operation>'.
                 '<operation name="Zend_Soap_AutoDiscover_TestFunc3">'.
                 '<soap:operation soapAction="' . $scriptUri . '#Zend_Soap_AutoDiscover_TestFunc3"/>'.

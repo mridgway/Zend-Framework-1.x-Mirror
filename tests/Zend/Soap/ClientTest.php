@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ClientTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ClientTest.php 23453 2010-11-28 13:56:14Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -221,6 +221,48 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertNull($client->getUserAgent());
         $options = $client->getOptions();
         $this->assertArrayNotHasKey('user_agent', $options);
+    }
+
+    /**
+     * @group ZF-10542
+     */
+    public function testAllowNumericZeroAsValueForCacheWsdlOption()
+    {
+        $client = new Zend_Soap_Client();
+        $this->assertNull($client->getWsdlCache());
+        $options = $client->getOptions();
+        $this->assertArrayNotHasKey('cache_wsdl', $options);
+
+        $client->setWsdlCache(WSDL_CACHE_NONE);
+        $this->assertSame(WSDL_CACHE_NONE, $client->getWsdlCache());
+        $options = $client->getOptions();
+        $this->assertSame(WSDL_CACHE_NONE, $options['cache_wsdl']);
+
+        $client->setWsdlCache(null);
+        $this->assertNull($client->getWsdlCache());
+        $options = $client->getOptions();
+        $this->assertArrayNotHasKey('cache_wsdl', $options);
+    }
+
+    /**
+     * @group ZF-10542
+     */
+    public function testAllowNumericZeroAsValueForCompressionOptions()
+    {
+        $client = new Zend_Soap_Client();
+        $this->assertNull($client->getCompressionOptions());
+        $options = $client->getOptions();
+        $this->assertArrayNotHasKey('compression', $options);
+
+        $client->setCompressionOptions(SOAP_COMPRESSION_GZIP);
+        $this->assertSame(SOAP_COMPRESSION_GZIP, $client->getCompressionOptions());
+        $options = $client->getOptions();
+        $this->assertSame(SOAP_COMPRESSION_GZIP, $options['compression']);
+
+        $client->setCompressionOptions(null);
+        $this->assertNull($client->getCompressionOptions());
+        $options = $client->getOptions();
+        $this->assertArrayNotHasKey('compression', $options);
     }
 
     public function testGetFunctions()

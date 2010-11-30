@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Code39Test.php 21667 2010-03-28 17:45:14Z mikaelkael $
+ * @version    $Id: Code39Test.php 23398 2010-11-19 17:17:05Z mikaelkael $
  */
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
@@ -65,9 +65,9 @@ class Zend_Barcode_Object_Code39Test extends Zend_Barcode_Object_TestCommon
     public function testSetTextWithSpaces()
     {
         $this->_object->setText(' 0123456789 ');
-        $this->assertSame('0123456789', $this->_object->getRawText());
-        $this->assertSame('*0123456789*', $this->_object->getText());
-        $this->assertSame('*0123456789*', $this->_object->getTextToDisplay());
+        $this->assertSame(' 0123456789 ', $this->_object->getRawText());
+        $this->assertSame('* 0123456789 *', $this->_object->getText());
+        $this->assertSame('* 0123456789 *', $this->_object->getTextToDisplay());
     }
 
     public function testSetTextWithChecksum()

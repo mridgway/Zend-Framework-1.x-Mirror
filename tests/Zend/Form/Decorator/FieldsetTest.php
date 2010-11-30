@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FieldsetTest.php 21966 2010-04-21 23:14:30Z alab $
+ * @version    $Id: FieldsetTest.php 23437 2010-11-23 20:01:01Z alexander $
  */
 
 // Call Zend_Form_Decorator_FieldsetTest::main() if this source file is executed directly.
@@ -34,7 +34,7 @@ require_once 'Zend/Form/Decorator/Fieldset.php';
 require_once 'Zend/Form.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/View.php';
-
+require_once 'Zend/Form/SubForm.php';
 /**
  * Test class for Zend_Form_Decorator_Fieldset
  *
@@ -218,6 +218,21 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render('content');
         $this->assertContains('<fieldset', $test, $test);
         $this->assertNotContains('helper="', $test);
+    }
+
+    /**
+     * @group ZF-10679
+     */
+    public function testFieldsetIdOverridesFormId()
+    {
+        $form = new Zend_Form();
+        $form->setName('bar')
+             ->setAttrib('id', 'form-id')
+             ->setView($this->getView());
+        $html = $this->decorator->setElement($form)
+                                ->setOption('id', 'fieldset-id')
+                                ->render('content');
+        $this->assertContains('<fieldset id="fieldset-id"', $html);
     }
 }
 

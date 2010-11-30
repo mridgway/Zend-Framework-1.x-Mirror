@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbTest.php 23193 2010-10-21 02:09:18Z ramon $
+ * @version    $Id: DbTest.php 23384 2010-11-19 00:00:29Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -222,6 +222,34 @@ class Zend_Application_Resource_DbTest extends PHPUnit_Framework_TestCase
         $resource = new Zend_Application_Resource_Db($config);
         $db = $resource->init();
         $this->assertEquals($db->getFetchMode(), Zend_Db::FETCH_OBJ);
+    }
+
+    /**
+     * @group ZF-10543
+     */
+    public function testSetDefaultMetadataCacheThroughBootstrap()
+    {
+        $options = array(
+            'resources' => array(
+                'db'    => array(
+                    'adapter'  => 'Pdo_Sqlite',
+                    'params'   => array(
+                        'dbname'   => ':memory:'
+                     ),
+                     'defaultMetadataCache' => 'default'
+                ),
+                'cachemanager' => array(
+                    'default'  => array(
+                        'backend' => array('name' => 'black-hole')
+                    )
+                )
+            )
+        );
+
+        $this->bootstrap->setOptions($options);
+        $this->bootstrap->bootstrap();
+        $resource = $this->bootstrap->getResource('cachemanager');
+        $this->assertEquals($resource->getCache('default'), Zend_Db_Table::getDefaultMetadataCache());
     }
 }
 

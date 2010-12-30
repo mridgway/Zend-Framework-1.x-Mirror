@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IniTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: IniTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Config_Ini
@@ -268,7 +263,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         }
 
     }
-    
+
     /**
      * @group ZF-8159
      */
@@ -278,11 +273,11 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
             dirname(__FILE__) . '/_files/zf8159.ini',
             array('first', 'second')
         );
-        
+
         $this->assertTrue(isset(
            $config->user->login->elements->password
         ));
-        
+
         $this->assertEquals(
             'password',
             $config->user->login->elements->password->type
@@ -301,7 +296,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('1', $config->receiver->{0}->html);
         $this->assertNull($config->receiver->mail);
     }
-    
+
     /*
      * @group ZF-6508
      */
@@ -310,8 +305,8 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $filename = dirname(__FILE__) . '/_files/zf6508.ini';
         $config = new Zend_Config_Ini($filename, 'all');
         $this->assertEquals(true, isset($config->{1002}));
-        
+
     }
-    
+
 
 }

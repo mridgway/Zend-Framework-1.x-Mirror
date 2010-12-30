@@ -16,7 +16,7 @@
  * @package   Zend_Navigation
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Container.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Container.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -369,7 +369,7 @@ abstract class Zend_Navigation_Container implements RecursiveIterator, Countable
     public function toArray()
     {
         $pages = array();
-        
+
         $this->_dirtyIndex = true;
         $this->_sort();
         $indexes = array_keys($this->_index);

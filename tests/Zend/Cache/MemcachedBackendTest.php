@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MemcachedBackendTest.php 21519 2010-03-16 17:46:38Z mabe $
+ * @version    $Id: MemcachedBackendTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
@@ -30,11 +30,6 @@ require_once 'Zend/Cache/Backend/Memcached.php';
  * Common tests for backends
  */
 require_once 'CommonExtendedBackendTest.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

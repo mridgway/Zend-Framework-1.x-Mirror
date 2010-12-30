@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RedirectorTest.php 23248 2010-10-26 12:45:52Z matthew $
+ * @version    $Id: RedirectorTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_Action_Helper_RedirectorTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Action_Helper_RedirectorTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Action.php';
@@ -73,7 +71,6 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Action_Helper_RedirectorTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -504,7 +501,7 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $this->assertNotContains('https://', $test);
         $this->assertEquals('http://localhost/bar/baz', $test);
     }
-    
+
     /**
      * @group ZF-9859
      */
@@ -515,7 +512,7 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $setGotoUrl = $this->redirector->setGotoUrl($url);
         $this->assertSame($gotoUrl, $setGotoUrl);
     }
-    
+
     /**
      * @group ZF-10364
      */

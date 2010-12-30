@@ -17,7 +17,7 @@
  * @package    Zend_Ldap
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Ldap.php 22996 2010-09-22 17:01:46Z sgehrig $
+ * @version    $Id: Ldap.php 23486 2010-12-10 04:05:30Z mjh_ca $
  */
 
 /**
@@ -922,8 +922,8 @@ class Zend_Ldap
      * @param  array                                  $attributes
      * @param  string|null                            $sort
      * @param  string|null                            $collectionClass
-     * @param  integer                            	  $sizelimit
-     * @param  integer                            	  $timelimit
+     * @param  integer                                  $sizelimit
+     * @param  integer                                  $timelimit
      * @return Zend_Ldap_Collection
      * @throws Zend_Ldap_Exception
      */
@@ -1008,8 +1008,8 @@ class Zend_Ldap
     /**
      * Extension point for collection creation
      *
-     * @param  Zend_Ldap_Collection_Iterator_Default	$iterator
-     * @param  string|null								$collectionClass
+     * @param  Zend_Ldap_Collection_Iterator_Default    $iterator
+     * @param  string|null                                $collectionClass
      * @return Zend_Ldap_Collection
      * @throws Zend_Ldap_Exception
      */
@@ -1107,8 +1107,8 @@ class Zend_Ldap
      * @param  array                                  $attributes
      * @param  string|null                            $sort
      * @param  boolean                                $reverseSort
-     * @param  integer                            	  $sizelimit
-     * @param  integer                            	  $timelimit
+     * @param  integer                                  $sizelimit
+     * @param  integer                                  $timelimit
      * @return array
      * @throws Zend_Ldap_Exception
      */

@@ -21,11 +21,6 @@
  */
 
 /**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
-
-/**
  * Zend_Mail
  */
 require_once 'Zend/Mail.php';

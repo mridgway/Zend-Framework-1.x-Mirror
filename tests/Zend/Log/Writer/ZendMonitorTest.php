@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ZendMonitorTest.php 22977 2010-09-19 12:44:00Z intiilapa $
+ * @version    $Id: ZendMonitorTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Log_Writer_ZendMonitorTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Log_Writer_ZendMonitor */
 require_once 'Zend/Log/Writer/ZendMonitor.php';

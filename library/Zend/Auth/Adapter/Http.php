@@ -17,7 +17,7 @@
  * @subpackage Zend_Auth_Adapter_Http
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Http.php 23088 2010-10-11 19:53:24Z padraic $
+ * @version    $Id: Http.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 
@@ -844,7 +844,7 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
 
         return $data;
     }
-    
+
     /**
      * Securely compare two strings for equality while avoided C level memcmp()
      * optimisations capable of leaking timing information useful to an attacker

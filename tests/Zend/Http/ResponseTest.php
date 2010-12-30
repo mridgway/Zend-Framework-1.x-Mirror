@@ -17,23 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ResponseTest.php 22810 2010-08-08 10:29:09Z shahar $
+ * @version    $Id: ResponseTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Http_Response
  */
 require_once 'Zend/Http/Response.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Zend_Http_Response unit tests
@@ -335,10 +325,10 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
         $response = Zend_Http_Response::fromString($this->readResponse('response_multibyte_body'));
         $this->assertEquals($md5, md5($response->getBody()));
     }
-    
+
     /**
      * Test that headers are properly set when passed to the constructor as an associative array
-     * 
+     *
      * @group ZF-10277
      */
     public function testConstructorWithHeadersAssocArray()
@@ -347,11 +337,11 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
             'content-type' => 'text/plain',
             'x-foo'        => 'bar:baz'
         ));
-        
+
         $this->assertEquals('text/plain', $response->getHeader('content-type'));
         $this->assertEquals('bar:baz', $response->getHeader('x-foo'));
     }
-    
+
     /**
      * Test that headers are properly parsed when passed to the constructor as an indexed array
      *
@@ -364,13 +354,13 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
             'content-type: text/plain',
             'x-foo: bar:baz'
         ));
-        
+
         $this->assertEquals('text/plain', $response->getHeader('content-type'));
         $this->assertEquals('bar:baz', $response->getHeader('x-foo'));
     }
-    
+
     /**
-     * Test that headers are properly parsed when passed to the constructor as 
+     * Test that headers are properly parsed when passed to the constructor as
      * an indexed array with no whitespace after the ':' sign
      *
      * @link  http://framework.zend.com/issues/browse/ZF-10277
@@ -382,11 +372,11 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
             'content-type:text/plain',
             'x-foo:bar:baz'
         ));
-        
+
         $this->assertEquals('text/plain', $response->getHeader('content-type'));
         $this->assertEquals('bar:baz', $response->getHeader('x-foo'));
     }
-    
+
     /**
      * Helper function: read test response from file
      *

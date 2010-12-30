@@ -16,7 +16,7 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Atom.php 22662 2010-07-24 17:37:36Z mabe $
+ * @version    $Id: Atom.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -362,7 +362,7 @@ class Zend_Feed_Reader_Feed_Atom extends Zend_Feed_Reader_FeedAbstract
 
         return $this->_data['hubs'];
     }
-    
+
     /**
      * Get all categories
      *
@@ -375,7 +375,7 @@ class Zend_Feed_Reader_Feed_Atom extends Zend_Feed_Reader_FeedAbstract
         }
 
         $categoryCollection = $this->getExtension('Atom')->getCategories();
-        
+
         if (count($categoryCollection) == 0) {
             $categoryCollection = $this->getExtension('DublinCore')->getCategories();
         }

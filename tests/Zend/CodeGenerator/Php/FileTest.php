@@ -20,11 +20,6 @@
  * @version    $Id $
  */
 
-/**
- * @see TestHelper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
-
 /** requires here */
 require_once 'Zend/CodeGenerator/Php/File.php';
 require_once 'Zend/Reflection/File.php';
@@ -119,21 +114,19 @@ EOS;
 
     public function testFromReflectionFile()
     {
-        ///$this->markTestSkipped('skipme');
         $file = dirname(__FILE__) . '/_files/TestSampleSingleClass.php';
 
         require_once $file;
         $codeGenFileFromDisk = Zend_CodeGenerator_Php_File::fromReflection(new Zend_Reflection_File($file));
-
         $codeGenFileFromDisk->getClass()->setMethod(array('name' => 'foobar'));
 
         $expectedOutput = <<<EOS
 <?php
 /**
  * File header here
- * 
+ *
  * @author Ralph Schindler <ralph.schindler@zend.com>
- * 
+ *
  */
 
 
@@ -141,18 +134,18 @@ EOS;
 
 /**
  * class docblock
- * 
+ *
  * @package Zend_Reflection_TestSampleSingleClass
- * 
+ *
  */
 class Zend_Reflection_TestSampleSingleClass
 {
 
     /**
      * Enter description here...
-     * 
+     *
      * @return bool
-     * 
+     *
      */
     public function someMethod()
     {
@@ -173,6 +166,114 @@ EOS;
 
         $this->assertEquals($expectedOutput, $codeGenFileFromDisk->generate());
 
+    }
+
+    /**
+     * @group ZF-7369
+     * @group ZF-6982
+     */
+    public function testFromReflectionFileKeepsIndents()
+    {
+        $file = dirname(__FILE__) . '/_files/TestClassWithCodeInMethod.php';
+
+        require_once $file;
+        $codeGenFileFromDisk = Zend_CodeGenerator_Php_File::fromReflection(new Zend_Reflection_File($file));
+
+        $expectedOutput = <<<EOS
+<?php
+/**
+ * File header here
+ *
+ * @author Ralph Schindler <ralph.schindler@zend.com>
+ */
+
+
+
+/**
+ * class docblock
+ *
+ * @package Zend_Reflection_TestClassWithCodeInMethod
+ */
+class Zend_Reflection_TestClassWithCodeInMethod
+{
+
+    /**
+     * Enter description here...
+     *
+     * @return bool
+     */
+    public function someMethod()
+    {
+        /* test test */
+        \$foo = 'bar';
+    }
+
+}
+
+
+EOS;
+
+        $this->assertEquals($expectedOutput, $codeGenFileFromDisk->generate());
+    }
+
+    /**
+     * @group ZF-7369
+     * @group ZF-6982
+     */
+    public function testFromReflectionFilePreservesIndentsWhenAdditionalMethodAdded()
+    {
+        $file = dirname(__FILE__) . '/_files/TestClassWithCodeInMethod.php';
+
+        require_once $file;
+        $codeGenFileFromDisk = Zend_CodeGenerator_Php_File::fromReflection(new Zend_Reflection_File($file));
+        $codeGenFileFromDisk->getClass()->setMethod(array('name' => 'foobar'));
+        
+        $expectedOutput = <<<EOS
+<?php
+/**
+ * File header here
+ *
+ * @author Ralph Schindler <ralph.schindler@zend.com>
+ *
+ */
+
+
+
+
+/**
+ * class docblock
+ *
+ * @package Zend_Reflection_TestClassWithCodeInMethod
+ *
+ */
+class Zend_Reflection_TestClassWithCodeInMethod
+{
+
+    /**
+     * Enter description here...
+     *
+     * @return bool
+     *
+     */
+    public function someMethod()
+    {
+        /* test test */
+        \$foo = 'bar';
+    }
+
+    public function foobar()
+    {
+    }
+
+
+}
+
+
+
+
+EOS;
+
+        $this->assertEquals($expectedOutput, $codeGenFileFromDisk->generate());
     }
 
     public function testFileLineEndingsAreAlwaysLineFeed()

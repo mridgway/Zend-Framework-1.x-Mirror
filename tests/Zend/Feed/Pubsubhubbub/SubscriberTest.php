@@ -16,10 +16,8 @@
  * @package    UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SubscriberTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: SubscriberTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Feed/Pubsubhubbub/Subscriber.php';
 require_once 'Zend/Feed/Pubsubhubbub/Model/Subscription.php';
@@ -37,9 +35,9 @@ class Zend_Feed_Pubsubhubbub_SubscriberTest extends PHPUnit_Framework_TestCase
 {
 
     protected $_subscriber = null;
-    
+
     protected $_adapter = null;
-    
+
     protected $_tableGateway = null;
 
     public function setUp()
@@ -331,7 +329,7 @@ class Zend_Feed_Pubsubhubbub_SubscriberTest extends PHPUnit_Framework_TestCase
     {
         $this->_subscriber->getStorage();
     }
-    
+
     protected function _getCleanMock($className) {
         $class = new ReflectionClass($className);
         $methods = $class->getMethods();

@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HtmlEntitiesTest.php 22244 2010-05-22 08:40:03Z wilmoore $
+ * @version    $Id: HtmlEntitiesTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Filter_HtmlEntities
@@ -194,7 +189,7 @@ class Zend_Filter_HtmlEntitiesTest extends PHPUnit_Framework_TestCase
     {
         $input  = "A 'single' and " . '"double"';
         $result = "A 'single' and &quot;double&quot;";
-        
+
         $this->_filter->setQuoteStyle(ENT_COMPAT);
         $this->assertEquals($result, $this->_filter->filter($input));
     }

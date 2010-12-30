@@ -16,7 +16,7 @@
  * @package    Zend_Rest
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Route.php 23421 2010-11-21 10:03:53Z wilmoore $
+ * @version    $Id: Route.php 23486 2010-12-10 04:05:30Z mjh_ca $
  */
 
 /**
@@ -98,13 +98,13 @@ class Zend_Rest_Route extends Zend_Controller_Router_Route_Module
         $defaultsArray = array();
         $restfulConfigArray = array();
         foreach ($config as $key => $values) {
-        	if ($key == 'type') {
-        		// do nothing
-        	} elseif ($key == 'defaults') {
-        		$defaultsArray = $values->toArray();
-        	} else {
-        		$restfulConfigArray[$key] = explode(',', $values);
-        	}
+            if ($key == 'type') {
+                // do nothing
+            } elseif ($key == 'defaults') {
+                $defaultsArray = $values->toArray();
+            } else {
+                $restfulConfigArray[$key] = explode(',', $values);
+            }
         }
         $instance = new self($frontController, $defaultsArray, $restfulConfigArray);
         return $instance;
@@ -161,10 +161,10 @@ class Zend_Rest_Route extends Zend_Controller_Router_Route_Module
                     return false;
                 }
             } elseif ($this->_checkRestfulController($moduleName, $controllerName)) {
-            	$values[$this->_controllerKey] = $controllerName;
-            	$values[$this->_actionKey] = 'get';
+                $values[$this->_controllerKey] = $controllerName;
+                $values[$this->_actionKey] = 'get';
             } else {
-            	return false;
+                return false;
             }
 
             //Store path count for method mapping

@@ -17,23 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StringTest.php 21542 2010-03-18 08:56:40Z bate $
+ * @version    $Id: StringTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * TestHelper
- */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Pdf_Element_String
  */
 require_once 'Zend/Pdf/Element/String.php';
-
-/**
- * PHPUnit Test Case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

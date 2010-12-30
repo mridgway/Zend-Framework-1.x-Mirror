@@ -17,10 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Zend_ValidateTest.php 23151 2010-10-17 16:20:14Z ramon $
+ * @version    $Id: Zend_ValidateTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Locale

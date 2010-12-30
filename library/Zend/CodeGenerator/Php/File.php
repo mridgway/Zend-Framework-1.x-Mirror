@@ -17,7 +17,7 @@
  * @subpackage PHP
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: File.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: File.php 23562 2010-12-19 23:23:22Z mjh_ca $
  */
 
 /**
@@ -97,7 +97,7 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
     }
 
     /**
-     * fromReflectedFilePath() - use this if you intend on generating code generation objects based on the same file.
+     * fromReflectedFileName() - use this if you intend on generating code generation objects based on the same file.
      * This will keep previous changes to the file in tact during the same PHP process
      *
      * @param string $filePath

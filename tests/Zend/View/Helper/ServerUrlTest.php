@@ -17,11 +17,9 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerUrlTest.php 23374 2010-11-18 21:04:24Z bittarman $
+ * @version    $Id: ServerUrlTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/View/Helper/ServerUrl.php';
 

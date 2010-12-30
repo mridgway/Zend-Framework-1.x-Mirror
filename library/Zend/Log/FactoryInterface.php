@@ -16,7 +16,7 @@
  * @package    Zend_Log
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FactoryInterface.php 20785 2010-01-31 09:43:03Z mikaelkael $
+ * @version    $Id: FactoryInterface.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -24,13 +24,13 @@
  * @package    Zend_Log
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FactoryInterface.php 20785 2010-01-31 09:43:03Z mikaelkael $
+ * @version    $Id: FactoryInterface.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 interface Zend_Log_FactoryInterface
 {
     /**
      * Construct a Zend_Log driver
-     * 
+     *
      * @param  array|Zen_Config $config
      * @return Zend_Log_FactoryInterface
      */

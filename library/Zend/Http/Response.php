@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Response
- * @version    $Id: Response.php 22810 2010-08-08 10:29:09Z shahar $
+ * @version    $Id: Response.php 23484 2010-12-10 03:57:59Z mjh_ca $
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -165,7 +165,7 @@ class Zend_Http_Response
                     require_once 'Zend/Http/Exception.php';
                     throw new Zend_Http_Exception("'{$value}' is not a valid HTTP header");
                 }
-                
+
                 $name  = trim($header[0]);
                 $value = trim($header[1]);
             }

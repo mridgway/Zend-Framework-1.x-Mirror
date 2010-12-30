@@ -17,7 +17,7 @@
  * @subpackage Amazon_S3
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Stream.php 22621 2010-07-18 00:35:48Z torio $
+ * @version    $Id: Stream.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -175,9 +175,9 @@ class Zend_Service_Amazon_S3_Stream
     /**
      * Read from the stream
      *
-     * http://bugs.php.net/21641 - stream_read() is always passed PHP's 
-     * internal read buffer size (8192) no matter what is passed as $count 
-     * parameter to fread(). 
+     * http://bugs.php.net/21641 - stream_read() is always passed PHP's
+     * internal read buffer size (8192) no matter what is passed as $count
+     * parameter to fread().
      *
      * @param  integer $count
      * @return string

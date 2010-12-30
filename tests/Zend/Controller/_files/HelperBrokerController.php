@@ -17,11 +17,11 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HelperBrokerController.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: HelperBrokerController.php 23510 2010-12-15 18:34:36Z andries $
  */
 
-require_once 'PHPUnit/Util/Filter.php';
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+
 
 require_once 'Zend/Controller/Action.php';
 
@@ -93,4 +93,13 @@ class HelperBrokerController extends Zend_Controller_Action
         $this->getResponse()->appendBody(get_class($this->_helper->TestHelper));
     }
 
+    public function testCanLoadNamespacedHelperAction()
+    {
+        try {
+            $helper = $this->_helper->getHelper('NamespacedHelper');
+            $this->getResponse()->appendBody(get_class($helper));
+        } catch (Exception $e) {
+            $this->getResponse()->appendBody($e->getMessage());
+        }
+    }
 }

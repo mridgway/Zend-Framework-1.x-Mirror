@@ -17,10 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Queue_AllTests::main');
@@ -49,6 +47,7 @@ require_once 'Zend/Queue/Stomp/ClientTest.php';
 
 // Message Queues dependent on Stomp
 require_once 'Zend/Queue/Adapter/ActivemqTest.php';
+require_once 'Zend/Queue/Adapter/ActivemqOfflineTest.php';
 
 /**
  * @category   Zend
@@ -94,6 +93,7 @@ class Zend_Queue_AllTests
 
         // Message Queues dependent on Stomp
         $suite->addTestSuite('Zend_Queue_Adapter_ActivemqTest');
+        $suite->addTestSuite('Zend_Queue_Adapter_ActivemqOfflineTest');
 
         return $suite;
     }

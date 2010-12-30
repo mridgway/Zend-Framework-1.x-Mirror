@@ -17,7 +17,7 @@
  * @subpackage Zend_Cache_Frontend
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Capture.php 22662 2010-07-24 17:37:36Z mabe $
+ * @version    $Id: Capture.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 
@@ -46,7 +46,7 @@ class Zend_Cache_Frontend_Capture extends Zend_Cache_Core
      * @var array
      */
     protected $_tags = array();
-    
+
     protected $_extension = null;
 
     /**

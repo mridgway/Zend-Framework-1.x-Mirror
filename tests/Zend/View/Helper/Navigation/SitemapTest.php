@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SitemapTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: SitemapTest.php 23547 2010-12-18 03:11:58Z ramon $
  */
 
 require_once dirname(__FILE__) . '/TestAbstract.php';
@@ -217,14 +217,14 @@ class Zend_View_Helper_Navigation_SitemapTest
     public function testThrowExceptionOnInvalidLoc()
     {
         $nav = clone $this->_nav2;
-        $nav->addPage(array('label' => 'Invalid', 'uri' => 'http://w.'));
+        $nav->addPage(array('label' => 'Invalid', 'uri' => 'http://w..'));
 
         try {
             $this->_helper->render($nav);
         } catch (Zend_View_Exception $e) {
             $expected = sprintf(
                     'Encountered an invalid URL for Sitemap XML: "%s"',
-                    'http://w.');
+                    'http://w..');
             $actual = $e->getMessage();
             $this->assertEquals($expected, $actual);
             return;

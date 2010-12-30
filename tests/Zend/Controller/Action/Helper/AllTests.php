@@ -20,8 +20,6 @@
  * @version    $Id $
  */
 
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Action_Helper_AllTests::main');
 }
@@ -68,6 +66,11 @@ class Zend_Controller_Action_Helper_AllTests
         $suite->addTestSuite('Zend_Controller_Action_Helper_RedirectorTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_UrlTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_ViewRendererTest');
+
+        if (version_compare(PHP_VERSION, '5.3', '>=')) {
+            require_once 'Zend/Controller/Action/Helper/NamespaceTest.php';
+            $suite->addTestSuite('Zend_Controller_Action_Helper_NamespaceTest');
+        }
 
         return $suite;
     }

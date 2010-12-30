@@ -17,14 +17,11 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: ValueTest.php 20278 2010-01-14 14:48:59Z ralph $
+ * @version $Id: ValueTest.php 23580 2010-12-27 10:58:21Z alexander $
  */
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/XmlRpc/Value.php';
 require_once 'Zend/XmlRpc/Value/Scalar.php';
-require_once 'Zend/XmlRpc/Value/BigInteger.php';
 require_once 'Zend/XmlRpc/Value/Collection.php';
 require_once 'Zend/XmlRpc/Value/Array.php';
 require_once 'Zend/XmlRpc/Value/Base64.php';
@@ -35,7 +32,6 @@ require_once 'Zend/XmlRpc/Value/Integer.php';
 require_once 'Zend/XmlRpc/Value/String.php';
 require_once 'Zend/XmlRpc/Value/Nil.php';
 require_once 'Zend/XmlRpc/Value/Struct.php';
-require_once 'Zend/Crypt/Math/BigInteger.php';
 require_once 'Zend/XmlRpc/TestProvider.php';
 require_once 'Zend/Date.php';
 
@@ -52,7 +48,6 @@ require_once 'Zend/Date.php';
 class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
 {
     // Boolean
-
     public function testFactoryAutodetectsBoolean()
     {
         foreach (array(true, false) as $native) {
@@ -136,7 +131,6 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('Zend_XmlRpc_Value_Exception', 'Overlong integer given');
         $x = Zend_XmlRpc_Value::getXmlRpcValue(PHP_INT_MAX + 5000, Zend_XmlRpc_Value::XMLRPC_TYPE_I4);
-        var_dump($x);
     }
 
     /**
@@ -146,53 +140,6 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('Zend_XmlRpc_Value_Exception', 'Overlong integer given');
         Zend_XmlRpc_Value::getXmlRpcValue(PHP_INT_MAX + 5000, Zend_XmlRpc_Value::XMLRPC_TYPE_INTEGER);
-    }
-
-    // BigInteger
-
-    /**
-     * @group ZF-6445
-     * @dataProvider Zend_XmlRpc_TestProvider::provideGenerators
-     */
-    public function testMarshalBigIntegerFromFromXmlRpc(Zend_XmlRpc_Generator_GeneratorAbstract $generator)
-    {
-        Zend_XmlRpc_Value::setGenerator($generator);
-        $bigInt = (string)(PHP_INT_MAX + 1);
-        $native = new Zend_Crypt_Math_BigInteger();
-        $native->init($bigInt);
-
-        $xmlStrings = array("<value><i8>$bigInt</i8></value>",
-                            "<value><ex:i8 xmlns:ex=\"http://ws.apache.org/xmlrpc/namespaces/extensions\">$bigInt</ex:i8></value>");
-
-        foreach ($xmlStrings as $xml) {
-            $value = Zend_XmlRpc_Value::getXmlRpcValue($xml, Zend_XmlRpc_Value::XML_STRING);
-            $this->assertEquals($native, $value->getValue());
-            $this->assertEquals('i8', $value->getType());
-            $this->assertEquals($this->wrapXml($xml), $value->saveXml());
-        }
-    }
-
-    /**
-     * @group ZF-6445
-     */
-    public function testMarshalBigIntegerFromNative()
-    {
-        $native = (string)(PHP_INT_MAX + 1);
-        $types = array(Zend_XmlRpc_Value::XMLRPC_TYPE_APACHEI8,
-                       Zend_XmlRpc_Value::XMLRPC_TYPE_I8);
-
-        $bigInt = new Zend_Crypt_Math_BigInteger();
-        $bigInt->init($native);
-
-        foreach ($types as $type) {
-            $value = Zend_XmlRpc_Value::getXmlRpcValue($native, $type);
-            $this->assertSame('i8', $value->getType());
-            $this->assertEquals($bigInt, $value->getValue());
-        }
-
-        $value = Zend_XmlRpc_Value::getXmlRpcValue($bigInt);
-        $this->assertSame('i8', $value->getType());
-        $this->assertEquals($bigInt, $value->getValue());
     }
 
     // Double
@@ -757,6 +704,26 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('dateTime.iso8601', $val->getType());
         $this->assertSame($dateString, $val->getValue());
         $this->assertEquals(trim($xml), trim($val->saveXml()));
+    }
+
+    /**
+     * @group ZF-10776
+     */
+    public function testGetValueDatetime()
+    {
+        $expectedValue = '20100101T00:00:00';
+        $zfDate         = new Zend_Date('2010-01-01 00:00:00', 'yyyy-MM-dd HH:mm:ss');
+        $phpDatetime     = new DateTime('20100101T00:00:00');
+        $phpDateNative   = '20100101T00:00:00';
+
+        $xmlRpcValueDateTime = new Zend_XmlRpc_Value_DateTime($zfDate);
+        $this->assertEquals($expectedValue, $xmlRpcValueDateTime->getValue());
+
+        $xmlRpcValueDateTime = new Zend_XmlRpc_Value_DateTime($phpDatetime);
+        $this->assertEquals($expectedValue, $xmlRpcValueDateTime->getValue());
+
+        $xmlRpcValueDateTime = new Zend_XmlRpc_Value_DateTime($phpDateNative);
+        $this->assertEquals($expectedValue, $xmlRpcValueDateTime->getValue());
     }
 
     // Base64

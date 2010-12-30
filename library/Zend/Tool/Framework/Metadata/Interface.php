@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Interface.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Interface.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -48,5 +48,5 @@ interface Zend_Tool_Framework_Metadata_Interface
      *
      */
     public function getValue();
-    
+
 }

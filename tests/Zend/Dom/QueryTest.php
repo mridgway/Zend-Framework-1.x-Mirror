@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: QueryTest.php 23062 2010-10-08 14:05:45Z matthew $
+ * @version    $Id: QueryTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Dom_QueryTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dom_QueryTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /** Zend_Dom_Query */
 require_once 'Zend/Dom/Query.php';
@@ -89,7 +87,7 @@ class Zend_Dom_QueryTest extends PHPUnit_Framework_TestCase
         $this->query->setDocument($this->getHtml());
     }
 
-    public function handleError($msg, $code = 0) 
+    public function handleError($msg, $code = 0)
     {
         $this->error = $msg;
     }
@@ -243,7 +241,7 @@ class Zend_Dom_QueryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($errors));
         $this->assertTrue(0 < count($errors));
     }
-    
+
     /**
      * @group ZF-9765
      */

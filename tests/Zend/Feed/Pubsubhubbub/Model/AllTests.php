@@ -16,14 +16,12 @@
  * @package    UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 22508 2010-06-30 19:14:01Z ramon $
+ * @version    $Id: AllTests.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Feed_Pubsubhubbub_Model_AllTests::main');
 }
-
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Feed/Pubsubhubbub/Model/SubscriptionTest.php';
 

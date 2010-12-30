@@ -32,7 +32,7 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
  * @subpackage Plugins
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ErrorHandler.php 20246 2010-01-12 21:36:08Z dasprid $
+ * @version    $Id: ErrorHandler.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstract
 {
@@ -193,8 +193,8 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
 
     /**
      * Route shutdown hook -- Ccheck for router exceptions
-     * 
-     * @param Zend_Controller_Request_Abstract $request 
+     *
+     * @param Zend_Controller_Request_Abstract $request
      */
     public function routeShutdown(Zend_Controller_Request_Abstract $request)
     {

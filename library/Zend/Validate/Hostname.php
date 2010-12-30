@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Hostname.php 22830 2010-08-12 16:05:09Z thomas $
+ * @version    $Id: Hostname.php 23488 2010-12-10 07:22:55Z mjh_ca $
  */
 
 /**
@@ -512,6 +512,21 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
             }
         }
 
+        // RFC3986 3.2.2 states:
+        // 
+        //     The rightmost domain label of a fully qualified domain name
+        //     in DNS may be followed by a single "." and should be if it is 
+        //     necessary to distinguish between the complete domain name and
+        //     some local domain.
+        //     
+        // Strip trailing '.' since it is not necessary to validate a non-IP
+        // hostname.
+        //
+        // (see ZF-6363)
+        if (substr($value, -1) === '.') {
+            $value = substr($value, 0, strlen($value)-1);
+        }
+        
         // Check input against DNS hostname schema
         $domainParts = explode('.', $value);
         if ((count($domainParts) > 1) && (strlen($value) >= 4) && (strlen($value) <= 254)) {

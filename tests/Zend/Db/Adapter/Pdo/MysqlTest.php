@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MysqlTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: MysqlTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 
@@ -31,9 +31,6 @@ require_once 'Zend/Db/Adapter/Pdo/TestCommon.php';
  * @see Zend_Db_Adapter_Pdo_Mysql
  */
 require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
-
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
 /**
@@ -108,7 +105,7 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
     /**
      * Ensures that driver_options are properly passed along to PDO
      *
-     * @see    http://framework.zend.com/issues/browse/ZF-285
+     * @group ZF-285
      * @return void
      */
     public function testAdapterDriverOptions()

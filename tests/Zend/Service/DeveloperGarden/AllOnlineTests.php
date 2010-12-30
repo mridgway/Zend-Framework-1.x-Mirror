@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllOnlineTests.php 20166 2010-01-09 19:00:17Z bkarwin $
+ * @version    $Id: AllOnlineTests.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_DeveloperGarden_AllTests::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Service/DeveloperGarden/SecurityTokenServerTest.php';
 require_once 'Zend/Service/DeveloperGarden/BaseUserServiceTest.php';
@@ -46,7 +41,7 @@ require_once 'Zend/Service/DeveloperGarden/VoiceCallTest.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllOnlineTests.php 20166 2010-01-09 19:00:17Z bkarwin $
+ * @version    $Id: AllOnlineTests.php 23522 2010-12-16 20:33:22Z andries $
  */
 class Zend_Service_DeveloperGarden_AllOnlineTests
 {

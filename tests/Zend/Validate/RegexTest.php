@@ -17,14 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RegexTest.php 21571 2010-03-19 19:43:01Z thomas $
+ * @version    $Id: RegexTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Validate_Regex

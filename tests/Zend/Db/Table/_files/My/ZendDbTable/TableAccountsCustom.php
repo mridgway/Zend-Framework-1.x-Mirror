@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TableAccountsCustom.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: TableAccountsCustom.php 23510 2010-12-15 18:34:36Z andries $
  */
 
 
@@ -34,8 +34,6 @@ require_once 'TableAccounts.php';
 require_once 'TableBugsCustom.php';
 
 
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
 /**

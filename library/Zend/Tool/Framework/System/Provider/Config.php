@@ -48,7 +48,7 @@ require_once "Zend/Loader.php";
  * @uses       Zend_Tool_Framework_Provider_Abstract
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Config.php 23206 2010-10-21 15:49:31Z ralph $
+ * @version    $Id: Config.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 class Zend_Tool_Framework_System_Provider_Config extends Zend_Tool_Framework_Provider_Abstract
 {
@@ -59,11 +59,11 @@ class Zend_Tool_Framework_System_Provider_Config extends Zend_Tool_Framework_Pro
 
     /**
      * array of specialties handled by this provider
-     * 
+     *
      * @var array
      */
     protected $_specialties = array('Manifest', 'Provider');
-    
+
     /**
      * @param string $type
      */

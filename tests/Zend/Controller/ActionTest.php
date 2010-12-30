@@ -17,17 +17,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActionTest.php 22792 2010-08-05 18:30:27Z matthew $
+ * @version    $Id: ActionTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_ActionTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(__FILE__) . '/../../TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_ActionTest::main");
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Controller/Action/Helper/Redirector.php';
@@ -54,7 +51,6 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_ActionTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -231,7 +227,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($params['foo']));
         $this->assertEquals('bar', $params['foo']);
     }
-    
+
     /**
      * @group ZF-5163
      */
@@ -240,12 +236,12 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->_controller->setParam('foo', 'bar');
         $this->_controller->setParam('bar', 0);
         $this->_controller->setParam('baz', null);
-        
+
         $this->assertEquals('bar', $this->_controller->getParam('foo', -1));
         $this->assertEquals(0, $this->_controller->getParam('bar', -1));
         $this->assertEquals(-1, $this->_controller->getParam('baz', -1));
     }
-	
+
 	/**
      * @group ZF-9179
      */
@@ -570,7 +566,7 @@ class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
         $this->_setParam($key, $value);
         return $this;
     }
-    
+
     public function getParam($key, $default)
     {
         return $this->_getParam($key, $default);

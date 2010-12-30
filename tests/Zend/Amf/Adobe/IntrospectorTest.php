@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IntrospectorTest.php 23316 2010-11-10 16:37:40Z matthew $
+ * @version    $Id: IntrospectorTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_Action_Helper_MultiPageFormTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Amf_Adobe_IntrospectorTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Amf_Adobe_Introspector

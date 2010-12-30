@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OfflineClientTest.php 20166 2010-01-09 19:00:17Z bkarwin $
+ * @version    $Id: OfflineClientTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_DeveloperGarden_CredentialTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Service_DeveloperGarden_IpLocation
@@ -42,7 +37,7 @@ require_once 'Zend/Service/DeveloperGarden/IpLocation.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OfflineClientTest.php 20166 2010-01-09 19:00:17Z bkarwin $
+ * @version    $Id: OfflineClientTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 class Zend_Service_DeveloperGarden_OfflineClientTest extends PHPUnit_Framework_TestCase
 {

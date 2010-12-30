@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: EmailAddressTest.php 21082 2010-02-18 19:14:52Z thomas $
+ * @version    $Id: EmailAddressTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Validate_EmailAddressTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Validate_EmailAddress
@@ -387,7 +382,7 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-2861
+     * @group ZF-2861
      */
     public function testHostnameValidatorMessagesShouldBeTranslated()
     {
@@ -421,7 +416,7 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-4888
+     * @group ZF-4888
      */
     public function testEmailsExceedingLength()
     {
@@ -435,7 +430,7 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-4352
+     * @group ZF-4352
      */
     public function testNonStringValidation()
     {
@@ -443,7 +438,7 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-7490
+     * @group ZF-7490
      */
     public function testSettingHostnameMessagesThroughEmailValidator()
     {

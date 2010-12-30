@@ -17,17 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CommonExtendedBackendTest.php 21519 2010-03-16 17:46:38Z mabe $
+ * @version    $Id: CommonExtendedBackendTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
-
-require_once 'PHPUnit/Util/Filter.php';
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @see Zend_Cache_CommonBackendTest

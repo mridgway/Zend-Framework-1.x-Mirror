@@ -17,7 +17,7 @@
  * @subpackage PHP
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Docblock.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Docblock.php 23560 2010-12-19 20:47:11Z mjh_ca $
  */
 
 /**
@@ -211,7 +211,11 @@ class Zend_CodeGenerator_Php_Docblock extends Zend_CodeGenerator_Php_Abstract
         $content = wordwrap($content, 80, self::LINE_FEED);
         $lines = explode(self::LINE_FEED, $content);
         foreach ($lines as $line) {
-            $output .= $indent . ' * ' . $line . self::LINE_FEED;
+            $output .= $indent . ' *';
+            if ($line) {
+                $output .= " $line";
+            }
+            $output .= self::LINE_FEED;
         }
         $output .= $indent . ' */' . self::LINE_FEED;
         return $output;

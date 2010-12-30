@@ -17,17 +17,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AutoCompleteTest.php 22233 2010-05-21 22:16:08Z dragonbe $
+ * @version    $Id: AutoCompleteTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_Action_Helper_AutoCompleteTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(__FILE__) . '/../../../../TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Action_Helper_AutoCompleteTest::main");
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Controller/Action/Helper/AutoCompleteDojo.php';
 require_once 'Zend/Controller/Action/Helper/AutoCompleteScriptaculous.php';
@@ -62,7 +59,6 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Action_Helper_AutoCompleteTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);

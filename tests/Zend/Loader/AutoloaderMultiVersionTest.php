@@ -25,11 +25,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 /**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
-
-/**
  * @see Zend_Loader_Autoloader
  */
 require_once 'Zend/Loader/Autoloader.php';
@@ -52,10 +47,6 @@ class Zend_Loader_AutoloaderMultiVersionTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_ENABLED')) {
-            $this->markTestSkipped();
-        }
-
         // Store original autoloaders
         $this->loaders = spl_autoload_functions();
         if (!is_array($this->loaders)) {
@@ -66,6 +57,10 @@ class Zend_Loader_AutoloaderMultiVersionTest extends PHPUnit_Framework_TestCase
 
         // Store original include_path
         $this->includePath = get_include_path();
+
+        if (!constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_ENABLED')) {
+            $this->markTestSkipped();
+        }
 
         Zend_Loader_Autoloader::resetInstance();
         $this->path        = constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_PATH');

@@ -17,14 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HostnameTest.php 22830 2010-08-12 16:05:09Z thomas $
+ * @version    $Id: HostnameTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
-
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Validate_Hostname
@@ -280,8 +274,8 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     /**
      * Test changed with ZF-6676, as IP check is only involved when IP patterns match
      *
-     * @see ZF-2861
-     * @see ZF-6676
+     * @group ZF-2861
+     * @group ZF-6676
      */
     public function testValidatorMessagesShouldBeTranslated()
     {
@@ -307,7 +301,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-6033
+     * @group ZF-6033
      */
     public function testNumberNames()
     {
@@ -326,7 +320,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-6133
+     * @group ZF-6133
      */
     public function testPunycodeDecoding()
     {
@@ -363,7 +357,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-7277
+     * @group ZF-7277
      */
     public function testDifferentIconvEncoding()
     {
@@ -405,5 +399,17 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
+    }
+
+    /**
+     * Ensure that a trailing "." in a hostname (but not ip) is permitted
+     *
+     * @group ZF-6363
+     */
+    public function testTrailingDot()
+    {
+        $this->assertTrue($this->_validator->isValid('example.com.'));
+        $this->assertFalse($this->_validator->isValid('example.com..'));
+        $this->assertFalse($this->_validator->isValid('1.2.3.4.'));
     }
 }

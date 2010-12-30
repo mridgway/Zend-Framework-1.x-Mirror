@@ -17,26 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OpenIdTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: OpenIdTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * Zend_OpenId
  */
 require_once 'Zend/OpenId.php';
-
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework.php';
-
 
 /**
  * Zend_OpenId_ResponseHelper

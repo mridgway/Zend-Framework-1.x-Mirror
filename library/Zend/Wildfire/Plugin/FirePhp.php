@@ -17,7 +17,7 @@
  * @subpackage Plugin
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FirePhp.php 23066 2010-10-09 23:29:20Z cadorn $
+ * @version    $Id: FirePhp.php 23532 2010-12-17 18:36:35Z cadorn $
  */
 
 /** Zend_Controller_Request_Abstract */
@@ -323,11 +323,12 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
      * Starts a group in the Firebug Console
      *
      * @param string $title The title of the group
+     * @param array $options OPTIONAL Setting 'Collapsed' to true will initialize group collapsed instead of expanded
      * @return TRUE if the group instruction was added to the response headers or buffered.
      */
-    public static function group($title)
+    public static function group($title, $options=array())
     {
-        return self::send(null, $title, self::GROUP_START);
+        return self::send(null, $title, self::GROUP_START, $options);
     }
 
     /**
@@ -488,6 +489,12 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
             unset($meta['Line']);
         }
 
+        if ($meta['Type'] == self::GROUP_START) {
+            if (isset($options['Collapsed'])) {
+                $meta['Collapsed'] = ($options['Collapsed'])?'true':'false';
+            }
+        }
+
         if ($meta['Type'] == self::DUMP) {
 
           return $firephp->_recordMessage(self::STRUCTURE_URI_DUMP,
@@ -515,7 +522,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
         $trace = debug_backtrace();
 
         $trace = array_splice($trace, $options['traceOffset']);
-        
+
         if (!count($trace)) {
             return $trace;
         }

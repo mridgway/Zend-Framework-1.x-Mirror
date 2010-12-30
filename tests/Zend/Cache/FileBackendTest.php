@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FileBackendTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FileBackendTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
@@ -36,11 +36,6 @@ require_once 'Zend/Log/Writer/Null.php';
  * Common tests for backends
  */
 require_once 'CommonExtendedBackendTest.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

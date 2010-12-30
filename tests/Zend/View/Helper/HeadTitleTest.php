@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HeadTitleTest.php 22879 2010-08-21 21:21:15Z ramon $
+ * @version    $Id: HeadTitleTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_View_Helper_HeadTitleTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_HeadTitleTest::main");
 }
-
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
 
 /** Zend_View_Helper_HeadTitle */
 require_once 'Zend/View/Helper/HeadTitle.php';
@@ -223,7 +221,7 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
     }
 
    /**
-    * @see ZF-8036
+    * @group ZF-8036
     */
     public function testHeadTitleZero()
     {

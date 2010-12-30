@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ComboBoxTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ComboBoxTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_Dojo_Form_Element_ComboBoxTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_Form_Element_ComboBoxTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Dojo_Form_Element_ComboBox */
 require_once 'Zend/Dojo/Form/Element/ComboBox.php';
@@ -148,7 +146,7 @@ class Zend_Dojo_Form_Element_ComboBoxTest extends PHPUnit_Framework_TestCase
     }
 
     /**#@+
-     * @see ZF-3286
+     * @group ZF-3286
      */
     public function testShouldNeverRegisterInArrayValidatorAutomatically()
     {

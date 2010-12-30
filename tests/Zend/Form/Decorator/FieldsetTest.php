@@ -17,17 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FieldsetTest.php 23437 2010-11-23 20:01:01Z alexander $
+ * @version    $Id: FieldsetTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_Form_Decorator_FieldsetTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Decorator_FieldsetTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Decorator/Fieldset.php';
 
@@ -54,7 +50,6 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Form_Decorator_FieldsetTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -132,7 +127,7 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-7054
+     * @group ZF-7054
      */
     public function testCustomIdSupersedesElementId()
     {
@@ -146,7 +141,7 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-2981
+     * @group ZF-2981
      */
     public function testActionAndMethodAttributesShouldNotBePresentInFieldsetTag()
     {
@@ -162,7 +157,7 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
     }
 
     /**#@+
-     * @see ZF-3731
+     * @group ZF-3731
      */
     public function testIdShouldBePrefixedWithFieldset()
     {
@@ -189,7 +184,7 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
     /**#@-*/
 
     /**
-     * @see ZF-3728
+     * @group ZF-3728
      */
     public function testEnctypeAttributeShouldNotBePresentInFieldsetTag()
     {
@@ -205,7 +200,7 @@ class Zend_Form_Decorator_FieldsetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3499
+     * @group ZF-3499
      */
     public function testHelperAttributeShouldNotBePresentInFieldsetTag()
     {

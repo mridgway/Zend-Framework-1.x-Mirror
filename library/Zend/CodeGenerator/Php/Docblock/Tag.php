@@ -17,7 +17,7 @@
  * @subpackage PHP
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Tag.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Tag.php 23560 2010-12-19 20:47:11Z mjh_ca $
  */
 
 /**
@@ -178,7 +178,11 @@ class Zend_CodeGenerator_Php_Docblock_Tag extends Zend_CodeGenerator_Php_Abstrac
      */
     public function generate()
     {
-        return '@' . $this->_name . ' ' . $this->_description;
+        $tag = '@' . $this->_name;
+        if ($this->_description) {
+            $tag .= ' ' . $this->_description;
+        }
+        return $tag;
     }
 
 }

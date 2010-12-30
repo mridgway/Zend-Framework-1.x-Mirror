@@ -17,14 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RouteTest.php 23421 2010-11-21 10:03:53Z wilmoore $
+ * @version    $Id: RouteTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/** Test helper */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
-
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 /** Zend_Rest_Route */
 require_once 'Zend/Rest/Route.php';
@@ -63,7 +57,6 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Rest_RouteTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);

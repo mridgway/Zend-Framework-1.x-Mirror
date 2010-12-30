@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: QueueBaseTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: QueueBaseTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 /*
@@ -27,9 +27,6 @@
  * All methods marked not supported are explictly checked for for throwing
  * an exception.
  */
-
-/** TestHelper.php */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /** Zend_Config */
 require_once 'Zend/Config.php';

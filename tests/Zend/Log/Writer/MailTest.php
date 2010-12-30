@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MailTest.php 22977 2010-09-19 12:44:00Z intiilapa $
+ * @version    $Id: MailTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Log_Writer_MailTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Log_Writer_MailTest::main");
 }
-
-/**
- * Test helper
- */
-require_once realpath(dirname(__FILE__) . '/../../..') . '/TestHelper.php';
 
 /** Zend_Layout */
 require_once 'Zend/Layout.php';
@@ -47,6 +42,10 @@ require_once 'Zend/Mail/Transport/Exception.php';
 
 /** Zend_View_Exception */
 require_once 'Zend/View/Exception.php';
+
+/** For some reason these classed have to be manually loaded, because PHPUnit fails to autoload them */
+require_once 'PHPUnit/Framework/MockObject/Stub/Exception.php';
+
 
 /**
  * @category   Zend

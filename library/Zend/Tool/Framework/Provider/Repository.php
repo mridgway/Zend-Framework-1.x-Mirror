@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Repository.php 23202 2010-10-21 15:08:15Z ralph $
+ * @version    $Id: Repository.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -163,7 +163,7 @@ class Zend_Tool_Framework_Provider_Repository
         //foreach ($this->_unprocessedProviders as $providerName => $provider) {
         reset($this->_unprocessedProviders);
         while ($this->_unprocessedProviders) {
-            
+
             $providerName = key($this->_unprocessedProviders);
             $provider = array_shift($this->_unprocessedProviders);
 

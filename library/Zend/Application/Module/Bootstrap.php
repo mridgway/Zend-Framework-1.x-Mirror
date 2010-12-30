@@ -16,7 +16,7 @@
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Bootstrap.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Bootstrap.php 23484 2010-12-10 03:57:59Z mjh_ca $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -97,9 +97,9 @@ abstract class Zend_Application_Module_Bootstrap
     /**
      * Get default application namespace
      *
-     * Proxies to {@link getModuleName()}, and returns the current module 
+     * Proxies to {@link getModuleName()}, and returns the current module
      * name
-     * 
+     *
      * @return string
      */
     public function getAppNamespace()

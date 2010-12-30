@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Amf0.php 20574 2010-01-24 17:39:14Z mabe $
+ * @version    $Id: Amf0.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /** @see Zend_Serializer_Adapter_AdapterAbstract */
@@ -46,9 +46,9 @@ class Zend_Serializer_Adapter_Amf0 extends Zend_Serializer_Adapter_AdapterAbstra
 {
     /**
      * Serialize a PHP value to AMF0 format
-     * 
-     * @param  mixed $value 
-     * @param  array $opts 
+     *
+     * @param  mixed $value
+     * @param  array $opts
      * @return string
      * @throws Zend_Serializer_Exception
      */
@@ -67,9 +67,9 @@ class Zend_Serializer_Adapter_Amf0 extends Zend_Serializer_Adapter_AdapterAbstra
 
     /**
      * Unserialize an AMF0 value to PHP
-     * 
-     * @param  mixed $value 
-     * @param  array $opts 
+     *
+     * @param  mixed $value
+     * @param  array $opts
      * @return void
      * @throws Zend_Serializer_Exception
      */

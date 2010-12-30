@@ -17,14 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RewriteTest.php 22416 2010-06-11 14:11:24Z rob $
+ * @version    $Id: RewriteTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_RewriteTest::main');
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Controller_Router_Rewrite */
 require_once 'Zend/Controller/Router/Rewrite.php';
@@ -50,10 +48,6 @@ require_once 'Zend/Controller/Router/Route/Hostname.php';
 /** Zend_Uri_Http */
 require_once 'Zend/Uri/Http.php';
 
-/** PHPUnit test case */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-require_once 'PHPUnit/Runner/Version.php';
 
 /**
  * @category   Zend
@@ -76,7 +70,6 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Router_RewriteTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -732,7 +725,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/articles/777', $url);
     }
-    
+
 
     /**
      * Test that it is possible to generate a URL with a numerical key
@@ -744,7 +737,7 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
     public function testCanGenerateNumericKeyUri()
     {
         $this->_router->addRoute(
-            'default', 
+            'default',
             new Zend_Controller_Router_Route(
                 ':controller/:action/*',
                 array('controller' => 'index', 'action' => 'index')

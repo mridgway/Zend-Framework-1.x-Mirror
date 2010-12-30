@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PhpSerializeTest.php 20576 2010-01-24 17:54:57Z mabe $
+ * @version    $Id: PhpSerializeTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
  * @see Zend_Serializer_Adapter_PhpSerialize
  */
 require_once 'Zend/Serializer/Adapter/PhpSerialize.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

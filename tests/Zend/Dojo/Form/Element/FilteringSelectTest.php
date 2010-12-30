@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FilteringSelectTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FilteringSelectTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_Dojo_Form_Element_FilteringSelectTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_Form_Element_FilteringSelectTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Dojo_Form_Element_FilteringSelect */
 require_once 'Zend/Dojo/Form/Element/FilteringSelect.php';
@@ -118,7 +116,7 @@ class Zend_Dojo_Form_Element_FilteringSelectTest extends PHPUnit_Framework_TestC
     }
 
     /**#@+
-     * @see ZF-3286
+     * @group ZF-3286
      */
     public function testShouldRegisterInArrayValidatorWhenNoStoreProvided()
     {

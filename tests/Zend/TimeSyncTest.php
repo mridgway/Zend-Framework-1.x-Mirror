@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TimeSyncTest.php 21713 2010-03-31 17:44:44Z matthew $
+ * @version    $Id: TimeSyncTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__ ) . '/../TestHelper.php';
 
 /**
  * Zend_timeSync

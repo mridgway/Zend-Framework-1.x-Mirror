@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Amf3Test.php 20576 2010-01-24 17:54:57Z mabe $
+ * @version    $Id: Amf3Test.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
  * @see Zend_Serializer_Adapter_Amf3
  */
 require_once 'Zend/Serializer/Adapter/Amf3.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

@@ -17,14 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestSetup.php 20513 2010-01-22 07:55:48Z ralph $
+ * @version    $Id: TestSetup.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-
-/**
- * Test helper
- */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * @see Zend_Loader
@@ -35,19 +29,6 @@ require_once 'Zend/Loader.php';
  * @see Zend_Db
  */
 require_once 'Zend/Db.php';
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/**
- * PHPUnit_Util_Filter
- */
-require_once 'PHPUnit/Util/Filter.php';
-
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
 /**

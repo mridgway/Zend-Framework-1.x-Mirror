@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HelperBrokerTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: HelperBrokerTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_Action_HelperBrokerTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Action_HelperBrokerTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Request/Http.php';
@@ -48,6 +46,11 @@ require_once 'Zend/Controller/Action/Helper/Redirector.php';
 class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * @var Zend_Controller_Front
+     */
+    protected $front;
+
+    /**
      * Runs the test methods of this class.
      *
      * @access public
@@ -55,7 +58,6 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Action_HelperBrokerTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -70,8 +72,8 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
                     ->throwExceptions(true);
         Zend_Controller_Action_HelperBroker::resetHelpers();
 
-        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-        $viewRenderer->setActionController();
+        //$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        //$viewRenderer->setActionController();
     }
 
     public function testLoadingAndReturningHelper()
@@ -318,6 +320,20 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         $loader = Zend_Controller_Action_HelperBroker::getPluginLoader();
         $paths  = $loader->getPaths('Zend_Controller_Action_Helper');
         $this->assertFalse(empty($paths));
+    }
+
+    public function testCanLoadNamespacedHelper()
+    {
+        $this->front->setControllerDirectory(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files')
+            ->setResponse(new Zend_Controller_Response_Cli())
+            ->returnResponse(true);
+
+        $path = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files/Helpers';
+        Zend_Controller_Action_HelperBroker::addPath($path, 'MyApp\Controller\Action\Helper\\');
+
+        $request  = new Zend_Controller_Request_Http('http://framework.zend.com/helper-broker/test-can-load-namespaced-helper/');
+        $response = $this->front->dispatch($request);
+        $this->assertEquals('MyApp\Controller\Action\Helper\NamespacedHelper', $response->getBody());
     }
 
     /**

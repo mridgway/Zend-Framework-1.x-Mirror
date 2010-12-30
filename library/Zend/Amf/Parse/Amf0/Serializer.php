@@ -17,7 +17,7 @@
  * @subpackage Parse_Amf0
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Serializer.php 21968 2010-04-22 03:53:34Z matthew $
+ * @version    $Id: Serializer.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /** Zend_Amf_Constants */
@@ -63,8 +63,8 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
      */
     public function writeTypeMarker(&$data, $markerType = null, $dataByVal = false)
     {
-        // Workaround for PHP5 with E_STRICT enabled complaining about "Only 
-        // variables should be passed by reference" 
+        // Workaround for PHP5 with E_STRICT enabled complaining about "Only
+        // variables should be passed by reference"
         if ((null === $data) && ($dataByVal !== false)) {
             $data = &$dataByVal;
         }
@@ -192,18 +192,18 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
      * @param mixed $objectByVal object to check for reference
      * @return Boolean true, if the reference was written, false otherwise
      */
-    protected function writeObjectReference(&$object, $markerType, $objectByVal = false) 
+    protected function writeObjectReference(&$object, $markerType, $objectByVal = false)
     {
-        // Workaround for PHP5 with E_STRICT enabled complaining about "Only 
+        // Workaround for PHP5 with E_STRICT enabled complaining about "Only
         // variables should be passed by reference"
         if ((null === $object) && ($objectByVal !== false)) {
             $object = &$objectByVal;
         }
 
-        if ($markerType == Zend_Amf_Constants::AMF0_OBJECT 
-            || $markerType == Zend_Amf_Constants::AMF0_MIXEDARRAY 
-            || $markerType == Zend_Amf_Constants::AMF0_ARRAY 
-            || $markerType == Zend_Amf_Constants::AMF0_TYPEDOBJECT 
+        if ($markerType == Zend_Amf_Constants::AMF0_OBJECT
+            || $markerType == Zend_Amf_Constants::AMF0_MIXEDARRAY
+            || $markerType == Zend_Amf_Constants::AMF0_ARRAY
+            || $markerType == Zend_Amf_Constants::AMF0_TYPEDOBJECT
         ) {
             $ref = array_search($object, $this->_referenceObjects, true);
             //handle object reference

@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CheckBoxTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: CheckBoxTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_Dojo_View_Helper_CheckBoxTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_View_Helper_CheckBoxTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Dojo_View_Helper_CheckBox */
 require_once 'Zend/Dojo/View/Helper/CheckBox.php';
@@ -144,7 +142,6 @@ class Zend_Dojo_View_Helper_CheckBoxTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-4006
      * @group ZF-4006
      */
     public function testElementShouldUseCheckedValueForCheckboxInput()

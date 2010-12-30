@@ -17,14 +17,11 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ProcessingTest.php 20469 2010-01-21 16:09:24Z alexander $
+ * @version    $Id: ProcessingTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /** Zend_Pdf */
 require_once 'Zend/Pdf.php';
-
-/** PHPUnit Test Case */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FileTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FileTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
@@ -29,11 +29,6 @@ require_once 'Zend/Search/Lucene/Storage/File/Filesystem.php';
  * Zend_Search_Lucene_Storage_File_Memory
  */
 require_once 'Zend/Search/Lucene/Storage/File/Memory.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

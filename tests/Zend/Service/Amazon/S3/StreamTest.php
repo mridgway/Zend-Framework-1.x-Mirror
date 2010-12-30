@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StreamTest.php 22621 2010-07-18 00:35:48Z torio $
+ * @version    $Id: StreamTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /**
  * @see Zend_Service_Amazon

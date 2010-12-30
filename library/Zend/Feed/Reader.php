@@ -16,7 +16,7 @@
  * @package    Zend_Feed_Reader
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Reader.php 22662 2010-07-24 17:37:36Z mabe $
+ * @version    $Id: Reader.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -510,7 +510,7 @@ class Zend_Feed_Reader
         if ($xpath->query('//atom:feed')->length) {
             return self::TYPE_ATOM_10;
         }
-        
+
         if ($xpath->query('//atom:entry')->length) {
             if ($specOnly == true) {
                 return self::TYPE_ATOM_10;
@@ -698,7 +698,7 @@ class Zend_Feed_Reader
         self::registerExtension('Thread');
         self::registerExtension('Podcast');
     }
-    
+
     /**
      * Utility method to apply array_unique operation to a multidimensional
      * array.
@@ -717,5 +717,5 @@ class Zend_Feed_Reader
         }
         return $array;
     }
- 
+
 }

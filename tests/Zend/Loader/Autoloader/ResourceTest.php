@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ResourceTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ResourceTest.php 23568 2010-12-20 08:13:20Z mjh_ca $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Loader_Autoloader_ResourceTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Loader_Autoloader
@@ -423,6 +418,41 @@ class Zend_Loader_Autoloader_ResourceTest extends PHPUnit_Framework_TestCase
         ));
         $path = $this->loader->autoload('Something_Totally_Wrong');
         $this->assertFalse($path);
+    }
+
+    /**
+     * @group ZF-10836
+     */
+    public function testConstructorAcceptsNamespaceKeyInAnyOrder()
+    {
+        // namespace is after resourceTypes - fails in ZF 1.11.1
+        $data = array(
+            'basePath'      => 'path/to/some/directory',
+            'resourceTypes' => array(
+                'acl' => array(
+                    'path'      => 'acls/',
+                    'namespace' => 'Acl',
+                )
+            ),
+            'namespace'     => 'My'
+        );
+        $loader1 = new Zend_Loader_Autoloader_Resource($data);
+
+        // namespace is defined before resourceTypes - always worked as expected
+        $data = array(
+            'basePath'      => 'path/to/some/directory',
+            'namespace'     => 'My',
+            'resourceTypes' => array(
+                'acl' => array(
+                    'path'      => 'acls/',
+                    'namespace' => 'Acl',
+                )
+            )
+        );
+        $loader2 = new Zend_Loader_Autoloader_Resource($data);
+
+        // Check that autoloaders are configured the same
+        $this->assertEquals($loader1, $loader2);
     }
 }
 

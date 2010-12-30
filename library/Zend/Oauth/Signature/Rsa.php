@@ -16,7 +16,7 @@
  * @package    Zend_Oauth
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Rsa.php 20217 2010-01-12 16:01:57Z matthew $
+ * @version    $Id: Rsa.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /** Zend_Oauth_Signature_SignatureAbstract */
@@ -35,13 +35,13 @@ class Zend_Oauth_Signature_Rsa extends Zend_Oauth_Signature_SignatureAbstract
 {
     /**
      * Sign a request
-     * 
-     * @param  array $params 
-     * @param  null|string $method 
-     * @param  null|string $url 
+     *
+     * @param  array $params
+     * @param  null|string $method
+     * @param  null|string $url
      * @return string
      */
-    public function sign(array $params, $method = null, $url = null) 
+    public function sign(array $params, $method = null, $url = null)
     {
         $rsa = new Zend_Crypt_Rsa;
         $rsa->setHashAlgorithm($this->_hashAlgorithm);
@@ -55,7 +55,7 @@ class Zend_Oauth_Signature_Rsa extends Zend_Oauth_Signature_SignatureAbstract
 
     /**
      * Assemble encryption key
-     * 
+     *
      * @return string
      */
     protected function _assembleKey()

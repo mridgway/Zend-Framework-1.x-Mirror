@@ -16,7 +16,7 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Registry.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Registry.php 23545 2010-12-18 01:42:57Z ramon $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -85,7 +85,7 @@ class Zend_View_Helper_Placeholder_Registry
     {
         $key = (string) $key;
 
-        $this->_items[$key] = new $this->_containerClass(array());
+        $this->_items[$key] = new $this->_containerClass($value);
         return $this->_items[$key];
     }
 

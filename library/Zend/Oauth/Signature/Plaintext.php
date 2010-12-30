@@ -16,7 +16,7 @@
  * @package    Zend_Oauth
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Plaintext.php 22662 2010-07-24 17:37:36Z mabe $
+ * @version    $Id: Plaintext.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /** Zend_Oauth_Signature_SignatureAbstract */
@@ -32,10 +32,10 @@ class Zend_Oauth_Signature_Plaintext extends Zend_Oauth_Signature_SignatureAbstr
 {
     /**
      * Sign a request
-     * 
-     * @param  array $params 
-     * @param  null|string $method 
-     * @param  null|string $url 
+     *
+     * @param  array $params
+     * @param  null|string $method
+     * @param  null|string $url
      * @return string
      */
     public function sign(array $params, $method = null, $url = null)

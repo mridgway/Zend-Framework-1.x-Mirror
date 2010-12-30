@@ -17,7 +17,7 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerUrl.php 23371 2010-11-18 20:49:55Z bittarman $
+ * @version    $Id: ServerUrl.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -59,7 +59,7 @@ class Zend_View_Helper_ServerUrl
                 $scheme = 'https';
                 break;
             default:
-            $scheme = 'http';   
+            $scheme = 'http';
         }
         $this->setScheme($scheme);
 

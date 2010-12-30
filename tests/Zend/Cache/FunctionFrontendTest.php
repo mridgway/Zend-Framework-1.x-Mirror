@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FunctionFrontendTest.php 22503 2010-06-29 17:18:05Z mabe $
+ * @version    $Id: FunctionFrontendTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
@@ -26,11 +26,6 @@
 require_once 'Zend/Cache.php';
 require_once 'Zend/Cache/Frontend/Function.php';
 require_once 'Zend/Cache/Backend/Test.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 function foobar($param1, $param2) {
     echo "foobar_output($param1, $param2)";

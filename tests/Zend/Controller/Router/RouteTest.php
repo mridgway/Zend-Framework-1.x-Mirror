@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RouteTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: RouteTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_RouteTest::main');
@@ -40,9 +35,6 @@ require_once 'Zend/Translate.php';
 
 /** @see Zend_Registry */
 require_once 'Zend/Registry.php';
-
-/** PHPUnit test case */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

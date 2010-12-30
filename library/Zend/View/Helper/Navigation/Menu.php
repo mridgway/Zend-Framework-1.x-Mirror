@@ -17,7 +17,7 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Menu.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Menu.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -602,8 +602,8 @@ class Zend_View_Helper_Navigation_Menu
             if (count($partial) != 2) {
                 require_once 'Zend/View/Exception.php';
                 $e = new Zend_View_Exception(
-                    'Unable to render menu: A view partial supplied as ' 
-                    .  'an array must contain two values: partial view ' 
+                    'Unable to render menu: A view partial supplied as '
+                    .  'an array must contain two values: partial view '
                     .  'script and module where script can be found'
                 );
                 $e->setView($this->view);

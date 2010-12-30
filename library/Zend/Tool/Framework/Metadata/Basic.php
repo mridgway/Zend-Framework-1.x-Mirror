@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Basic.php 22662 2010-07-24 17:37:36Z mabe $
+ * @version    $Id: Basic.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -36,7 +36,7 @@ require_once 'Zend/Tool/Framework/Metadata/Attributable.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Framework_Metadata_Basic 
+class Zend_Tool_Framework_Metadata_Basic
     implements Zend_Tool_Framework_Metadata_Interface, Zend_Tool_Framework_Metadata_Attributable
 {
 

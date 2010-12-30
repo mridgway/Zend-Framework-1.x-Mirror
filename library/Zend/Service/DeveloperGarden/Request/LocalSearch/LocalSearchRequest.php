@@ -17,7 +17,7 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LocalSearchRequest.php 20166 2010-01-09 19:00:17Z bkarwin $
+ * @version    $Id: LocalSearchRequest.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -65,8 +65,8 @@ class Zend_Service_DeveloperGarden_Request_LocalSearch_LocalSearchRequest
      * @param integer $account
      * @return Zend_Service_DeveloperGarden_Request_RequestAbstract
      */
-    public function __construct($environment, 
-        Zend_Service_DeveloperGarden_LocalSearch_SearchParameters $searchParameters, 
+    public function __construct($environment,
+        Zend_Service_DeveloperGarden_LocalSearch_SearchParameters $searchParameters,
         $account = null
     ) {
         parent::__construct($environment);

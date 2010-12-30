@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: VersionTest.php 23340 2010-11-15 15:24:18Z ramon $
+ * @version    $Id: VersionTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_VersionTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * @see Zend_Version

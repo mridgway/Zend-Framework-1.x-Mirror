@@ -16,11 +16,11 @@
  * @package    Zend_Feed_Writer
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Source.php 20785 2010-01-31 09:43:03Z mikaelkael $
+ * @version    $Id: Source.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 require_once 'Zend/Feed/Writer/Feed/FeedAbstract.php';
- 
+
  /**
  * @category   Zend
  * @package    Zend_Feed_Writer

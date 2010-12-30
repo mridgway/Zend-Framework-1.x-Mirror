@@ -16,7 +16,7 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: HeadMeta.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: HeadMeta.php 23589 2010-12-29 13:46:12Z matthew $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -164,10 +164,10 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
 
 	/**
 	 * Create an HTML5-style meta charset tag. Something like <meta charset="utf-8">
-	 * 
+	 *
 	 * Not valid in a non-HTML5 doctype
 	 *
-	 * @param string $charset 
+	 * @param string $charset
 	 * @return Zend_View_Helper_HeadMeta Provides a fluent interface
 	 */
     public function setCharset($charset)
@@ -344,9 +344,9 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
         if ($this->view instanceof Zend_View_Abstract) {
             if ($this->view->doctype()->isHtml5()
             && $type == 'charset') {
-				$tpl = ($this->view->doctype()->isXhtml())
-					? '<meta %s="%s"/>'
-					: '<meta %s="%s">';
+                $tpl = ($this->view->doctype()->isXhtml())
+                    ? '<meta %s="%s"/>'
+                    : '<meta %s="%s">';
             } elseif ($this->view->doctype()->isXhtml()) {
                 $tpl = '<meta %s="%s" content="%s" %s/>';
             } else {

@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PluginLoaderTest.php 22603 2010-07-17 00:02:10Z ramon $
+ * @version    $Id: PluginLoaderTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Loader_PluginLoaderTest::main() if this source file is executed directly.
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Loader_PluginLoaderTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Loader/PluginLoader.php';
 
@@ -53,7 +48,6 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Loader_PluginLoaderTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);

@@ -17,22 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 23004 2010-09-24 15:14:34Z matthew $
+ * @version    $Id: AllTests.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_Amazon_SimpleDb_AllTests::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
-
-/**
- * Exclude from code coverage report
- */
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @see Zend_Service_Amazon_SimpleDb_OfflineTest

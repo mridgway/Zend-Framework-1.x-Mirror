@@ -17,10 +17,9 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: WordpressAtom10Test.php 22300 2010-05-26 10:13:34Z padraic $
+ * @version    $Id: WordpressAtom10Test.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Feed/Reader.php';
 
 /**

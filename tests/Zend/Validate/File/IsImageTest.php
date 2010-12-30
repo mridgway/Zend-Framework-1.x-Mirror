@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IsImageTest.php 22690 2010-07-26 19:28:49Z alexander $
+ * @version    $Id: IsImageTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Validate_File_IsImageTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Validate_File_IsImageTest::main");
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Validate_File_IsImage

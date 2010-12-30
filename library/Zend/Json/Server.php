@@ -16,7 +16,7 @@
  * @package    Zend_Json
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Server.php 22237 2010-05-21 23:58:00Z andyfowler $
+ * @version    $Id: Server.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -534,8 +534,8 @@ class Zend_Json_Server extends Zend_Server_Abstract
                 $reflection = new ReflectionFunction( $callback->getFunction() );
                 $refParams  = $reflection->getParameters();
             } else {
-                
-                $reflection = new ReflectionMethod( 
+
+                $reflection = new ReflectionMethod(
                     $callback->getClass(),
                     $callback->getMethod()
                 );
@@ -549,9 +549,9 @@ class Zend_Json_Server extends Zend_Server_Abstract
                 } elseif( $refParam->isOptional() ) {
                     $orderedParams[ $refParam->getName() ] = null;
                 } else {
-                    throw new Zend_Server_Exception( 
-                        'Missing required parameter: ' . $refParam->getName() 
-                    ); 
+                    throw new Zend_Server_Exception(
+                        'Missing required parameter: ' . $refParam->getName()
+                    );
                 }
             }
             $params = $orderedParams;

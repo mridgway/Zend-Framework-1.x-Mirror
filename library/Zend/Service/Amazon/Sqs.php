@@ -17,7 +17,7 @@
  * @subpackage Amazon_Sqs
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Sqs.php 22984 2010-09-21 02:52:48Z matthew $
+ * @version    $Id: Sqs.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -288,7 +288,7 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
 
         $result = $this->_makeRequest($queue_url, 'DeleteMessage', $params);
 
-        if (isset($result->Error->Code) 
+        if (isset($result->Error->Code)
             && !empty($result->Error->Code)
         ) {
             return false;
@@ -319,7 +319,7 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
             require_once 'Zend/Service/Amazon/Sqs/Exception.php';
             throw new Zend_Service_Amazon_Sqs_Exception($result->Error->Code);
         }
-        
+
         if(count($result->GetQueueAttributesResult->Attribute) > 1) {
             $attr_result = array();
             foreach($result->GetQueueAttributesResult->Attribute as $attribute) {

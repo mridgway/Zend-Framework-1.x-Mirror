@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Wddx.php 20574 2010-01-24 17:39:14Z mabe $
+ * @version    $Id: Wddx.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /** @see Zend_Serializer_Adapter_AdapterAbstract */
@@ -43,8 +43,8 @@ class Zend_Serializer_Adapter_Wddx extends Zend_Serializer_Adapter_AdapterAbstra
 
     /**
      * Constructor
-     * 
-     * @param  array $opts 
+     *
+     * @param  array $opts
      * @return void
      * @throws Zend_Serializer_Exception if wddx extension not found
      */
@@ -60,9 +60,9 @@ class Zend_Serializer_Adapter_Wddx extends Zend_Serializer_Adapter_AdapterAbstra
 
     /**
      * Serialize PHP to WDDX
-     * 
-     * @param  mixed $value 
-     * @param  array $opts 
+     *
+     * @param  mixed $value
+     * @param  array $opts
      * @return string
      * @throws Zend_Serializer_Exception on wddx error
      */
@@ -86,9 +86,9 @@ class Zend_Serializer_Adapter_Wddx extends Zend_Serializer_Adapter_AdapterAbstra
 
     /**
      * Unserialize from WDDX to PHP
-     * 
-     * @param  string $wddx 
-     * @param  array $opts 
+     *
+     * @param  string $wddx
+     * @param  array $opts
      * @return mixed
      * @throws Zend_Serializer_Exception on wddx error
      */

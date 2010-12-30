@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestCommon.php 22229 2010-05-21 20:55:01Z ralph $
+ * @version    $Id: TestCommon.php 23510 2010-12-15 18:34:36Z andries $
  */
 
 
@@ -26,7 +26,8 @@
  */
 require_once 'Zend/Db/Table/TestSetup.php';
 
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+
 
 require_once 'Zend/Db/Table/Row.php';
 
@@ -887,15 +888,15 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertTrue($row instanceof Traversable);
         $this->assertTrue($row instanceof IteratorAggregate);
         $this->assertType('ArrayIterator', $row->getIterator());
-        
+
         $count=0;
         foreach ($row as $columnValue) {
             $count++;
         }
-        
+
         $this->assertEquals(8, $count, 'The row was iterated, there should be 8 columns iterated');
     }
-    
+
 
     /**
      * Utility methods below

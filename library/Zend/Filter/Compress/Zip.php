@@ -16,7 +16,7 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Zip.php 20126 2010-01-07 18:10:58Z ralph $
+ * @version    $Id: Zip.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -218,7 +218,7 @@ class Zend_Filter_Compress_Zip extends Zend_Filter_Compress_CompressAbstract
         if (!empty($target) && !is_dir($target)) {
             $target = dirname($target);
         }
-        
+
         if (!empty($target)) {
             $target = rtrim($target, '/\\') . DIRECTORY_SEPARATOR;
         }
@@ -249,8 +249,8 @@ class Zend_Filter_Compress_Zip extends Zend_Filter_Compress_CompressAbstract
                         );
                 }
             }
-        }    
-        
+        }
+
         $res = @$zip->extractTo($target);
         if ($res !== true) {
             require_once 'Zend/Filter/Exception.php';

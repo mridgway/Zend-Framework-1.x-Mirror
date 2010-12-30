@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DojoTest.php 23368 2010-11-18 19:56:30Z bittarman $
+ * @version    $Id: DojoTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_Dojo_View_Helper_DojoTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_View_Helper_DojoTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Dojo_View_Helper_Dojo */
 require_once 'Zend/Dojo/View/Helper/Dojo.php';
@@ -801,7 +799,6 @@ function() {
     }
 
     /**
-     * @see   ZF-3962
      * @group ZF-3962
      */
     public function testHelperShouldAllowDisablingParseOnLoadWithDeclarativeStyle()

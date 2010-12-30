@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SizeTest.php 20454 2010-01-20 22:50:59Z thomas $
+ * @version    $Id: SizeTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Validate_File_SizeTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Validate_File_SizeTest::main");
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Validate_File_Size

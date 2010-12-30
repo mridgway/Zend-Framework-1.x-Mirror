@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NotEmptyTest.php 22659 2010-07-24 15:36:42Z thomas $
+ * @version    $Id: NotEmptyTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_Validate_NotEmptyTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Validate_NotEmptyTest::main");
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Validate_NotEmpty
@@ -535,7 +530,7 @@ class Zend_Validate_NotEmptyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3236
+     * @group ZF-3236
      */
     public function testStringWithZeroShouldNotBeTreatedAsEmpty()
     {

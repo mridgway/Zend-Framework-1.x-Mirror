@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OnlineTest.php 23224 2010-10-22 13:45:57Z matthew $
+ * @version    $Id: OnlineTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /**
  * @see Zend_Service_Amazon
@@ -111,7 +106,7 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
 
     /**
      * Get object using streaming and temp files
-     * 
+     *
      */
     public function testGetObjectStream()
     {
@@ -121,36 +116,36 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'The test did not return stream response');
         $this->assertTrue(is_resource($response->getStream()), 'Request does not contain stream!');
-        
+
         $stream_name = $response->getStreamName();
-     
+
         $stream_read = stream_get_contents($response->getStream());
         $file_read = file_get_contents($stream_name);
-        
+
         $this->assertEquals("testdata", $stream_read, 'Downloaded stream does not seem to match!');
         $this->assertEquals("testdata", $file_read, 'Downloaded file does not seem to match!');
     }
-    
+
     /**
      * Get object using streaming and specific files
-     * 
+     *
      */
     public function testGetObjectStreamNamed()
     {
         $this->_amazon->createBucket($this->_bucket);
         $this->_amazon->putObject($this->_bucket."/zftest", "testdata");
         $outfile = tempnam(sys_get_temp_dir(), "output");
-  
+
         $response = $this->_amazon->getObjectStream($this->_bucket."/zftest", $outfile);
 
         $this->assertTrue($response instanceof Zend_Http_Response_Stream, 'The test did not return stream response');
         $this->assertTrue(is_resource($response->getStream()), 'Request does not contain stream!');
-        
+
         $this->assertEquals($outfile, $response->getStreamName());
-             
+
         $stream_read = stream_get_contents($response->getStream());
         $file_read = file_get_contents($outfile);
-        
+
         $this->assertEquals("testdata", $stream_read, 'Downloaded stream does not seem to match!');
         $this->assertEquals("testdata", $file_read, 'Downloaded file does not seem to match!');
     }
@@ -253,7 +248,7 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
         $fdata = $this->_amazon->getObject($object);
         $this->assertEquals($data, $fdata);
     }
-    
+
     public function testPutFile()
     {
         $filedir = dirname(__FILE__)."/_files/";
@@ -275,7 +270,7 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
         $this->_fileTest($filedir."testdata.html", $this->_bucket."/zftestfile3", null, 'text/html', true);
         $this->_fileTest($filedir."testdata.html", $this->_bucket."/zftestfile3.html", 'text/plain', 'text/plain', true);
     }
-    
+
     public function testPutNoFile()
     {
         $filedir = dirname(__FILE__)."/_files/";

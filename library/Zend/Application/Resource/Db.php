@@ -17,7 +17,7 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Db.php 22544 2010-07-10 15:01:37Z freak $
+ * @version    $Id: Db.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -161,7 +161,7 @@ class Zend_Application_Resource_Db extends Zend_Application_Resource_ResourceAbs
 
     /**
      * Set the default metadata cache
-     * 
+     *
      * @param string|Zend_Cache_Core $cache
      * @return Zend_Application_Resource_Db
      */

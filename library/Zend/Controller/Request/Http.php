@@ -16,7 +16,7 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Http.php 23414 2010-11-20 10:56:11Z bittarman $
+ * @version    $Id: Http.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /** @see Zend_Controller_Request_Abstract */
@@ -622,20 +622,20 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
             if ($pos = strpos($requestUri, '?')) {
                 $requestUri = substr($requestUri, 0, $pos);
             }
-            
+
             $requestUri = urldecode($requestUri);
 
             if (null !== $baseUrl
-                && ((!empty($baseUrl) && 0 === strpos($requestUri, $baseUrl)) 
+                && ((!empty($baseUrl) && 0 === strpos($requestUri, $baseUrl))
                     || empty($baseUrl))
                     && false === ($pathInfo = substr($requestUri, strlen($baseUrl)))
-            ){ 
-                // If substr() returns false then PATH_INFO is set to an empty string 
+            ){
+                // If substr() returns false then PATH_INFO is set to an empty string
                 $pathInfo = '';
-            } elseif (null === $baseUrl 
+            } elseif (null === $baseUrl
                     || (!empty($baseUrl) && false === strpos($requestUri, $baseUrl))
-            ) { 
-                $pathInfo = $requestUri; 
+            ) {
+                $pathInfo = $requestUri;
             }
         }
 

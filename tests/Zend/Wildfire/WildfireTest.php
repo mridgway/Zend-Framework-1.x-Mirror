@@ -17,14 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: WildfireTest.php 23066 2010-10-09 23:29:20Z cadorn $
+ * @version    $Id: WildfireTest.php 23532 2010-12-17 18:36:35Z cadorn $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Wildfire_WildfireTest::main');
 }
-
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /** Zend_Wildfire_Channel_HttpHeaders */
 require_once 'Zend/Wildfire/Channel/HttpHeaders.php';
@@ -156,13 +154,13 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->_request->setUserAgentExtensionEnabled(false);
 
         $this->assertFalse($channel->isReady(true));
-        
+
         $this->_request->setUserAgentExtensionEnabled(true, 'User-Agent');
-        
+
         $this->assertTrue($channel->isReady(true));
 
         $this->_request->setUserAgentExtensionEnabled(true, 'X-FirePHP-Version');
-        
+
         $this->assertTrue($channel->isReady(true));
     }
 
@@ -179,11 +177,11 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($channel->isReady());
 
         $this->_request->setUserAgentExtensionEnabled(true, 'User-Agent');
-        
+
         $this->assertTrue($channel->isReady());
 
         $this->_request->setUserAgentExtensionEnabled(true, 'X-FirePHP-Version');
-        
+
         $this->assertTrue($channel->isReady());
     }
 
@@ -599,6 +597,54 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
         $headers['X-Wf-1-1-1-1'] = '50|[{"Type":"GROUP_START","Label":"Test Group"},null]|';
+        $headers['X-Wf-1-1-1-2'] = '31|[{"Type":"LOG"},"Test Message"]|';
+        $headers['X-Wf-1-1-1-3'] = '27|[{"Type":"GROUP_END"},null]|';
+
+        $this->assertTrue($this->_response->verifyHeaders($headers));
+    }
+
+    /**
+     * @group ZF-10761
+     */
+    public function testMessageGroupsWithCollapsedTrueOption()
+    {
+        $this->_setupWithFrontController();
+ 
+        Zend_Wildfire_Plugin_FirePhp::group('Test Group', array('Collapsed' => true));
+        Zend_Wildfire_Plugin_FirePhp::send('Test Message');
+        Zend_Wildfire_Plugin_FirePhp::groupEnd();
+
+        $this->_controller->dispatch();
+
+        $headers = array();
+        $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2';
+        $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
+        $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
+        $headers['X-Wf-1-1-1-1'] = '69|[{"Type":"GROUP_START","Label":"Test Group","Collapsed":"true"},null]|';
+        $headers['X-Wf-1-1-1-2'] = '31|[{"Type":"LOG"},"Test Message"]|';
+        $headers['X-Wf-1-1-1-3'] = '27|[{"Type":"GROUP_END"},null]|';
+
+        $this->assertTrue($this->_response->verifyHeaders($headers));
+    }
+
+    /**
+     * @group ZF-10761
+     */
+    public function testMessageGroupsWithCollapsedFalseOption()
+    {
+        $this->_setupWithFrontController();
+ 
+        Zend_Wildfire_Plugin_FirePhp::group('Test Group', array('Collapsed' => false));
+        Zend_Wildfire_Plugin_FirePhp::send('Test Message');
+        Zend_Wildfire_Plugin_FirePhp::groupEnd();
+
+        $this->_controller->dispatch();
+
+        $headers = array();
+        $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2';
+        $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
+        $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
+        $headers['X-Wf-1-1-1-1'] = '70|[{"Type":"GROUP_START","Label":"Test Group","Collapsed":"false"},null]|';
         $headers['X-Wf-1-1-1-2'] = '31|[{"Type":"LOG"},"Test Message"]|';
         $headers['X-Wf-1-1-1-3'] = '27|[{"Type":"GROUP_END"},null]|';
 

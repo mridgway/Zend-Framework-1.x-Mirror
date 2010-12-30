@@ -17,7 +17,7 @@
  * @subpackage Amazon_S3
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: S3.php 23224 2010-10-22 13:45:57Z matthew $
+ * @version    $Id: S3.php 23486 2010-12-10 04:05:30Z mjh_ca $
  */
 
 /**
@@ -557,11 +557,11 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Amazon_Abstract
     /**
      * Make a request to Amazon S3
      *
-     * @param  string $method	Request method
-     * @param  string $path		Path to requested object
-     * @param  array  $params	Request parameters
-     * @param  array  $headers	HTTP headers
-     * @param  string|resource $data		Request data
+     * @param  string $method    Request method
+     * @param  string $path        Path to requested object
+     * @param  array  $params    Request parameters
+     * @param  array  $headers    HTTP headers
+     * @param  string|resource $data        Request data
      * @return Zend_Http_Response
      */
     public function _makeRequest($method, $path='', $params=null, $headers=array(), $data=null)

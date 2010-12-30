@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ControllerFile.php 23204 2010-10-21 15:35:21Z ralph $
+ * @version    $Id: ControllerFile.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -43,7 +43,7 @@ class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Cont
      * @var string
      */
     protected $_moduleName = null;
-    
+
     /**
      * @var string
      */
@@ -102,7 +102,7 @@ class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Cont
     {
         $className = ($this->_moduleName) ? ucfirst($this->_moduleName) . '_' : '';
         $className .= ucfirst($this->_controllerName) . 'Controller';
-        
+
         $codeGenFile = new Zend_CodeGenerator_Php_File(array(
             'fileName' => $this->getPath(),
             'classes' => array(

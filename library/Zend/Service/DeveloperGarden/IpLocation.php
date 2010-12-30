@@ -17,7 +17,7 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IpLocation.php 20166 2010-01-09 19:00:17Z bkarwin $
+ * @version    $Id: IpLocation.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -68,7 +68,7 @@ require_once 'Zend/Service/DeveloperGarden/Request/IpLocation/LocateIPRequest.ph
  * @author     Marco Kaiser
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_DeveloperGarden_IpLocation 
+class Zend_Service_DeveloperGarden_IpLocation
     extends Zend_Service_DeveloperGarden_Client_ClientAbstract
 {
     /**

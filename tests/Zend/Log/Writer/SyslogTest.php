@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SyslogTest.php 22977 2010-09-19 12:44:00Z intiilapa $
+ * @version    $Id: SyslogTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Log_Writer_SyslogTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Log_Writer_Syslog */
 require_once 'Zend/Log/Writer/Syslog.php';
@@ -107,6 +102,23 @@ class Zend_Log_Writer_SyslogTest extends PHPUnit_Framework_TestCase
                            ->setApplicationName('my_app');
 
         $this->assertTrue($instance instanceof Zend_Log_Writer_Syslog);
+    }
+
+    /**
+     * @group ZF-10769
+     */
+    public function testPastFacilityViaConstructor()
+    {
+        $writer = new WriterSyslogCustom(array('facility' => LOG_USER));
+        $this->assertEquals(LOG_USER, $writer->getFacility());
+    }
+}
+
+class WriterSyslogCustom extends Zend_Log_Writer_Syslog
+{
+    public function getFacility()
+    {
+        return $this->_facility;
     }
 }
 

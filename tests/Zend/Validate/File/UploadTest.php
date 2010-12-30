@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: UploadTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: UploadTest.php 23570 2010-12-20 08:38:30Z mjh_ca $
  */
 
 // Call Zend_Validate_File_UploadTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Validate_File_UploadTest::main");
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Validate_File_Upload
@@ -257,6 +252,28 @@ class Zend_Validate_File_UploadTest extends PHPUnit_Framework_TestCase
         $validator->setFiles($files);
         $this->assertEquals($files, $validator->getFiles());
     }
+
+    /**
+     * @group ZF-10738
+     */
+    public function testGetFilesReturnsEmptyArrayWhenFilesSuperglobalIsNull()
+    {
+        $_FILES = NULL;
+        $validator = new Zend_Validate_File_Upload();
+        $validator->setFiles();
+        $this->assertEquals(array(), $validator->getFiles());
+    }
+
+    /**
+     * @group ZF-10738
+     */
+    public function testGetFilesReturnsEmptyArrayAfterSetFilesIsCalledWithNull()
+    {
+        $validator = new Zend_Validate_File_Upload();
+        $validator->setFiles(NULL);
+        $this->assertEquals(array(), $validator->getFiles());
+    }
+
 }
 
 // Call Zend_Validate_File_UploadTest::main() if this source file is executed directly.

@@ -24,12 +24,6 @@
  * This code specifically tests for ZF-7650
  */
 
-/** PHPUnit Test Case */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** TestHelp.php */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
-
 /** Zend_Queue */
 require_once 'Zend/Queue.php';
 

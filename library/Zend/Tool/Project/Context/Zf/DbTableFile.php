@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbTableFile.php 20851 2010-02-02 21:45:51Z ralph $
+ * @version    $Id: DbTableFile.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -35,9 +35,9 @@ class Zend_Tool_Project_Context_Zf_DbTableFile extends Zend_Tool_Project_Context
 {
 
     protected $_dbTableName = null;
-    
+
     protected $_actualTableName = null;
-    
+
     /**
      * getName()
      *
@@ -59,7 +59,7 @@ class Zend_Tool_Project_Context_Zf_DbTableFile extends Zend_Tool_Project_Context
         $this->_filesystemName = ucfirst($this->_dbTableName) . '.php';
         parent::init();
     }
-    
+
     public function getPersistentAttributes()
     {
         return array('dbTableName' => $this->_dbTableName);
@@ -68,7 +68,7 @@ class Zend_Tool_Project_Context_Zf_DbTableFile extends Zend_Tool_Project_Context
     public function getContents()
     {
         $className = $this->getFullClassName($this->_dbTableName, 'Model_DbTable');
-        
+
         $codeGenFile = new Zend_CodeGenerator_Php_File(array(
             'fileName' => $this->getPath(),
             'classes' => array(
@@ -82,11 +82,11 @@ class Zend_Tool_Project_Context_Zf_DbTableFile extends Zend_Tool_Project_Context
                             'defaultValue' => $this->_actualTableName
                             ))
                         ),
-                
+
                     ))
                 )
             ));
         return $codeGenFile->generate();
     }
-    
+
 }

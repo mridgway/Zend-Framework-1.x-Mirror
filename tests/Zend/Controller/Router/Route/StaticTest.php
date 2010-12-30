@@ -17,10 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 23187 2010-10-20 18:42:37Z matthew $
+ * @version    $Id: StaticTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Controller_Router_Route */
 require_once 'Zend/Controller/Router/Route/Static.php';

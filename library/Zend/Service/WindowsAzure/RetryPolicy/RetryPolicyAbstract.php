@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage RetryPolicy
- * @version    $Id: RetryPolicyAbstract.php 20785 2010-01-31 09:43:03Z mikaelkael $
+ * @version    $Id: RetryPolicyAbstract.php 23484 2010-12-10 03:57:59Z mjh_ca $
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -46,26 +46,26 @@ abstract class Zend_Service_WindowsAzure_RetryPolicy_RetryPolicyAbstract
 {
     /**
      * Execute function under retry policy
-     * 
+     *
      * @param string|array $function       Function to execute
      * @param array        $parameters     Parameters for function call
      * @return mixed
      */
     public abstract function execute($function, $parameters = array());
-    
+
     /**
      * Create a Zend_Service_WindowsAzure_RetryPolicy_NoRetry instance
-     * 
+     *
      * @return Zend_Service_WindowsAzure_RetryPolicy_NoRetry
      */
     public static function noRetry()
     {
         return new Zend_Service_WindowsAzure_RetryPolicy_NoRetry();
     }
-    
+
     /**
      * Create a Zend_Service_WindowsAzure_RetryPolicy_RetryN instance
-     * 
+     *
      * @param int $count                    Number of retries
      * @param int $intervalBetweenRetries   Interval between retries (in milliseconds)
      * @return Zend_Service_WindowsAzure_RetryPolicy_RetryN

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CoreTest.php 22651 2010-07-21 04:19:44Z ramon $
+ * @version    $Id: CoreTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
@@ -27,11 +27,6 @@ require_once 'Zend/Cache.php';
 require_once 'Zend/Cache/Core.php';
 require_once 'Zend/Cache/Backend/File.php'; // TODO : use only Test backend ?
 require_once 'Zend/Cache/Backend/Test.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 require_once 'Zend/Config.php';
 

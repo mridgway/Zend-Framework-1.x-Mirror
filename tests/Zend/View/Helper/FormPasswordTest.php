@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormPasswordTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FormPasswordTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_View_Helper_FormPasswordTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_FormPasswordTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View.php';
 require_once 'Zend/View/Helper/FormPassword.php';
@@ -76,7 +74,7 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-1666
+     * @group ZF-1666
      */
     public function testCanDisableElement()
     {
@@ -90,7 +88,7 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-1666
+     * @group ZF-1666
      */
     public function testDisablingElementDoesNotRenderHiddenElements()
     {
@@ -123,7 +121,7 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-2860
+     * @group ZF-2860
      */
     public function testShouldRenderValueWhenRenderPasswordFlagPresentAndTrue()
     {
@@ -132,7 +130,7 @@ class Zend_View_Helper_FormPasswordTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-2860
+     * @group ZF-2860
      */
     public function testRenderPasswordAttribShouldNeverBeRendered()
     {

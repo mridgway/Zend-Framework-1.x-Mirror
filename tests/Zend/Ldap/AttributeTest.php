@@ -17,13 +17,9 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AttributeTest.php 22161 2010-05-14 10:11:10Z sgehrig $
+ * @version    $Id: AttributeTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
-/**
- * Test helper
- */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 /**
  * Zend_Ldap_Attribute
  */

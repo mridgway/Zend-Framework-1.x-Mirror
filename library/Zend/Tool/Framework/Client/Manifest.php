@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Manifest.php 20785 2010-01-31 09:43:03Z mikaelkael $
+ * @version    $Id: Manifest.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -140,7 +140,7 @@ class Zend_Tool_Framework_Client_Manifest
                 if ($specialty == '_Global') {
                     continue;
                 }
-                
+
                 $metadatas[] = new Zend_Tool_Framework_Metadata_Tool(array(
                     'name'            => 'normalizedSpecialtyName',
                     'value'           => $lowerFilter->filter($specialty),

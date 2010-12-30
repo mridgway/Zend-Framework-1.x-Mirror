@@ -17,10 +17,9 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RssTest.php 22688 2010-07-26 19:12:53Z ralph $
+ * @version    $Id: RssTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Feed/Reader.php';
 require_once 'Zend/Registry.php';
 

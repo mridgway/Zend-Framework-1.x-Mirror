@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActionTest.php 20420 2010-01-19 14:05:58Z alexander $
+ * @version    $Id: ActionTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /** Zend_Pdf_Action */
@@ -41,9 +41,6 @@ require_once 'Zend/Pdf/RecursivelyIteratableObjectsContainer.php';
 /** Zend_Pdf_ElementFactory */
 require_once 'Zend/Pdf/ElementFactory.php';
 
-
-/** PHPUnit Test Case */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**

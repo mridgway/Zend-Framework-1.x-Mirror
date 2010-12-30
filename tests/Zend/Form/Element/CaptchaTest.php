@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CaptchaTest.php 22328 2010-05-30 15:09:06Z bittarman $
+ * @version    $Id: CaptchaTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Form_Element_CaptchaTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Element_CaptchaTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Form_Element_Captcha */
 require_once 'Zend/Form/Element/Captcha.php';
@@ -45,7 +43,6 @@ class Zend_Form_Element_CaptchaTest extends PHPUnit_Framework_TestCase
 {
     public static function main()
     {
-        require_once 'PHPUnit/TextUI/TestRunner.php';
 
         $suite  = new PHPUnit_Framework_TestSuite('Zend_Form_Element_CaptchaTest');
         PHPUnit_TextUI_TestRunner::run($suite);

@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerTest.php 22223 2010-05-21 08:06:47Z jan $
+ * @version    $Id: ServerTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-require_once dirname(__FILE__)."/../../TestHelper.php";
-
-/** PHPUnit Test Case */
-require_once "PHPUnit/Framework/TestCase.php";
 
 /** Zend_Soap_Server */
 require_once 'Zend/Soap/Server.php';
@@ -96,7 +91,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         $server = new Zend_Soap_Server(null, array(
             'features' => SOAP_SINGLE_ELEMENT_ARRAYS
         ));
-        
+
         $this->assertEquals(
             SOAP_SINGLE_ELEMENT_ARRAYS,
             $server->getSoapFeatures()

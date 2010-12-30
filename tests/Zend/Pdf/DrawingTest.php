@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DrawingTest.php 20469 2010-01-21 16:09:24Z alexander $
+ * @version    $Id: DrawingTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /** Zend_Pdf */
@@ -44,9 +44,6 @@ require_once 'Zend/Pdf/Image.php';
 /** Zend_Pdf_Font */
 require_once 'Zend/Pdf/Font.php';
 
-
-/** PHPUnit Test Case */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

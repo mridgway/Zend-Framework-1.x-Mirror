@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IniTest.php 21983 2010-04-25 08:09:09Z jan $
+ * @version    $Id: IniTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * Zend_Config
@@ -246,7 +241,7 @@ ECS;
             $this->assertContains('Value can not contain double quotes "', $expected->getMessage());
         }
     }
-    
+
     /**
      * @group ZF-6289
      */
@@ -259,10 +254,10 @@ ECS;
             'four'  => array('type' => 'section'),
             'five'  => 'element'
         ));
-        
+
         $writer = new Zend_Config_Writer_Ini;
         $iniString = $writer->setConfig($config)->render($config);
-        
+
         $expected = <<<ECS
 one = "element"
 three = "element"
@@ -275,7 +270,7 @@ type = "section"
 
 
 ECS;
-        
+
         $this->assertEquals(
             $expected,
             $iniString

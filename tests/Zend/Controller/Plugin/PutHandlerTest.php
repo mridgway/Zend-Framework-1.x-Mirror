@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PutHandlerTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: PutHandlerTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_Plugin_PutHandlerTest::main() if this source file is executed directly.
@@ -25,7 +25,6 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Plugin_PutHandlerTest::main");
 }
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'Zend/Controller/Plugin/PutHandler.php';
 require_once 'Zend/Controller/Request/HttpTestCase.php';
 require_once 'Zend/Controller/Front.php';
@@ -64,7 +63,6 @@ class Zend_Controller_Plugin_PutHandlerTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Plugin_PutHandlerTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);

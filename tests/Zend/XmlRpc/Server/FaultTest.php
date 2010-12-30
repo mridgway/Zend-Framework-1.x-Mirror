@@ -17,17 +17,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: FaultTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version $Id: FaultTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_XmlRpc_Server_FaultTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(__FILE__) . '/../../../TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_Server_FaultTest::main");
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Fault.php';
@@ -52,7 +49,6 @@ class Zend_XmlRpc_Server_FaultTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_XmlRpc_Server_FaultTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);

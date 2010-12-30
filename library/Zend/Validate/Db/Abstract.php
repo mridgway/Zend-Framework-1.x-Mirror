@@ -16,7 +16,7 @@
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 23356 2010-11-18 15:59:10Z ralph $
+ * @version    $Id: Abstract.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -276,7 +276,7 @@ abstract class Zend_Validate_Db_Abstract extends Zend_Validate_Abstract
 
     /**
      * Sets the select object to be used by the validator
-     * 
+     *
      * @param Zend_Db_Select $select
      * @return Zend_Validate_Db_Abstract
      */

@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpTest.php 20382 2010-01-18 16:24:36Z ralph $
+ * @version    $Id: HttpTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
-
-/**
- * Test helper
- */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * @see Zend_Uri
@@ -34,11 +29,6 @@ require_once 'Zend/Uri.php';
  * @see Zend_Uri_Http
  */
 require_once 'Zend/Uri/Http.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -51,12 +41,12 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
 {
-    
+
     public function setup()
     {
         Zend_Uri::setConfig(array('allow_unwise' => false));
     }
-    
+
     /**
      * Tests for proper URI decomposition
      */
@@ -89,7 +79,7 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
      * Make sure an exception is thrown when trying to use fromString() with a
      * non-HTTP scheme
      *
-     * @see http://framework.zend.com/issues/browse/ZF-4395
+     * @group ZF-4395
      *
      * @expectedException Zend_Uri_Exception
      */
@@ -242,7 +232,7 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
             'http://example.com/?q=^',
             'http://example.com/?q=`',
         );
-        
+
         foreach ($unwise as $uri) {
             $this->assertFalse(Zend_Uri::check($uri), "failed for URI $uri");
         }

@@ -17,17 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RegistryTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: RegistryTest.php 23545 2010-12-18 01:42:57Z ramon $
  */
 
 // Call Zend_View_Helper_Placeholder_RegistryTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_Placeholder_RegistryTest::main");
 }
-
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 /** Zend_View_Helper_Placeholder_Registry */
 require_once 'Zend/View/Helper/Placeholder/Registry.php';
@@ -57,7 +53,6 @@ class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCa
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_Placeholder_RegistryTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -212,10 +207,29 @@ class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCa
         $registered = Zend_Registry::get(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY);
         $this->assertSame($registry, $registered);
     }
+
+    /**
+     * @group ZF-10793
+     */
+    public function testSetValueCreateContainer()
+    {
+        $this->registry->setContainerClass('Zend_View_Helper_Placeholder_RegistryTest_Container');
+        $data = array(
+            'ZF-10793'
+        );
+        $container = $this->registry->createContainer('foo', $data);
+        $this->assertEquals(array('ZF-10793'), $container->data);
+    }
 }
 
 class Zend_View_Helper_Placeholder_RegistryTest_Container extends Zend_View_Helper_Placeholder_Container_Abstract
 {
+    public $data = array();
+
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
 }
 
 class Zend_View_Helper_Placeholder_RegistryTest_BogusContainer

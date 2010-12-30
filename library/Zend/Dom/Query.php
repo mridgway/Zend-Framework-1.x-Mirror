@@ -16,7 +16,7 @@
  * @package    Zend_Dom
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Query.php 23062 2010-10-08 14:05:45Z matthew $
+ * @version    $Id: Query.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -90,8 +90,8 @@ class Zend_Dom_Query
 
     /**
      * Set document encoding
-     * 
-     * @param  string $encoding 
+     *
+     * @param  string $encoding
      * @return Zend_Dom_Query
      */
     public function setEncoding($encoding)
@@ -102,7 +102,7 @@ class Zend_Dom_Query
 
     /**
      * Get document encoding
-     * 
+     *
      * @return null|string
      */
     public function getEncoding()
@@ -205,7 +205,7 @@ class Zend_Dom_Query
 
     /**
      * Get any DOMDocument errors found
-     * 
+     *
      * @return false|array
      */
     public function getDocumentErrors()

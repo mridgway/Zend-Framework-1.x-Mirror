@@ -17,7 +17,7 @@
  * @subpackage Parser
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Token.php 20277 2010-01-14 14:17:12Z kokx $
+ * @version    $Id: Token.php 23486 2010-12-10 04:05:30Z mjh_ca $
  */
 
 /**
@@ -260,7 +260,7 @@ class Zend_Markup_Token
         return $this->_children;
     }
 
-	/**
+    /**
      * Does this token have any children
      *
      * @return bool

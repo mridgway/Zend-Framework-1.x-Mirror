@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Config.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Config.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -72,13 +72,13 @@ class Zend_Tool_Framework_Client_Config
 
         $this->_configFilepath = $configFilepath;
         $this->loadConfig($configFilepath);
-        
+
         return $this;
     }
 
     /**
      * Load the configuration from the given path.
-     * 
+     *
      * @param string $configFilepath
      */
     protected function loadConfig($configFilepath)
@@ -108,7 +108,7 @@ class Zend_Tool_Framework_Client_Config
 
     /**
      * Return the filepath of the configuration.
-     * 
+     *
      * @return string
      */
     public function getConfigFilepath()
@@ -118,7 +118,7 @@ class Zend_Tool_Framework_Client_Config
 
     /**
      * Get a configuration value.
-     * 
+     *
      * @param string $name
      * @param string $defaultValue
      * @return mixed

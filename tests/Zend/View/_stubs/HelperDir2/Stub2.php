@@ -17,12 +17,11 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Stub2.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Stub2.php 23510 2010-12-15 18:34:36Z andries $
  */
 
-require_once 'PHPUnit/Util/Filter.php';
 
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
 
 /**
  * @category   Zend

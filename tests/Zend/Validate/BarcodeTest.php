@@ -17,13 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BarcodeTest.php 22540 2010-07-08 21:02:24Z thomas $
+ * @version    $Id: BarcodeTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /** Zend_Validate_Barcode */
 require_once 'Zend/Validate/Barcode.php';

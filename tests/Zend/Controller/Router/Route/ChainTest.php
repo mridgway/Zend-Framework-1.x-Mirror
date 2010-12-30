@@ -17,14 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ChainTest.php 23187 2010-10-20 18:42:37Z matthew $
+ * @version    $Id: ChainTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_Route_ChainTest::main');
 }
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Config */
 require_once 'Zend/Config.php';
@@ -81,7 +79,6 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Router_Route_ChainTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -129,13 +126,13 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
             array('foo' => 'bar'),
             array('foo' => '[a-z]{3}')
         );
-        
+
         $bar = new Zend_Controller_Router_Route_Module(array(
             'module' => 0,
             'controller' => 1,
             'action' => 2
         ));
-        
+
         $chain = $foo->chain($bar);
 
         $request = new Zend_Controller_Router_ChainTest_Request('http://www.zend.com/');
@@ -785,7 +782,7 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
             'action'     => 'index',
         ), $values);
     }
-    
+
     protected function _getRouter()
     {
         $router = new Zend_Controller_Router_Rewrite();

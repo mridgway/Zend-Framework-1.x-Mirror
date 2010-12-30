@@ -16,7 +16,7 @@
  * @package    UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestConfiguration.php.dist 23154 2010-10-18 17:41:06Z mabe $
+ * @version    $Id: TestConfiguration.php.dist 23512 2010-12-15 19:06:06Z mjh_ca $
  */
 
 /**
@@ -570,6 +570,7 @@ define('TESTS_ZEND_MAIL_SMTP_AUTH', false);
  *
  * Selectively define the below in order to run tests for them.
  */
+define('TESTS_ZEND_QUEUE_ACTIVEMQ_ENABLED', false);
 define('TESTS_ZEND_QUEUE_ACTIVEMQ_SCHEME', false);
 define('TESTS_ZEND_QUEUE_ACTIVEMQ_HOST', false);
 define('TESTS_ZEND_QUEUE_ACTIVEMQ_PORT', false);

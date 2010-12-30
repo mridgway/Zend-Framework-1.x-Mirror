@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 23382 2010-11-18 22:50:50Z bittarman $
+ * @version    $Id: StaticTest.php 23510 2010-12-15 18:34:36Z andries $
  */
 
 
@@ -25,9 +25,6 @@
  * @see Zend_Db_TestSetup
  */
 require_once 'Zend/Db/TestSetup.php';
-
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
 /**

@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewRendererTest.php 21141 2010-02-23 06:09:18Z ralph $
+ * @version    $Id: ViewRendererTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Action_Helper_ViewRendererTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
 require_once 'Zend/Controller/Front.php';
@@ -841,7 +839,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $body = $this->response->getBody();
         $this->assertContains('SampleZfHelper invoked', $body, 'Received ' . $body);
     }
-    
+
     protected function _normalizePath($path)
     {
         return str_replace(array('/', '\\'), '/', $path);

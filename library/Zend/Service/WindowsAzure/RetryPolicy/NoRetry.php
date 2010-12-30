@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Service_WindowsAzure
  * @subpackage RetryPolicy
- * @version    $Id: NoRetry.php 20785 2010-01-31 09:43:03Z mikaelkael $
+ * @version    $Id: NoRetry.php 23484 2010-12-10 03:57:59Z mjh_ca $
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -36,7 +36,7 @@ class Zend_Service_WindowsAzure_RetryPolicy_NoRetry extends Zend_Service_Windows
 {
     /**
      * Execute function under retry policy
-     * 
+     *
      * @param string|array $function       Function to execute
      * @param array        $parameters     Parameters for function call
      * @return mixed
@@ -44,7 +44,7 @@ class Zend_Service_WindowsAzure_RetryPolicy_NoRetry extends Zend_Service_Windows
     public function execute($function, $parameters = array())
     {
         $returnValue = null;
-        
+
         try
         {
             $returnValue = call_user_func_array($function, $parameters);

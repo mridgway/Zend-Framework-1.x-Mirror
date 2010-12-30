@@ -17,14 +17,9 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OfflineTest.php 21883 2010-04-16 14:57:07Z dragonbe $
+ * @version    $Id: OfflineTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Service_Amazon
@@ -328,11 +323,11 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
             ))
         );
     }
-    
+
 	/**
      * Testing if Amazon service component can handle return values where the
      * item-list is not empty
-     * 
+     *
      * @group ZF-9547
      */
     public function testAmazonComponentHandlesValidBookResults()
@@ -340,7 +335,7 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
     	$xml = file_get_contents(dirname(__FILE__)."/_files/amazon-response-valid.xml");
         $dom = new DOMDocument();
         $dom->loadXML($xml);
-        
+
     	$result = new Zend_Service_Amazon_ResultSet($dom);
 
     	$currentItem = null;
@@ -352,11 +347,11 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
     	$this->assertType('Zend_Service_Amazon_Item', $currentItem);
     	$this->assertEquals('0754512673', $currentItem->ASIN);
     }
-    
+
     /**
      * Testing if Amazon service component can handle return values where the
      * item-list is empty (no results found)
-     * 
+     *
      * @group ZF-9547
      */
     public function testAmazonComponentHandlesEmptyBookResults()
@@ -364,7 +359,7 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
     	$xml = file_get_contents(dirname(__FILE__)."/_files/amazon-response-invalid.xml");
         $dom = new DOMDocument();
         $dom->loadXML($xml);
-        
+
     	$result = new Zend_Service_Amazon_ResultSet($dom);
 
     	try {

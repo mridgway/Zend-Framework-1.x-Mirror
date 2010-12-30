@@ -17,19 +17,18 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestHelper.php 22818 2010-08-08 17:53:51Z mikaelkael $
+ * @version    $Id: TestHelper.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 /*
  * Include PHPUnit dependencies
  */
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/Framework/IncompleteTestError.php';
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/Runner/Version.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-require_once 'PHPUnit/Util/Filter.php';
+@require_once 'PHPUnit/Framework.php';
+if (!@fopen('PHPUnit/Autoload.php', 'r', true)) {
+    require_once 'PHPUnit/Framework.php'; // < PHPUnit 3.5.5
+} else {
+    require_once 'PHPUnit/Autoload.php'; // >= of PHPUnit 3.5.5
+}
 
 /*
  * Set error reporting to the level to which Zend Framework code must comply.
@@ -66,28 +65,6 @@ if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
 } else {
     require_once $zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php.dist';
 }
-
-if (defined('TESTS_GENERATE_REPORT') && TESTS_GENERATE_REPORT === true &&
-    version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')) {
-
-    /*
-     * Add Zend Framework library/ directory to the PHPUnit code coverage
-     * whitelist. This has the effect that only production code source files
-     * appear in the code coverage report and that all production code source
-     * files, even those that are not covered by a test yet, are processed.
-     */
-    PHPUnit_Util_Filter::addDirectoryToWhitelist($zfCoreLibrary);
-
-    /*
-     * Omit from code coverage reports the contents of the tests directory
-     */
-    foreach (array('.php', '.phtml', '.csv', '.inc') as $suffix) {
-        PHPUnit_Util_Filter::addDirectoryToFilter($zfCoreTests, $suffix);
-    }
-    PHPUnit_Util_Filter::addDirectoryToFilter(PEAR_INSTALL_DIR);
-    PHPUnit_Util_Filter::addDirectoryToFilter(PHP_LIBDIR);
-}
-
 
 /**
  * Start output buffering, if enabled

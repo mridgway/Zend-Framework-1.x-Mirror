@@ -17,11 +17,9 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PodcastRss2Test.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: PodcastRss2Test.php 23522 2010-12-16 20:33:22Z andries $
  */
 
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Feed/Reader.php';
 
 /**
@@ -50,7 +48,7 @@ class Zend_Feed_Reader_Integration_PodcastRss2Test extends PHPUnit_Framework_Tes
         }
         Zend_Date::setOptions(array('format_type'=>'iso'));
     }
-    
+
     public function teardown()
     {
         Zend_Date::setOptions($this->_options);

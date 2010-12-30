@@ -17,23 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GetoptTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: GetoptTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Console_Getopt
  */
 require_once 'Zend/Console/Getopt.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend
@@ -278,7 +268,7 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
         unset($opts->a);
         $this->assertFalse(isset($opts->a));
     }
-    
+
     /**
      * @group ZF-5948
      */
@@ -294,7 +284,7 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
             $this->assertEquals("Parameter #1 to setArguments should be an array",
                 $e->getMessage());
         }
-        
+
         try {
             $opts->addArguments('-b');
             $this->fail('Expected to catch a Zend_Console_Getopt_Exception');
@@ -304,7 +294,7 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
             $this->assertEquals("Parameter #1 to addArguments should be an array",
                 $e->getMessage());
         }
-        
+
     }
 
     public function testGetoptAddArguments()

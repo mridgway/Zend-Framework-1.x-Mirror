@@ -17,9 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: ServerTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version $Id: ServerTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Request.php';
@@ -602,7 +601,7 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-2872
+     * @group ZF-2872
      */
     public function testCanMarshalBase64Requests()
     {

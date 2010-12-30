@@ -48,7 +48,7 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewScript.php 23299 2010-11-05 04:38:14Z matthew $
+ * @version    $Id: ViewScript.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 class Zend_Form_Decorator_ViewScript extends Zend_Form_Decorator_Abstract
 {
@@ -108,7 +108,7 @@ class Zend_Form_Decorator_ViewScript extends Zend_Form_Decorator_Abstract
 
     /**
      * Set view script module
-     * 
+     *
      * @param  string $module
      * @return Zend_Form_Decorator_ViewScript
      */
@@ -120,7 +120,7 @@ class Zend_Form_Decorator_ViewScript extends Zend_Form_Decorator_Abstract
 
     /**
      * Get view script module
-     * 
+     *
      * @return string|null
      */
     public function getViewModule()

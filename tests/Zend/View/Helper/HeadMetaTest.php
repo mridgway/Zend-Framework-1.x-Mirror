@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HeadMetaTest.php 20375 2010-01-18 12:23:37Z mabe $
+ * @version    $Id: HeadMetaTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_View_Helper_HeadMetaTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_HeadMetaTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_View_Helper_HeadMeta */
 require_once 'Zend/View/Helper/HeadMeta.php';

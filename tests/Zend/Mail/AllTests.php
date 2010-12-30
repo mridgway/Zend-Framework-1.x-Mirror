@@ -17,10 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 23424 2010-11-22 22:42:55Z bittarman $
+ * @version    $Id: AllTests.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Mail_AllTests::main');
@@ -39,6 +37,7 @@ require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
 require_once 'Zend/Mail/MessageTest.php';
 require_once 'Zend/Mail/SmtpOfflineTest.php';
+require_once 'Zend/Mail/SmtpProtocolTest.php';
 require_once 'Zend/Mail/SmtpTest.php';
 require_once 'Zend/Mail/FileTransportTest.php';
 
@@ -80,6 +79,7 @@ class Zend_Mail_AllTests
             $suite->addTestSuite('Zend_Mail_MaildirWritableTest');
         }
 	$suite->addTestSuite('Zend_Mail_SmtpOfflineTest');
+	$suite->addTestSuite('Zend_Mail_SmtpProtocolTest');
         if (defined('TESTS_ZEND_MAIL_SMTP_ENABLED') && constant('TESTS_ZEND_MAIL_SMTP_ENABLED') == true) {
             $suite->addTestSuite('Zend_Mail_SmtpTest');
         }

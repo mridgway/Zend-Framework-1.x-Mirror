@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActivemqTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: ActivemqTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 /*
@@ -27,12 +27,6 @@
  * All methods marked not supported are explictly checked for for throwing
  * an exception.
  */
-
-/** PHPUnit Test Case */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/** TestHelp.php */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Queue/Adapter/AdapterTest.php';
 
@@ -46,6 +40,18 @@ require_once 'Zend/Queue/Adapter/AdapterTest.php';
  */
 class Zend_Queue_Adapter_ActivemqTest extends Zend_Queue_Adapter_AdapterTest
 {
+    /**
+     * Test setup
+     */
+    public function setUp()
+    {
+        if (!TESTS_ZEND_QUEUE_ACTIVEMQ_ENABLED) {
+            $this->markTestSkipped('TESTS_ZEND_QUEUE_ACTIVEMQ_ENABLED is not enabled in TestConfiguration.php');
+        }
+        parent::setUp();
+    }
+
+
     /**
      * getAdapterName() is an method to help make AdapterTest work with any
      * new adapters
@@ -63,13 +69,13 @@ class Zend_Queue_Adapter_ActivemqTest extends Zend_Queue_Adapter_AdapterTest
     {
         $driverOptions = array();
         if (defined('TESTS_ZEND_QUEUE_ACTIVEMQ_HOST')) {
-            $driverOptions['host'] = TESTS_ZEND_QUEUE_APACHEMQ_HOST;
+            $driverOptions['host'] = TESTS_ZEND_QUEUE_ACTIVEMQ_HOST;
         }
         if (defined('TESTS_ZEND_QUEUE_ACTIVEMQ_PORT')) {
-            $driverOptions['port'] = TESTS_ZEND_QUEUE_APACHEMQ_PORT;
+            $driverOptions['port'] = TESTS_ZEND_QUEUE_ACTIVEMQ_PORT;
         }
         if (defined('TESTS_ZEND_QUEUE_ACTIVEMQ_SCHEME')) {
-            $driverOptions['scheme'] = TESTS_ZEND_QUEUE_APACHEMQ_SCHEME;
+            $driverOptions['scheme'] = TESTS_ZEND_QUEUE_ACTIVEMQ_SCHEME;
         }
         return array('driverOptions' => $driverOptions);
     }

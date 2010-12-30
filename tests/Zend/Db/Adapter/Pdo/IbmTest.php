@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: IbmTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: IbmTest.php 23510 2010-12-15 18:34:36Z andries $
  */
 
 
@@ -31,9 +31,6 @@ require_once 'Zend/Db/Adapter/Db2Test.php';
  * @see Zend_Db_Adapter_Pdo_Ibm
  */
 require_once 'Zend/Db/Adapter/Pdo/Ibm.php';
-
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
 /**

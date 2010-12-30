@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FileFrontendTest.php 23330 2010-11-14 20:08:09Z mabe $
+ * @version    $Id: FileFrontendTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 /**
@@ -26,11 +26,6 @@
 require_once 'Zend/Cache.php';
 require_once 'Zend/Cache/Frontend/File.php';
 require_once 'Zend/Cache/Backend/Test.php';
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

@@ -17,15 +17,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AllTests.php 23580 2010-12-27 10:58:21Z alexander $
  */
-
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_XmlRpc_AllTests::main');
 }
 
+require_once 'Zend/XmlRpc/BigIntegerValueTest.php';
 require_once 'Zend/XmlRpc/ValueTest.php';
 require_once 'Zend/XmlRpc/RequestTest.php';
 require_once 'Zend/XmlRpc/Request/HttpTest.php';
@@ -56,6 +55,7 @@ class Zend_XmlRpc_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_XmlRpc');
 
+        $suite->addTestSuite('Zend_XmlRpc_BigIntegerValueTest');
         $suite->addTestSuite('Zend_XmlRpc_ValueTest');
         $suite->addTestSuite('Zend_XmlRpc_RequestTest');
         $suite->addTestSuite('Zend_XmlRpc_Request_HttpTest');

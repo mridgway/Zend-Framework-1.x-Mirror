@@ -17,13 +17,10 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: ResponseTest.php 21360 2010-03-07 01:28:57Z lars $
+ * @version $Id: ResponseTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
-require_once dirname(__FILE__)."/../../TestHelper.php";
 require_once 'Zend/XmlRpc/Response.php';
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 /**
  * Test case for Zend_XmlRpc_Response

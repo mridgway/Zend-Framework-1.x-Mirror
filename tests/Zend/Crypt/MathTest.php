@@ -17,11 +17,10 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MathTest.php 23450 2010-11-27 01:58:52Z ramon $
+ * @version    $Id: MathTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 require_once 'Zend/Crypt/Math.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**

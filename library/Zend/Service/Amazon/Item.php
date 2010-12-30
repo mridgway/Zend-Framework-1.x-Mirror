@@ -18,7 +18,7 @@
  * @subpackage Amazon
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Item.php 21883 2010-04-16 14:57:07Z dragonbe $
+ * @version    $Id: Item.php 23589 2010-12-29 13:46:12Z matthew $
  */
 
 
@@ -114,20 +114,20 @@ class Zend_Service_Amazon_Item
      *
      * @param  null|DOMElement $dom
      * @return void
-     * @throws	Zend_Service_Amazon_Exception
-     * 
+     * @throws Zend_Service_Amazon_Exception
+     *
      * @group ZF-9547
      */
     public function __construct($dom)
     {
-    	if (null === $dom) {
-    		require_once 'Zend/Service/Amazon/Exception.php';
-    		throw new Zend_Service_Amazon_Exception('Item element is empty');
-    	}
-    	if (!$dom instanceof DOMElement) {
-    		require_once 'Zend/Service/Amazon/Exception.php';
-    		throw new Zend_Service_Amazon_Exception('Item is not a valid DOM element');
-    	}
+        if (null === $dom) {
+            require_once 'Zend/Service/Amazon/Exception.php';
+            throw new Zend_Service_Amazon_Exception('Item element is empty');
+        }
+        if (!$dom instanceof DOMElement) {
+            require_once 'Zend/Service/Amazon/Exception.php';
+            throw new Zend_Service_Amazon_Exception('Item is not a valid DOM element');
+        }
         $xpath = new DOMXPath($dom->ownerDocument);
         $xpath->registerNamespace('az', 'http://webservices.amazon.com/AWSECommerceService/2005-10-05');
         $this->ASIN = $xpath->query('./az:ASIN/text()', $dom)->item(0)->data;

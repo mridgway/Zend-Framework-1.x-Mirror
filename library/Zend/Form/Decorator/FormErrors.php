@@ -34,7 +34,7 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormErrors.php 22316 2010-05-29 10:03:37Z alab $
+ * @version    $Id: FormErrors.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
 {
@@ -345,7 +345,7 @@ class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
 
     /**
      * Get showCustomFormErrors
-     * 
+     *
      * @return bool
      */
     public function getShowCustomFormErrors()
@@ -375,7 +375,7 @@ class Zend_Form_Decorator_FormErrors extends Zend_Form_Decorator_Abstract
 
     /**
      * Get onlyCustomFormErrors
-     * 
+     *
      * @return bool
      */
     public function getOnlyCustomFormErrors()

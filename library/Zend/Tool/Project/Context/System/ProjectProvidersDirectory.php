@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ProjectProvidersDirectory.php 23202 2010-10-21 15:08:15Z ralph $
+ * @version    $Id: ProjectProvidersDirectory.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -66,13 +66,13 @@ class Zend_Tool_Project_Context_System_ProjectProvidersDirectory
     {
         return 'ProjectProvidersDirectory';
     }
-    
+
     public function loadProviders(Zend_Tool_Framework_Registry_Interface $registry)
     {
         if (file_exists($this->getPath())) {
 
             $providerRepository = $registry->getProviderRepository();
-            
+
             foreach (new DirectoryIterator($this->getPath()) as $item) {
                 if ($item->isFile() && (($suffixStart = strpos($item->getFilename(), 'Provider.php')) !== false)) {
                     $className = substr($item->getFilename(), 0, $suffixStart+8);

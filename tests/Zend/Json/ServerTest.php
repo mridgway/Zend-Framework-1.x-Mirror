@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerTest.php 22237 2010-05-21 23:58:00Z andyfowler $
+ * @version    $Id: ServerTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Json_ServerTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Json_ServerTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Json/Server.php';
 require_once 'Zend/Json/Server/Request.php';
@@ -52,7 +50,6 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Json_ServerTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -328,7 +325,7 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
                      ->setAutoEmitResponse( false );
         $request = $this->server->getRequest();
         $request->setMethod('bar')
-                ->setParams( array( 
+                ->setParams( array(
                     'three' => 3,
                     'two'   => 2,
                     'one'   => 1
@@ -349,7 +346,7 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
                      ->setAutoEmitResponse( false );
         $request = $this->server->getRequest();
         $request->setMethod('bar')
-                ->setParams( array( 
+                ->setParams( array(
                     'three' => 3,
                     'one'   => 1,
                     'two'   => 2,

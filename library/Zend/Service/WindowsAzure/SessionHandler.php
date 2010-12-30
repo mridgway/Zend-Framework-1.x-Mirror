@@ -17,7 +17,7 @@
  * @subpackage Session
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SessionHandler.php 20785 2010-01-31 09:43:03Z mikaelkael $
+ * @version    $Id: SessionHandler.php 23589 2010-12-29 13:46:12Z matthew $
  */
 
 /** Zend_Service_WindowsAzure_Storage_Table */
@@ -39,28 +39,28 @@ class Zend_Service_WindowsAzure_SessionHandler
 {
     /**
      * Table storage
-     * 
+     *
      * @var Zend_Service_WindowsAzure_Storage_Table
      */
     protected $_tableStorage;
-    
+
     /**
      * Session table name
-     * 
+     *
      * @var string
      */
     protected $_sessionTable;
-    
+
     /**
      * Session table partition
-     * 
+     *
      * @var string
      */
     protected $_sessionTablePartition;
-	
+    
     /**
      * Creates a new Zend_Service_WindowsAzure_SessionHandler instance
-     * 
+     *
      * @param Zend_Service_WindowsAzure_Storage_Table $tableStorage Table storage
      * @param string $sessionTable Session table name
      * @param string $sessionTablePartition Session table partition
@@ -75,7 +75,7 @@ class Zend_Service_WindowsAzure_SessionHandler
 	
 	/**
 	 * Registers the current session handler as PHP's session handler
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function register()
@@ -87,38 +87,38 @@ class Zend_Service_WindowsAzure_SessionHandler
                                         array($this, 'destroy'),
                                         array($this, 'gc')
         );
-	}
-	
+    }
+    
     /**
      * Open the session store
-     * 
+     *
      * @return bool
      */
     public function open()
     {
-    	// Make sure table exists
-    	$tableExists = $this->_tableStorage->tableExists($this->_sessionTable);
-    	if (!$tableExists) {
-		    $this->_tableStorage->createTable($this->_sessionTable);
-		}
-		
-		// Ok!
-		return true;
+        // Make sure table exists
+        $tableExists = $this->_tableStorage->tableExists($this->_sessionTable);
+        if (!$tableExists) {
+            $this->_tableStorage->createTable($this->_sessionTable);
+        }
+        
+        // Ok!
+        return true;
     }
 
     /**
      * Close the session store
-     * 
+     *
      * @return bool
      */
     public function close()
     {
         return true;
     }
-    
+
     /**
      * Read a specific session
-     * 
+     *
      * @param int $id Session Id
      * @return string
      */
@@ -138,10 +138,10 @@ class Zend_Service_WindowsAzure_SessionHandler
             return '';
         }
     }
-    
+
     /**
      * Write a specific session
-     * 
+     *
      * @param int $id Session Id
      * @param string $serializedData Serialized PHP object
      */
@@ -150,7 +150,7 @@ class Zend_Service_WindowsAzure_SessionHandler
         $sessionRecord = new Zend_Service_WindowsAzure_Storage_DynamicTableEntity($this->_sessionTablePartition, $id);
         $sessionRecord->sessionExpires = time();
         $sessionRecord->serializedData = base64_encode($serializedData);
-        
+
         $sessionRecord->setAzurePropertyType('sessionExpires', 'Edm.Int32');
 
         try
@@ -162,10 +162,10 @@ class Zend_Service_WindowsAzure_SessionHandler
             $this->_tableStorage->insertEntity($this->_sessionTable, $sessionRecord);
         }
     }
-    
+
     /**
      * Destroy a specific session
-     * 
+     *
      * @param int $id Session Id
      * @return boolean
      */
@@ -179,7 +179,7 @@ class Zend_Service_WindowsAzure_SessionHandler
                 $id
             );
             $this->_tableStorage->deleteEntity($this->_sessionTable, $sessionRecord);
-            
+
             return true;
         }
         catch (Zend_Service_WindowsAzure_Exception $ex)
@@ -187,10 +187,10 @@ class Zend_Service_WindowsAzure_SessionHandler
             return false;
         }
     }
-    
+
     /**
      * Garbage collector
-     * 
+     *
      * @param int $lifeTime Session maximal lifetime
      * @see session.gc_divisor  100
      * @see session.gc_maxlifetime 1440

@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MemoryTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: MemoryTest.php 23554 2010-12-18 15:37:47Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Memory_MemoryTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /** Zend_Memory */
 require_once 'Zend/Memory.php';
@@ -92,6 +87,39 @@ class Zend_Memory_MemoryTest extends PHPUnit_Framework_TestCase
         $memoryManager = Zend_Memory::factory('File', $backendOptions);
         $this->assertTrue($memoryManager instanceof Zend_Memory_Manager);
         unset($memoryManager);
+    }
+
+    /**
+     * @group ZF-9883
+     * @dataProvider Zend_Memory_MemoryTest::providerCacheBackend
+     */
+    public function testFactoryCacheBackendStandards($backend)
+    {
+        try {
+            $memoryManager = Zend_Memory::factory($backend);
+        } catch(Zend_Cache_Exception $exception) {
+            $this->markTestSkipped($exception->getMessage());
+        }
+        $this->assertTrue($memoryManager instanceof Zend_Memory_Manager);
+    }
+
+    /**
+     * @group ZF-9883
+     */
+    public function providerCacheBackend()
+    {
+        return array(
+            array('Apc'),
+            array('File'),
+            array('Libmemcached'),
+            array('Memcached'),
+            array('Sqlite'),
+            array('TwoLevels'),
+            array('Xcache'),
+            array('ZendPlatform'),
+            array('ZendServer_Disk'),
+            array('ZendServer_ShMem')
+        );
     }
 }
 

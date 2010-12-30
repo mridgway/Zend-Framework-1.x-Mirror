@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Container.php 20851 2010-02-02 21:45:51Z ralph $
+ * @version    $Id: Container.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -50,7 +50,7 @@ class Zend_Tool_Project_Profile_Resource_Container implements RecursiveIterator,
      * @var bool
      */
     protected $_appendable = true;
-    
+
     /**
      * @var array
      */
@@ -253,10 +253,10 @@ class Zend_Tool_Project_Profile_Resource_Container implements RecursiveIterator,
     {
         return (array_key_exists($name, $this->_attributes)) ? $this->_attributes[$name] : null;
     }
-    
+
     /**
      * hasAttribute()
-     * 
+     *
      * @param string $name
      * @return bool
      */

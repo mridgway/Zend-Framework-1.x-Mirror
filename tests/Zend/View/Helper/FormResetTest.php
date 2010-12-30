@@ -17,15 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormResetTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FormResetTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
  */
 
 // Call Zend_View_Helper_FormResetTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_FormResetTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View/Helper/FormReset.php';
 require_once 'Zend/View.php';
@@ -93,7 +91,7 @@ class Zend_View_Helper_FormResetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-2845
+     * @group ZF-2845
      */
     public function testShouldAllowDisabling()
     {

@@ -17,17 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PartialTest.php 21180 2010-02-23 22:00:29Z matthew $
+ * @version    $Id: PartialTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_View_Helper_PartialTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_PartialTest::main");
 }
-
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 /** Zend_View_Helper_Partial */
 require_once 'Zend/View/Helper/Partial.php';
@@ -68,7 +64,6 @@ class Zend_View_Helper_PartialTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_View_Helper_PartialTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);

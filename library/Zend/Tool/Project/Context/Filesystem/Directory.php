@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Directory.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Directory.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -41,14 +41,14 @@ class Zend_Tool_Project_Context_Filesystem_Directory extends Zend_Tool_Project_C
 
     /**
      * getName()
-     * 
+     *
      * @return string
      */
     public function getName()
     {
         return 'directory';
     }
-    
+
     /**
      * create()
      *

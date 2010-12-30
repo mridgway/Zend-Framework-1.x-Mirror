@@ -17,17 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SubmitTest.php 22328 2010-05-30 15:09:06Z bittarman $
+ * @version    $Id: SubmitTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Form_Element_SubmitTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Element_SubmitTest::main");
 }
-
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Submit.php';
 require_once 'Zend/Form.php';
@@ -54,7 +50,6 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
 
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Form_Element_SubmitTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
@@ -195,7 +190,7 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $submit = new Zend_Form_Element_Submit('foo', 'label');
         $submit->setTranslator($translate);
         $submit->setValue($translations['label']);
-        
+
         $this->assertTrue($submit->isChecked());
 
         $submit->setValue('label');
@@ -230,7 +225,7 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $this->assertContains('bar', $html);
         $this->assertNotContains('baz', $html);
     }
-    
+
     public function testSetDefaultIgnoredToTrueWhenNotDefined()
     {
         $this->assertTrue($this->element->getIgnore());
@@ -248,7 +243,7 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
             $this->markTestIncomplete('Error occurs for PHP 5.1.4 on Windows');
         }
     }
-    
+
     /**
      * Prove the fluent interface on Zend_Form_Element_Submit::loadDefaultDecorators
      *

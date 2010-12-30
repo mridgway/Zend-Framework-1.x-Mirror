@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LocaleTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: LocaleTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Application_Resource_LocaleTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * Zend_Loader_Autoloader
@@ -117,7 +112,7 @@ class Zend_Application_Resource_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Zend_Registry::isRegistered('Foo_Bar'));
         $this->assertSame(Zend_Registry::get('Foo_Bar'), $locale);
     }
-    
+
     public function testOptionsPassedToResourceAreUsedToSetLocaleState1()
     {
         $options = array(
@@ -128,7 +123,7 @@ class Zend_Application_Resource_LocaleTest extends PHPUnit_Framework_TestCase
         $resource->setBootstrap($this->bootstrap);
         $resource->init();
         $locale   = $resource->getLocale();
-        
+
         // This test will fail if your configured locale is kok_IN
         $this->assertFalse('kok_IN' == $locale->__toString());
         $this->assertSame(Zend_Registry::get('Zend_Locale'), $locale);

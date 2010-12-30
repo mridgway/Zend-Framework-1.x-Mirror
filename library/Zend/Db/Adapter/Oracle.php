@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Oracle.php 21108 2010-02-19 22:36:08Z mikaelkael $
+ * @version    $Id: Oracle.php 23573 2010-12-23 18:20:00Z mikaelkael $
  */
 
 /**
@@ -147,7 +147,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     public function isConnected()
     {
         return ((bool) (is_resource($this->_connection)
-                     && get_resource_type($this->_connection) == 'oci8 connection'));
+                    && (get_resource_type($this->_connection) == 'oci8 connection'
+                     || get_resource_type($this->_connection) == 'oci8 persistent connection')));
     }
 
     /**

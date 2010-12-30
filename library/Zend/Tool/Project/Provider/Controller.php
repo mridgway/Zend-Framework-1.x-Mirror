@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Controller.php 20851 2010-02-02 21:45:51Z ralph $
+ * @version    $Id: Controller.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /**
@@ -57,7 +57,7 @@ class Zend_Tool_Project_Provider_Controller
         }
 
         $newController = $controllersDirectory->createResource(
-            'controllerFile', 
+            'controllerFile',
             array('controllerName' => $controllerName, 'moduleName' => $moduleName)
             );
 
@@ -124,14 +124,14 @@ class Zend_Tool_Project_Provider_Controller
         if (preg_match('#[_-]#', $name)) {
             throw new Zend_Tool_Project_Provider_Exception('Controller names should be camel cased.');
         }
-        
+
         $originalName = $name;
         $name = ucfirst($name);
-        
+
         // get request & response
         $request = $this->_registry->getRequest();
         $response = $this->_registry->getResponse();
-        
+
         try {
             $controllerResource = self::createResource($this->_loadedProfile, $name, $module);
             if ($indexActionIncluded) {
@@ -158,17 +158,17 @@ class Zend_Tool_Project_Provider_Controller
                 );
             unset($tense);
         }
-        
+
         // do the creation
         if ($request->isPretend()) {
-            
+
             $response->appendContent('Would create a controller at '  . $controllerResource->getContext()->getPath());
 
             if (isset($indexActionResource)) {
                 $response->appendContent('Would create an index action method in controller ' . $name);
                 $response->appendContent('Would create a view script for the index action method at ' . $indexActionViewResource->getContext()->getPath());
             }
-            
+
             if ($testControllerResource) {
                 $response->appendContent('Would create a controller test file at ' . $testControllerResource->getContext()->getPath());
             }

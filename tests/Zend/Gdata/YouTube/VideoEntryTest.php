@@ -17,13 +17,8 @@
  * @subpackage   UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license      http://framework.zend.com/license/new-bsd     New BSD License
- * @version      $Id: VideoEntryTest.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version      $Id: VideoEntryTest.php 23522 2010-12-16 20:33:22Z andries $
  */
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Gdata/YouTube/VideoEntry.php';
 require_once 'Zend/Gdata/YouTube/Extension/State.php';

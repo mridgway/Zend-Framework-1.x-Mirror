@@ -17,17 +17,12 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FrontcontrollerTest.php 23378 2010-11-18 21:48:27Z bittarman $
+ * @version    $Id: FrontcontrollerTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Application_Resource_FrontcontrollerTest::main');
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * Zend_Loader_Autoloader
@@ -346,7 +341,7 @@ class Zend_Application_Resource_FrontcontrollerTest extends PHPUnit_Framework_Te
         $front = $resource->getFrontController();
         $this->assertNull($front->getBaseUrl());
     }
-    
+
     /**
      * @group ZF-9044
      */
@@ -365,7 +360,7 @@ class Zend_Application_Resource_FrontcontrollerTest extends PHPUnit_Framework_Te
             5 => 'Zend_Controller_Plugin_PutHandler',
             10 => 'Zend_Controller_Plugin_ErrorHandler',
         );
-        
+
         $resource = new Zend_Application_Resource_Frontcontroller(array(
             'plugins' => $plugins
         ));
@@ -373,7 +368,7 @@ class Zend_Application_Resource_FrontcontrollerTest extends PHPUnit_Framework_Te
         $resource->init();
         $front = $resource->getFrontController();
         $plugins = $front->getPlugins();
-        
+
         $this->assertEquals(count($expected), count($plugins));
         foreach($expected as $index => $class) {
         	$this->assertEquals($class, get_class($plugins[$index]));

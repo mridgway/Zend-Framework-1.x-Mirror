@@ -17,14 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpTest.php 23414 2010-11-20 10:56:11Z bittarman $
+ * @version    $Id: HttpTest.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Request_HttpTest::main");
 }
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Controller/Request/Http.php';
 
@@ -435,7 +434,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     {
         $this->assertSame('', $this->_request->getBaseUrl());
     }
-    
+
 	/**
      * Dataprovider for testing prefix paths in the base url
      * @group ZF-10040
@@ -443,9 +442,9 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     public function prefixProvider()
     {
         return array (
-            array (null), 
-            array ('/public'), 
-            array ('/publicite'), 
+            array (null),
+            array ('/public'),
+            array ('/publicite'),
             array ('/foo'),
         );
     }
@@ -883,11 +882,11 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     public function testGetHeaderWithEmptyValueReturnsEmptyString()
     {
         $_SERVER['HTTP_X_FOO'] = '';
-        
+
         $this->assertSame('', $this->_request->getHeader('X-Foo'));
     }
-    
-    
+
+
     /**
      * @group ZF-3527
      */
@@ -958,7 +957,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Request_Http();
         $this->assertEquals('', $request->getHttpHost(), 'HttpHost should be :');
     }
-    
+
 }
 
 // Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.

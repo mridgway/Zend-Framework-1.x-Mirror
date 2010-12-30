@@ -17,18 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Sha1Test.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Sha1Test.php 23522 2010-12-16 20:33:22Z andries $
  */
 
 // Call Zend_Validate_File_Sha1Test::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Validate_File_Sha1Test::main");
 }
-
-/**
- * Test helper
- */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Validate_File_Sha1

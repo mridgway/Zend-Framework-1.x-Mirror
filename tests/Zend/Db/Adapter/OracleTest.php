@@ -30,7 +30,6 @@ require_once 'Zend/Db/Adapter/TestCommon.php';
  */
 require_once 'Zend/Db/Adapter/Oracle.php';
 
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @category   Zend
@@ -287,6 +286,18 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         $result = $this->_db->fetchRow("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1));
         $this->assertType('object', $result);
         $this->assertEquals(2, $result->$col_name);
+    }
+
+    /**
+     * @group ZF-10829
+     */
+    public function testAdapterGetPersistentConnection()
+    {
+        $params = $this->_util->getParams();
+        $params['persistent'] = 1;
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+        $this->assertTrue($db->isConnected());
     }
 
     public function testAdapterInsert()

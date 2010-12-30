@@ -16,7 +16,7 @@
  * @package    Zend_Oauth
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Token.php 22662 2010-07-24 17:37:36Z mabe $
+ * @version    $Id: Token.php 23484 2010-12-10 03:57:59Z mjh_ca $
  */
 
 /** Zend_Oauth_Http_Utility */
@@ -40,14 +40,14 @@ abstract class Zend_Oauth_Token
 
     /**
      * Token parameters
-     * 
+     *
      * @var array
      */
     protected $_params = array();
 
     /**
      * OAuth response object
-     * 
+     *
      * @var Zend_Http_Response
      */
     protected $_response = null;
@@ -264,11 +264,11 @@ abstract class Zend_Oauth_Token
         }
         return $params;
     }
-    
+
     /**
      * Limit serialisation stored data to the parameters
      */
-    public function __sleep() 
+    public function __sleep()
     {
         return array('_params');
     }
@@ -276,7 +276,7 @@ abstract class Zend_Oauth_Token
     /**
      * After serialisation, re-instantiate a HTTP utility class for use
      */
-    public function __wakeup() 
+    public function __wakeup()
     {
         if ($this->_httpUtility === null) {
             $this->_httpUtility = new Zend_Oauth_Http_Utility;

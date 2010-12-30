@@ -17,12 +17,11 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DiffieHellmanTest.php 23439 2010-11-23 21:10:14Z alexander $
+ * @version    $Id: DiffieHellmanTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
  */
 
 require_once 'Zend/Crypt/DiffieHellman.php';
 require_once 'Zend/Crypt/Math/BigInteger.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend

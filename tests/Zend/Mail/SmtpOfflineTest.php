@@ -20,7 +20,7 @@
  * @version    $Id$
  */
 
-/** 
+/**
  * Zend_Mail
  */
 require_once 'Zend/Mail.php';
@@ -35,17 +35,6 @@ require_once 'Zend/Mail/Protocol/Smtp.php';
  * Zend_Mail_Transport_Smtp
  */
 require_once 'Zend/Mail/Transport/Smtp.php';
-
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/**
- * Test helper for configuration when run standalone
- */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @category   Zend

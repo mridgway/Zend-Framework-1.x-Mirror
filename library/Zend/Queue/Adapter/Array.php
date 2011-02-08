@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Array.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Array.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /**
@@ -344,7 +344,7 @@ class Zend_Queue_Adapter_Array extends Zend_Queue_Adapter_AdapterAbstract
      * sets the underlying _data array
      * $queue->getAdapter()->setData($data);
      *
-     * @param $data array
+     * @param array $data
      * @return $this;
      */
     public function setData($data)

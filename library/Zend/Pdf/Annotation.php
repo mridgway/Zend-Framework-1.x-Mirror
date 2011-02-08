@@ -17,7 +17,7 @@
  * @subpackage Annotation
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Annotation.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Annotation.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /** Internally used classes */
@@ -220,7 +220,7 @@ abstract class Zend_Pdf_Annotation
      * Load Annotation object from a specified resource
      *
      * @internal
-     * @param $destinationArray
+     * @param Zend_Pdf_Element $resource
      * @return Zend_Pdf_Annotation
      */
     public static function load(Zend_Pdf_Element $resource)

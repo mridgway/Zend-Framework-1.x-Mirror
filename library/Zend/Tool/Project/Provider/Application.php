@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Application.php 23484 2010-12-10 03:57:59Z mjh_ca $
+ * @version    $Id: Application.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /**
@@ -35,8 +35,8 @@ class Zend_Tool_Project_Provider_Application
 
     /**
      *
-     * @param $classNamePrefix Prefix of classes
-     * @param $force
+     * @param string $classNamePrefix Prefix of classes
+     * @param bool   $force
      */
     public function changeClassNamePrefix($classNamePrefix /* , $force = false */)
     {

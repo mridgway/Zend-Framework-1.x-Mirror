@@ -17,7 +17,7 @@
  * @subpackage Channel
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpHeaders.php 23096 2010-10-12 20:36:15Z cadorn $
+ * @version    $Id: HttpHeaders.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /** Zend_Wildfire_Channel_Interface */
@@ -115,7 +115,7 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
     /**
      * Get or create singleton instance
      *
-     * @param $skipCreate boolean True if an instance should not be created
+     * @param bool $skipCreate True if an instance should not be created
      * @return Zend_Wildfire_Channel_HttpHeaders
      */
     public static function getInstance($skipCreate=false)

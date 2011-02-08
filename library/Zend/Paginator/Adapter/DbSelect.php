@@ -16,7 +16,7 @@
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbSelect.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: DbSelect.php 23659 2011-01-22 16:14:34Z ramon $
  */
 
 /**
@@ -100,7 +100,9 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
         if ($rowCount instanceof Zend_Db_Select) {
             $columns = $rowCount->getPart(Zend_Db_Select::COLUMNS);
 
-            $countColumnPart = $columns[0][1];
+            $countColumnPart = empty($columns[0][2])
+                             ? $columns[0][1]
+                             : $columns[0][2];
 
             if ($countColumnPart instanceof Zend_Db_Expr) {
                 $countColumnPart = $countColumnPart->__toString();

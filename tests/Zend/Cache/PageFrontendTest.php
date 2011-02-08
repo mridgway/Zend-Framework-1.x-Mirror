@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PageFrontendTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
+ * @version    $Id: PageFrontendTest.php 23654 2011-01-22 13:43:51Z ramon $
  */
 
 /**
@@ -164,8 +164,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
             echo('foobar');
             ob_end_flush();
         }
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('foo', $data);
     }
@@ -178,8 +177,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
             echo('foobar');
             ob_end_flush();
         }
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('foobar', $data);
     }
@@ -193,10 +191,20 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
             echo('foobar');
             ob_end_flush();
         }
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('DEBUG HEADER : This is a cached page !foo', $data);
+    }
+
+    /**
+     * @group ZF-10952
+     */
+    public function testNootice()
+    {
+        $regex = array('^/article/' => array('cache' => false));
+        $this->_instance->setOption('regexps', $regex);
+        $this->_instance->setOption('caching', false);
+        $this->_instance->start('zf10952');
     }
 }
 

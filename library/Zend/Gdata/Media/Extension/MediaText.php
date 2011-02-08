@@ -18,7 +18,7 @@
  * @subpackage Media
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MediaText.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: MediaText.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /**
@@ -64,11 +64,11 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     /**
      * Constructs a new MediaText element
      *
-     * @param $text string
-     * @param $type string
-     * @param $lang string
-     * @param $start string
-     * @param $end string
+     * @param string $text
+     * @param string $type
+     * @param string $lang
+     * @param string $start
+     * @param string $end
      */
     public function __construct($text = null, $type = null, $lang = null,
             $start = null, $end = null)

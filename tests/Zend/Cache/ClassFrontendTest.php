@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ClassFrontendTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
+ * @version    $Id: ClassFrontendTest.php 23591 2010-12-29 21:39:21Z mabe $
  */
 
 /**
@@ -138,8 +138,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param1', 'param2');
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('bar', $return);
         $this->assertEquals('foo', $data);
@@ -150,8 +149,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param3', 'param4');
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('foobar_return(param3, param4)', $return);
         $this->assertEquals('foobar_output(param3, param4)', $data);
@@ -162,8 +160,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance2->foobar2('param1', 'param2');
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('bar', $return);
         $this->assertEquals('foo', $data);
@@ -174,8 +171,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance2->foobar2('param3', 'param4');
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('foobar2_return(param3, param4)', $return);
         $this->assertEquals('hello !foobar2_output(param3, param4)', $data);
@@ -188,8 +184,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param1', 'param2');
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('foobar_return(param1, param2)', $return);
         $this->assertEquals('foobar_output(param1, param2)', $data);
@@ -204,8 +199,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param1', 'param2');
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('bar', $return);
         $this->assertEquals('foo', $data);
@@ -220,8 +214,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param1', 'param2');
-        $data = ob_get_contents();
-        ob_end_clean();
+        $data = ob_get_clean();
         ob_implicit_flush(true);
         $this->assertEquals('foobar_return(param1, param2)', $return);
         $this->assertEquals('foobar_output(param1, param2)', $data);

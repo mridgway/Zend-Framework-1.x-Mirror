@@ -16,7 +16,7 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Cycle.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Cycle.php 23651 2011-01-21 21:51:00Z mikaelkael $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -92,7 +92,7 @@ class Zend_View_Helper_Cycle implements Iterator
     /**
      * Sets actual name of cycle
      *
-     * @param $name
+     * @param string $name
      * @return Zend_View_Helper_Cycle
      */
     public function setName($name = self::DEFAULT_NAME)
@@ -111,7 +111,6 @@ class Zend_View_Helper_Cycle implements Iterator
     /**
      * Gets actual name of cycle
      *
-     * @param $name
      * @return string
      */
     public function getName()

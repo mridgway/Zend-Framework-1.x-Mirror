@@ -17,7 +17,7 @@
  * @subpackage Twitter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Twitter.php 23484 2010-12-10 03:57:59Z mjh_ca $
+ * @version    $Id: Twitter.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /**
@@ -923,8 +923,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
 
     /**
      * Protected function to validate that the integer is valid or return a 0
-     * @param $int
-     * @throws Zend_Http_Client_Exception if HTTP request fails or times out
+     * @param mixed $int
      * @return integer
      */
     protected function _validInteger($int)

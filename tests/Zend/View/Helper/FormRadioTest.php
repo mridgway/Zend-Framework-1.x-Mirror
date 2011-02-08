@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormRadioTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
+ * @version    $Id: FormRadioTest.php 23613 2011-01-03 09:34:26Z mjh_ca $
  */
 
 // Call Zend_View_Helper_FormRadioTest::main() if this source file is executed directly.
@@ -366,7 +366,7 @@ class Zend_View_Helper_FormRadioTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @issue ZF-5681
+     * @group ZF-5681
      */
     public function testRadioLabelDoesNotContainHardCodedStyle()
     {

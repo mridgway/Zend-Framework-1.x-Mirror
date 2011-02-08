@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 22970 -->
+<!-- EN-Revision: 23675 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.log.factory">
     <title>Utiliser la fabrique pour créer des logs</title>
@@ -22,6 +22,10 @@ $logger = Zend_Log::factory(array(
         'writerName'   => 'Stream',
         'writerParams' => array(
             'stream'   => '/tmp/zend.log',
+        ),
+        'formatterName' => 'Simple',
+        'filterParams' => array(
+            'format'   => '%timestamp%: %message% -- %info%',
         ),
         'filterName'   => 'Priority',
         'filterParams' => array(
@@ -78,6 +82,39 @@ $logger = Zend_Log::factory(array(
                 <para>
                     Le préfixe de classe ou espace de nom(namespace) à utiliser pour créer le nom de classe
                     complet de l'objet d'écriture. Par défault : "Zend_Log_Writer".
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>formatterName (optionnel)</term>
+
+            <listitem>
+                <para>
+                    Le nom "court" d'un formateur à utiliser sur l'objet d'écriture. Voyez 
+                    "formatterNamespace" pour plus de détails. Exemples: "Simple", "Xml".
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>formatterParams (optionnel)</term>
+
+            <listitem>
+                <para>
+                    Tableau associatif de paramètre à utiliser à l'instanciation de l'objet formateur.
+                    Chaque méthode <methodname>factory()</methodname> fera suivre ces paramètres.
+                </para>
+            </listitem>
+        </varlistentry>
+
+        <varlistentry>
+            <term>formatterNamespace (optionnel)</term>
+
+            <listitem>
+                <para>
+                    Le préfixe de classe ou espace de nom(namespace) à utiliser pour créer le nom de classe
+                    complet de l'objet formateur. Par défault : "Zend_Log_Formatter".
                 </para>
             </listitem>
         </varlistentry>
@@ -280,7 +317,7 @@ $logger = Zend_Log::factory(array(
                                 à la suite du sujet du courriel
                             </entry>
                         </row>
-                    
+
                         <row>
                             <entry><emphasis>layout</emphasis></entry>
                             <entry><type>String</type></entry>
@@ -290,7 +327,7 @@ $logger = Zend_Log::factory(array(
                                 Une instance de <classname>Zend_Layout</classname>
                             </entry>
                         </row>
-                    
+
                         <row>
                             <entry><emphasis>layoutOptions</emphasis></entry>
                             <entry><type>Array</type></entry>
@@ -300,7 +337,7 @@ $logger = Zend_Log::factory(array(
                                 Voir la section <xref linkend="zend.layout.options" />
                             </entry>
                         </row>
-                    
+
                         <row>
                             <entry><emphasis>layoutFormatter</emphasis></entry>
                             <entry><type>String</type></entry>
@@ -439,7 +476,7 @@ $logger = Zend_Log::factory(array(
         </sect3>
 
         <sect3 id="zend.log.factory.filter-options.suppress">
-            <title>Zend_Log_Writer_Suppress Options</title>
+            <title>Zend_Log_Filter_Suppress Options</title>
 
             <para>
                 Aucune option n'est acceptée par cet objet d'écriture.

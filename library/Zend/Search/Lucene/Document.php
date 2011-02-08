@@ -17,7 +17,7 @@
  * @subpackage Document
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Document.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Document.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 
@@ -57,7 +57,7 @@ class Zend_Search_Lucene_Document
      * Proxy method for getFieldValue(), provides more convenient access to
      * the string value of a field.
      *
-     * @param  $offset
+     * @param  string $offset
      * @return string
      */
     public function __get($offset)

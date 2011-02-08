@@ -18,7 +18,7 @@
  * @subpackage   Spreadsheets
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CellEntry.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: CellEntry.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /**
@@ -92,7 +92,8 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
 
     /**
      * Sets the Cell element of this Cell Entry.
-     * @param $cell Zend_Gdata_Spreadsheets_Extension_Cell $cell
+     * @param Zend_Gdata_Spreadsheets_Extension_Cell $cell
+		 * @return Zend_Gdata_Spreadsheets_CellEntry
      */
     public function setCell($cell)
     {

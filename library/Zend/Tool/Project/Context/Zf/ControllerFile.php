@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ControllerFile.php 23484 2010-12-10 03:57:59Z mjh_ca $
+ * @version    $Id: ControllerFile.php 23594 2010-12-30 10:08:37Z intiilapa $
  */
 
 /**
@@ -143,21 +143,23 @@ switch (\$errors->type) {
     case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
     case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
     case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-
         // 404 error -- controller or action not found
         \$this->getResponse()->setHttpResponseCode(404);
+        \$priority = Zend_Log::NOTICE;
         \$this->view->message = 'Page not found';
         break;
     default:
         // application error
         \$this->getResponse()->setHttpResponseCode(500);
+        \$priority = Zend_Log::CRIT;
         \$this->view->message = 'Application error';
         break;
 }
 
 // Log exception, if logger available
 if (\$log = \$this->getLog()) {
-    \$log->crit(\$this->view->message, \$errors->exception);
+    \$log->log(\$this->view->message, \$priority, \$errors->exception);
+    \$log->log('Request Parameters', \$priority, \$request->getParams());
 }
 
 // conditionally display exceptions

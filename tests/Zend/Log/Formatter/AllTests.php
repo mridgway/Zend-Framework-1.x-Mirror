@@ -17,13 +17,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: AllTests.php 23598 2010-12-30 15:20:16Z intiilapa $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Log_Formatter_AllTests::main');
 }
 
+require_once 'Zend/Log/Formatter/FirebugTest.php';
 require_once 'Zend/Log/Formatter/SimpleTest.php';
 require_once 'Zend/Log/Formatter/XmlTest.php';
 
@@ -47,6 +48,7 @@ class Zend_Log_Formatter_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Log_Formatter');
 
+        $suite->addTestSuite('Zend_Log_Formatter_FirebugTest');
         $suite->addTestSuite('Zend_Log_Formatter_SimpleTest');
         $suite->addTestSuite('Zend_Log_Formatter_XmlTest');
 

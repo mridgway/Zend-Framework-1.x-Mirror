@@ -17,7 +17,7 @@
  * @subpackage DeveloperGarden
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ConferenceDetail.php 20166 2010-01-09 19:00:17Z bkarwin $
+ * @version    $Id: ConferenceDetail.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /**
@@ -90,7 +90,7 @@ class Zend_Service_DeveloperGarden_ConferenceCall_ConferenceDetail
     /**
      * set the description of this conference
      *
-     * @param $description the $description to set
+     * @param string $description the $description to set
      * @return Zend_Service_DeveloperGarden_ConferenceCall_ConferenceDetail
      */
     public function setDescription($description)

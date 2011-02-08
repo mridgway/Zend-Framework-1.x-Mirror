@@ -17,10 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: RequestTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
+ * @version $Id: RequestTest.php 23624 2011-01-08 21:16:19Z ramon $
  */
 
 require_once 'Zend/XmlRpc/Request.php';
+require_once 'Zend/XmlRpc/Value/Nil.php';
+require_once 'Zend/XmlRpc/Value/String.php';
+
 
 /**
  * Test case for Zend_XmlRpc_Request

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActionTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: ActionTest.php 23613 2011-01-03 09:34:26Z mjh_ca $
  */
 
 // Call Zend_View_Helper_ActionTest::main() if this source file is executed directly.
@@ -279,7 +279,7 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @issue ZF-2716
+     * @group ZF-2716
      */
     public function testActionWithPartialsUseOfViewRendererReturnsToOriginatingViewState()
     {
@@ -299,7 +299,7 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
     /**
      * Future ViewRenderer State issues should be included in this test.
      *
-     * @issue ZF-2846
+     * @group ZF-2846
      */
     public function testActionReturnsViewRendererToOriginalState()
     {

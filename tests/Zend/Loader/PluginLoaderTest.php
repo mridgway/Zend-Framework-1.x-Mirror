@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PluginLoaderTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: PluginLoaderTest.php 23613 2011-01-03 09:34:26Z mjh_ca $
  */
 
 // Call Zend_Loader_PluginLoaderTest::main() if this source file is executed directly.
@@ -368,7 +368,7 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @issue ZF-2741
+     * @group ZF-2741
      */
     public function testWin32UnderscoreSpacedShortNamesWillLoad()
     {

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AclTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
+ * @version    $Id: AclTest.php 23613 2011-01-03 09:34:26Z mjh_ca $
  */
 
 require_once 'Zend/Acl.php';
@@ -1181,7 +1181,7 @@ class Zend_Acl_AclTest extends PHPUnit_Framework_TestCase
     /**
      * Returns an array of registered roles
      * @expectedException PHPUnit_Framework_Error
-     * @issue ZF-5638
+     * @group ZF-5638
      */
     public function testGetRegisteredRoles()
     {

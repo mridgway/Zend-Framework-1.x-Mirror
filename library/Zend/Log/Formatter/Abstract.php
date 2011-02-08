@@ -1,5 +1,7 @@
 <?php
 /**
+ * Zend Framework
+ *
  * LICENSE
  *
  * This source file is subject to the new BSD license that is bundled
@@ -11,50 +13,28 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Cloud
- * @subpackage QueueService
+ * @package    Zend_Log
+ * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Abstract.php 23648 2011-01-21 19:04:20Z intiilapa $
  */
+
+/** @see Zend_Log_Formatter_Interface */
+require_once 'Zend/Log/Formatter/Interface.php';
+
+/** @see Zend_Log_FactoryInterface */
+require_once 'Zend/Log/FactoryInterface.php';
 
 /**
- * Generic message class
- *
  * @category   Zend
- * @package    Zend_Cloud
- * @subpackage QueueService
+ * @package    Zend_Log
+ * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Abstract.php 23648 2011-01-21 19:04:20Z intiilapa $
  */
-class Zend_Cloud_QueueService_Message
+abstract class Zend_Log_Formatter_Abstract
+    implements Zend_Log_Formatter_Interface, Zend_Log_FactoryInterface
 {
-    protected $_body;
-    protected $_clientMessage;
-
-    /**
-     * @param string $body Message text
-     * @param string $message Original message
-     */
-    function __construct($body, $message)
-    {
-        $this->_body = $body;
-        $this->_clientMessage = $message;
-    }
-
-    /**
-     * Get the message body
-     * @return string
-     */
-    public function getBody()
-    {
-        return $this->_body;
-    }
-
-    /**
-     * Get the original adapter-specific message
-     */
-    public function getMessage()
-    {
-        return $this->_clientMessage;
-    }
 }

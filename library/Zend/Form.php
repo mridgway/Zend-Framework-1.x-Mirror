@@ -28,7 +28,7 @@ require_once 'Zend/Validate/Interface.php';
  * @package    Zend_Form
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Form.php 23484 2010-12-10 03:57:59Z mjh_ca $
+ * @version    $Id: Form.php 23604 2011-01-01 17:52:54Z ramon $
  */
 class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
 {
@@ -1786,7 +1786,11 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         $group = array();
         foreach ($elements as $element) {
             if($element instanceof Zend_Form_Element) {
-                $element = $element->getId();
+                $elementName = $element->getName();
+                if (!isset($this->_elements[$elementName])) {
+                    $this->addElement($element);
+                }
+                $element = $elementName;
             }
 
             if (isset($this->_elements[$element])) {

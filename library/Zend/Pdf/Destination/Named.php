@@ -17,7 +17,7 @@
  * @subpackage Destination
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Named.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Named.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /** Internally used classes */
@@ -54,7 +54,7 @@ class Zend_Pdf_Destination_Named extends Zend_Pdf_Destination
     /**
      * Named destination object constructor
      *
-     * @param $resource
+     * @param Zend_Pdf_Element $resource
      * @throws Zend_Pdf_Exception
      */
     public function __construct(Zend_Pdf_Element $resource)

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HeadStyleTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: HeadStyleTest.php 23681 2011-01-27 19:23:08Z intiilapa $
  */
 
 // Call Zend_View_Helper_HeadStyleTest::main() if this source file is executed directly.
@@ -417,7 +417,7 @@ a {
     }
 
     /**
-     * @issue ZF-5435
+     * @group ZF-5435
      */
     public function testContainerMaintainsCorrectOrderOfItems()
     {
@@ -441,6 +441,21 @@ a {
                   . '</style>';
 
         $this->assertEquals($expected, $test);
+    }
+
+    /**
+     * @group ZF-9532
+     */
+    public function testRenderConditionalCommentsShouldNotContainHtmlEscaping()
+    {
+        $style = 'a{display:none;}';
+        $this->helper->appendStyle($style, array(
+        	'conditional' => 'IE 8'
+        ));
+        $value = $this->helper->toString();
+
+        $this->assertNotContains('<!--' . PHP_EOL, $value);
+        $this->assertNotContains(PHP_EOL . '-->', $value);
     }
 }
 

@@ -17,7 +17,7 @@
  * @subpackage StrikeIron
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Base.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Base.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 
@@ -193,10 +193,10 @@ class Zend_Service_StrikeIron_Base
      * on what was originally called.
      *
      * @see    __call()
-     * @param  $result  Raw result returned from SOAPClient_>__soapCall()
-     * @param  $method  Method name that was passed to SOAPClient->__soapCall()
-     * @param  $params  Method parameters that were passed to SOAPClient->__soapCall()
-     * @return mixed    Transformed result
+     * @param  object $result  Raw result returned from SOAPClient_>__soapCall()
+     * @param  string $method  Method name that was passed to SOAPClient->__soapCall()
+     * @param  array  $params  Method parameters that were passed to SOAPClient->__soapCall()
+     * @return mixed  Transformed result
      */
     protected function _transformResult($result, $method, $params)
     {

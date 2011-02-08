@@ -17,7 +17,7 @@
  * @subpackage Search
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Weight.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Weight.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 
@@ -78,7 +78,7 @@ abstract class Zend_Search_Lucene_Search_Weight
     /**
      * Assigns the query normalization factor to this.
      *
-     * @param $norm
+     * @param float $norm
      */
     abstract public function normalize($norm);
 }

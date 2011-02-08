@@ -16,7 +16,7 @@
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: HeadStyle.php 20104 2010-01-06 21:26:01Z matthew $
+ * @version    $Id: HeadStyle.php 23681 2011-01-27 19:23:08Z intiilapa $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -355,14 +355,21 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             }
         }
 
-        $html = '<style type="text/css"' . $attrString . '>' . PHP_EOL
-              . $indent . '<!--' . PHP_EOL . $indent . $item->content . PHP_EOL . $indent . '-->' . PHP_EOL
-              . '</style>';
-
+        $escapeStart = $indent . '<!--'. PHP_EOL;
+        $escapeEnd = $indent . '-->'. PHP_EOL;
         if (isset($item->attributes['conditional'])
             && !empty($item->attributes['conditional'])
-            && is_string($item->attributes['conditional']))
-        {
+            && is_string($item->attributes['conditional'])
+        ) {
+            $escapeStart = null;
+            $escapeEnd = null;
+        }
+
+        $html = '<style type="text/css"' . $attrString . '>' . PHP_EOL
+              . $escapeStart . $indent . $item->content . PHP_EOL . $escapeEnd
+              . '</style>';
+
+        if (null == $escapeStart && null == $escapeEnd) {
             $html = '<!--[if ' . $item->attributes['conditional'] . ']> ' . $html . '<![endif]-->';
         }
 

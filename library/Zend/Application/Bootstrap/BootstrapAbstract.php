@@ -17,7 +17,7 @@
  * @subpackage Bootstrap
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BootstrapAbstract.php 23278 2010-10-30 12:50:21Z ramon $
+ * @version    $Id: BootstrapAbstract.php 23602 2011-01-01 16:08:23Z ramon $
  */
 
 /**
@@ -414,7 +414,8 @@ abstract class Zend_Application_Bootstrap_BootstrapAbstract
     {
         if ($this->_pluginLoader === null) {
             $options = array(
-                'Zend_Application_Resource' => 'Zend/Application/Resource'
+                'Zend_Application_Resource'  => 'Zend/Application/Resource',
+                'ZendX_Application_Resource' => 'ZendX/Application/Resource'
             );
 
             $this->_pluginLoader = new Zend_Loader_PluginLoader($options);

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SimpleTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: SimpleTest.php 23648 2011-01-21 19:04:20Z intiilapa $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -110,6 +110,18 @@ class Zend_Log_Formatter_SimpleTest extends PHPUnit_Framework_TestCase
         $fields['message'] = new Zend_Log_Formatter_SimpleTest_TestObject2();
         $line = $f->format($fields);
         $this->assertContains('object', $line);
+    }
+
+    /**
+     * @group ZF-9176
+     */
+    public function testFactory()
+    {
+        $options = array(
+            'format' => '%timestamp% [%priority%]: %message% -- %info%'
+        );
+        $formatter = Zend_Log_Formatter_Simple::factory($options);
+        $this->assertType('Zend_Log_Formatter_Simple', $formatter);
     }
 }
 

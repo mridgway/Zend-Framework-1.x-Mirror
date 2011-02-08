@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SyslogTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: SyslogTest.php 23595 2010-12-30 10:09:31Z intiilapa $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -111,6 +111,24 @@ class Zend_Log_Writer_SyslogTest extends PHPUnit_Framework_TestCase
     {
         $writer = new WriterSyslogCustom(array('facility' => LOG_USER));
         $this->assertEquals(LOG_USER, $writer->getFacility());
+    }
+
+    /**
+     * @group ZF-8382
+     */
+    public function testWriteWithFormatter()
+    {
+        $event = array(
+        	'message' => 'tottakai',
+            'priority' => Zend_Log::ERR
+        );
+
+        $writer = Zend_Log_Writer_Syslog::factory(array());
+        require_once 'Zend/Log/Formatter/Simple.php';
+        $formatter = new Zend_Log_Formatter_Simple('%message% (this is a test)');
+        $writer->setFormatter($formatter);
+
+        $writer->write($event);
     }
 }
 

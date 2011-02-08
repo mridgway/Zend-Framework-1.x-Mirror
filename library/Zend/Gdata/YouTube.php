@@ -18,7 +18,7 @@
  * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: YouTube.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: YouTube.php 23651 2011-01-21 21:51:00Z mikaelkael $
  */
 
 /**
@@ -844,11 +844,11 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     /**
      * Post a comment in reply to an existing comment
      *
-     * @param $commentEntry Zend_Gdata_YouTube_CommentEntry The comment entry
-     *        to reply to
-     * @param $commentText string The text of the comment to post
-     * @return A Zend_Gdata_YouTube_CommentEntry representing the posted
-     *         comment
+     * @param Zend_Gdata_YouTube_CommentEntry $commentEntry The comment entry
+     *         to reply to
+     * @param string                          $commentText  The text of the
+		 *         comment to post
+     * @return Zend_Gdata_YouTube_CommentEntry the posted comment
      */
     public function replyToCommentEntry($commentEntry, $commentText)
     {

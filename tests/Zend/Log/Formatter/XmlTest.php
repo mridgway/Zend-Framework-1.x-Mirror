@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: XmlTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: XmlTest.php 23648 2011-01-21 19:04:20Z intiilapa $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -99,6 +99,43 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
         $line = $f->format(array('message' => '&amp', 'priority' => 42));
 
         $this->assertContains('&amp;amp', $line);
+    }
+
+    public function testConstructorWithArray()
+    {
+        $options = array(
+            'rootElement' => 'log',
+            'elementMap' => array(
+                'word' => 'message',
+                'priority' => 'priority'
+            )
+        );
+        $event = array(
+            'message' => 'tottakai',
+            'priority' => 4
+        );
+        $expected = '<log><word>tottakai</word><priority>4</priority></log>';
+
+        $formatter = new Zend_Log_Formatter_Xml($options);
+        $output = $formatter->format($event);
+        $this->assertContains($expected, $output);
+        $this->assertEquals('UTF-8', $formatter->getEncoding());
+    }
+
+    /**
+     * @group ZF-9176
+     */
+    public function testFactory()
+    {
+        $options = array(
+            'rootElement' => 'log',
+            'elementMap' => array(
+                'timestamp' => 'timestamp',
+                'response' => 'message'
+            )
+        );
+        $formatter = Zend_Log_Formatter_Xml::factory($options);
+        $this->assertType('Zend_Log_Formatter_Xml', $formatter);
     }
 }
 

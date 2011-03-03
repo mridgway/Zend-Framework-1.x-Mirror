@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Locale
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id $
  */
@@ -36,7 +36,7 @@ require_once 'Zend/Cache.php';
  * @category   Zend
  * @package    Zend_Locale
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Locale
  */
@@ -848,6 +848,17 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $value = new Zend_Locale('TR');
         $this->assertEquals('tr_TR', $value->toString());
+    }
+    /**
+     * @group ZF-11072
+     */
+    public function testTranslationReturnsZeroAsNumber()
+    {
+        $this->assertFalse(Zend_Locale::getTranslation('USD', 'CurrencyFraction'));
+        $this->assertEquals('0', Zend_Locale::getTranslation('JPY', 'CurrencyFraction'));
+		$this->assertEquals('2', Zend_Locale::getTranslation('CHF', 'CurrencyFraction'));
+		$this->assertEquals('3', Zend_Locale::getTranslation('BHD', 'CurrencyFraction'));
+		$this->assertEquals('2', Zend_Locale::getTranslation('DEFAULT', 'CurrencyFraction'));
     }
 
     /**

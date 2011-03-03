@@ -26,7 +26,7 @@
  * Test helper
  */
 
- 
+
 require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
@@ -103,7 +103,7 @@ abstract class ZendX_Db_TestSetup extends PHPUnit_Framework_TestCase
     {
         $params = $this->_util->getParams();
         $params['adapterNamespace'] = 'ZendX_Db_Adapter';
-        $this->_db = Zend_Db::($this->getDriver(), $params);
+        $this->_db = Zend_Db::factory($this->getDriver(), $params);
         try {
             $conn = $this->_db->getConnection();
         } catch (Zend_Exception $e) {

@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Http_UserAgent
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -41,7 +41,7 @@ require_once 'Zend/Http/UserAgent/Validator.php';
  * @category   Zend
  * @package    Zend_Http_UserAgent
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Http_UserAgent_AbstractDeviceTest extends PHPUnit_Framework_TestCase
@@ -378,7 +378,7 @@ class Zend_Http_UserAgent_AbstractDeviceTest extends PHPUnit_Framework_TestCase
 
     public function testMatchMobileOtherHeaders()
     {
-        
+
         $userAgent = 'xxxxx';
         $server = array(
             'all_http' => '. opera Mini'
@@ -388,17 +388,17 @@ class Zend_Http_UserAgent_AbstractDeviceTest extends PHPUnit_Framework_TestCase
             'http_x_wap_profile' => 'http://device.sprintpcs.com/Sanyo/PL3100/1003QW.rdf'
         );
         $this->assertTrue(Zend_Http_UserAgent_Mobile::match($userAgent, $server));
-        
+
         $server = array(
             'http_profile' => ''
         );
         $this->assertTrue(Zend_Http_UserAgent_Mobile::match($userAgent, $server));
-        
+
         $server = array(
             'http_accept' => 'midp'
         );
         $this->assertTrue(Zend_Http_UserAgent_Mobile::match($userAgent, $server));
-        
+
         $server = array(
             'http_accept' => 'text/html, image/vnd.wap.wbmp, image/png, image/jpeg,
 image/gif, image/bmp, application/vnd.wap.wmlc,
@@ -409,12 +409,12 @@ text/vnd.sun.j2me.app-descriptor, application/java-archive,
 *,text/x-hdml,image/mng,image/x-mng,video/mng,video/x-mng,image/bmp,text/html'
         );
         $this->assertTrue(Zend_Http_UserAgent_Mobile::match($userAgent, $server));
-        
+
         $server = array(
             'http_accept' => 'vnd.rim'
         );
         $this->assertTrue(Zend_Http_UserAgent_Mobile::match($userAgent, $server));
-        
+
         $server = array(
             'http_accept' => 'application/xhtml+xml, application/vnd.wap.xhtml+xml,
 application/x-pmd, application/vnd.phonecom.mmc-xml, audio/midi,
@@ -423,7 +423,7 @@ audio/vnd.qcelp, application/xhtml+xml'
         $this->assertTrue(Zend_Http_UserAgent_Mobile::match($userAgent, $server));
     }
 
-    /** 
+    /**
      * examples from http://en.wikipedia.org/wiki/List_of_user_agents_for_mobile_phones
      */
     public function testMatchMobile()

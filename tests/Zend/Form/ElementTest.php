@@ -15,16 +15,14 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ElementTest.php 23566 2010-12-20 07:54:20Z mjh_ca $
+ * @version    $Id: ElementTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Form_ElementTest::main');
 }
-
-// error_reporting(E_ALL);
 
 require_once 'Zend/Form/Element.php';
 
@@ -44,7 +42,7 @@ require_once 'Zend/View.php';
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Form
  */
@@ -2159,35 +2157,6 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $t2 = $this->element->getDecorators();
         $this->assertEquals($t1, $t2);
     }
-}
-
-class Zend_Form_ElementTest_Decorator extends Zend_Form_Decorator_Abstract
-{
-}
-
-class Zend_Form_ElementTest_Element extends Zend_Form_Element
-{
-    public function init()
-    {
-        $this->setDisableLoadDefaultDecorators(true);
-    }
-}
-
-class Zend_Form_ElementTest_ArrayFilter implements Zend_Filter_Interface
-{
-    public function filter($value)
-    {
-        $value = array_filter($value, array($this, '_filter'));
-        return $value;
-    }
-
-    protected function _filter($value)
-    {
-        if (is_array($value)) {
-            return array_filter($value, array($this, '_filter'));
-        }
-        return (strstr($value, 'ba'));
-    }
 
     /**
      * Check array notation for validators
@@ -2220,7 +2189,35 @@ class Zend_Form_ElementTest_ArrayFilter implements Zend_Filter_Interface
         $validator = $username->getValidator('regex');
         $this->assertTrue($validator->zfBreakChainOnFailure);
     }
+}
 
+class Zend_Form_ElementTest_Decorator extends Zend_Form_Decorator_Abstract
+{
+}
+
+class Zend_Form_ElementTest_Element extends Zend_Form_Element
+{
+    public function init()
+    {
+        $this->setDisableLoadDefaultDecorators(true);
+    }
+}
+
+class Zend_Form_ElementTest_ArrayFilter implements Zend_Filter_Interface
+{
+    public function filter($value)
+    {
+        $value = array_filter($value, array($this, '_filter'));
+        return $value;
+    }
+
+    protected function _filter($value)
+    {
+        if (is_array($value)) {
+            return array_filter($value, array($this, '_filter'));
+        }
+        return (strstr($value, 'ba'));
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_ElementTest::main') {

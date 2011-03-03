@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Mime
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PartTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
+ * @version    $Id: PartTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -29,7 +29,7 @@ require_once 'Zend/Mime/Part.php';
  * @category   Zend
  * @package    Zend_Mime
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Mime
  */
@@ -40,14 +40,14 @@ class Zend_Mime_PartTest extends PHPUnit_Framework_TestCase
      *
      * @var Zend_Mime_Part
      */
-    protected $_part = null;
-    protected $_testText;
+    protected $part = null;
+    protected $testText;
 
     protected function setUp()
     {
-        $this->_testText = 'safdsafsa�lg ��gd�� sd�jg�sdjg�ld�gksd�gj�sdfg�dsj�gjsd�gj�dfsjg�dsfj�djs�g kjhdkj '
+        $this->testText = 'safdsafsa�lg ��gd�� sd�jg�sdjg�ld�gksd�gj�sdfg�dsj�gjsd�gj�dfsjg�dsfj�djs�g kjhdkj '
                        . 'fgaskjfdh gksjhgjkdh gjhfsdghdhgksdjhg';
-        $this->part = new Zend_Mime_Part($this->_testText);
+        $this->part = new Zend_Mime_Part($this->testText);
         $this->part->encoding = Zend_Mime::ENCODING_BASE64;
         $this->part->type = "text/plain";
         $this->part->filename = 'test.txt';
@@ -76,15 +76,15 @@ class Zend_Mime_PartTest extends PHPUnit_Framework_TestCase
     {
         // Test with base64 encoding
         $content = $this->part->getContent();
-        $this->assertEquals($this->_testText, base64_decode($content));
+        $this->assertEquals($this->testText, base64_decode($content));
         // Test with quotedPrintable Encoding:
         $this->part->encoding = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
         $content = $this->part->getContent();
-        $this->assertEquals($this->_testText, quoted_printable_decode($content));
+        $this->assertEquals($this->testText, quoted_printable_decode($content));
         // Test with 8Bit encoding
         $this->part->encoding = Zend_Mime::ENCODING_8BIT;
         $content = $this->part->getContent();
-        $this->assertEquals($this->_testText, $content);
+        $this->assertEquals($this->testText, $content);
     }
 
     public function testStreamEncoding()
@@ -114,4 +114,13 @@ class Zend_Mime_PartTest extends PHPUnit_Framework_TestCase
         fclose($fp);
         $this->assertEquals(quoted_printable_decode($encoded),$original);
     }
+    
+    /**
+     * @group ZF-1491
+     */
+    public function testGetRawContentFromPart()
+    {
+        $this->assertEquals($this->testText, $this->part->getRawContent());
+    }
+    
 }

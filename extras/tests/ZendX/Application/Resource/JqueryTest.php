@@ -154,6 +154,45 @@ class ZendX_Application_Resource_JqueryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/f00/b4r/', $res->getUiLocalPath());
         $this->assertEquals(187, $res->getRenderMode());
     }
+
+    /**
+     * @group ZF-10254
+     */
+    public function testIfUiDisableEnableViewHelperJquery()
+    {
+        $options = array(
+            'uienable'    => false,
+            'enable'      => true
+        );
+
+        $this->bootstrap->registerPluginResource('view');
+        $resource = new ZendX_Application_Resource_Jquery(array());
+        $resource->setBootstrap($this->bootstrap);
+        $resource->setOptions($options);
+        $res = $resource->init();
+        $this->assertTrue($res->isEnabled());
+        $this->assertFalse($res->uiIsEnabled());
+
+        $resource = new ZendX_Application_Resource_Jquery(array());
+        $resource->setBootstrap($this->bootstrap);
+        $res = $resource->init();
+        $this->assertTrue($res->isEnabled());
+        $this->assertTrue($res->uiIsEnabled());
+
+        $resource = new ZendX_Application_Resource_Jquery(array());
+        $resource->setBootstrap($this->bootstrap);
+        $resource->setOptions(array('uienable' => false));
+        $res = $resource->init();
+        $this->assertTrue($res->isEnabled());
+        $this->assertFalse($res->uiIsEnabled());
+
+        $resource = new ZendX_Application_Resource_Jquery(array());
+        $resource->setBootstrap($this->bootstrap);
+        $resource->setOptions(array('enable' => false));
+        $res = $resource->init();
+        $this->assertFalse($res->isEnabled());
+        $this->assertFalse($res->uiIsEnabled());
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Application_Resource_LocaleTest::main') {

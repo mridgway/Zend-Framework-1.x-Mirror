@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Nirvanix
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ImfsTest.php 23613 2011-01-03 09:34:26Z mjh_ca $
+ * @version    $Id: ImfsTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -34,7 +34,7 @@ require_once 'Zend/Service/Nirvanix/FunctionalTestCase.php';
  * @category   Zend
  * @package    Zend_Service_Nirvanix
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Service
  * @group      Zend_Service_Nirvanix

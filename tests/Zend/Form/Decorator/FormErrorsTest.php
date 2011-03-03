@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormErrorsTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: FormErrorsTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 // Call Zend_Form_Decorator_FormErrorsTest::main() if this source file is executed directly.
@@ -36,7 +36,7 @@ require_once 'Zend/View.php';
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Form
  */
@@ -134,6 +134,18 @@ class Zend_Form_Decorator_FormErrorsTest extends PHPUnit_Framework_TestCase
     {
         $form = new Zend_Form();
         $this->decorator->setElement($form);
+        $content = 'test content';
+        $this->assertSame($content, $this->decorator->render($content));
+    }
+
+    public function testNotGeneratingSubformErrorMarkupWrappingWhenNoErrors()
+    {
+        $form1 = new Zend_Form_SubForm();
+        $form2 = new Zend_Form();
+        $form2->addSubForm($form1, 'sub');
+        $form2->setView($this->getView());
+        $this->decorator->setElement($form2);
+
         $content = 'test content';
         $this->assertSame($content, $this->decorator->render($content));
     }
@@ -288,6 +300,7 @@ class Zend_Form_Decorator_FormErrorsTest extends PHPUnit_Framework_TestCase
         $html = $this->form->render();
         $this->assertNotContains('form-badness', $html);
     }
+
 
     /**
      * @dataProvider markupOptionMethodsProvider

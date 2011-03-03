@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OracleTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: OracleTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -41,7 +41,7 @@ require_once dirname(__FILE__) . '/../../_files/TestTable.php';
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Paginator
  */
@@ -86,6 +86,14 @@ class Zend_Paginator_Adapter_DbSelect_OracleTest extends Zend_Paginator_Adapter_
      */
     protected function tearDown ()
     {
+        if (! extension_loaded('oci8')) {
+            $this->markTestSkipped('Oci8 extension is not loaded');
+        }
+
+        if (! TESTS_ZEND_DB_ADAPTER_ORACLE_ENABLED) {
+            $this->markTestSkipped('Oracle is required');
+        }
+
         $this->_dropTable();
         $this->_db = null;
         $this->_adapter = null;

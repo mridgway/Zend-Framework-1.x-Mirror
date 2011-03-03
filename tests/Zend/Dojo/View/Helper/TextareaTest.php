@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TextareaTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: TextareaTest.php 23777 2011-03-01 18:26:05Z matthew $
  */
 
 // Call Zend_Dojo_View_Helper_TextareaTest::main() if this source file is executed directly.
@@ -43,7 +43,7 @@ require_once 'Zend/Dojo/View/Helper/Dojo.php';
  * @category   Zend
  * @package    Zend_Dojo
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Dojo
  * @group      Zend_Dojo_View
@@ -123,6 +123,12 @@ class Zend_Dojo_View_Helper_TextareaTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->helper->textarea('foo[bar]', '', array(), array('id' => 'foo-bar'));
         $this->assertContains('id="foo-bar"', $html);
+    }
+
+    public function testGeneratedMarkupShouldNotIncludeTypeAttribute()
+    {
+        $html = $this->getElement();
+        $this->assertNotRegexp('/type="text/', $html, $html);
     }
 }
 

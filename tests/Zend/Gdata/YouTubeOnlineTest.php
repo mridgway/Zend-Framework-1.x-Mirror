@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Gdata_YouTube
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id $
  */
@@ -28,7 +28,7 @@ require_once 'Zend/Gdata/ClientLogin.php';
  * @category   Zend
  * @package    Zend_Gdata_YouTube
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Gdata
  * @group      Zend_Gdata_YouTube
@@ -144,13 +144,13 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $service = Zend_Gdata_YouTube::AUTH_SERVICE_NAME;
         $authenticationURL= 'https://www.google.com/youtube/accounts/ClientLogin';
         $httpClient = Zend_Gdata_ClientLogin::getHttpClient(
-                                          $username = $this->user,
-                                          $password = $this->pass,
-                                          $service = $service,
-                                          $client = null,
-                                          $source = 'Google-UnitTests-1.0',
-                                          $loginToken = null,
-                                          $loginCaptcha = null,
+                                          $this->user,
+                                          $this->pass,
+                                          $service,
+                                          null,                    // client
+                                          'Google-UnitTests-1.0',  // source
+                                          null,                    // loginToken
+                                          null,                    // loginCaptcha
                                           $authenticationURL);
 
         $this->gdata = new Zend_Gdata_YouTube($httpClient,
@@ -311,13 +311,13 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $authenticationURL =
             'https://www.google.com/youtube/accounts/ClientLogin';
         $httpClient = Zend_Gdata_ClientLogin::getHttpClient(
-                                          $username = $this->user,
-                                          $password = $this->pass,
-                                          $service = $service,
-                                          $client = null,
-                                          $source = 'Google-UnitTests-1.0',
-                                          $loginToken = null,
-                                          $loginCaptcha = null,
+                                          $this->user,
+                                          $this->pass,
+                                          $service,
+                                          null,                    // client
+                                          'Google-UnitTests-1.0',  // source
+                                          null,                    // $loginToken
+                                          null,                    // loginCaptcha
                                           $authenticationURL);
 
         $yt = new Zend_Gdata_YouTube(
@@ -394,13 +394,13 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $authenticationURL =
             'https://www.google.com/youtube/accounts/ClientLogin';
         $httpClient = Zend_Gdata_ClientLogin::getHttpClient(
-                                          $username = $this->user,
-                                          $password = $this->pass,
-                                          $service = $service,
-                                          $client = null,
-                                          $source = 'Google-UnitTests-1.0',
-                                          $loginToken = null,
-                                          $loginCaptcha = null,
+                                          $this->user,
+                                          $this->pass,
+                                          $service,
+                                          null,                    // client
+                                          'Google-UnitTests-1.0',  // source
+                                          null,                    // loginToken
+                                          null,                    // loginCaptcha
                                           $authenticationURL);
 
         $yt = new Zend_Gdata_YouTube(

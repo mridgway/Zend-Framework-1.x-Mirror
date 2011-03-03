@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ControllerFile.php 23594 2010-12-30 10:08:37Z intiilapa $
+ * @version    $Id: ControllerFile.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -28,7 +28,7 @@
  *
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Context_Filesystem_File
@@ -134,7 +134,7 @@ class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Cont
                                 'body' => <<<EOS
 \$errors = \$this->_getParam('error_handler');
 
-if (!\$errors) {
+if (!\$errors || !\$errors instanceof ArrayObject) {
     \$this->view->message = 'You have reached the error page';
     return;
 }
@@ -159,7 +159,7 @@ switch (\$errors->type) {
 // Log exception, if logger available
 if (\$log = \$this->getLog()) {
     \$log->log(\$this->view->message, \$priority, \$errors->exception);
-    \$log->log('Request Parameters', \$priority, \$request->getParams());
+    \$log->log('Request Parameters', \$priority, \$errors->request->getParams());
 }
 
 // conditionally display exceptions

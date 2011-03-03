@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SubscriberTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: SubscriberTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 require_once 'Zend/Feed/Pubsubhubbub/Subscriber.php';
@@ -28,7 +28,7 @@ require_once 'Zend/Feed/Pubsubhubbub/Model/Subscription.php';
  * @subpackage UnitTests
  * @group      Zend_Feed
  * @group      Zend_Feed_Subsubhubbub
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Feed_Pubsubhubbub_SubscriberTest extends PHPUnit_Framework_TestCase

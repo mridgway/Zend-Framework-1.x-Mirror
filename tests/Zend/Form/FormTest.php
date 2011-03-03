@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormTest.php 23613 2011-01-03 09:34:26Z mjh_ca $
+ * @version    $Id: FormTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -43,7 +43,7 @@ require_once 'Zend/View.php';
  * @category   Zend
  * @package    Zend_Form
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Form
  */
@@ -4430,6 +4430,26 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             $this->fail('Setting a view object using the options array should not throw an exception');
         }
         $this->assertNotEquals($result,'');
+    }
+    
+    /**
+     * @group ZF-11088
+     */
+    public function testAddErrorOnElementMakesFormInvalidAndReturnsCustomError()
+    {
+        $element = new Zend_Form_Element_Text('foo');
+        $errorString = 'This element made a booboo';
+        $element->addError($errorString);
+        $errorMessages = $element->getErrorMessages();
+        $this->assertSame(1, count($errorMessages));
+        $this->assertSame($errorString, $errorMessages[0]);
+        
+        $element2 = new Zend_Form_Element_Text('bar');
+        $this->form->addElement($element2);
+        $this->form->getElement('bar')->addError($errorString);
+        $errorMessages2 = $this->form->getElement('bar')->getErrorMessages();
+        $this->assertSame(1, count($errorMessages2));
+        $this->assertSame($errorString, $errorMessages2[0]);
     }
 }
 

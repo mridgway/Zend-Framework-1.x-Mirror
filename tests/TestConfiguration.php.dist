@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestConfiguration.php.dist 23512 2010-12-15 19:06:06Z mjh_ca $
+ * @version    $Id: TestConfiguration.php.dist 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -58,6 +58,7 @@ define('TESTS_ZEND_AUTH_ADAPTER_LDAP_ONLINE_ENABLED', false);
  *
  * TESTS_ZEND_CACHE_SQLITE_ENABLED     => sqlite extension has to be enabled
  * TESTS_ZEND_CACHE_APC_ENABLED        => apc extension has to be enabled
+ * TESTS_ZEND_CACHE_WINCACHE_ENABLED   => wincache extension has to be enabled
  * TESTS_ZEND_CACHE_MEMCACHED_ENABLED  => memcache extension has to be enabled and
  *                                        a memcached server has to be available
  * TESTS_ZEND_CACHE_LIBMEMCACHED_ENABLED => memcached extension has to be enabled and
@@ -66,6 +67,7 @@ define('TESTS_ZEND_AUTH_ADAPTER_LDAP_ONLINE_ENABLED', false);
  */
 define('TESTS_ZEND_CACHE_SQLITE_ENABLED', false);
 define('TESTS_ZEND_CACHE_APC_ENABLED', false);
+define('TESTS_ZEND_CACHE_WINCACHE_ENABLED', false);
 define('TESTS_ZEND_CACHE_XCACHE_ENABLED', false);
 define('TESTS_ZEND_CACHE_XCACHE_USER', null);
 define('TESTS_ZEND_CACHE_XCACHE_PASSWORD', null);

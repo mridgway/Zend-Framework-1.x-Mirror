@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 23675 -->
+<!-- EN-Revision: 23743 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.log.factory">
     <title>Utiliser la fabrique pour créer des logs</title>
@@ -18,13 +18,14 @@
 
     <programlisting language="php"><![CDATA[
 $logger = Zend_Log::factory(array(
+    'timestampFormat' => 'Y-m-d',
     array(
         'writerName'   => 'Stream',
         'writerParams' => array(
             'stream'   => '/tmp/zend.log',
         ),
         'formatterName' => 'Simple',
-        'filterParams' => array(
+        'formatterParams' => array(
             'format'   => '%timestamp%: %message% -- %info%',
         ),
         'filterName'   => 'Priority',
@@ -44,7 +45,13 @@ $logger = Zend_Log::factory(array(
 
     <para>
         Le code ci-dessus instancie un objet journal et 2 objets d'écriture dont un vers un
-        fichier local, puis un vers Firebug. Chacun possède un filtre.
+        fichier local, puis un vers Firebug. Chacun possède un filtre sur la priorité avec
+        un niveau maximum différent.
+    </para>
+
+    <para>
+        Les évènements sont journalisés avec le format de date ISO 8601 par défaut. Vous
+        pouvez choisir votre propre format avec l'option <emphasis>timestampFormat</emphasis>.
     </para>
 
     <para>

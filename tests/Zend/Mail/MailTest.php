@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id $
  */
@@ -56,7 +56,7 @@ require_once 'Zend/Config.php';
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
@@ -88,7 +88,7 @@ class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Transport_Sendmail_Mock extends Zend_Mail_Transport_Sendmail
@@ -114,7 +114,7 @@ class Zend_Mail_Transport_Sendmail_Mock extends Zend_Mail_Transport_Sendmail
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Mail
  */
@@ -208,6 +208,7 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
         $mail->setSubject('Test recipients Header format.');
         $mail->addTo('address_to1@example.com', 'name_to@example.com');
         $mail->addTo('address_to2@example.com', 'noinclude comma nor at mark');
+        $mail->addTo('address_to3@example.com', 'include brackets []');
         $mail->addCc('address_cc@example.com', 'include, name_cc');
 
         $mock = new Zend_Mail_Transport_Mock();
@@ -218,6 +219,7 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Test recipients Header format.', $mock->body);
         $this->assertContains('To: "name_to@example.com" <address_to1@example.com>', $mock->header);
         $this->assertContains('noinclude comma nor at mark <address_to2@example.com>', $mock->header);
+        $this->assertContains('"include brackets []" <address_to3@example.com>', $mock->header);
         $this->assertContains('Cc: "include, name_cc" <address_cc@example.com>', $mock->header);
     }
 

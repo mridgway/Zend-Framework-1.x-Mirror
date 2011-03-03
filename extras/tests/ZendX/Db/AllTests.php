@@ -86,11 +86,11 @@ class ZendX_Db_AllTests
             define('TESTS_ZENDX_DB_ADAPTER_STATIC_ENABLED', false);
         }
 
-		self::_addDbTestSuites($suite, 'Firebird');
+        self::_addDbTestSuites($suite, 'Firebird');
 
         /**
          * @todo  self::_addDbTestSuites($suite, 'Odbc');
-         */		
+         */
 
         if (self::$_skipTestSuite !== null) {
             $suite->addTest(self::$_skipTestSuite);
@@ -104,14 +104,14 @@ class ZendX_Db_AllTests
     protected static function _addDbTestSuites($suite, $driver)
     {
         $DRIVER = strtoupper($driver);
-        $enabledConst = "TESTS_ZENDX_DB_ADAPTER_{$DRIVER}_ENABLED";
+        $enabledConst = "TESTS_ZEND_DB_ADAPTER_{$DRIVER}_ENABLED";
         if (!defined($enabledConst) || constant($enabledConst) != true) {
             self::_skipTestSuite($driver, "this Adapter is not enabled in TestConfiguration.php");
             return;
         }
 
         $ext = array(
-			'Firebird' => 'interbase',
+            'Firebird' => 'interbase',
             /**
              * @todo  'Odbc'
              */

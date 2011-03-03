@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Validate
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BarcodeTest.php 23522 2010-12-16 20:33:22Z andries $
+ * @version    $Id: BarcodeTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /** Zend_Validate_Barcode */
@@ -30,7 +30,7 @@ require_once 'Zend/Validate/Barcode.php';
  * @package    Zend_Validate
  * @subpackage UnitTests
  * @uses       Zend_Validate_Barcode
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Validate
  */

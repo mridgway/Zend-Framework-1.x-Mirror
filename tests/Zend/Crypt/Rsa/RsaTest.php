@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Crypt
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RsaTest.php 23514 2010-12-15 19:29:04Z mjh_ca $
+ * @version    $Id: RsaTest.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 require_once 'Zend/Crypt/Rsa.php';
@@ -27,7 +27,7 @@ require_once 'Zend/Crypt/Rsa.php';
  * @category   Zend
  * @package    Zend_Crypt
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Crypt
  */
@@ -135,6 +135,9 @@ CERT;
 
     public function testConstructorSetsHashOption()
     {
+        if (!defined('OPENSSL_ALGO_MD2')) {
+            $this->markTestSkipped('The OPENSSL_ALGO_MD2 constant is not defined in this PHP instance.');
+        }
         $rsa = new Zend_Crypt_Rsa(array('hashAlgorithm'=>'md2'));
         $this->assertEquals(OPENSSL_ALGO_MD2, $rsa->getHashAlgorithm());
     }

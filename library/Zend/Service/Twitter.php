@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Twitter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Twitter.php 23651 2011-01-21 21:51:00Z mikaelkael $
+ * @version    $Id: Twitter.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -39,7 +39,7 @@ require_once 'Zend/Oauth/Consumer.php';
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Twitter
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Twitter extends Zend_Rest_Client
@@ -131,11 +131,15 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     public function __construct($options = null, Zend_Oauth_Consumer $consumer = null)
     {
         $this->setUri('http://api.twitter.com');
-        if (!is_array($options)) $options = array();
-        $options['siteUrl'] = self::OAUTH_BASE_URI;
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
+
+        if (!is_array($options)) {
+            $options = array();
+        }
+        $options['siteUrl'] = self::OAUTH_BASE_URI;
+
         $this->_options = $options;
         if (isset($options['username'])) {
             $this->setUsername($options['username']);

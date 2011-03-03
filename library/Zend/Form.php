@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Form
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -26,9 +26,9 @@ require_once 'Zend/Validate/Interface.php';
  *
  * @category   Zend
  * @package    Zend_Form
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Form.php 23604 2011-01-01 17:52:54Z ramon $
+ * @version    $Id: Form.php 23775 2011-03-01 17:25:24Z ralph $
  */
 class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
 {

@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Service_Twitter
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: TwitterTest.php 22318 2010-05-29 18:24:27Z padraic $
  */
@@ -37,7 +37,7 @@ require_once 'Zend/Http/Client/Adapter/Test.php';
  * @category   Zend
  * @package    Zend_Service_Twitter
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Service
  * @group      Zend_Service_Twitter
@@ -647,6 +647,16 @@ class Zend_Service_Twitter_TwitterTest extends PHPUnit_Framework_TestCase
         $timeline = $twitter->statusUserTimeline($params);
     }
 
+    /**
+     * @group ZF-11023
+     */
+    public function testConstructorPassedObjectZendConfig()
+    {
+        require_once 'Zend/Config.php';
+        $config = new Zend_Config(array('username' => 'zf'));
+        $twitter = new Zend_Service_Twitter($config);
+        $this->assertEquals('zf', $twitter->getUsername());
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Service_TwitterTest2::main') {

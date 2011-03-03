@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Zf4207.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Zf4207.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 require_once 'Zend/Paginator/Adapter/Interface.php';
@@ -26,7 +26,7 @@ require_once 'Zend/Paginator/Adapter/Interface.php';
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zf4207 extends ArrayObject implements Zend_Paginator_Adapter_Interface

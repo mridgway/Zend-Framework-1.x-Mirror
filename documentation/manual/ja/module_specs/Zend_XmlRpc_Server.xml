@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 22468 -->
+<!-- EN-Revision: 22760 -->
 <sect1 id="zend.xmlrpc.server">
     <title>Zend_XmlRpc_Server</title>
 
@@ -66,11 +66,12 @@ echo $server->handle();
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.anatomy">
-        <title>Anatomy of a webservice</title>
+        <title>Web サービスの解剖図</title>
 
         <sect3 id="zend.xmlrpc.server.anatomy.general">
-            <title>General considerations</title>
+            <title>一般的な考慮点</title>
 
+            <!-- TODO : to be translation -->
             <para>
                 For maximum performance it is recommended to use a simple
                 bootstrap file for the server component. Using
@@ -415,8 +416,9 @@ echo $server->handle();
         </example>
 
         <example id="zend.xmlrpc.server.use.attach-class-with-arguments">
-            <title>Attaching a class with arguments</title>
+            <title>引数にクラスを添付</title>
 
+            <!-- TODO : to be translated -->
             <para>
                 The following example illustrates how to attach a class' public
                 methods and passing arguments to its methods. This can be used to specify certain
@@ -451,7 +453,7 @@ $server->setClass('Services_PricingService',
             <para>
                 The arguments passed at <methodname>setClass()</methodname> at server construction
                 time are injected into the method call <command>pricing.calculate()</command> on
-                remote invokation. In the example above, only the argument <code>$purchaseId</code>
+                remote invokation. In the example above, only the argument <varname>$purchaseId</varname>
                 is expected from the client.
             </para>
         </example>
@@ -562,6 +564,7 @@ echo $server->handle();
         <example id="zend.xmlrpc.server.use.custom-request-object">
             <title>独自のリクエスト及びレスポンスオブジェクトの利用</title>
 
+            <!-- TODO : to be translated -->
             <para>
                 Some use cases require to utilize a custom request object.
                 For example, <acronym>XML/RPC</acronym> is not bound to
@@ -675,26 +678,26 @@ echo $server->handle($request);
 
         <note>
             <para>
-                The server cache file should be located outside the document root.
+                サーバーのキャッシュファイルは、ドキュメントルートの外部に配置されるべきです。
             </para>
         </note>
 
         <example id="zend.xmlrpc.server.performance.xmlgen">
+            <title>XML 生成を最適化</title>
 
-            <title>Optimizing XML generation</title>
-
+            <!-- TODO : to be translated -->
             <para>
                 <classname>Zend_XmlRpc_Server</classname> uses
                 <classname>DOMDocument</classname> of <acronym>PHP</acronym>
-                extension <code>ext/dom</code> to generate it's
-                <acronym>XML</acronym> output. While <code>ext/dom</code> is
+                extension <emphasis>ext/dom</emphasis> to generate it's
+                <acronym>XML</acronym> output. While <emphasis>ext/dom</emphasis> is
                 available on a lot of hosts it is not exactly the fastest.
                 Benchmarks have shown, that <classname>XmlWriter</classname>
-                from <code>ext/xmlwriter</code> performs better.
+                from <emphasis>ext/xmlwriter</emphasis> performs better.
             </para>
 
             <para>
-                If <code>ext/xmlwriter</code> is available on your host, you can
+                If <emphasis>ext/xmlwriter</emphasis> is available on your host, you can
                 select a the <classname>XmlWriter</classname>-based generator
                 to leaverage the performance differences.
             </para>

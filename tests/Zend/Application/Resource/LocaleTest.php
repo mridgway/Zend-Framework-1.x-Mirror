@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LocaleTest.php 23784 2011-03-01 21:55:30Z intiilapa $
+ * @version    $Id: LocaleTest.php 23838 2011-04-05 19:36:12Z ralph $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -146,7 +146,7 @@ class Zend_Application_Resource_LocaleTest extends PHPUnit_Framework_TestCase
         $resource = new Zend_Application_Resource_Locale($config);
         $resource->init();
         $backend = Zend_Locale::getCache()->getBackend();
-        $this->assertInstanceOf('Zend_Cache_Backend_BlackHole', $backend);
+        $this->assertType('Zend_Cache_Backend_BlackHole', $backend);
         Zend_Locale::removeCache();
     }
 

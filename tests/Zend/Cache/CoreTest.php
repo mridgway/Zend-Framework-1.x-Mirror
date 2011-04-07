@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CoreTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: CoreTest.php 23800 2011-03-10 20:52:08Z mabe $
  */
 
 /**
@@ -517,6 +517,17 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase
         $ids = $this->_instance->getIdsMatchingAnyTags(array('tag5', 'tag6'));
         $this->assertContains('id5', $ids);
         $this->assertContains('id6', $ids);
+    }
+
+    public function testLoggerSanity()
+    {
+        $this->_instance = new Zend_Cache_Core(array(
+            'logging' => true
+        ));
+        $this->_instance->setBackend($this->_backend);
+
+        $logger = $this->_instance->getOption('logger');
+        $this->assertType('Zend_Log', $logger);
     }
 
     /**

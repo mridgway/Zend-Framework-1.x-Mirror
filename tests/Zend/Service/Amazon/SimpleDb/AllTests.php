@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: AllTests.php 23798 2011-03-07 14:44:06Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -64,7 +64,7 @@ class Zend_Service_Amazon_SimpleDb_AllTests
 
         if (defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED')
             && constant('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED')
-            && defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEY')
+            && defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID')
             && defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_SECRETKEY')
         ) {
             $suite->addTestSuite('Zend_Service_Amazon_SimpleDb_OnlineTest');

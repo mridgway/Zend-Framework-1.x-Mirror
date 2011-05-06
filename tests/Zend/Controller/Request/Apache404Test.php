@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Apache404Test.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Apache404Test.php 23988 2011-05-04 02:39:04Z ralph $
  */
 
 // Call Zend_Controller_Request_Apache404Test::main() if this source file is executed directly.
@@ -83,11 +83,12 @@ class Zend_Controller_Request_Apache404Test extends PHPUnit_Framework_TestCase
 
     /**
      * @group ZF-3057
+     * @group ZF-9776
      */
     public function testRedirectQueryStringShouldBeParsedIntoGetVars()
     {
         $_SERVER['REDIRECT_URL']         = '/foo/bar';
-        $_SERVER['REDIRECT_QUERYSTRING'] = 'baz=bat&bat=delta';
+        $_SERVER['REDIRECT_QUERY_STRING'] = 'baz=bat&bat=delta';
         $_SERVER['REQUEST_URI']          = '/baz/bat';
 
         $request = new Zend_Controller_Request_Apache404();

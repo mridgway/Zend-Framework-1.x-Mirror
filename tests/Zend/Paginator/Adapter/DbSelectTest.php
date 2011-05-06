@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbSelectTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: DbSelectTest.php 23855 2011-04-10 19:03:02Z ramon $
  */
 
 /**
@@ -494,5 +494,47 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
                          ->getLastQueryProfile()
                          ->getQuery();
         $this->assertEquals($expected, $lastQuery);
+    }
+
+    /**
+     * @group ZF-7434
+     */
+    public function testGroupByOneColumnWithZendExpr()
+    {
+        $select = $this->_db->select();
+        $select->from('test', 'testgroup')
+               ->group(new Zend_Db_Expr('testgroup'));
+
+        $adapter = new Zend_Paginator_Adapter_DbSelect($select);
+
+        $this->assertEquals(2, $adapter->count());
+    }
+
+    /**
+     * @group ZF-10704
+     */
+    public function testObjectSelectWithBind()
+    {
+        $select = $this->_db->select();
+        $select->from('test', array('number'))
+               ->where('number = ?')
+               ->distinct(true)
+               ->bind(array(250));
+
+        $adapter = new Zend_Paginator_Adapter_DbSelect($select);
+        $this->assertEquals(1, $adapter->count());
+
+        $select->reset(Zend_Db_Select::DISTINCT);
+        $select2 = clone $select;
+        $select2->reset(Zend_Db_Select::WHERE)
+                ->where('number = 500');
+
+        $selectUnion = $this->_db
+                           ->select()
+                           ->bind(array(250));
+
+        $selectUnion->union(array($select, $select2));
+        $adapter = new Zend_Paginator_Adapter_DbSelect($selectUnion);
+        $this->assertEquals(2, $adapter->count());
     }
 }

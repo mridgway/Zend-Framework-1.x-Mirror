@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewRendererTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ViewRendererTest.php 23976 2011-05-03 17:36:13Z ralph $
  */
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.
@@ -838,6 +838,25 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->helper->render();
         $body = $this->response->getBody();
         $this->assertContains('SampleZfHelper invoked', $body, 'Received ' . $body);
+    }
+    
+    /**
+     * @group ZF-11127
+     */
+    public function testViewSuffixInstanceNotSharedWhenViewHelperIsCloned()
+    {
+        $a = new Zend_Controller_Action_Helper_ViewRenderer();
+        $a->init();
+        $a->setViewSuffix('A');
+        
+        $this->assertEquals('A', $a->getViewSuffix());
+        
+        $b = clone $a;        
+        $this->assertEquals('A', $b->getViewSuffix());
+        $b->setViewSuffix('B');
+        
+        $this->assertEquals('B', $b->getViewSuffix());
+        $this->assertNotEquals('B', $a->getViewSuffix());
     }
 
     protected function _normalizePath($path)

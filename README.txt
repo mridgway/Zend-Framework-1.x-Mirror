@@ -2,8 +2,34 @@ Welcome to the Zend Framework 1.11 Release!
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.11.5 Release ([INSERT REV NUM HERE]).
+Zend Framework 1.11.6 Release ([INSERT REV NUM HERE]).
 Released on <Month> <Day>, <Year>.
+
+SECURITY NOTICE FOR 1.11.6
+--------------------------
+
+This release includes a patch that helps prevent SQL injection attacks
+in applications using the MySQL PDO driver of PHP while using non-ASCII
+compatible encodings. Developers using ASCII-compatible encodings like
+UTF8 or latin1 are not affected by this PHP issue, which is described
+in more detail here: http://bugs.php.net/bug.php?id=47802
+
+The PHP Group included a feature in PHP 5.3.6+ that allows any
+character set information to be passed as part of the DSN in PDO to
+allow both the database as well as the c-level driver to be aware of
+which charset is in use which is of special importance when PDO's
+quoting mechanisms are utilized, which Zend Framework also relies on.
+
+Our patch ensures that any charset information provided to the Zend_Db
+PDO MySQL adapter will be sent to PDO both as part of the DSN as well
+as in a SET NAMES query.  This ensures that any developer using ZF on
+PHP 5.3.6+ while using non-ASCII compatible encodings is safe from SQL
+injection while using the PDO's quoting mechanisms or emulated prepared
+statements.
+
+If you are using non-ASCII compatible encodings, like GBK, we strongly
+urge you to consider upgrading to at least PHP 5.3.6 and use
+Zend Framework version 1.11.6 or 1.10.9
 
 NEW FEATURES
 ------------

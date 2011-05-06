@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NumberSpinnerTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: NumberSpinnerTest.php 23923 2011-05-02 19:16:09Z matthew $
  */
 
 // Call Zend_Dojo_Form_Element_NumberSpinnerTest::main() if this source file is executed directly.
@@ -197,6 +197,24 @@ class Zend_Dojo_Form_Element_NumberSpinnerTest extends PHPUnit_Framework_TestCas
         $html = $this->element->render();
         $this->assertRegexp('/\'min\':\s*5/', $html, $html);
         $this->assertRegexp('/\'max\':\s*10/', $html, $html);
+    }
+    
+    public function testSmallAndLargeDeltaCanBeSetAsDecimalValues()
+    {
+        $this->element->setSmallDelta(20.5);
+        $this->assertEquals(20.5, $this->element->getSmallDelta());
+        
+        $this->element->setLargeDelta(50.5);
+        $this->assertEquals(50.5, $this->element->getLargeDelta());
+    }
+    
+    public function testMinAndMaxValuesCanBeSetAsDecimalValues()
+    {
+        $this->element->setMin(20.5);
+        $this->assertEquals(20.5, $this->element->getMin());
+        
+        $this->element->setMax(50.5);
+        $this->assertEquals(50.5, $this->element->getMax());
     }
 }
 

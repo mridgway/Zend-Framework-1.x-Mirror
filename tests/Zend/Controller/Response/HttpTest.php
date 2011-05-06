@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: HttpTest.php 23967 2011-05-03 14:31:55Z adamlundrigan $
  */
 
 // Call Zend_Controller_Response_HttpTest::main() if this source file is executed directly.
@@ -163,6 +163,21 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $updatedHeadersRaw  = $this->_response->getRawHeaders();
 
         $this->assertFalse($originalHeadersRaw == $updatedHeadersRaw);
+    }
+
+       /**
+        * @group ZF-6038
+        */
+    public function testClearRawHeaderThatDoesNotExist()
+    {
+        $this->_response->setRawHeader('HTTP/1.0 404 Not Found');
+        $this->_response->setRawHeader('HTTP/1.0 401 Unauthorized');
+        $originalHeadersRaw = $this->_response->getRawHeaders();
+
+        $this->_response->clearRawHeader('HTTP/1.0 403 Forbidden');
+        $updatedHeadersRaw  = $this->_response->getRawHeaders();
+
+        $this->assertTrue($originalHeadersRaw == $updatedHeadersRaw);
     }
 
     public function testClearAllHeaders()

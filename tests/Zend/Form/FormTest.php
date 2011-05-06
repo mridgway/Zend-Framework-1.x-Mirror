@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: FormTest.php 23950 2011-05-03 03:46:42Z ralph $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -4450,6 +4450,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $errorMessages2 = $this->form->getElement('bar')->getErrorMessages();
         $this->assertSame(1, count($errorMessages2));
         $this->assertSame($errorString, $errorMessages2[0]);
+    }
+    
+    /**
+     * @group ZF-10865
+     * @expectedException Zend_Form_Exception
+     */
+    public function testExceptionThrownWhenAddElementsIsGivenNullValue()
+    {
+        $form = new Zend_Form();
+        $form->addElement(NULL);
     }
 }
 

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RedirectorTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: RedirectorTest.php 23940 2011-05-02 20:20:40Z matthew $
  */
 
 // Call Zend_Controller_Action_Helper_RedirectorTest::main() if this source file is executed directly.
@@ -530,6 +530,28 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $this->redirector->gotoSimple('index', 'index', 'default');
         $result = $this->redirector->getRedirectUrl();
         $expected = '/default/index/index';
+        $this->assertEquals($expected, $result);
+    }
+
+    /** @group ZF-6025 */
+    public function testGotoSimpleShouldNotHardcodeControllerActionModuleKeys()
+    {
+        $this->request->setControllerKey('foo')
+                      ->setActionKey('bar')
+                      ->setModuleKey('baz');
+
+        $this->router->removeRoute('default');
+        $this->router->addRoute('default', new Zend_Controller_Router_Route(
+            ':baz/:foo/:bar/*', array(
+                'baz' => 'default',
+                'foo' => 'index',
+                'bar' => 'index'
+            )
+        ));
+
+        $this->redirector->gotoSimple('babar', 'barbapapa', 'barbazoo', array('asd' => 1));
+        $result = $this->redirector->getRedirectUrl();
+        $expected = '/barbazoo/barbapapa/babar/asd/1';
         $this->assertEquals($expected, $result);
     }
 

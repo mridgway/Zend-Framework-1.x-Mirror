@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: EditorTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: EditorTest.php 23938 2011-05-02 20:13:50Z matthew $
  */
 
 // Call Zend_Dojo_View_Helper_EditorTest::main() if this source file is executed directly.
@@ -147,7 +147,7 @@ class Zend_Dojo_View_Helper_EditorTest extends PHPUnit_Framework_TestCase
         $onLoadActions = $this->view->dojo()->getOnLoadActions();
         $found = false;
         foreach ($onLoadActions as $action) {
-            if (strstr($action, "dojo.byId('foo').value = dijit.byId('foo-Editor').getValue(false);")) {
+            if (strstr($action, "value = dijit.byId('foo-Editor').getValue(false);")) {
                 $found = true;
                 break;
             }
@@ -210,6 +210,15 @@ class Zend_Dojo_View_Helper_EditorTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->helper->editor('foo');
         $this->assertRegexp('#<noscript><textarea[^>]*>#', $html, $html);
+    }
+
+    /**
+     * @group ZF-11315
+     */
+    public function testHiddenInputShouldBeRenderedLast()
+    {
+        $html = $this->helper->editor('foo');
+        $this->assertRegexp('#</noscript><input#', $html, $html);
     }
 }
 

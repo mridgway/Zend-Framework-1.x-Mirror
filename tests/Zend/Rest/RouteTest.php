@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RouteTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: RouteTest.php 24013 2011-05-04 21:19:12Z ralph $
  */
 
 /** Zend_Rest_Route */
@@ -933,6 +933,20 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
         $url = $route->assemble($params, false, false);
         $this->assertEquals('users/index/1/extra/parameter/another/parameter', $url);
     }
+    /**
+     * @group ZF-9115
+     */
+    public function test_request_get_user_params()
+    {
+        $uri = Zend_Uri::factory('http://localhost.com/user/index?a=1&b=2');
+        $request = new Zend_Controller_Request_Http($uri);
+        $request->setParam('test', 5);
+        $config = array('mod'=>array('user'));
+        $this->_invokeRouteMatch($request, $config);
+        $this->assertEquals(array("test"=>5), $request->getUserParams());
+        $this->assertEquals(array("test"=>5,"a"=>1,"b"=>2), $request->getParams());
+    }
+
 
     private function _buildRequest($method, $uri)
     {
@@ -944,8 +958,9 @@ class Zend_Rest_RouteTest extends PHPUnit_Framework_TestCase
     private function _invokeRouteMatch($request, $config = array(), $route = null)
     {
         $this->_front->setRequest($request);
-        if ($route == null)
+        if ($route == null) {
         	$route = new Zend_Rest_Route($this->_front, array(), $config);
+        }
         $values = $route->match($request);
         return $values;
     }

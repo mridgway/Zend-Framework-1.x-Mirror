@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ValidationTextBoxTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ValidationTextBoxTest.php 23929 2011-05-02 19:28:33Z matthew $
  */
 
 // Call Zend_Dojo_Form_Element_ValidationTextBoxTest::main() if this source file is executed directly.
@@ -177,6 +177,15 @@ class Zend_Dojo_Form_Element_ValidationTextBoxTest extends PHPUnit_Framework_Tes
     {
         $html = $this->element->render();
         $this->assertContains('dojoType="dijit.form.ValidationTextBox"', $html);
+    }
+    
+    public function testSettingMultipleConstraintsShouldNotOverridePreviousConstraints()
+    {
+        $this->element->setConstraint('foo', 'bar');
+        
+        $this->element->setConstraints(array('spam' => 'ham'));
+        
+        $this->assertEquals('bar', $this->element->getConstraint('foo'));
     }
 }
 

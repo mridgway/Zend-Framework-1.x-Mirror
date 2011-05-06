@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: FormTest.php 23927 2011-05-02 19:24:53Z matthew $
  */
 
 // Call Zend_Dojo_View_Helper_FormTest::main() if this source file is executed directly.
@@ -126,6 +126,12 @@ class Zend_Dojo_View_Helper_FormTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->helper->form('foo', array('id' => 'bar'));
         $this->assertRegexp('/<form[^>]*(id="bar")/', $html);
+    }
+    
+    public function testShouldNotRenderClosingTagIfContentIsFalse()
+    {
+        $html = $this->helper->form('foo');
+        $this->assertNotRegexp('/<\/form>/', $html);
     }
 }
 

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MysqlTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: MysqlTest.php 23986 2011-05-03 20:10:42Z ralph $
  */
 
 
@@ -307,9 +307,27 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->assertEquals(1, $result[0]['product_id']);
     }
 
+    /**
+     * @group ZF-11304
+     */
+    public function testAdapterIncludesCharsetInsideGeneratedPdoDsn()
+    {
+        $adapter = new ZendTest_Db_Adapter_Pdo_Mysql(array('dbname' => 'foo', 'charset' => 'XYZ', 'username' => 'bar', 'password' => 'foo'));
+        $this->assertEquals('mysql:dbname=foo;charset=XYZ', $adapter->_dsn());
+    }
+    
     public function getDriver()
     {
         return 'Pdo_Mysql';
     }
 
 }
+
+class ZendTest_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Mysql
+{
+    public function _dsn()
+    {
+        return parent::_dsn();
+    }
+}
+

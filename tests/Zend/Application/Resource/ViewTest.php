@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ViewTest.php 23992 2011-05-04 03:32:01Z ralph $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -208,7 +208,27 @@ class Zend_Application_Resource_ViewTest extends PHPUnit_Framework_TestCase
         $registry->deleteContainer('Zend_View_Helper_HeadMeta');
         $registry->deleteContainer('Zend_View_Helper_Doctype');
     }
+    
+    /**
+     * @group ZF-10042
+     */
+    public function testAssignmentsAreSet()
+    {
+        $options = array(
+            'assign' => array(
+                'foo' => 'barbapapa',
+                'bar' => 'barbazoo',
+            )
+        );
+        $resource = new Zend_Application_Resource_View($options);
+        $view = $resource->init();
+ 
+        $this->assertEquals('barbapapa', $view->foo);
+        $this->assertEquals('barbazoo', $view->bar);
+    }
+
 }
+
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Application_Resource_ViewTest::main') {
     Zend_Application_Resource_ViewTest::main();

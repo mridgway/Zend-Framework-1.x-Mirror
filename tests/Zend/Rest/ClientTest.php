@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ClientTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ClientTest.php 23966 2011-05-03 14:30:07Z ralph $
  */
 
 /** Zend_Rest_Client */
@@ -297,4 +297,27 @@ class Zend_Rest_ClientTest extends PHPUnit_Framework_TestCase
 
         }
     }
+    
+    /**
+     * @group ZF-11281
+     */
+    public function testCallStatusGetterOnResponseObjectWhenServerResponseHasNoStatusXmlElement()
+    {
+        $expXml   = file_get_contents($this->path . 'returnEmptyStatus.xml');
+        $response = "HTTP/1.0 200 OK\r\n"
+                  . "X-powered-by: PHP/5.2.0\r\n"
+                  . "Content-type: text/xml\r\n"
+                  . "Content-length: " . strlen($expXml) . "\r\n"
+                  . "Server: Apache/1.3.34 (Unix) PHP/5.2.0)\r\n"
+                  . "Date: Tue, 06 Feb 2007 15:01:47 GMT\r\n"
+                  . "Connection: close\r\n"
+                  . "\r\n"
+                  . $expXml;
+        $this->adapter->setResponse($response);
+
+        $response = $this->rest->get('/rest/');
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $this->assertFalse($response->getStatus());
+    }
+
 }

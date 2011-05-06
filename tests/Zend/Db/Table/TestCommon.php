@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestCommon.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: TestCommon.php 23994 2011-05-04 06:09:42Z ralph $
  */
 
 
@@ -671,6 +671,28 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals($insertResult, $lastInsertId);
         $this->assertEquals(5, $lastInsertId);
     }
+    
+    /**
+     * @group ZF-3837
+     */
+    public function testTableInsertWhenAutoIncrementFieldIsAnEmptyStringShouldProduceNewAutoIncrementValue()
+    {
+        $table = $this->_table['bugs'];
+        $row = array (
+            'bug_id'          => '',
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy',
+            'verified_by'     => 'dduck'
+        );
+        $insertResult = $table->insert($row);
+        $lastInsertId = $this->_db->lastInsertId();
+        $this->assertEquals($insertResult, $lastInsertId);
+        $this->assertEquals(5, $lastInsertId);
+    }
 
     public function testTableInsertWithSchema()
     {
@@ -1011,6 +1033,44 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
         $this->assertTrue(isset($row->bug_description));
         $this->assertEquals('New bug', $row->bug_description);
+    }
+
+    /**
+     * @group ZF-8944
+     * @group ZF-10598
+     * @group ZF-11253
+     */
+    public function testTableFetchRowOffset()
+    {
+        $reported_by = $this->_db->quoteIdentifier('reported_by', true);
+
+        $table = $this->_table['bugs'];
+        $row = $table->fetchRow(array("$reported_by = ?" => 'goofy'), null, 1);
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(2, $row->$bug_id);
+    }
+
+    /**
+     * @group ZF-8944
+     * @group ZF-10598
+     * @group ZF-11253
+     */
+    public function testTableFetchRowOffsetSelect()
+    {
+        $reported_by = $this->_db->quoteIdentifier('reported_by', true);
+
+        $table = $this->_table['bugs'];
+        $select = $table->select()
+            ->where("$reported_by = ?", 'goofy')
+            ->limit(1, 1);
+
+        $row = $table->fetchRow($select);
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(2, $row->$bug_id);
     }
 
     public function testTableFetchRow()

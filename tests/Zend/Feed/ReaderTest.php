@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ReaderTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ReaderTest.php 23975 2011-05-03 16:43:46Z ralph $
  */
 
 require_once 'Zend/Feed/Reader.php';
@@ -318,6 +318,22 @@ class Zend_Feed_ReaderTest extends PHPUnit_Framework_TestCase
             $this->fail($e->getMessage());
         }
         $this->assertTrue(Zend_Feed_Reader::isRegistered('JungleBooks'));
+    }
+    
+    /**
+     * @group ZF-11184
+     */
+    public function testImportingUriWithEmptyResponseBodyTriggersException()
+    {
+        $currClient = Zend_Feed_Reader::getHttpClient();
+        $testAdapter = new Zend_Http_Client_Adapter_Test();
+        $testAdapter->setResponse(new Zend_Http_Response(200,array(),''));
+        Zend_Feed_Reader::setHttpClient(new Zend_Http_Client(null, array(
+            'adapter'=>$testAdapter
+        )));
+        
+        $this->setExpectedException('Zend_Feed_Exception', 'Feed failed to load');
+        $result = Zend_Feed_Reader::import('http://www.example.com');
     }
 
     protected function _getTempDirectory()

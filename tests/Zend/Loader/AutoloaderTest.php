@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AutoloaderTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: AutoloaderTest.php 23953 2011-05-03 05:47:39Z ralph $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -391,6 +391,34 @@ class Zend_Loader_AutoloaderTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Zend_Loader_Autoloader::autoload('AutoloaderTest_AutoloaderClosure'));
     }
 
+    /**
+     * @group ZF-11219
+     */
+    public function testRetrievesAutoloadersFromLongestMatchingNamespace()
+    {
+        $this->autoloader->pushAutoloader(array($this, 'autoloadFirstLevel'), 'Level1_')
+                         ->pushAutoloader(array($this, 'autoloadSecondLevel'), 'Level1_Level2');
+        $class = 'Level1_Level2_Foo';
+        $als   = $this->autoloader->getClassAutoloaders($class);
+        $this->assertEquals(1, count($als));
+        $al    = array_shift($als);
+        $this->assertEquals(array($this, 'autoloadSecondLevel'), $al);
+    }
+
+    /**
+     * @group ZF-10136
+     */
+    public function testMergedAutoloadersWithoutNamespace()
+    {
+        $this->autoloader
+             ->pushAutoloader('autoloadOne')
+             ->pushAutoloader('autoloadSecond');
+
+        $class = 'Zend_Autoloader_Test';
+        $autoloaders = $this->autoloader->getClassAutoloaders($class);
+        $this->assertEquals(3, count($autoloaders));
+    }
+
     public function addTestIncludePath()
     {
         set_include_path(dirname(__FILE__) . '/_files/' . PATH_SEPARATOR . $this->includePath);
@@ -402,6 +430,16 @@ class Zend_Loader_AutoloaderTest extends PHPUnit_Framework_TestCase
     }
 
     public function autoload($class)
+    {
+        return $class;
+    }
+
+    public function autoloadFirstLevel($class)
+    {
+        return $class;
+    }
+
+    public function autoloadSecondLevel($class)
     {
         return $class;
     }

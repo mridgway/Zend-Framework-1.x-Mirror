@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HtmlEntitiesTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: HtmlEntitiesTest.php 24011 2011-05-04 18:56:38Z matthew $
  */
 
 /**
@@ -207,5 +207,63 @@ class Zend_Filter_HtmlEntitiesTest extends PHPUnit_Framework_TestCase
 
         $this->_filter->setQuoteStyle(ENT_NOQUOTES);
         $this->assertEquals($result, $this->_filter->filter($input));
+    }
+
+    /**
+     * @group ZF-11344
+     */
+    public function testCorrectsForEncodingMismatch()
+    {
+        $string = file_get_contents(dirname(__FILE__) . '/_files/latin-1-text.txt');
+
+        // restore_error_handler can emit an E_WARNING; let's ignore that, as 
+        // we want to test the returned value
+        set_error_handler(array($this, 'errorHandler'), E_NOTICE | E_WARNING);
+        $result = $this->_filter->filter($string);
+        restore_error_handler();
+
+        $this->assertTrue(strlen($result) > 0);
+    }
+
+    /**
+     * @group ZF-11344
+     */
+    public function testStripsUnknownCharactersWhenEncodingMismatchDetected()
+    {
+        $string = file_get_contents(dirname(__FILE__) . '/_files/latin-1-text.txt');
+
+        // restore_error_handler can emit an E_WARNING; let's ignore that, as 
+        // we want to test the returned value
+        set_error_handler(array($this, 'errorHandler'), E_NOTICE | E_WARNING);
+        $result = $this->_filter->filter($string);
+        restore_error_handler();
+
+        $this->assertContains('&quot;&quot;', $result);
+    }
+
+    /**
+     * @group ZF-11344
+     */
+    public function testRaisesExceptionIfEncodingMismatchDetectedAndFinalStringIsEmpty()
+    {
+        $string = file_get_contents(dirname(__FILE__) . '/_files/latin-1-dash-only.txt');
+
+        // restore_error_handler can emit an E_WARNING; let's ignore that, as 
+        // we want to test the returned value
+        // Also, explicit try, so that we don't mess up PHPUnit error handlers
+        set_error_handler(array($this, 'errorHandler'), E_NOTICE | E_WARNING);
+        try {
+            $result = $this->_filter->filter($string);
+            $this->fail('Expected exception from single non-utf-8 character');
+        } catch (Zend_Filter_Exception $e) {
+            $this->assertTrue($e instanceof Zend_Filter_Exception);
+        }
+    }
+
+    /**
+     * Null error handler; used when wanting to ignore specific error types
+     */
+    public function errorHandler($errno, $errstr)
+    {
     }
 }

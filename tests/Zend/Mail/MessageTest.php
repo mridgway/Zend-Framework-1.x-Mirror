@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MessageTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: MessageTest.php 23999 2011-05-04 15:20:53Z matthew $
  */
 
 /**
@@ -217,9 +217,9 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
 
     public function testDecodeString()
     {
-        $is = Zend_Mime_Decode::decodeQuotedPrintable('=?UTF-8?Q?"Peter M=C3=BCller"?= <peter-mueller@example.com>');
-        $should = iconv('UTF-8', iconv_get_encoding('internal_encoding'),
-                        '"Peter Müller" <peter-mueller@example.com>');
+        $string = '"Peter M=C3=BCller" <peter-mueller@example.com>';
+        $is     = Zend_Mime_Decode::decodeQuotedPrintable($string);
+        $should = quoted_printable_decode($string);
         $this->assertEquals($is, $should);
     }
 

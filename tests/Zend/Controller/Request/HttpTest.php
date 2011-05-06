@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: HttpTest.php 24003 2011-05-04 17:49:06Z ralph $
  */
 
 // Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.
@@ -947,6 +947,20 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $pathInfo = $request->getPathInfo();
 
         $this->assertEquals( '/module/controller/action', $pathInfo, $pathInfo);
+    }
+    
+    /**
+     * @group ZF-3527
+     * @group ZF-10964
+     * @group ZF-10787
+     */
+    public function testPathInfoShouldNotDecodeRequestParams()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $_SERVER['REQUEST_URI'] = '/module/controller/action/param/escaped%2Fstring';
+        $pathInfo = $request->getPathInfo();
+    
+        $this->assertEquals( '/module/controller/action/param/escaped%2Fstring', $pathInfo, $pathInfo);
     }
 
     /**

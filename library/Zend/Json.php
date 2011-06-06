@@ -16,7 +16,7 @@
  * @package    Zend_Json
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Json.php 23973 2011-05-03 16:28:26Z ezimuel $
+ * @version    $Id: Json.php 24040 2011-05-17 09:04:37Z ezimuel $
  */
 
 /**
@@ -277,7 +277,7 @@ class Zend_Json
             $childArray= array();
             foreach ($childrens as $child) {
                 $childname= $child->getName();
-                $element= self::_processXml($child,$ignoreXmlAttributes,$recursionDepth++);
+                $element= self::_processXml($child,$ignoreXmlAttributes,$recursionDepth+1);
                 if (array_key_exists($childname, $childArray)) {
                     if (empty($subChild[$childname])) {
                         $childArray[$childname]=array($childArray[$childname]);

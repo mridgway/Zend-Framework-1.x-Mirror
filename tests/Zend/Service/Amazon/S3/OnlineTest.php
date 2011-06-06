@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OnlineTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: OnlineTest.php 24083 2011-05-30 10:52:55Z ezimuel $
  */
 
 /**
@@ -71,6 +71,7 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
         $this->_httpClientAdapterSocket = new Zend_Http_Client_Adapter_Socket();
 
         $this->_bucket = constant('TESTS_ZEND_SERVICE_AMAZON_S3_BUCKET');
+        $this->_bucketEu = $this->_bucket.'-eu';
 
         $this->_amazon->getHttpClient()
                       ->setAdapter($this->_httpClientAdapterSocket);
@@ -395,10 +396,12 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateBucketEU()
     {
-        $this->_amazon->createBucket($this->_bucket, 'EU');
-        $this->assertTrue($this->_amazon->isBucketAvailable($this->_bucket));
+        $this->_amazon->createBucket($this->_bucketEu, 'EU');
+        $this->assertTrue($this->_amazon->isBucketAvailable($this->_bucketEu));
         $list = $this->_amazon->getBuckets();
-        $this->assertContains($this->_bucket, $list);
+        $this->assertContains($this->_bucketEu, $list);
+        $this->_amazon->cleanBucket($this->_bucketEu);
+        $this->_amazon->removeBucket($this->_bucketEu);
     }
     /**
      * Test bucket name with /'s and encoding
@@ -482,12 +485,23 @@ class Zend_Service_Amazon_S3_OnlineTest extends PHPUnit_Framework_TestCase
         $this->_amazon->removeObject("testgetobjectparams1/zftest2", "testdata");
         $this->_amazon->removeBucket("testgetobjectparams1");
     }
-
+    /**
+     * @see ZF-10219
+     */
+    public function testVersionBucket()
+    {
+        $this->_amazon->createBucket($this->_bucket);
+        $response= $this->_amazon->_makeRequest('GET', $this->_bucket.'/?versions', array('versions'=>''));
+        $this->assertNotNull($response,'The response for the ?versions is empty');
+        $xml = new SimpleXMLElement($response->getBody());
+        $this->assertEquals((string) $xml->Name,$this->_bucket,'The bucket name in XML response is not valid');
+    }
     public function tearDown()
     {
         unset($this->_amazon->debug);
         $this->_amazon->cleanBucket($this->_bucket);
         $this->_amazon->removeBucket($this->_bucket);
+        sleep(1);
     }
 }
 

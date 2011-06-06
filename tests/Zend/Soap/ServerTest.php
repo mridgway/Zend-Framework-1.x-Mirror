@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ServerTest.php 24066 2011-05-28 19:42:53Z ralph $
  */
 
 /** Zend_Soap_Server */
@@ -890,6 +890,16 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($options['cache_wsdl']));
         $this->assertEquals(100, $options['cache_wsdl']);
     }
+    
+    /**
+     * @group ZF-11411
+     */
+    public function testHandleUsesProperRequestParameter()
+    {
+        $server = new Zend_Soap_MockServer();
+        $r = $server->handle(new DomDocument('1.0', 'UTF-8'));
+        $this->assertTrue(is_string($server->mockSoapServer->handle[0]));
+    }
 }
 
 
@@ -930,6 +940,22 @@ class Zend_Soap_Server_TestLocalSoapClient extends SoapClient
 
 }
 
+class MockSoapServer {
+    public $handle = null;
+    public function handle()
+    {
+        $this->handle = func_get_args();
+    }
+    public function __call($name, $args) {}
+}
+
+class Zend_Soap_MockServer extends Zend_Soap_Server {
+    public $mockSoapServer = null;
+    protected function _getSoap() {
+        $this->mockSoapServer = new MockSoapServer(); 
+        return $this->mockSoapServer;
+    }
+}
 
 /** Test Class */
 class Zend_Soap_Server_TestClass {

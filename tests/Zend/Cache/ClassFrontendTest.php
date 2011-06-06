@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ClassFrontendTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ClassFrontendTest.php 24032 2011-05-10 21:08:20Z mabe $
  */
 
 /**
@@ -262,6 +262,15 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
 
         $output = ob_get_clean();
         $this->assertEquals('startend', $output);
+    }
+
+    /**
+     * @group ZF-11337
+     */
+    public function testThrowExceptionOnInvalidCallback()
+    {
+        $this->setExpectedException('Zend_Cache_Exception');
+        $this->_instance2->unknownMethod();
     }
 
 }

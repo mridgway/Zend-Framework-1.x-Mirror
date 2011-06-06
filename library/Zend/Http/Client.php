@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
- * @version    $Id: Client.php 23864 2011-04-19 16:14:07Z shahar $
+ * @version    $Id: Client.php 24081 2011-05-30 10:41:43Z ezimuel $
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -782,7 +782,8 @@ class Zend_Http_Client
         $this->paramsPost    = array();
         $this->files         = array();
         $this->raw_post_data = null;
-
+        $this->enctype       = null;
+        
         if($clearAll) {
             $this->headers = array();
             $this->last_request = null;

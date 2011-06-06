@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ApplicationTest.php 23844 2011-04-06 00:34:03Z wilmoore $
+ * @version    $Id: ApplicationTest.php 24101 2011-06-01 02:21:15Z adamlundrigan $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -318,6 +318,15 @@ class Zend_Application_ApplicationTest extends PHPUnit_Framework_TestCase
     public function testPassingStringJsonConfigPathOptionToConstructorShouldLoadOptions()
     {
         $application = new Zend_Application('testing', dirname(__FILE__) . '/_files/appconfig.json');
+        $this->assertTrue($application->hasOption('foo'));
+    }
+    
+    /**
+     * @group ZF-11425
+     */
+    public function testPassingStringYmlConfigPathOptionToConstructorShouldLoadOptionsAsYaml()
+    {
+        $application = new Zend_Application('testing', dirname(__FILE__) . '/_files/appconfig.yml');
         $this->assertTrue($application->hasOption('foo'));
     }
 

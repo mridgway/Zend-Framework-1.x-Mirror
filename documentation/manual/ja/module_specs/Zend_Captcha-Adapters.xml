@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 21815 -->
+<!-- EN-Revision: 24077 -->
 <sect1 id="zend.captcha.adapters">
     <title>CAPTCHA アダプタ</title>
 
@@ -214,6 +214,7 @@
                 生成される画像の形式が変わるわけではありません。
             </para></listitem>
 
+            <!-- TODO : to be translated -->
             <listitem><para>
                 <methodname>setDotNoiseLevel($level)</methodname> and <methodname>getDotNoiseLevel()</methodname>,
                 along with <methodname>setLineNoiseLevel($level)</methodname> and 
@@ -262,6 +263,29 @@
                 <methodname>getService()</methodname> で、
                 ReCaptcha サービスオブジェクトを取得したり取得したりします。
             </para></listitem>
+
+            <!-- TODO : to be translated -->
+            <listitem>
+                <para>
+                    <methodname>isValid($value, $context = null)</methodname> validates the user's
+                    input against the ReCaptcha service.  <varname>$value</varname> is an array with the following
+                    keys:
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                <varname>recaptcha_challenge_field</varname> - Value of the ReCaptcha widget's 
+                                challenge field (hidden)
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <varname>recaptcha_response_field</varname> - Value of the ReCaptcha widget's
+                                user input field
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </listitem>
         </itemizedlist>
     </sect2>
 </sect1>

@@ -105,8 +105,6 @@ class ZendX_Application_Resource_Jquery
      */
     protected function _parseOptions(array $options)
     {
-        $options = array_merge($options, array('cdn_ssl' => false));
-
         foreach ($options as $key => $value) {
             switch(strtolower($key)) {
                 case 'noconflictmode':

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ModulesTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ModulesTest.php 24106 2011-06-03 23:25:41Z freak $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -168,6 +168,30 @@ class Zend_Application_Resource_ModulesTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('foo-bar', (array)$bootstraps);
         $this->assertArrayHasKey('foo',     (array)$bootstraps);
         $this->assertArrayHasKey('default', (array)$bootstraps);
+    }
+    
+    public function testBootstrapBootstrapsIsOwnMethod()
+    {
+        require_once 'Zend/Application/Resource/Modules.php';
+
+        $this->bootstrap->registerPluginResource('Frontcontroller', array(
+            'moduleDirectory' => dirname(__FILE__) . '/../_files/modules',
+        ));
+        $resource = new ZendTest_Application_Resource_ModulesHalf(array());
+        $resource->setBootstrap($this->bootstrap);
+        $bootstraps = $resource->init();
+        $this->assertEquals(3, count((array)$bootstraps));
+    }
+}
+
+require_once 'Zend/Application/Resource/Modules.php';
+class ZendTest_Application_Resource_ModulesHalf
+    extends Zend_Application_Resource_Modules 
+{
+    protected function bootstrapBootstraps($bootstraps)
+    {
+        array_pop($bootstraps);
+        return parent::bootstrapBootstraps($bootstraps);
     }
 }
 

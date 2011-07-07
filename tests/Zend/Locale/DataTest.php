@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DataTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: DataTest.php 24140 2011-06-14 02:11:19Z adamlundrigan $
  */
 
 /**
@@ -744,6 +744,16 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     {
         $value = Zend_Locale_Data::getContent('de_AT', 'decimalnumber');
         $this->assertEquals("#,##0.###", $value);
+    }
+    
+    /**
+     * test for reading defaultNumberingSystem from locale data
+     * @group ZF-10728
+     */
+    public function testDefaultNumberingSystem()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'defaultnumberingsystem');
+        $this->assertEquals('latn', $value);
     }
 
     /**

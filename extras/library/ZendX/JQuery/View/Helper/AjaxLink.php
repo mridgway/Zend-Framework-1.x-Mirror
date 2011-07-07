@@ -17,7 +17,7 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: AjaxLink.php 21865 2010-04-16 07:26:51Z beberlei $
+ * @version     $Id: AjaxLink.php 24187 2011-07-05 14:51:57Z matthew $
  */
 
 /**
@@ -242,11 +242,11 @@ class ZendX_JQuery_View_Helper_AjaxLink extends Zend_View_Helper_HtmlElement
 
         switch($requestHandler) {
             case 'GET':
-                $js[] = sprintf("%s.get('%s', %s, function(data, textStatus) { %s }, '%s');return false;",
+                $js[] = sprintf('%s.get("%s", %s, function(data, textStatus) { %s }, "%s");return false;',
                     $jqHandler, $url, $params, implode(" ", $callbackCompleteJs), $options['dataType']);
                 break;
             case 'POST':
-                $js[] = sprintf("%s.post('%s', %s, function(data, textStatus) { %s }, '%s');return false;",
+                $js[] = sprintf('%s.post("%s", %s, function(data, textStatus) { %s }, "%s");return false;',
                     $jqHandler, $url, $params, implode(" ", $callbackCompleteJs), $options['dataType']);
                 break;
         }

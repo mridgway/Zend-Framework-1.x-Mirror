@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DateObjectTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: DateObjectTest.php 24108 2011-06-04 00:09:27Z freak $
  */
 
 /**
@@ -539,6 +539,24 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(($diff < 2), "Zend_Date_DateObject->_getTime() returned a significantly "
             . "different timestamp than expected: $diff seconds");
     }
+    
+    /**
+     * Test for RFC 2822's Obsolete Date and Time (paragraph 4.3)
+     * 
+     * @see ZF-11296
+     */
+    public function test_obsRfc2822()
+    {
+        $date = new Zend_Date();
+        /* Obsolete timezones */
+        $this->assertTrue($date->set("Mon, 15 Aug 2005 15:52:01 +0000", Zend_Date::RFC_2822) instanceof Zend_Date);
+        $this->assertTrue($date->set("Mon, 15 Aug 2005 15:52:01 UT", Zend_Date::RFC_2822) instanceof Zend_Date);
+        $this->assertTrue($date->set("Mon, 15 Aug 2005 15:52:01 GMT", Zend_Date::RFC_2822) instanceof Zend_Date);
+        $this->assertTrue($date->set("Mon, 15 Aug 2005 15:52:01 EST", Zend_Date::RFC_2822) instanceof Zend_Date);
+        $this->assertTrue($date->set("Mon, 15 Aug 2005 15:52:01 I", Zend_Date::RFC_2822) instanceof Zend_Date);
+        $this->assertTrue($date->set("Mon, 15 Aug 2005 15:52:01 Z", Zend_Date::RFC_2822) instanceof Zend_Date);
+    }
+    
 }
 
 class Zend_Date_DateObjectTestHelper extends Zend_Date

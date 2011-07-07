@@ -127,7 +127,7 @@ class ZendX_Application_Resource_JqueryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/foo/bar/', $res->getLocalPath());
         $this->assertEquals('2.3.4', $res->getUiVersion());
         $this->assertEquals('/bar/foo/', $res->getUiLocalPath());
-//        $this->assertTrue($res->getCdnSsl()); // Not implemented yet
+        $this->assertTrue($res->getCdnSsl());
         $this->assertEquals(192, $res->getRenderMode());
         $this->assertEquals(array('/fooBar.css', 'johndoe.css', 'janedoe.css'),
                             $res->getStylesheets());

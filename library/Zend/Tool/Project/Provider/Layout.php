@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Layout.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Layout.php 24165 2011-06-29 20:21:34Z adamlundrigan $
  */
 
 /**
@@ -70,7 +70,7 @@ class Zend_Tool_Project_Provider_Layout extends Zend_Tool_Project_Provider_Abstr
 
         $zc = $applicationConfigResource->getAsZendConfig();
 
-        if (isset($zc->resources) && isset($zf->resources->layout)) {
+        if (isset($zc->resources) && isset($zc->resources->layout)) {
             $this->_registry->getResponse()->appendContent('A layout resource already exists in this project\'s application configuration file.');
             return;
         }
@@ -95,8 +95,7 @@ class Zend_Tool_Project_Provider_Layout extends Zend_Tool_Project_Provider_Abstr
             $this->_registry->getResponse()->appendContent('A layout entry has been added to the application config file.');
         }
 
-
-
+        $this->_storeProfile();
     }
 
     public function disable()

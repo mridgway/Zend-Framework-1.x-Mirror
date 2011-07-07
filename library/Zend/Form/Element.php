@@ -38,7 +38,7 @@ require_once 'Zend/Validate/Abstract.php';
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Element.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: Element.php 24198 2011-07-05 16:04:15Z matthew $
  */
 class Zend_Form_Element implements Zend_Validate_Interface
 {
@@ -1377,15 +1377,23 @@ class Zend_Form_Element implements Zend_Validate_Interface
             if ($isArray && is_array($value)) {
                 $messages = array();
                 $errors   = array();
-                foreach ($value as $val) {
-                    if (!$validator->isValid($val, $context)) {
+                if (empty($value)) {
+                    if ($this->isRequired()
+                        || (!$this->isRequired() && !$this->getAllowEmpty())
+                    ) {
                         $result = false;
-                        if ($this->_hasErrorMessages()) {
-                            $messages = $this->_getErrorMessages();
-                            $errors   = $messages;
-                        } else {
-                            $messages = array_merge($messages, $validator->getMessages());
-                            $errors   = array_merge($errors,   $validator->getErrors());
+                    }
+                } else {
+                    foreach ($value as $val) {
+                        if (!$validator->isValid($val, $context)) {
+                            $result = false;
+                            if ($this->_hasErrorMessages()) {
+                                $messages = $this->_getErrorMessages();
+                                $errors   = $messages;
+                            } else {
+                                $messages = array_merge($messages, $validator->getMessages());
+                                $errors   = array_merge($errors,   $validator->getErrors());
+                            }
                         }
                     }
                 }

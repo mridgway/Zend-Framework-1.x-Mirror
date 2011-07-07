@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 23864 2011-04-19 16:14:07Z shahar $
+ * @version    $Id: StaticTest.php 24194 2011-07-05 15:53:45Z matthew $
  */
 
 require_once 'Zend/Http/Client.php';
@@ -539,6 +539,54 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(count($expectedLines), count($gotLines));
 
+        while (($expected = array_shift($expectedLines)) &&
+               ($got = array_shift($gotLines))) {
+
+            $expected = trim($expected);
+            $got = trim($got);
+            $this->assertRegExp("/^$expected$/", $got);
+        }
+    }
+
+    /**
+     * @group ZF-4236
+     */
+    public function testFormFileUpload()
+    {
+        $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
+        $this->_client->setUri('http://example.com');
+        $this->_client->setFileUpload('testFile.name', 'testFile', 'TESTDATA12345', 'text/plain');
+        $this->_client->request('POST');
+        
+        $expectedLines = file(dirname(__FILE__) . '/_files/ZF4236-fileuploadrequest.txt');
+        $gotLines = explode("\n", trim($this->_client->getLastRequest()));
+
+        $this->assertEquals(count($expectedLines), count($gotLines));
+        while (($expected = array_shift($expectedLines)) &&
+               ($got = array_shift($gotLines))) {
+
+            $expected = trim($expected);
+            $got = trim($got);
+            $this->assertRegExp("/^$expected$/", $got);
+        }
+    }
+    
+    /**
+     * @group ZF-4236
+     */
+    public function testClientBodyRetainsFieldOrdering()
+    {
+        $this->_client->setAdapter('Zend_Http_Client_Adapter_Test');
+        $this->_client->setUri('http://example.com');
+        $this->_client->setParameterPost('testFirst', 'foo');
+        $this->_client->setFileUpload('testFile.name', 'testFile', 'TESTDATA12345', 'text/plain');
+        $this->_client->setParameterPost('testLast', 'bar');
+        $this->_client->request('POST');
+        
+        $expectedLines = file(dirname(__FILE__) . '/_files/ZF4236-clientbodyretainsfieldordering.txt');
+        $gotLines = explode("\n", trim($this->_client->getLastRequest()));
+
+        $this->assertEquals(count($expectedLines), count($gotLines));
         while (($expected = array_shift($expectedLines)) &&
                ($got = array_shift($gotLines))) {
 

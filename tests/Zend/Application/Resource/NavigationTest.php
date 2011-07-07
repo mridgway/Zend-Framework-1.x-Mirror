@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NavigationTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: NavigationTest.php 24114 2011-06-04 01:51:02Z freak $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -93,7 +93,7 @@ class Zend_Application_Resource_NavigationTest extends PHPUnit_Framework_TestCas
 
     public function testInitializationReturnsNavigationObject()
     {
-           $this->bootstrap->registerPluginResource('view');
+        $this->bootstrap->registerPluginResource('view');
         $resource = new Zend_Application_Resource_Navigation(array());
         $resource->setBootstrap($this->bootstrap);
         $test = $resource->init();
@@ -147,6 +147,32 @@ class Zend_Application_Resource_NavigationTest extends PHPUnit_Framework_TestCas
          $view = $bootstrap->bootstrap('view')->view;
 
          $this->assertEquals($view->setInMethodByTest,true);
+    }
+    
+    /**
+     * @group ZF-10959
+     */
+    public function testDefaultPageTypeIsSet()
+    {
+        $this->bootstrap->registerPluginResource('view');
+        $this->bootstrap->getPluginResource('view')->getView();
+
+        $options = array('defaultPageType' => 'foobar',
+                         'pages'=> array(array(
+            			 'action'     => 'index',
+                         'controller' => 'index')));
+
+        $results = array();
+        $resource = new Zend_Application_Resource_Navigation($options);
+        
+        try {
+            $resource->setBootstrap($this->bootstrap)->init();
+            $this->fail('An exception should have been thrown but wasn\'t');
+        } catch(Zend_Exception $e) {
+            $this->assertTrue(true);
+        }
+        
+        $this->bootstrap->unregisterPluginResource('view');
     }
 
     /**

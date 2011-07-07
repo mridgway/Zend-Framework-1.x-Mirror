@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: LocaleTest.php 23969 2011-05-03 14:48:31Z ralph $
+ * @version    $Id: LocaleTest.php 24112 2011-06-04 01:28:08Z freak $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -117,6 +117,7 @@ class Zend_Application_Resource_LocaleTest extends PHPUnit_Framework_TestCase
     {
         $options = array(
             'default'      => 'kok_IN',
+            'force' => true
         );
 
         $resource = new Zend_Application_Resource_Locale($options);
@@ -146,7 +147,7 @@ class Zend_Application_Resource_LocaleTest extends PHPUnit_Framework_TestCase
         $resource = new Zend_Application_Resource_Locale($config);
         $resource->init();
         $backend = Zend_Locale::getCache()->getBackend();
-        $this->assertType('Zend_Cache_Backend_BlackHole', $backend);
+        $this->assertInstanceOf('Zend_Cache_Backend_BlackHole', $backend);
         Zend_Locale::removeCache();
     }
 

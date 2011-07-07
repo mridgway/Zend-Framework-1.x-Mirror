@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormSelectTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: FormSelectTest.php 24158 2011-06-27 15:31:54Z ezimuel $
  */
 
 // Call Zend_View_Helper_FormSelectTest::main() if this source file is executed directly.
@@ -311,6 +311,25 @@ class Zend_View_Helper_FormSelectTest extends PHPUnit_Framework_TestCase
         $this->assertRegexp('/<select[^>]*?(name="baz\[\]")/', $html, $html);
         $this->assertNotRegexp('/<select[^>]*?(multiple="multiple")/', $html, $html);
     }
+    /** 
+     * @group ZF-8252
+     */
+    public function testOptGroupHasAnId()
+    {
+        $html = $this->helper->formSelect(array(
+            'name'    => 'baz',
+            'options' => array(
+                'foo' => 'Foo',
+                'bar' => array(
+                    '1' => 'one',
+                    '2' => 'two'
+                ),
+                'baz' => 'Baz,'
+            )
+        ));
+        $this->assertRegexp('/<optgroup[^>]*?id="baz-optgroup-bar"[^>]*?"bar"[^>]*?/', $html, $html);
+    }
+ 
 }
 
 // Call Zend_View_Helper_FormSelectTest::main() if this source file is executed directly.

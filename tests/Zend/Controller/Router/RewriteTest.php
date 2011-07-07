@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RewriteTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: RewriteTest.php 24129 2011-06-07 23:16:31Z adamlundrigan $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -755,6 +755,15 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
             '/index/index/2/foo/page/bar',
             $this->_router->assemble($params)
         );
+    }
+    
+    /**
+     * @group ZF-11393
+     * @expectedException Zend_Controller_Router_Exception
+     */
+    public function testCallingAssembleWithNullArgumentShouldThrowException()
+    {
+        $this->_router->assemble(null);
     }
 }
 

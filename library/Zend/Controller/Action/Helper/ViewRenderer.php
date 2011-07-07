@@ -17,7 +17,7 @@
  * @subpackage Zend_Controller_Action_Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewRenderer.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ViewRenderer.php 24200 2011-07-05 16:12:07Z matthew $
  */
 
 /**
@@ -626,6 +626,14 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         } elseif (null !== $action) {
             $vars['action'] = $action;
         }
+
+        // Remove non-alphanumeric characters from action name
+        // see ZF-10725
+        $vars['action'] = preg_replace(
+            array('/[^a-z0-9]+$/', '/^[^a-z0-9]+/'),
+            array('', ''),
+            $vars['action']
+        );
 
         $inflector = $this->getInflector();
         if ($this->getNoController() || $this->getNeverController()) {

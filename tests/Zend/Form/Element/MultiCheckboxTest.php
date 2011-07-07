@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MultiCheckboxTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: MultiCheckboxTest.php 24198 2011-07-05 16:04:15Z matthew $
  */
 
 // Call Zend_Form_Element_MultiCheckboxTest::main() if this source file is executed directly.
@@ -277,6 +277,28 @@ class Zend_Form_Element_MultiCheckboxTest extends PHPUnit_Framework_TestCase
                       ->addErrorMessage('%value% is invalid');
         $this->element->isValid(array('foo', 'bogus'));
         $html = $this->element->render($this->getView());
+    }
+
+    /**
+     * @group ZF-11402
+     */
+    public function testValidateShouldNotAcceptEmptyArray()
+    {
+        $this->element->addMultiOptions(array(
+            'foo' => 'Foo',
+            'bar' => 'Bar',
+            'baz' => 'Baz',
+        ));
+        $this->element->setRegisterInArrayValidator(true);
+    
+        $this->assertTrue($this->element->isValid(array('foo')));
+        $this->assertTrue($this->element->isValid(array('foo','baz')));
+    
+        $this->element->setAllowEmpty(true);
+        $this->assertTrue($this->element->isValid(array()));
+    
+        $this->element->setAllowEmpty(false);
+        $this->assertFalse($this->element->isValid(array()));
     }
 }
 

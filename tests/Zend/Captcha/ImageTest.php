@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ImageTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ImageTest.php 24146 2011-06-15 13:15:22Z adamlundrigan $
  */
 
 // Call Zend_Captcha_ImageTest::main() if this source file is executed directly.
@@ -345,6 +345,21 @@ class Zend_Captcha_ImageTest extends PHPUnit_Framework_TestCase
         $this->testCaptchaIsRendered();
         $input = array("id" => $this->captcha->getId(), "input" => $this->captcha->getWord());
         $this->assertTrue($this->element->isValid($input));
+    }
+    
+    /**
+     * @group ZF-11483
+     */
+    public function testImageTagRenderedProperlyBasedUponDoctype()
+    {
+        $this->testCaptchaIsRendered();        
+        $view = new Zend_View();
+        
+        $view->doctype('XHTML1_STRICT');        
+        $this->assertRegExp('#/>$#', $this->captcha->render($view));
+        
+        $view->doctype('HTML4_STRICT');        
+        $this->assertRegExp('#[^/]>$#', $this->captcha->render($view));
     }
 }
 

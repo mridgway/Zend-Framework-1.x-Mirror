@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: JsonTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: JsonTest.php 24152 2011-06-24 15:23:19Z adamlundrigan $
  */
 
 /**
@@ -761,6 +761,25 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $encoded = Zend_Json_Encoder::encode($inputValue);
         $expectedDecoding = '{"__className":"ArrayIterator","0":"foo"}';
         $this->assertEquals($encoded, $expectedDecoding);
+    }
+    
+    /**
+     * @group ZF-11356
+     */
+    public function testEncoderEscapesNamespacedClassNamesProperly()
+    {
+        if (version_compare(PHP_VERSION, '5.3.0') === -1) {
+            $this->markTestSkipped('Namespaces not available in PHP < 5.3.0');
+        }
+        
+        require_once dirname(__FILE__ ) . "/Json/_files/ZF11356-NamespacedClass.php";        
+        $inputValue = new \Zend\JsonTest\ZF11356\NamespacedClass(array('foo'));
+        
+        $encoded = Zend_Json_Encoder::encode($inputValue);
+        $this->assertEquals(
+            '{"__className":"Zend\\\\JsonTest\\\\ZF11356\\\\NamespacedClass","0":"foo"}',
+            $encoded
+        );
     }
 }
 

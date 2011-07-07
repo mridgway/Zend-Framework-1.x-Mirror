@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: XmlTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: XmlTest.php 24128 2011-06-07 23:11:58Z adamlundrigan $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -137,6 +137,28 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
         $formatter = Zend_Log_Formatter_Xml::factory($options);
         $this->assertType('Zend_Log_Formatter_Xml', $formatter);
     }
+    
+    /**
+     * @group ZF-11161
+     */
+    public function testNonScalarValuesAreExcludedFromFormattedString()
+    {
+        $options = array(
+            'rootElement' => 'log'
+        );
+        $event = array(
+            'message' => 'tottakai',
+            'priority' => 4,
+            'context' => array('test'=>'one'),
+            'reference' => new Zend_Log_Formatter_Xml()
+        );
+        $expected = '<log><message>tottakai</message><priority>4</priority></log>';
+
+        $formatter = new Zend_Log_Formatter_Xml($options);
+        $output = $formatter->format($event);
+        $this->assertContains($expected, $output);
+    }
+    
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Log_Formatter_XmlTest::main') {

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MessageTest.php 23999 2011-05-04 15:20:53Z matthew $
+ * @version    $Id: MessageTest.php 24163 2011-06-29 15:24:10Z adamlundrigan $
  */
 
 /**
@@ -445,4 +445,31 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'foo'), 'bar');
         $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'baz'), 42);
     }
+    
+    /**
+     * @group ZF-11514
+     */
+    public function testConstructorMergesConstructorFlagsIntoDefaultFlags()
+    {
+        $message = new ZF11514_Mail_Message(array(
+            'file'  => $this->_file,
+            'flags' => array('constructor')
+        ));
+        $flags = $message->getFlags();
+        $this->assertArrayHasKey('default', $flags);
+        $this->assertEquals('yes!', $flags['default']);
+        $this->assertArrayHasKey('constructor', $flags);
+        $this->assertEquals('constructor', $flags['constructor']);
+    }
+}
+
+/**
+ * Message class which sets a pre-defined default flag set
+ * @see ZF-11514
+ */
+class ZF11514_Mail_Message extends Zend_Mail_Message
+{
+    protected $_flags = array(
+        'default'=>'yes!'
+    );
 }

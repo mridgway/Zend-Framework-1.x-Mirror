@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewRendererTest.php 23976 2011-05-03 17:36:13Z ralph $
+ * @version    $Id: ViewRendererTest.php 24200 2011-07-05 16:12:07Z matthew $
  */
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.
@@ -826,6 +826,19 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->helper->render();
         $body = $this->response->getBody();
         $this->assertContains('fooUseHelper invoked', $body, 'Received ' . $body);
+    }
+    /**
+     * @group ZF-10725
+     */
+    public function testThatCharactersStrippedFromActionNameByDispatcherAreAlsoStrippedFromViewScriptName()
+    {
+        $this->request->setModuleName('default')
+                      ->setControllerName('foo')
+                      ->setActionName('-myBar-');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $scriptName = $this->helper->getViewScript();
+        $this->assertEquals('foo/my-bar.phtml', $scriptName);
     }
 
     public function testCorrectViewHelperPathShouldBePropagatedWhenSubControllerInvokedInDefaultModule()

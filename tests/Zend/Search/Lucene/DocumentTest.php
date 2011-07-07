@@ -17,8 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DocumentTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: DocumentTest.php 24207 2011-07-06 16:44:17Z matthew $
  */
+
+/**
+ * Zend_Search_Lucene
+ */
+require_once 'Zend/Search/Lucene.php';
 
 /**
  * Zend_Search_Lucene_Document
@@ -39,6 +44,11 @@ require_once 'Zend/Search/Lucene/Document/Pptx.php';
  * Zend_Search_Lucene_Document_Xlsx
  */
 require_once 'Zend/Search/Lucene/Document/Xlsx.php';
+
+/**
+ * Zend_Search_Lucene_Document_Html
+ */
+require_once 'Zend/Search/Lucene/Document/Html.php';
 
 /**
  * @category   Zend

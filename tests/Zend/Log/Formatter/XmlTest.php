@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: XmlTest.php 24128 2011-06-07 23:11:58Z adamlundrigan $
+ * @version    $Id: XmlTest.php 24237 2011-07-13 18:22:20Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -159,6 +159,34 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertContains($expected, $output);
     }
     
+    /**
+     * @group ZF-11161
+     */
+    public function testObjectsWithStringSerializationAreIncludedInFormattedString()
+    {
+        $options = array(
+            'rootElement' => 'log'
+        );
+        $event = array(
+            'message' => 'tottakai',
+            'priority' => 4,
+            'context' => array('test'=>'one'),
+            'reference' => new Zend_Log_Formatter_XmlTest_SerializableObject()
+        );
+        $expected = '<log><message>tottakai</message><priority>4</priority><reference>Zend_Log_Formatter_XmlTest_SerializableObject</reference></log>';
+
+        $formatter = new Zend_Log_Formatter_Xml($options);
+        $output = $formatter->format($event);
+        $this->assertContains($expected, $output);
+    }
+}
+
+class Zend_Log_Formatter_XmlTest_SerializableObject
+{
+    public function __toString()
+    {
+        return __CLASS__;
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Log_Formatter_XmlTest::main') {

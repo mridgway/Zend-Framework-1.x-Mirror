@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ReCaptchaTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ReCaptchaTest.php 24224 2011-07-12 17:45:49Z matthew $
  */
 
 /** @see Zend_Service_ReCaptcha */
@@ -252,6 +252,15 @@ class Zend_Service_ReCaptcha_ReCaptchaTest extends PHPUnit_Framework_TestCase
 
         // See if the js/iframe src is correct
         $this->assertNotSame(false, strstr($html, 'src="' . Zend_Service_ReCaptcha::API_SECURE_SERVER . '/challenge?k=' . $this->_publicKey . '&error=' . $errorMsg . '"'));
+    }
+
+    /** @group ZF-10991 */
+    public function testHtmlGenerationWillUseSuppliedNameForNoScriptElements()
+    {
+        $this->_reCaptcha->setPublicKey($this->_publicKey);
+        $html = $this->_reCaptcha->getHtml('contact');
+        $this->assertContains('contact[recaptcha_challenge_field]', $html);
+        $this->assertContains('contact[recaptcha_response_field]', $html);
     }
 
     public function testVerifyWithMissingPrivateKey() {

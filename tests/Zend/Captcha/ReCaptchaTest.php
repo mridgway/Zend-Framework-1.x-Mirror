@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ReCaptchaTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ReCaptchaTest.php 24224 2011-07-12 17:45:49Z matthew $
  */
 
 // Call Zend_Captcha_ReCaptchaTest::main() if this source file is executed directly.
@@ -129,10 +129,7 @@ class Zend_Captcha_ReCaptchaTest extends PHPUnit_Framework_TestCase
         $this->assertSame($privKey, $captcha->getService()->getPrivateKey());
     }
 
-    /**
-     * Regression tests for ZF-7654
-     */
-
+    /** @group ZF-7654 */
     public function testConstructorShouldAllowSettingLangOptionOnServiceObject()
     {
         $options = array('lang'=>'fr');
@@ -140,6 +137,7 @@ class Zend_Captcha_ReCaptchaTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('fr', $captcha->getService()->getOption('lang'));
     }
 
+    /** @group ZF-7654 */
     public function testConstructorShouldAllowSettingThemeOptionOnServiceObject()
     {
         $options = array('theme'=>'black');
@@ -147,6 +145,7 @@ class Zend_Captcha_ReCaptchaTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('black', $captcha->getService()->getOption('theme'));
     }
 
+    /** @group ZF-7654 */
     public function testAllowsSettingLangOptionOnServiceObject()
     {
         $captcha = new Zend_Captcha_ReCaptcha;
@@ -154,6 +153,7 @@ class Zend_Captcha_ReCaptchaTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('fr', $captcha->getService()->getOption('lang'));
     }
 
+    /** @group ZF-7654 */
     public function testAllowsSettingThemeOptionOnServiceObject()
     {
         $captcha = new Zend_Captcha_ReCaptcha;
@@ -161,9 +161,30 @@ class Zend_Captcha_ReCaptchaTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('black', $captcha->getService()->getOption('theme'));
     }
 
-    /**
-     * End ZF-7654 tests
-    */
+    /** @group ZF-10991 */
+    public function testRenderWillUseElementNameWhenRenderingNoScriptFields()
+    {
+        $captcha = new Zend_Captcha_ReCaptcha;
+        $pubKey  = 'pubKey';
+        $privKey = 'privKey';
+        $captcha->setPubkey($pubKey)
+                ->setPrivkey($privKey);
+        $element = new Zend_Form_Element_Captcha('captcha', array(
+            'captcha'   => $captcha,
+            'belongsTo' => 'contact',
+        ));
+        $view = new Zend_View();
+        $html = $captcha->render($view, $element);
+        $this->assertContains('contact[recaptcha_challenge_field]', $html);
+        $this->assertContains('contact[recaptcha_response_field]', $html);
+    }
+
+    /** @group ZF-10991 */
+    public function testUsesReCaptchaSpecificDecorator()
+    {
+        $captcha = new Zend_Captcha_ReCaptcha;
+        $this->assertEquals('Captcha_ReCaptcha', $captcha->getDecorator());
+    }
 }
 
 class Zend_Captcha_ReCaptchaTest_SessionContainer

@@ -17,7 +17,7 @@
  * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Xml.php 24128 2011-06-07 23:11:58Z adamlundrigan $
+ * @version    $Id: Xml.php 24237 2011-07-13 18:22:20Z matthew $
  */
 
 /** Zend_Log_Formatter_Abstract */
@@ -29,7 +29,7 @@ require_once 'Zend/Log/Formatter/Abstract.php';
  * @subpackage Formatter
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Xml.php 24128 2011-06-07 23:11:58Z adamlundrigan $
+ * @version    $Id: Xml.php 24237 2011-07-13 18:22:20Z matthew $
  */
 class Zend_Log_Formatter_Xml extends Zend_Log_Formatter_Abstract
 {
@@ -146,7 +146,10 @@ class Zend_Log_Formatter_Xml extends Zend_Log_Formatter_Abstract
         $elt = $dom->appendChild(new DOMElement($this->_rootElement));
 
         foreach ($dataToInsert as $key => $value) {
-            if(empty($value) || is_scalar($value)) {
+            if (empty($value) 
+                || is_scalar($value) 
+                || (is_object($value) && method_exists($value,'__toString'))
+            ) {
                 if($key == "message") {
                     $value = htmlspecialchars($value, ENT_COMPAT, $enc);
                 }

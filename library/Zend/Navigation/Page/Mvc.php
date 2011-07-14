@@ -17,7 +17,7 @@
  * @subpackage Page
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mvc.php 24119 2011-06-04 14:35:38Z freak $
+ * @version    $Id: Mvc.php 24235 2011-07-13 18:13:45Z matthew $
  */
 
 /**
@@ -161,6 +161,12 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
                 $myParams['action'] = $this->_action;
             } elseif(!array_key_exists('action', $myParams)) {
                 $myParams['action'] = $front->getDefaultAction();
+            }
+
+            foreach($myParams as $key => $value) {
+                if($value == null) {
+                    unset($myParams[$key]);
+                }
             }
 
             if (count(array_intersect_assoc($reqParams, $myParams)) ==

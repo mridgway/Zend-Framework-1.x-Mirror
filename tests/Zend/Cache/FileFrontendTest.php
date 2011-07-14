@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FileFrontendTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: FileFrontendTest.php 24218 2011-07-10 01:22:58Z ramon $
  */
 
 /**
@@ -223,6 +223,13 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('foo', $this->_instance1->load('cache_id', true));
     }
 
+    /**
+     * @group ZF-11547
+     */
+    public function testMultipleMasterFiles()
+    {
+        $this->assertEquals(2, count($this->_instance3->getOption('master_files')));
+        $this->assertNotNull($this->_instance3->getOption('master_file'));
+    }
+
 }
-
-

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MvcTest.php 24119 2011-06-04 14:35:38Z freak $
+ * @version    $Id: MvcTest.php 24235 2011-07-13 18:13:45Z matthew $
  */
 
 require_once 'Zend/Navigation/Page/Mvc.php';
@@ -396,5 +396,48 @@ class Zend_Navigation_Page_MvcTest extends PHPUnit_Framework_TestCase
         Zend_Navigation_Page_Mvc::setUrlHelper($old);
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @group ZF-11550
+     */
+    public function testNullValuesInMatchedRouteWillStillReturnMatchedPage()
+    {
+        $page = new Zend_Navigation_Page_Mvc(array(
+            'route'      => 'default',
+            'module'     => 'default',
+            'controller' => 'index',
+            'action'     => 'index',
+            'label'      => 'Home',
+            'title'      => 'Home',
+        ));
+
+        $this->_front->getRouter()->addRoute(
+            'default',
+            new Zend_Controller_Router_Route(
+                ':locale/:module/:controller/:action/*',
+                array(
+                    'locale'     => null,
+                    'module'     => 'default',
+                    'controller' => 'index',
+                    'action'     => 'index',
+                ),
+                array(
+                    'locale'     => '.*',
+                    'module'     => '.*',
+                    'controller' => '.*',
+                    'action'     => '.*',
+                )
+            )
+        );
+
+        $this->_front->getRequest()->setParams(array(
+            'locale'     => 'en_US',
+            'module'     => 'default',
+            'controller' => 'index',
+            'action'     => 'index',
+        ));
+
+        $this->assertEquals(true, $page->isActive());
     }
 }

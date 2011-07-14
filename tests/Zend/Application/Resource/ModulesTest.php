@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ModulesTest.php 24106 2011-06-03 23:25:41Z freak $
+ * @version    $Id: ModulesTest.php 24227 2011-07-12 19:41:46Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -181,6 +181,23 @@ class Zend_Application_Resource_ModulesTest extends PHPUnit_Framework_TestCase
         $resource->setBootstrap($this->bootstrap);
         $bootstraps = $resource->init();
         $this->assertEquals(3, count((array)$bootstraps));
+    }
+
+    /**
+     * @group ZF-11548
+     */
+    public function testGetExecutedBootstrapsShouldReturnArrayObject()
+    {
+        require_once 'Zend/Application/Resource/Modules.php';
+
+        $this->bootstrap->registerPluginResource('Frontcontroller', array(
+            'moduleDirectory' => dirname(__FILE__) . '/../_files/modules',
+        ));
+        $resource = new Zend_Application_Resource_Modules(array());
+        $resource->setBootstrap($this->bootstrap);
+        $resource->init();
+        $bootstraps = $resource->getExecutedBootstraps();
+        $this->assertType('ArrayObject', $bootstraps);
     }
 }
 

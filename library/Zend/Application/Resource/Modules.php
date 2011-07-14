@@ -17,7 +17,7 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Modules.php 24106 2011-06-03 23:25:41Z freak $
+ * @version    $Id: Modules.php 24227 2011-07-12 19:41:46Z matthew $
  */
 
 /**
@@ -103,13 +103,13 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Resour
                 // resource, don't re-execute.
                 continue;
             }
-            
+
             $bootstraps[$module] = $bootstrapClass;
         }
 
         return $this->_bootstraps = $this->bootstrapBootstraps($bootstraps);
     }
-    
+
     /*
      * Bootstraps the bootstraps found. Allows for easy extension.
      * @param array $bootstraps Array containing the bootstraps to instantiate
@@ -117,15 +117,14 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Resour
     protected function bootstrapBootstraps($bootstraps)
     {
         $bootstrap = $this->getBootstrap();
-        $out = array();
-        
+        $out = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
+
         foreach($bootstraps as $module => $bootstrapClass) {
             $moduleBootstrap = new $bootstrapClass($bootstrap);
             $moduleBootstrap->bootstrap();
-            $this->_bootstraps[$module] = $moduleBootstrap;
             $out[$module] = $moduleBootstrap;
         }
-        
+
         return $out;
     }
 

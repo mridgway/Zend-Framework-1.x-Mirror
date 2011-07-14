@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: AllTests.php 24224 2011-07-12 17:45:49Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -35,6 +35,7 @@ require_once 'Zend/Form/Decorator/FormTest.php';
 require_once 'Zend/Form/Decorator/HtmlTagTest.php';
 require_once 'Zend/Form/Decorator/ImageTest.php';
 require_once 'Zend/Form/Decorator/LabelTest.php';
+require_once 'Zend/Form/Decorator/ReCaptchaTest.php';
 require_once 'Zend/Form/Decorator/ViewHelperTest.php';
 require_once 'Zend/Form/Decorator/ViewScriptTest.php';
 
@@ -68,6 +69,7 @@ class Zend_Form_Decorator_AllTests
         $suite->addTestSuite('Zend_Form_Decorator_HtmlTagTest');
         $suite->addTestSuite('Zend_Form_Decorator_ImageTest');
         $suite->addTestSuite('Zend_Form_Decorator_LabelTest');
+        $suite->addTestSuite('Zend_Form_Decorator_ReCaptchaTest');
         $suite->addTestSuite('Zend_Form_Decorator_ViewHelperTest');
         $suite->addTestSuite('Zend_Form_Decorator_ViewScriptTest');
 

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ServerTest.php 24322 2011-07-30 15:38:24Z mikaelkael $
  */
 
 // Call Zend_Json_ServerTest::main() if this source file is executed directly.
@@ -83,11 +83,18 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($methods->hasMethod('strtolower'));
     }
 
-    public function testShouldBeAbleToBindCallbackToServer()
+    public function testShouldBeAbleToBindCallback1ToServer()
     {
-        $this->server->addFunction(array($this, 'setUp'));
+        $this->server->addFunction(array('Zend_Json_ServerTest_Foo', 'bar'));
         $methods = $this->server->getFunctions();
-        $this->assertTrue($methods->hasMethod('setUp'));
+        $this->assertTrue($methods->hasMethod('bar'));
+    }
+
+    public function testShouldBeAbleToBindCallback2ToServer()
+    {
+        $this->server->addFunction(array(new Zend_Json_ServerTest_Foo, 'bar'));
+        $methods = $this->server->getFunctions();
+        $this->assertTrue($methods->hasMethod('bar'));
     }
 
     public function testShouldBeAbleToBindClassToServer()

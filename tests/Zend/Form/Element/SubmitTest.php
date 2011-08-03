@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SubmitTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: SubmitTest.php 24280 2011-07-28 18:39:33Z matthew $
  */
 
 // Call Zend_Form_Element_SubmitTest::main() if this source file is executed directly.
@@ -157,6 +157,30 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $submit = new Zend_Form_Element_Submit('foo', 'Label');
         $submit->setTranslator($translate);
         $this->assertEquals($translations['Label'], $submit->getLabel());
+    }
+
+    public function testLabelWhichIsSetToNameIsTranslatedWhenTranslationAvailable()
+    {
+        require_once 'Zend/Translate.php';
+        $translations = array('foo' => 'This is the Submit Label');
+        $translate = new Zend_Translate('array', $translations);
+        $submit = new Zend_Form_Element_Submit('foo');
+        $submit->setTranslator($translate);
+        $this->assertEquals($translations['foo'], $submit->getLabel());
+    }
+
+    /**
+     * @group ZF-8764
+     */
+    public function testLabelIsNotTranslatedTwice()
+    {
+        require_once 'Zend/Translate.php';
+        $translations = array('firstLabel' => 'secondLabel',
+                              'secondLabel' => 'thirdLabel');
+        $translate = new Zend_Translate('array', $translations);
+        $submit = new Zend_Form_Element_Submit('foo', 'firstLabel');
+        $submit->setTranslator($translate);
+        $this->assertEquals($translations['firstLabel'], $submit->getLabel());
     }
 
     public function testIsCheckedReturnsFalseWhenNoValuePresent()

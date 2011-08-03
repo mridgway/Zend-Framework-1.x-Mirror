@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NavigationTest.php 24114 2011-06-04 01:51:02Z freak $
+ * @version    $Id: NavigationTest.php 24340 2011-08-02 18:28:17Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -67,6 +67,8 @@ class Zend_Application_Resource_NavigationTest extends PHPUnit_Framework_TestCas
 
     public function tearDown()
     {
+        Zend_Navigation_Page::setDefaultPageType();
+
         // Restore original autoloaders
         $loaders = spl_autoload_functions();
         foreach ($loaders as $loader) {
@@ -148,7 +150,7 @@ class Zend_Application_Resource_NavigationTest extends PHPUnit_Framework_TestCas
 
          $this->assertEquals($view->setInMethodByTest,true);
     }
-    
+
     /**
      * @group ZF-10959
      */
@@ -164,14 +166,14 @@ class Zend_Application_Resource_NavigationTest extends PHPUnit_Framework_TestCas
 
         $results = array();
         $resource = new Zend_Application_Resource_Navigation($options);
-        
+
         try {
             $resource->setBootstrap($this->bootstrap)->init();
             $this->fail('An exception should have been thrown but wasn\'t');
         } catch(Zend_Exception $e) {
             $this->assertTrue(true);
         }
-        
+
         $this->bootstrap->unregisterPluginResource('view');
     }
 

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ArrayTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ArrayTest.php 24329 2011-07-31 04:13:18Z adamlundrigan $
  */
 
 /*
@@ -109,5 +109,21 @@ class Zend_Queue_Adapter_ArrayTest extends Zend_Queue_Adapter_AdapterTest
         $adapter->setData($data);
         $got = $adapter->getData();
         $this->assertEquals($data['test'], $got['test']);
+    }
+    
+    /**
+     * @group ZF-7650
+     */
+    public function testReceiveWillRetrieveZeroItems()
+    {
+        // Zend_Queue_Adapter_Array
+        $queue = new Zend_Queue('Array');
+        $queue2 = $queue->createQueue('queue');
+
+        $queue->send('My Test Message 1');
+        $queue->send('My Test Message 2');
+
+        $messages = $queue->receive(0);
+        $this->assertEquals(0, count($messages));
     }
 }

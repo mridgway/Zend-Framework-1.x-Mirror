@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BrokerTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: BrokerTest.php 24317 2011-07-30 13:40:07Z mikaelkael $
  */
 
 // Call Zend_Controller_Plugin_BrokerTest::main() if this source file is executed directly.
@@ -185,6 +185,7 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $request  = new Zend_Controller_Request_Http('http://framework.zend.com/empty');
         $response = new Zend_Controller_Response_Cli();
         $broker   = new Zend_Controller_Plugin_Broker();
+        $broker->setRequest($request);
         $broker->setResponse($response);
         $broker->registerPlugin(new Zend_Controller_Plugin_BrokerTest_ExceptionTestPlugin());
         try {

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: AllTests.php 24333 2011-07-31 16:27:10Z ramon $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -35,6 +35,7 @@ require_once 'Zend/Queue/MessageTest.php';
 require_once 'Zend/Queue/Message/IteratorTest.php';
 
 // Adapter testing
+require_once 'Zend/Queue/Adapter/AdapterTest.php';
 require_once 'Zend/Queue/Adapter/ArrayTest.php';
 require_once 'Zend/Queue/Adapter/MemcacheqTest.php';
 require_once 'Zend/Queue/Adapter/NullTest.php';
@@ -80,9 +81,7 @@ class Zend_Queue_AllTests
 
         // Adapter testing
         $suite->addTestSuite('Zend_Queue_Adapter_ArrayTest');
-        if (extension_loaded('memcache')) {
-            $suite->addTestSuite('Zend_Queue_Adapter_MemcacheqTest');
-        }
+        $suite->addTestSuite('Zend_Queue_Adapter_MemcacheqTest');
         $suite->addTestSuite('Zend_Queue_Adapter_DbTest');
         $suite->addTestSuite('Zend_Queue_Adapter_NullTest');
         $suite->addTestSuite('Zend_Queue_Adapter_PlatformJobQueueTest');

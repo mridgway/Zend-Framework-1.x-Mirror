@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ClientTest.php 23966 2011-05-03 14:30:07Z ralph $
+ * @version    $Id: ClientTest.php 24274 2011-07-28 09:25:31Z mcleod@spaceweb.nl $
  */
 
 /** Zend_Rest_Client */
@@ -220,10 +220,13 @@ class Zend_Rest_ClientTest extends PHPUnit_Framework_TestCase
         $this->adapter->setResponse($response);
 
         $reqXml   = file_get_contents($this->path . 'returnInt.xml');
-        $response = $this->rest->restDelete('/rest/');
+        $response = $this->rest->restDelete('/rest/', $reqXml);
         $this->assertTrue($response instanceof Zend_Http_Response);
         $body = $response->getBody();
         $this->assertContains($expXml, $response->getBody());
+        
+        $request = Zend_Rest_Client::getHttpClient()->getLastRequest();
+        $this->assertContains($reqXml, $request, $request);
     }
 
     public function testCallWithHttpMethod()

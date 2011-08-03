@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PageFrontendTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: PageFrontendTest.php 24318 2011-07-30 13:41:53Z mikaelkael $
  */
 
 /**
@@ -205,6 +205,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
         $this->_instance->setOption('regexps', $regex);
         $this->_instance->setOption('caching', false);
         $this->_instance->start('zf10952');
+        ob_get_clean();
     }
 }
 

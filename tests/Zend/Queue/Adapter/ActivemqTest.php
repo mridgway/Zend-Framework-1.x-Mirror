@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActivemqTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ActivemqTest.php 24329 2011-07-31 04:13:18Z adamlundrigan $
  */
 
 /*
@@ -97,5 +97,22 @@ class Zend_Queue_Adapter_ActivemqTest extends Zend_Queue_Adapter_AdapterTest
         $this->assertTrue(is_string(Zend_Queue_Adapter_Activemq::DEFAULT_SCHEME));
         $this->assertTrue(is_string(Zend_Queue_Adapter_Activemq::DEFAULT_HOST));
         $this->assertTrue(is_integer(Zend_Queue_Adapter_Activemq::DEFAULT_PORT));
+    }
+    
+    /**
+     * @group ZF-7650
+     */
+    public function testReceiveWillRetrieveZeroItems()
+    {
+        $options = array('driverOptions' => $this->getTestConfig());
+
+        $queue = new Zend_Queue('Activemq', $options);
+        $queue2 = $queue->createQueue('queue');
+
+        $queue->send('My Test Message 1');
+        $queue->send('My Test Message 2');
+
+        $messages = $queue->receive(0);
+        $this->assertEquals(0, count($messages));
     }
 }

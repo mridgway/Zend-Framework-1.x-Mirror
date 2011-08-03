@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StripTagsTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: StripTagsTest.php 24278 2011-07-28 18:32:21Z adamlundrigan $
  */
 
 // Call Zend_Filter_StripTagsTest::main() if this source file is executed directly.
@@ -604,6 +604,20 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
     {
         $input    = 'text<!-- not closed comment at the end';
         $expected = 'text';
+        $this->assertEquals($expected, $this->_filter->filter($input));
+    }
+    
+    /**
+     * @group ZF-11617
+     */
+    public function testFilterCanAllowHyphenatedAttributeNames()
+    {
+        $input     = '<li data-disallowed="no!" data-name="Test User" data-id="11223"></li>';
+        $expected  = '<li data-name="Test User" data-id="11223"></li>';
+        
+        $this->_filter->setTagsAllowed('li');
+        $this->_filter->setAttributesAllowed(array('data-id','data-name'));
+        
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 }

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestAdapterTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: TestAdapterTest.php 24309 2011-07-30 02:52:32Z ramon $
  */
 
 require_once 'Zend/Http/Client.php';
@@ -196,6 +196,14 @@ class Zend_Http_Client_TestAdapterTest extends PHPUnit_Framework_TestCase
                 $this->assertRegexp('/out of range/i', $e->getMessage());
             }
         }
+    }
+
+    /**
+     * @group ZF-11599
+     */
+    public function testGetConfig()
+    {
+        $this->assertNotNull($this->adapter->getConfig());
     }
 
     /**

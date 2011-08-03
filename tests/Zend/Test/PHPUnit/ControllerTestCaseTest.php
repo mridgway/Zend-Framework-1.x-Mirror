@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ControllerTestCaseTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ControllerTestCaseTest.php 24253 2011-07-22 00:15:05Z adamlundrigan $
  */
 
 // Call Zend_Test_PHPUnit_ControllerTestCaseTest::main() if this source file is executed directly.
@@ -780,6 +780,61 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
                ? get_class($boot)
                : gettype($boot);
         $this->assertTrue($boot === $this->testCase->bootstrap->getBootstrap(), $type);
+    }
+    
+    /**
+     * @group ZF-7496
+     * @dataProvider providerRedirectWorksAsExpectedFromHookMethodsInActionController
+     */
+    public function testRedirectWorksAsExpectedFromHookMethodsInActionController($dispatchTo)
+    {
+        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
+        $this->testCase->dispatch($dispatchTo);
+        $this->testCase->assertRedirectTo('/login');
+        $this->assertNotEquals('action body', $this->testCase->getResponse()->getBody());
+    }
+    
+    /**
+     * Data provider for testRedirectWorksAsExpectedFromHookMethodsInActionController
+     * @return array
+     */
+    public function providerRedirectWorksAsExpectedFromHookMethodsInActionController()
+    {
+        return array(
+            array('/zend-test-redirect-from-init/baz'),
+            array('/zend-test-redirect-from-pre-dispatch/baz')
+        );
+    }
+    
+    /**
+     * @group ZF-7496
+     * @dataProvider providerRedirectWorksAsExpectedFromHookMethodsInFrontControllerPlugin
+     */
+    public function testRedirectWorksAsExpectedFromHookMethodsInFrontControllerPlugin($pluginName)
+    {
+        require_once dirname(__FILE__) . "/_files/application/plugins/RedirectFrom{$pluginName}.php";
+        $className = "Application_Plugin_RedirectFrom{$pluginName}";
+        
+        $fc = $this->testCase->getFrontController();
+        $fc->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers')
+           ->registerPlugin(new $className());
+        $this->testCase->dispatch('/');
+        $this->testCase->assertRedirectTo('/login');
+        $this->assertNotEquals('action body', $this->testCase->getResponse()->getBody());
+    }
+    
+    /**
+     * Data provider for testRedirectWorksAsExpectedFromHookMethodsInFrontControllerPlugin
+     * @return array
+     */
+    public function providerRedirectWorksAsExpectedFromHookMethodsInFrontControllerPlugin()
+    {
+        return array(
+            array('RouteStartup'),
+            array('RouteShutdown'),
+            array('DispatchLoopStartup'),
+            array('PreDispatch')
+        );
     }
 }
 

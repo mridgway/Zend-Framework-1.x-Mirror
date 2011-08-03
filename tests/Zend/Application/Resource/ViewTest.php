@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewTest.php 23992 2011-05-04 03:32:01Z ralph $
+ * @version    $Id: ViewTest.php 24288 2011-07-28 20:37:43Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -227,6 +227,20 @@ class Zend_Application_Resource_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('barbazoo', $view->bar);
     }
 
+    /**
+     * @group ZF-11579
+     */
+    public function testViewResourceDoesNotReinjectViewRenderer()
+    {
+        require_once dirname(__FILE__) . '/TestAsset/ViewRenderer.php';
+        $viewRenderer = new Zend_Application_Resource_TestAsset_ViewRenderer();
+        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+
+        $resource = new Zend_Application_Resource_View(array('encoding' => 'UTF-8'));
+        $view = $resource->init();
+
+        $this->assertSame($view, $viewRenderer->view);
+    }
 }
 
 

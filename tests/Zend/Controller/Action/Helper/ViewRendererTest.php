@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewRendererTest.php 24225 2011-07-12 19:23:12Z matthew $
+ * @version    $Id: ViewRendererTest.php 24282 2011-07-28 18:59:26Z matthew $
  */
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.
@@ -885,7 +885,6 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->helper->setActionController($controller);
         $scriptName = $this->helper->getViewScript();
         $this->assertEquals('foo/my-bar.phtml', $scriptName);
-
     }
     
     /**
@@ -908,6 +907,20 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
     protected function _normalizePath($path)
     {
         return str_replace(array('/', '\\'), '/', $path);
+    }
+
+    /**
+     * @group ZF-10725
+     */
+    public function testActionsWithLeadingCapitalLettersShouldNotInvokeTruncatedViewScripts()
+    {
+        $this->request->setModuleName('default')
+                      ->setControllerName('Controller')
+                      ->setActionName('Action');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $scriptName = $this->helper->getViewScript();
+        $this->assertEquals('controller/action.phtml', $scriptName);
     }
 }
 

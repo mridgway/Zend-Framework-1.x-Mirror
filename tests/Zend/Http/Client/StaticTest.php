@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 24194 2011-07-05 15:53:45Z matthew $
+ * @version    $Id: StaticTest.php 24337 2011-08-01 13:04:41Z ezimuel $
  */
 
 require_once 'Zend/Http/Client.php';
@@ -706,6 +706,27 @@ RESPONSE
         $this->assertEquals("/test", $lastUri->getPath());
     }
 
+    /**
+     * @group ZF-11162
+     */
+    function testClientDoesNotModifyPassedUri() {
+        $uri = Zend_Uri_Http::fromString('http://example.org/');
+        $orig = clone $uri;
+        $client = new Zend_Http_Client($uri);
+        $this->assertEquals((string)$orig, (string)$uri);
+    }
+    /*
+     * @group ZF-9206
+     */
+    function testStreamWarningRewind()
+    {
+        $httpClient = new Zend_Http_Client();
+        $httpClient->setUri('http://example.org');
+        $httpClient->setMethod(Zend_Http_Client::GET);
+        ob_start();
+        $httpClient->setStream('php://output')->request();
+        ob_clean();
+    }
     /**
      * Data providers
      */

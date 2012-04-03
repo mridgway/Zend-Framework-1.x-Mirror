@@ -17,12 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MvcTest.php 24235 2011-07-13 18:13:45Z matthew $
+ * @version    $Id: MvcTest.php 24455 2011-09-11 12:51:54Z padraic $
  */
 
 require_once 'Zend/Navigation/Page/Mvc.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Router/Route.php';
+require_once 'Zend/Controller/Router/Route/Regex.php';
 
 /**
  * Tests the class Zend_Navigation_Page_Mvc
@@ -102,6 +103,38 @@ class Zend_Navigation_Page_MvcTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('/lolcat/myaction/1337', $page->getHref());
     }
+
+    /**
+     * @group ZF-8922
+     */
+    public function testGetHrefWithFragmentIdentifier()
+    {
+        $page = new Zend_Navigation_Page_Mvc(array(
+            'label'              => 'foo',
+            'fragment' => 'qux',
+            'controller'         => 'mycontroller',
+            'action'             => 'myaction',
+            'route'              => 'myroute',
+            'params'             => array(
+                'page' => 1337
+            )
+        ));
+ 
+        $this->_front->getRouter()->addRoute(
+            'myroute',
+            new Zend_Controller_Router_Route(
+                'lolcat/:action/:page',
+                array(
+                    'module'     => 'default',
+                    'controller' => 'foobar',
+                    'action'     => 'bazbat',
+                    'page'       => 1
+                )
+            )
+        );
+ 
+        $this->assertEquals('/lolcat/myaction/1337#qux', $page->getHref());
+    } 
 
     public function testIsActiveReturnsTrueOnIdenticalModuleControllerAction()
     {
@@ -346,6 +379,54 @@ class Zend_Navigation_Page_MvcTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(), $page->getParams());
     }
 
+    /**
+     * @group ZF-10465
+     */
+    public function testSetAndGetEncodeUrl()
+    {
+        $page = new Zend_Navigation_Page_Mvc(array(
+            'label'      => 'foo',
+            'action'     => 'index',
+            'controller' => 'index',
+        ));
+        
+        $page->setEncodeUrl(false);
+        $this->assertEquals(false, $page->getEncodeUrl());
+    }
+    
+    /**
+     * @group ZF-10465
+     */
+    public function testEncodeUrlIsRouteAware()
+    {
+        $page = new Zend_Navigation_Page_Mvc(array(
+            'label'      => 'foo',
+            'route'      => 'myroute',
+            'encodeUrl'  => false,
+            'params'     => array(
+                'contentKey' => 'pagexy/subpage',
+            )
+        ));
+ 
+        $this->_front->getRouter()->addRoute(
+            'myroute',
+            new Zend_Controller_Router_Route_Regex(
+                '(.+)\.html',
+                array(
+                    'module'     => 'default',
+                    'controller' => 'foobar',
+                    'action'     => 'bazbat',
+                ),
+                array(
+                    1 => 'contentKey'
+                ),
+                '%s.html'
+            )
+        );
+
+        $this->assertEquals('/pagexy/subpage.html', $page->getHref());
+    }
+
     public function testToArrayMethod()
     {
         $options = array(
@@ -353,6 +434,7 @@ class Zend_Navigation_Page_MvcTest extends PHPUnit_Framework_TestCase
             'action' => 'index',
             'controller' => 'index',
             'module' => 'test',
+            'fragment' => 'bar',
             'id' => 'my-id',
             'class' => 'my-class',
             'title' => 'my-title',
@@ -360,6 +442,7 @@ class Zend_Navigation_Page_MvcTest extends PHPUnit_Framework_TestCase
             'order' => 100,
             'active' => true,
             'visible' => false,
+            'encodeUrl'  => false,
 
             'foo' => 'bar',
             'meaning' => 42

@@ -21,7 +21,7 @@
  */
 
 /**
- * EN-Revision: 22668
+ * EN-Revision: 23772
  */
 return array(
     // Zend_Validate_Alnum
@@ -87,7 +87,7 @@ return array(
     "'%value%' exceeds the allowed length" => "'%value%' は許された長さを超えています",
 
     // Zend_Validate_File_Count
-    "Too many files, maximum '%max%' are allowed but '%count%' are given" => "ファイル数が多すぎます。最大 '%max%' まで許されていますが、 '%count%' 個指定ました",
+    "Too many files, maximum '%max%' are allowed but '%count%' are given" => "ファイル数が多すぎます。最大 '%max%' まで許されていますが、 '%count%' 個指定しました",
     "Too few files, minimum '%min%' are expected but '%count%' are given" => "ファイル数が少なすぎます。最小 '%min%' 以上の必要がありますが、 '%count%' 個指定されていません",
 
     // Zend_Validate_File_Crc32

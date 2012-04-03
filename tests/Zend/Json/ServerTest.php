@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ServerTest.php 24322 2011-07-30 15:38:24Z mikaelkael $
+ * @version    $Id: ServerTest.php 24461 2011-09-11 19:25:08Z padraic $
  */
 
 // Call Zend_Json_ServerTest::main() if this source file is executed directly.

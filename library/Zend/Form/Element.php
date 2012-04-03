@@ -38,7 +38,7 @@ require_once 'Zend/Validate/Abstract.php';
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Element.php 24198 2011-07-05 16:04:15Z matthew $
+ * @version    $Id: Element.php 24428 2011-09-02 14:10:03Z matthew $
  */
 class Zend_Form_Element implements Zend_Validate_Interface
 {
@@ -315,17 +315,29 @@ class Zend_Form_Element implements Zend_Validate_Interface
 
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $getId = create_function('$decorator',
-                                     'return $decorator->getElement()->getId()
-                                             . "-element";');
             $this->addDecorator('ViewHelper')
                  ->addDecorator('Errors')
                  ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'))
-                 ->addDecorator('HtmlTag', array('tag' => 'dd',
-                                                 'id'  => array('callback' => $getId)))
+                 ->addDecorator('HtmlTag', array(
+                     'tag' => 'dd',
+                     'id'  => array('callback' => array(get_class($this), 'resolveElementId'))
+                 ))
                  ->addDecorator('Label', array('tag' => 'dt'));
         }
         return $this;
+    }
+
+    /**
+     * Used to resolve and return an element ID
+     *
+     * Passed to the HtmlTag decorator as a callback in order to provide an ID.
+     * 
+     * @param  Zend_Form_Decorator_Interface $decorator 
+     * @return string
+     */
+    public static function resolveElementId(Zend_Form_Decorator_Interface $decorator)
+    {
+        return $decorator->getElement()->getId() . '-element';
     }
 
     /**

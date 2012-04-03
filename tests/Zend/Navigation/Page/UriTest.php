@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: UriTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: UriTest.php 24455 2011-09-11 12:51:54Z padraic $
  */
 
 require_once 'Zend/Navigation/Page/Uri.php';
@@ -99,5 +99,23 @@ class Zend_Navigation_Page_UriTest extends PHPUnit_Framework_TestCase
         $page->setUri($uri);
 
         $this->assertEquals($uri, $page->getHref());
+    }
+
+    /**
+     * @group ZF-8922
+     */
+    public function testGetHrefWithFragmentIdentifier()
+    {
+        $uri = 'http://www.example.com/foo.html';
+        
+        $page = new Zend_Navigation_Page_Uri();
+        $page->setUri($uri);
+        $page->setFragment('bar');
+        
+        $this->assertEquals($uri . '#bar', $page->getHref());
+        
+        $page->setUri('#');
+        
+        $this->assertEquals('#bar', $page->getHref());
     }
 }

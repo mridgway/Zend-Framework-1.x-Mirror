@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OpenIdTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: OpenIdTest.php 24379 2011-08-14 12:01:10Z padraic $
  */
 
 /**
@@ -342,7 +342,7 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
 
         $url = 'http://example.com/test.php?Foo=Bar#Baz';
         $this->assertTrue( Zend_OpenId::normalizeUrl($url) );
-        $this->assertSame( 'http://example.com/test.php?Foo=Bar', $url );
+        $this->assertSame( 'http://example.com/test.php?Foo=Bar#Baz', $url );
     }
 
     /**

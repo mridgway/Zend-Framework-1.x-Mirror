@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: JsonTest.php 24152 2011-06-24 15:23:19Z adamlundrigan $
+ * @version    $Id: JsonTest.php 24423 2011-08-28 15:45:04Z adamlundrigan $
  */
 
 /**
@@ -118,6 +118,47 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $zero, 'Failed 0 integer test. Encoded: ' . serialize(Zend_Json_Encoder::encode(0)));
     }
 
+    /**
+     * @group ZF-10185
+     */
+    public function testJsonPrettyPrintWorksWithArrayNotationInStringLiteral()
+    {
+        $o = new stdClass();
+        $o->test = 1;
+        $o->faz = 'fubar';
+        
+        // The escaped double-quote in item 'stringwithjsonchars' ensures that 
+        // escaped double-quotes don't throw off prettyPrint's string literal detection
+        $test = array(
+            'simple'=>'simple test string',
+            'stringwithjsonchars'=>'\"[1,2]',
+            'complex'=>array(
+                'foo'=>'bar',
+                'far'=>'boo',
+                'faz'=>array(
+                    'obj'=>$o
+                )
+            )
+        );
+        $pretty = Zend_Json::prettyPrint(Zend_Json::encode($test), array("indent"  => " "));
+        $expected = <<<EOB
+{
+ "simple":"simple test string",
+ "stringwithjsonchars":"\\\\\\"[1,2]",
+ "complex":{
+  "foo":"bar",
+  "far":"boo",
+  "faz":{
+   "obj":{
+    "test":1,
+    "faz":"fubar"
+   }
+  }
+ }
+}
+EOB;
+        $this->assertSame($expected, $pretty);
+    }
 
     /**
      * test float encoding/decoding
@@ -781,6 +822,38 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
             $encoded
         );
     }
+
+    /**
+     * @group ZF-9577
+     */
+    public function testJsonPrettyPrintWorksWithTxtOutputFormat()
+    {
+        $o = new stdClass;
+        $o->four = 4;
+        $o->foo = array(1,2,3);
+
+        $jsonstr = Zend_Json::encode($o);
+
+        $targetTxtOutput = "{\n\t\"four\":4,\n\t\"foo\":[\n\t\t1,\n\t\t2,\n\t\t3\n\t]\n}";
+        $this->assertEquals($targetTxtOutput, Zend_Json::prettyPrint($jsonstr));
+    }
+
+    /**
+     * @group ZF-9577
+     */
+    public function testJsonPrettyPrintWorksWithHtmlOutputFormat()
+    {
+        $o = new stdClass;
+        $o->four = 4;
+        $o->foo = array(1,2,3);
+
+        $jsonstr = Zend_Json::encode($o);
+        $targetHtmlOutput = '{<br />&nbsp;&nbsp;&nbsp;&nbsp;"four":4,<br />&nbsp;&nbsp;&nbsp;&nbsp;"foo":[<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3<br />&nbsp;&nbsp;&nbsp;&nbsp;]<br />}';
+        $this->assertEquals($targetHtmlOutput, Zend_Json::prettyPrint($jsonstr, array('format' => 'html')));
+    }
+
+
+
 }
 
 /**

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MenuTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: MenuTest.php 24455 2011-09-11 12:51:54Z padraic $
  */
 
 require_once dirname(__FILE__) . '/TestAbstract.php';
@@ -525,5 +525,19 @@ class Zend_View_Helper_Navigation_MenuTest
         $actual = $this->_helper->renderMenu(null, $options);
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @group ZF-9746
+     */
+    public function testRenderingWithAccesskey()
+    {
+        $this->_nav3->findOneBy('id', 'home')->setAccesskey('H');
+        $this->_nav3->findOneBy('uri', 'contact')->setAccesskey('c');
+        $this->_nav3->findOneBy('id', 'imprint')->setAccesskey('i');
+        
+        $expected = $this->_getExpected('menu/accesskey.html');
+        
+        $this->assertEquals($expected, $this->_helper->render($this->_nav3));
     }
 }

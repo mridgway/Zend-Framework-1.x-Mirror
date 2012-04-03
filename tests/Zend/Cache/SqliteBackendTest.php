@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SqliteBackendTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: SqliteBackendTest.php 24348 2011-08-04 17:51:24Z mabe $
  */
 
 /**
@@ -101,10 +101,30 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonExtendedBackendTest 
             'automatic_vacuum_factor' => 1
         ));
         parent::setUp();
+
         $this->assertTrue($this->_instance->remove('bar'));
         $this->assertFalse($this->_instance->test('bar'));
         $this->assertFalse($this->_instance->remove('barbar'));
         $this->assertFalse($this->_instance->test('barbar'));
+    }
+
+    /**
+     * @group ZF-11640
+     */
+    public function testRemoveCorrectCallWithVacuumOnMemoryDb()
+    {
+        $this->_instance = new Zend_Cache_Backend_Sqlite(array(
+            'cache_db_complete_path'  => ':memory:',
+            'automatic_vacuum_factor' => 1
+        ));
+        parent::setUp();
+
+        $this->assertGreaterThan(0, $this->_instance->test('bar2'));
+
+        $this->assertTrue($this->_instance->remove('bar'));
+        $this->assertFalse($this->_instance->test('bar'));
+
+        $this->assertGreaterThan(0, $this->_instance->test('bar2'));
     }
 
 }

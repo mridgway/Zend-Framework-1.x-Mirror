@@ -17,7 +17,7 @@
  * @subpackage Framework
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Controller.php 24136 2011-06-14 00:35:46Z adamlundrigan $
+ * @version    $Id: Controller.php 24466 2011-09-25 02:19:39Z jaguarnet7 $
  */
 
 /**
@@ -70,7 +70,7 @@ class Zend_Tool_Project_Provider_Controller
      * @param Zend_Tool_Project_Profile $profile
      * @param string $controllerName
      * @param string $moduleName
-     * @return Zend_Tool_Project_Profile_Resource
+     * @return boolean
      */
     public static function hasResource(Zend_Tool_Project_Profile $profile, $controllerName, $moduleName = null)
     {
@@ -79,7 +79,7 @@ class Zend_Tool_Project_Provider_Controller
         }
 
         $controllersDirectory = self::_getControllersDirectoryResource($profile, $moduleName);
-        return (($controllersDirectory->search(array('controllerFile' => array('controllerName' => $controllerName)))) instanceof Zend_Tool_Project_Profile_Resource);
+        return ($controllersDirectory &&($controllersDirectory->search(array('controllerFile' => array('controllerName' => $controllerName)))) instanceof Zend_Tool_Project_Profile_Resource);
     }
 
     /**

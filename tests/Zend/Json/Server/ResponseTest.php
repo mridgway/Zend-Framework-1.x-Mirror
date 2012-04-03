@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ResponseTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: ResponseTest.php 24464 2011-09-24 14:06:34Z mcleod@spaceweb.nl $
  */
 
 // Call Zend_Json_Server_ResponseTest::main() if this source file is executed directly.
@@ -143,7 +143,8 @@ class Zend_Json_Server_ResponseTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($test));
         $this->assertTrue(array_key_exists('result', $test));
-        $this->assertTrue(array_key_exists('error', $test));
+        // assertion changed to false, because 'error' may not coexist with 'result'
+        $this->assertFalse(array_key_exists('error', $test), "'error' may not coexist with 'result'");
         $this->assertTrue(array_key_exists('id', $test));
         $this->assertTrue(array_key_exists('jsonrpc', $test));
 
@@ -164,7 +165,7 @@ class Zend_Json_Server_ResponseTest extends PHPUnit_Framework_TestCase
         $test = Zend_Json::decode($json);
 
         $this->assertTrue(is_array($test));
-        $this->assertTrue(array_key_exists('result', $test));
+        $this->assertFalse(array_key_exists('result', $test), "'result' may not coexist with 'error'");
         $this->assertTrue(array_key_exists('id', $test));
         $this->assertFalse(array_key_exists('jsonrpc', $test));
 
@@ -182,7 +183,7 @@ class Zend_Json_Server_ResponseTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($test));
         $this->assertTrue(array_key_exists('result', $test));
-        $this->assertTrue(array_key_exists('error', $test));
+        $this->assertFalse(array_key_exists('error', $test), "'error' may not coexist with 'result'");
         $this->assertTrue(array_key_exists('id', $test));
         $this->assertFalse(array_key_exists('jsonrpc', $test));
 

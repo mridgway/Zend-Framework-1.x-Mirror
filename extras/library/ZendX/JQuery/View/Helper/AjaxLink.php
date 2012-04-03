@@ -17,7 +17,7 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: AjaxLink.php 24187 2011-07-05 14:51:57Z matthew $
+ * @version     $Id: AjaxLink.php 24401 2011-08-26 09:00:52Z padraic $
  */
 
 /**
@@ -153,34 +153,34 @@ class ZendX_JQuery_View_Helper_AjaxLink extends Zend_View_Helper_HtmlElement
             if(!empty($callbacks['complete'])) {
                 switch(strtolower($callbacks['complete'])) {
                     case 'show':
-                        $callbacks['complete'] = sprintf("%s('%s').show();", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").show();', $jqHandler, $updateContainer);
                         break;
                     case 'showslow':
-                        $callbacks['complete'] = sprintf("%s('%s').show('slow');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").show("slow");', $jqHandler, $updateContainer);
                         break;
                     case 'shownormal':
-                        $callbacks['complete'] = sprintf("%s('%s').show('normal');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").show("normal");', $jqHandler, $updateContainer);
                         break;
                     case 'showfast':
-                        $callbacks['complete'] = sprintf("%s('%s').show('fast');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").show("fast");', $jqHandler, $updateContainer);
                         break;
                     case 'fadein':
-                        $callbacks['complete'] = sprintf("%s('%s').fadeIn('normal');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").fadeIn("normal");', $jqHandler, $updateContainer);
                         break;
                     case 'fadeinslow':
-                        $callbacks['complete'] = sprintf("%s('%s').fadeIn('slow');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").fadeIn("slow");', $jqHandler, $updateContainer);
                         break;
                     case 'fadeinfast':
-                        $callbacks['complete'] = sprintf("%s('%s').fadeIn('fast');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").fadeIn("fast");', $jqHandler, $updateContainer);
                         break;
                     case 'slidedown':
-                        $callbacks['complete'] = sprintf("%s('%s').slideDown('normal');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").slideDown("normal");', $jqHandler, $updateContainer);
                         break;
                     case 'slidedownslow':
-                        $callbacks['complete'] = sprintf("%s('%s').slideDown('slow');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").slideDown("slow");', $jqHandler, $updateContainer);
                         break;
                     case 'slidedownfast':
-                        $callbacks['complete'] = sprintf("%s('%s').slideDown('fast');", $jqHandler, $updateContainer);
+                        $callbacks['complete'] = sprintf('%s("%s").slideDown("fast");', $jqHandler, $updateContainer);
                         break;
                 }
             }
@@ -195,9 +195,9 @@ class ZendX_JQuery_View_Helper_AjaxLink extends Zend_View_Helper_HtmlElement
         $callbackCompleteJs = array();
         if($updateContainer != false) {
             if($options['dataType'] == "text") {
-                $callbackCompleteJs[] = sprintf("%s('%s').text(data);", $jqHandler, $updateContainer);
+                $callbackCompleteJs[] = sprintf('%s("%s").text(data);', $jqHandler, $updateContainer);
             } else {
-                $callbackCompleteJs[] = sprintf("%s('%s').html(data);", $jqHandler, $updateContainer);
+                $callbackCompleteJs[] = sprintf('%s("%s").html(data);', $jqHandler, $updateContainer);
             }
         }
         if($callbacks['complete'] != null) {
@@ -214,25 +214,25 @@ class ZendX_JQuery_View_Helper_AjaxLink extends Zend_View_Helper_HtmlElement
         if($callbacks['beforeSend'] != null) {
             switch(strtolower($callbacks['beforeSend'])) {
                 case 'fadeout':
-                    $js[] = sprintf("%s(this).fadeOut();", $jqHandler);
+                    $js[] = sprintf('%s(this).fadeOut();', $jqHandler);
                     break;
                 case 'fadeoutslow':
-                    $js[] = sprintf("%s(this).fadeOut('slow');", $jqHandler);
+                    $js[] = sprintf('%s(this).fadeOut("slow");', $jqHandler);
                     break;
                 case 'fadeoutfast':
-                    $js[] = sprintf("%s(this).fadeOut('fast');", $jqHandler);
+                    $js[] = sprintf('%s(this).fadeOut("fast");', $jqHandler);
                     break;
                 case 'hide':
-                    $js[] = sprintf("%s(this).hide();", $jqHandler);
+                    $js[] = sprintf('%s(this).hide();', $jqHandler);
                     break;
                 case 'hideslow':
-                    $js[] = sprintf("%s(this).hide('slow');", $jqHandler);
+                    $js[] = sprintf('%s(this).hide("slow");', $jqHandler);
                     break;
                 case 'hidefast':
-                    $js[] = sprintf("%s(this).hide('fast');", $jqHandler);
+                    $js[] = sprintf('%s(this).hide("fast");', $jqHandler);
                     break;
                 case 'slideup':
-                    $js[] = sprintf("%s(this).slideUp(1000);", $jqHandler);
+                    $js[] = sprintf('%s(this).slideUp(1000);', $jqHandler);
                     break;
                 default:
                     $js[] = $callbacks['beforeSend'];
@@ -243,11 +243,11 @@ class ZendX_JQuery_View_Helper_AjaxLink extends Zend_View_Helper_HtmlElement
         switch($requestHandler) {
             case 'GET':
                 $js[] = sprintf('%s.get("%s", %s, function(data, textStatus) { %s }, "%s");return false;',
-                    $jqHandler, $url, $params, implode(" ", $callbackCompleteJs), $options['dataType']);
+                    $jqHandler, $url, $params, implode(' ', $callbackCompleteJs), $options['dataType']);
                 break;
             case 'POST':
                 $js[] = sprintf('%s.post("%s", %s, function(data, textStatus) { %s }, "%s");return false;',
-                    $jqHandler, $url, $params, implode(" ", $callbackCompleteJs), $options['dataType']);
+                    $jqHandler, $url, $params, implode(' ', $callbackCompleteJs), $options['dataType']);
                 break;
         }
 
@@ -261,9 +261,9 @@ class ZendX_JQuery_View_Helper_AjaxLink extends Zend_View_Helper_HtmlElement
                 ZendX_JQuery_View_Helper_AjaxLink::$currentLinkCallbackId++;
 
                 $attribs['class'][] = $clickClass;
-                $onLoad = sprintf("%s('a.%s').click(function() { %s });", $jqHandler, $clickClass, $js);
+                $onLoad = sprintf('%s("a.%s").click(function() { %s });', $jqHandler, $clickClass, $js);
             } else {
-                $onLoad = sprintf("%s('a#%s').click(function() { %s });", $jqHandler, $attribs['id'], $js);
+                $onLoad = sprintf('%s("a#%s").click(function() { %s });', $jqHandler, $attribs['id'], $js);
             }
 
             $jquery->addOnLoad($onLoad);

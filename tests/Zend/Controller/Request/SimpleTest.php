@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SimpleTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: SimpleTest.php 24373 2011-08-13 21:50:10Z padraic $
  */
 
 // Call Zend_Controller_Request_SimpleTest::main() if this source file is executed directly.
@@ -67,6 +67,19 @@ class Zend_Controller_Request_SimpleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($request->getControllerName(), 'test2');
         $this->assertEquals($request->getModuleName(), 'test3');
         $this->assertEquals($request->getParam('test4'), 'test5');
+    }
+
+    /**
+     * @group ZF-3472
+     */
+    public function testSettingParamToNullInSetparamsCorrectlyUnsetsValue()
+    {
+        $request = new Zend_Controller_Request_Simple;
+        $request->setParam('key', 'value');
+        $request->setParams(array(
+            'key' => null
+        ));
+        $this->assertNull($request->getParam('key'));
     }
 
 }

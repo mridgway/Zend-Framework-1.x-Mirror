@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FormTest.php 23950 2011-05-03 03:46:42Z ralph $
+ * @version    $Id: FormTest.php 24453 2011-09-09 15:14:24Z matthew $
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
@@ -4460,6 +4460,24 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     {
         $form = new Zend_Form();
         $form->addElement(NULL);
+    }
+
+    /**
+     * @group ZF-11729
+     */
+    public function testDashSeparatedElementsInDisplayGroupsShouldNotRenderOutsideDisplayGroup()
+    {
+        $form = new Zend_Form();
+        $form->addElement('text', 'random-element-name', array(
+            'label' => 'This is weird',
+            'value' => 'think its a bug',
+        ));
+        $form->addDisplayGroup(array('random-element-name'), 'foobar', array(
+            'legend' => 'foobar',
+        ));
+        $html = $form->render($this->getView());
+        $count = substr_count($html, 'randomelementname-element');
+        $this->assertEquals(1, $count, $html);
     }
 }
 

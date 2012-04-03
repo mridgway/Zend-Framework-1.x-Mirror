@@ -17,7 +17,7 @@
  * @subpackage Parse_Amf3
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Deserializer.php 24138 2011-06-14 01:38:34Z adamlundrigan $
+ * @version    $Id: Deserializer.php 24386 2011-08-15 18:24:49Z padraic $
  */
 
 /** Zend_Amf_Parse_Deserializer */
@@ -385,6 +385,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
             }
 
             // Add properties back to the return object.
+            if (!is_array($properties)) $properties = array();
             foreach($properties as $key=>$value) {
                 if($key) {
                     $returnObject->$key = $value;

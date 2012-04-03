@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PageTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: PageTest.php 24455 2011-09-11 12:51:54Z padraic $
  */
 
 require_once 'Zend/Navigation/Page.php';
@@ -162,6 +162,35 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @group ZF-8922
+     */
+    public function testSetAndGetFragmentIdentifier()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'uri'                => '#',
+            'fragment'           => 'foo',
+        ));
+        
+        $this->assertEquals('foo', $page->getFragment());
+        
+        $page->setFragment('bar');
+        $this->assertEquals('bar', $page->getFragment());
+        
+        $invalids = array(42, (object) null);
+        foreach ($invalids as $invalid) {
+            try {
+                $page->setFragment($invalid);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
+            } catch (Zend_Navigation_Exception $e) {
+                $this->assertContains(
+                    'Invalid argument: $fragment', $e->getMessage()
+                );
+            }
+        }
+    } 
+
     public function testSetAndGetId()
     {
         $page = Zend_Navigation_Page::factory(array(
@@ -262,6 +291,35 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
                             'Zend_Navigation_Exception was not thrown');
             } catch (Zend_Navigation_Exception $e) {
                 $this->assertContains('Invalid argument: $target', $e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @group ZF-9746
+     */
+    public function testSetAndGetAccesskey()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'label' => 'foo',
+            'uri'   => '#',
+        ));
+        
+        $this->assertEquals(null, $page->getAccesskey());
+        $page->setAccesskey('b');
+        $this->assertEquals('b', $page->getAccesskey());
+        
+        $invalids = array('bar', 42, true, (object) null);
+        foreach ($invalids as $invalid) {
+            try {
+                $page->setAccesskey($invalid);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
+            } catch (Zend_Navigation_Exception $e) {
+                $this->assertContains(
+                    'Invalid argument: $character',
+                    $e->getMessage()
+                );
             }
         }
     }
@@ -685,6 +743,14 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         $page->setVisible(0);
         $this->assertFalse($page->isVisible());
 
+        /**
+         * ZF-10146
+         * 
+         * @link http://framework.zend.com/issues/browse/ZF-10146
+         */
+        $page->setVisible('False');
+        $this->assertFalse($page->isVisible());
+
         $page->setVisible(array());
         $this->assertFalse($page->isVisible());
     }
@@ -1094,11 +1160,13 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
     {
         $options = array(
             'label'    => 'foo',
-            'uri'      => '#',
+            'uri'      => 'http://www.example.com/foo.html',
+            'fragment' => 'bar',
             'id'       => 'my-id',
             'class'    => 'my-class',
             'title'    => 'my-title',
             'target'   => 'my-target',
+            'accesskey' => 'f',
             'rel'      => array(),
             'rev'      => array(),
             'order'    => 100,
@@ -1114,11 +1182,11 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
             'pages'    => array(
                 array(
                     'label' => 'foo.bar',
-                    'uri'   => '#'
+                    'uri'   => 'http://www.example.com/foo.html'
                 ),
                 array(
                     'label' => 'foo.baz',
-                    'uri'   => '#'
+                    'uri'   => 'http://www.example.com/foo.html'
                 )
             )
         );
@@ -1130,7 +1198,7 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         $options['type'] = 'Zend_Navigation_Page_Uri';
 
         // calculate diff between toArray() and $options
-        $diff = array_diff_assoc($toArray, $options);
+        $diff = array_diff_assoc($options, $toArray);
 
         // should be no diff
         $this->assertEquals(array(), $diff);
@@ -1140,11 +1208,13 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
 
         // tweak options to what we expect sub page 1 to be
         $options['label'] = 'foo.bar';
+        $options['fragment'] = null;
         $options['order'] = null;
         $options['id'] = null;
         $options['class'] = null;
         $options['title'] = null;
         $options['target'] = null;
+        $options['accesskey'] = null;
         $options['resource'] = null;
         $options['active'] = false;
         $options['visible'] = true;

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DateTextBoxTest.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: DateTextBoxTest.php 24461 2011-09-11 19:25:08Z padraic $
  */
 
 // Call Zend_Dojo_Form_Element_DateTextBoxTest::main() if this source file is executed directly.
@@ -195,6 +195,18 @@ class Zend_Dojo_Form_Element_DateTextBoxTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->element->render();
         $this->assertContains('dojoType="dijit.form.DateTextBox"', $html);
+    }
+
+    /**
+     * @group ZF-7813
+     */
+    public function testCanSetValue()
+    {
+        $this->element->setValue('2011-05-10');
+        $html = $this->element->render();
+        
+        $this->assertSame('2011-05-10', $this->element->getValue());
+        $this->assertContains('value="2011-05-10"', $html);
     }
 }
 

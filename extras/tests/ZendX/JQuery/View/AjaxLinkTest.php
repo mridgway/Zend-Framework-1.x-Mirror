@@ -17,7 +17,7 @@
  * @subpackage  View
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @version     $Id: AjaxLinkTest.php 24187 2011-07-05 14:51:57Z matthew $
+ * @version     $Id: AjaxLinkTest.php 24401 2011-08-26 09:00:52Z padraic $
  */
 
 require_once "jQueryTestCase.php";
@@ -96,25 +96,25 @@ class ZendX_JQuery_View_AjaxLinkTest extends ZendX_JQuery_View_jQueryTestCase
         $link = $this->view->ajaxLink("Link to Inject", "inject.html", array('update' => '#test', 'inline' => true, 'beforeSend' => 'hide'));
 
         $this->assertContains('$j.get', $link);
-        $this->assertContains("\$j('#test')", $link);
+        $this->assertContains('$j("#test")', $link);
         $this->assertContains('$j(this).hide', $link);
     }
 
     public function testShouldAllowSwitchUpdateDataFunc() {
         $link = $this->view->ajaxLink("Link to Inject", "inject.html", array('update' => '#test', 'inline' => true, 'dataType' => 'text'));
-        $this->assertContains("('#test').text(data);", $link);
+        $this->assertContains('("#test").text(data);', $link);
     }
 
     static public function dataBeforeSendEffects()
     {
         return array(
-            array('hide', "hide();"),
-            array('hideslow', "hide('slow');"),
-            array('hidefast', "hide('fast');"),
-            array('fadeout', "fadeOut();"),
-            array('fadeoutslow', "fadeOut('slow');"),
-            array('fadeoutfast', "fadeOut('fast');"),
-            array('slideup', "slideUp(1000);"),
+            array('hide', 'hide();'),
+            array('hideslow', 'hide("slow");'),
+            array('hidefast', 'hide("fast");'),
+            array('fadeout', 'fadeOut();'),
+            array('fadeoutslow', 'fadeOut("slow");'),
+            array('fadeoutfast', 'fadeOut("fast");'),
+            array('slideup', 'slideUp(1000);'),
         );
     }
 
@@ -138,15 +138,15 @@ class ZendX_JQuery_View_AjaxLinkTest extends ZendX_JQuery_View_jQueryTestCase
     {
         return array(
             array('show', 'show();'),
-            array('showslow', "show('slow');"),
-            array('showfast', "show('fast');"),
-            array('shownormal', "show('normal');"),
-            array('fadein', "fadeIn('normal');"),
-            array('fadeinslow', "fadeIn('slow');"),
-            array('fadeinfast', "fadeIn('fast');"),
-            array('slidedown', "slideDown('normal');"),
-            array('slidedownslow', "slideDown('slow');"),
-            array('slidedownfast', "slideDown('fast');"),
+            array('showslow', 'show("slow");'),
+            array('showfast', 'show("fast");'),
+            array('shownormal', 'show("normal");'),
+            array('fadein', 'fadeIn("normal");'),
+            array('fadeinslow', 'fadeIn("slow");'),
+            array('fadeinfast', 'fadeIn("fast");'),
+            array('slidedown', 'slideDown("normal");'),
+            array('slidedownslow', 'slideDown("slow");'),
+            array('slidedownfast', 'slideDown("fast");'),
         );
     }
 
@@ -158,12 +158,12 @@ class ZendX_JQuery_View_AjaxLinkTest extends ZendX_JQuery_View_jQueryTestCase
     public function testShouldAllowUsingCompleteEffects($effect, $js)
     {
         $link = $this->view->ajaxLink("Link to Inject", "inject.html", array('update' => '#test', 'inline' => true, 'complete' => $effect));
-        $this->assertContains(sprintf("$('#test').%s", $js), $link);
+        $this->assertContains(sprintf('$("#test").%s', $js), $link);
 
         ZendX_JQuery_View_Helper_JQuery::enableNoConflictMode();
 
         $link = $this->view->ajaxLink("Link to Inject", "inject.html", array('update' => '#test', 'inline' => true, 'complete' => $effect));
-        $this->assertContains(sprintf("\$j('#test').%s", $js), $link);
+        $this->assertContains(sprintf('$j("#test").%s', $js), $link);
     }
 
     public function testOptionsArrayAllowsForSettingAttributes() {
@@ -225,5 +225,23 @@ class ZendX_JQuery_View_AjaxLinkTest extends ZendX_JQuery_View_jQueryTestCase
        $this->assertContains('$.post("/some/url"', $html);
        $this->assertNotContains("'/some/url'", $html);
        $this->assertNotContains("'json'", $html);
+   }
+   /** @group ZF-9926 */
+   public function testSingleQuotesAreEscapedInJsInlineLinks()
+   {
+       $view = $this->getView();
+
+       $html = $view->ajaxLink('Label1', '/some/url', array(
+           'method'     => 'post',
+           'dataType'   => 'json',
+           'noscript'   => true,
+           'beforeSend' => "if(!confirm('Are you sure?')) {return false;}$('#progress-bar').show();",
+           'complete'   => '$("#progress-bar").hide();',
+           'inline'     => true
+       ));
+
+       $this->assertContains('&#39;Are you sure?&#39;', $html);
+       $this->assertContains('&#39;#progress-bar&#39;', $html);
+       $this->assertContains('"#progress-bar"', $html);
    }
 }

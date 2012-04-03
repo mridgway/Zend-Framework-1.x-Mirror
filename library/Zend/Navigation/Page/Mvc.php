@@ -17,7 +17,7 @@
  * @subpackage Page
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mvc.php 24235 2011-07-13 18:13:45Z matthew $
+ * @version    $Id: Mvc.php 24474 2011-09-26 19:46:23Z matthew $
  */
 
 /**
@@ -94,6 +94,15 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
      */
     protected $_resetParams = true;
 
+        
+    /**
+     * Whether href should be encoded when assembling URL
+     *
+     * @see getHref()
+     * @var bool 
+     */
+    protected $_encodeUrl = true;
+
     /**
      * Cached href
      *
@@ -129,11 +138,14 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
     public function isActive($recursive = false)
     {
         if (!$this->_active) {
-            $front = Zend_Controller_Front::getInstance();
-            $reqParams = $front->getRequest()->getParams();
-
-            if (!array_key_exists('module', $reqParams)) {
-                $reqParams['module'] = $front->getDefaultModule();
+            $front     = Zend_Controller_Front::getInstance();
+            $request   = $front->getRequest();
+            $reqParams = array();
+            if ($request) {
+                $reqParams = $request->getParams();
+                if (!array_key_exists('module', $reqParams)) {
+                    $reqParams['module'] = $front->getDefaultModule();
+                }
             }
 
             $myParams = $this->_params;
@@ -214,7 +226,16 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
 
         $url = self::$_urlHelper->url($params,
                                       $this->getRoute(),
-                                      $this->getResetParams());
+                                      $this->getResetParams(),
+                                      $this->getEncodeUrl());
+
+        // Add the fragment identifier if it is set
+        $fragment = $this->getFragment();       
+        if (null !== $fragment) {
+            $url .= '#' . $fragment;
+        }         
+        
+         return $this->_hrefCache = $url;
 
         return $this->_hrefCache = $url;
     }
@@ -418,6 +439,35 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
     }
 
     /**
+     * Sets whether href should be encoded when assembling URL
+     * 
+     * @see getHref()
+     *
+     * @param bool $resetParams         whether href should be encoded when
+     *                                  assembling URL
+     * @return Zend_Navigation_Page_Mvc fluent interface, returns self
+     */
+    public function setEncodeUrl($encodeUrl)
+    {
+        $this->_encodeUrl = (bool) $encodeUrl;
+        $this->_hrefCache = null;
+        
+        return $this;
+    }
+    
+    /**
+     * Returns whether herf should be encoded when assembling URL
+     * 
+     * @see getHref()
+     *
+     * @return bool whether herf should be encoded when assembling URL 
+     */
+    public function getEncodeUrl()
+    {
+        return $this->_encodeUrl;
+    }
+
+    /**
      * Sets action helper for assembling URLs
      *
      * @see getHref()
@@ -447,7 +497,8 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
                 'module'       => $this->getModule(),
                 'params'       => $this->getParams(),
                 'route'        => $this->getRoute(),
-                'reset_params' => $this->getResetParams()
+                'reset_params' => $this->getResetParams(),
+                'encodeUrl'    => $this->getEncodeUrl(),
             ));
     }
 }

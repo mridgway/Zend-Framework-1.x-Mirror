@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestAbstract.php 23775 2011-03-01 17:25:24Z ralph $
+ * @version    $Id: TestAbstract.php 24455 2011-09-11 12:51:54Z padraic $
  */
 
 require_once 'Zend/Acl.php';
@@ -81,6 +81,13 @@ abstract class Zend_View_Helper_Navigation_TestAbstract
      */
     protected $_nav2;
 
+    /**
+     * The third container in the config file (_files/navigation.xml)
+     *
+     * @var Zend_Navigation
+     */
+    protected $_nav3;
+
     private $_oldControllerDir;
 
     /**
@@ -98,6 +105,7 @@ abstract class Zend_View_Helper_Navigation_TestAbstract
         // setup containers from config
         $this->_nav1 = new Zend_Navigation($config->get('nav_test1'));
         $this->_nav2 = new Zend_Navigation($config->get('nav_test2'));
+        $this->_nav3 = new Zend_Navigation($config->get('nav_test3'));
 
         // setup view
         $view = new Zend_View();

@@ -17,7 +17,7 @@
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HtmlElement.php 24201 2011-07-05 16:22:04Z matthew $
+ * @version    $Id: HtmlElement.php 24399 2011-08-26 08:20:07Z padraic $
  */
 
 /**
@@ -109,7 +109,11 @@ abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
                     require_once 'Zend/Json.php';
                     $val = Zend_Json::encode($val);
                 }
-                $val = preg_replace('/"([^"]*)":/', '$1:', $val);
+                // Escape single quotes inside event attribute values.
+                // This will create html, where the attribute value has
+                // single quotes around it, and escaped single quotes or
+                // non-escaped double quotes inside of it
+                $val = str_replace('\'', '&#39;', $val);
             } else {
                 if (is_array($val)) {
                     $val = implode(' ', $val);
